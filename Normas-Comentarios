@@ -1,0 +1,13 @@
+------------------------------------------------
+As normas dos comentários devem seguir o padrão
+------------------------------------------------
+/**
+* DATA - Alterador
+* Comantário sobre alteração
+*/
+Exemplo
+--------
+/**
+* 29/08 - Maycon Q
+* Comentário Obrigatório
+*/
