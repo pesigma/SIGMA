@@ -1,4 +1,5 @@
 package sigma;
+import Telas.*;
 import java.util.Scanner;
 /**
  * @author Anderson Bottega
@@ -7,8 +8,8 @@ import java.util.Scanner;
  */
 public class SIGMA {
     public static void main(String[] args) {
-        // TODO code application logic here
+        System.out.println("Teste");
+        new TelaPrincipal().setVisible(true);
+        //new TelaLogin().setVisible(true);
     }
 }
-//TESTANDOOOOOOOOOOOOOOOOOOOOO
-kjhuhi
