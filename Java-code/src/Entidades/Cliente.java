@@ -13,14 +13,15 @@ public class Cliente {
 
     //Atributos
     int tel, cpf;
-    String nome, obs;
+    String nome, obs, end;
 
     //Construtores
-    public Cliente(int tel, int cpf, String nome, String obs) {
+    public Cliente(int tel, int cpf, String nome, String obs, String end) {
         this.tel = tel;
         this.cpf = cpf;
         this.nome = nome;
         this.obs = obs;
+        this.end = end;
     }
 
     //Métodos
@@ -54,6 +55,14 @@ public class Cliente {
 
     public void setObs(String obs) {
         this.obs = obs;
+    }
+    
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
     }
 
 }
