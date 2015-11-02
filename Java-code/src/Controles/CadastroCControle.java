@@ -13,9 +13,9 @@ import Entidades.Cliente;
  */
 public class CadastroCControle {
     
-    boolean cadastrarcliente(Cliente p) {
+    public boolean cadastrarcliente(Cliente p) {
         boolean result = false;
-        if (p != null && p.getNome().length() > 0 && p.getCpf() != 0 && p.getObs().length() > 0 && p.getTel() != 0) {
+        if (p != null && p.getNome().length() > 0 && p.getCpf() != 0 && p.getTel() != 0) {
             result = true;
         }
         return result;

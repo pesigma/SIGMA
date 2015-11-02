@@ -32,7 +32,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -41,19 +43,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem11 = new javax.swing.JMenuItem();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -65,17 +69,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Espaço reservado a logotipo do programa");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 243, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 88, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Clientes");
@@ -104,14 +117,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem5.setText("Adicionar");
         jMenu2.add(jMenuItem5);
 
+        jMenuItem8.setText("Quitar");
+        jMenu2.add(jMenuItem8);
+
         jMenuItem6.setText("Modificar");
         jMenu2.add(jMenuItem6);
 
         jMenuItem7.setText("Excluir");
         jMenu2.add(jMenuItem7);
-
-        jMenuItem8.setText("Quitar");
-        jMenu2.add(jMenuItem8);
 
         jMenuBar1.add(jMenu2);
 
@@ -129,6 +142,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuItem15.setText("Serviços");
         jMenu4.add(jMenuItem15);
+        jMenu4.add(jSeparator3);
 
         jMenuItem16.setText("Arquivo de Relatórios");
         jMenu4.add(jMenuItem16);
@@ -138,9 +152,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu5.setText("Ajuda");
         jMenu5.setToolTipText("");
 
-        jMenuItem11.setText("Sobre o SIGMA");
-        jMenu5.add(jMenuItem11);
-
+        jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem12.setText("Tópicos de ajuda");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,6 +164,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem13.setText("Relatar problema");
         jMenuItem13.setToolTipText("");
         jMenu5.add(jMenuItem13);
+        jMenu5.add(jSeparator2);
+
+        jMenuItem11.setText("Sobre o SIGMA");
+        jMenu5.add(jMenuItem11);
 
         jMenuBar1.add(jMenu5);
 
@@ -223,6 +239,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -250,5 +267,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     // End of variables declaration//GEN-END:variables
 }

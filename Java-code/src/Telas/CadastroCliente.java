@@ -5,7 +5,9 @@
  */
 package Telas;
 
+import Controles.CadastroCControle;
 import Entidades.Cliente;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,17 +16,18 @@ import Entidades.Cliente;
 public class CadastroCliente extends javax.swing.JFrame {
 
     public TelaPrincipal telaanterior;
+
     /**
      * Creates new form TelaCadastro
      */
     private CadastroCliente() {
         initComponents();
     }
-    
+
     public CadastroCliente(TelaPrincipal telanterior) {
         //Chamar construtor
         this();
-        this.telaanterior=telanterior;
+        this.telaanterior = telanterior;
     }
 
     /**
@@ -182,14 +185,33 @@ public class CadastroCliente extends javax.swing.JFrame {
         String tel = jTextField2.getText();
         String cpf = jTextField3.getText();
         String obs = jTextPane2.getText();
-        Cliente p;
+
+        int TEL = 0;
+        int CPF = 0;
+        try {
+            TEL = Integer.parseInt(tel);
+            CPF = Integer.parseInt(cpf);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro");
+            return;
+        }
+        Cliente p = new Cliente(TEL, CPF, nome, obs);
+        //Chama o controle para cadastrar
+        CadastroCControle C = new CadastroCControle();
+        if (C.cadastrarcliente(p)) {
+            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso");
+            this.dispose();
+            telaanterior.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         //Janela de cadastro de clientes fechada
         System.out.println("Fechando");
         telaanterior.setEnabled(true);
-        
+
     }//GEN-LAST:event_formWindowClosed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
