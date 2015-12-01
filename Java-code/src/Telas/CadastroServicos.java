@@ -16,11 +16,19 @@ package Telas;
  */
 public class CadastroServicos extends javax.swing.JFrame {
 
+    public TelaPrincipal telaanterior;
+
     /**
-     * Creates new form CadastroServicos
+     * Creates new form TelaCadastro
      */
-    public CadastroServicos() {
+    private CadastroServicos() {
         initComponents();
+    }
+
+    public CadastroServicos(TelaPrincipal telanterior) {
+        //Chamar construtor
+        this();
+        this.telaanterior = telanterior;
     }
 
     /**

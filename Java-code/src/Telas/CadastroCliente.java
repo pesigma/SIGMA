@@ -113,7 +113,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField1.setText("");
         jFormattedTextField1.setToolTipText("");
         jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +125,11 @@ public class CadastroCliente extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField2ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Alameda", "Avenida", "Rodovia", "Rua", "Travessa" }));
         jComboBox1.setSelectedIndex(3);
@@ -212,16 +216,16 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Botão Salvar pressionado
         String nome = jTextField1.getText();
-        String tel = jTextField2.getText();
-        String cpf = jTextField3.getText();
+        //String tel = jFormattedTextField1ActionPerformed.getText();
+        //String cpf = jFormattedTextField2ActionPerformed.getText();
         String obs = jTextPane2.getText();
         String end = jTextField4.getText();
 
         int TEL = 0;
         int CPF = 0;
         try {
-            TEL = Integer.parseInt(tel);
-            CPF = Integer.parseInt(cpf);
+            //TEL = Integer.parseInt(tel);
+            //CPF = Integer.parseInt(cpf);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro");
             return;
@@ -256,6 +260,10 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jComboBox1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1MouseExited
+
+    private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
