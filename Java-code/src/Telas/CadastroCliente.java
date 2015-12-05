@@ -260,16 +260,16 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Botão Salvar pressionado
         String nome = jTextField1.getText();
-        String tel = jTextField2.getText();
-        String cpf = jTextField3.getText();
+        //String tel = jTextField2.getText();
+        //String cpf = jTextField3.getText();
         String obs = jTextPane2.getText();
         String end = jTextField4.getText();
 
         int TEL = 0;
         int CPF = 0;
         try {
-            TEL = Integer.parseInt(tel);
-            CPF = Integer.parseInt(cpf);
+            //TEL = Integer.parseInt(tel);
+            //CPF = Integer.parseInt(cpf);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro");
             return;
