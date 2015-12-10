@@ -90,6 +90,12 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
 
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -169,6 +175,11 @@ public class CadastroCliente extends javax.swing.JFrame {
         });
 
         jTextField4.setToolTipText("");
+        jTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField4FocusLost(evt);
+            }
+        });
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
@@ -308,6 +319,18 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField2ActionPerformed
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        String nometemp = jTextField1.getText();;
+        String restemp = nometemp.toUpperCase();
+        jTextField1.setText (restemp);
+    }//GEN-LAST:event_jTextField1FocusLost
+
+    private void jTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusLost
+        String endtemp = jTextField4.getText();;
+        String strtemp = endtemp.toUpperCase();
+        jTextField4.setText (strtemp);
+    }//GEN-LAST:event_jTextField4FocusLost
 
     /**
      * @param args the command line arguments

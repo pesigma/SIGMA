@@ -75,6 +75,12 @@ public class CadastroServicos extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
 
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -126,7 +132,6 @@ public class CadastroServicos extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Modelo"));
 
-        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField2ActionPerformed(evt);
@@ -223,6 +228,12 @@ public class CadastroServicos extends javax.swing.JFrame {
          */
         telaanterior.setEnabled(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        String nometemp = jTextField1.getText();;
+        String restemp = nometemp.toUpperCase();
+        jTextField1.setText (restemp);
+    }//GEN-LAST:event_jTextField1FocusLost
 
     /**
      * @param args the command line arguments
