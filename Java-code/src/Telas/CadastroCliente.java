@@ -8,6 +8,8 @@ package Telas;
 import Controles.CadastroCControle;
 import Entidades.Cliente;
 import javax.swing.JOptionPane;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 /**
  * 29/11/15 - Juliano Felipe
@@ -27,6 +29,16 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     private CadastroCliente() {
         initComponents();
+        initNoicon ();
+    }
+    
+    /**
+    * 12/12/15 - Juliano Felipe
+    * Seta icone 1*1px (para "remover" icone default)
+    */
+    private void initNoicon (){
+        Image No_ico = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
+        this.setIconImage(No_ico);
     }
 
     public CadastroCliente(TelaPrincipal telanterior) {
@@ -336,14 +348,14 @@ public class CadastroCliente extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Windows look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* If Windows (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

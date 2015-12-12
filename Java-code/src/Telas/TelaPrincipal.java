@@ -22,6 +22,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initLogo();
     }
 
+    /**
+    * 12/12/15 - Juliano Felipe
+    * Seta icone "Logo 100x100.png"
+    */
     private void initLogo (){
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/Logo 100x100.png")));
     }
@@ -346,9 +350,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Windows look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* If Windows (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
