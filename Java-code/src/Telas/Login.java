@@ -6,6 +6,7 @@
 package Telas;
 
 import java.awt.Toolkit;
+import java.awt.Dimension;
 
 /**
  *
@@ -16,8 +17,15 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form TelaLogin
      */
+    /**
+    * 12/12/15 - Juliano Felipe
+    * Alteração para abrir no meio da tela, independente da resolução do monitor (Possíveis
+    * problemas se executado em computadores com mais de um monitor).
+    */
     public Login() {
         initComponents();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         initLogo();
     }
 
@@ -53,6 +61,7 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
+        setResizable(false);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
