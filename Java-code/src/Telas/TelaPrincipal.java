@@ -142,6 +142,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButton3.setText("Excluir");
 
         jButton4.setText("Consultar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -421,7 +426,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
          * Botão Cadastrar Clientes
          */
         this.setEnabled(false);
-        new CadastroCliente(this).setVisible(true);
+        new CadastroCliente(this, 1).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -452,6 +457,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //Problemas quando a janela é fechada!!
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        this.setEnabled(false);
+        new CadastroCliente(this, 2).setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+   
     /**
      * @param args the command line arguments
      */

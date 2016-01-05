@@ -41,12 +41,28 @@ public class CadastroCliente extends javax.swing.JFrame {
         this.setIconImage(No_ico);
     }
 
-    public CadastroCliente(TelaPrincipal telanterior) {
+    public CadastroCliente(TelaPrincipal telanterior, int option) {
         //Chamar construtor
         this();
         this.telaanterior = telanterior;
+        
+        if (option > 1){
+            metodosCliente (option);
+        }
     }
 
+    public void metodosCliente (int op){
+        if (op==2){
+           this.setTitle("Consulta Clientes"); 
+           jFormattedTextField1.setEditable(false);
+           jFormattedTextField2.setEditable(false);
+           jComboBox1.setEnabled(false);
+           jTextField4.setEditable(false);
+           jTextPane2.setEnabled(false);
+           jButton2.setEnabled(false);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
