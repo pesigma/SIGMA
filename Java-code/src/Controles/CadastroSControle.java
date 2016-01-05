@@ -11,9 +11,9 @@ import Entidades.Servico;
  * @author Maycon
  */
 public class CadastroSControle {
-    public boolean cadastrarcliente(Servico p) {
+    public boolean cadastrarservico(Servico p) {
         boolean result = false;
-        if (p != null && p.getPlaca().length() > 8 && p.getIdcliente() != 0) {
+        if (p != null && p.getPlaca().length() > 6 && p.getIdcliente() != 0) {
             result = true;
         }
         return result;

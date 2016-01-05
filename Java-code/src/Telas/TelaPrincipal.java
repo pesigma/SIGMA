@@ -5,7 +5,9 @@
  */
 package Telas;
 
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 //Para setar o logo.
 
 /**
@@ -22,6 +24,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initLogo();
     }
 
+    /**
+    * 12/12/15 - Juliano Felipe
+    * Seta icone 1*1px (para "remover" icone default)
+    */
+    private void initNoicon (){
+        Image No_ico = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
+        this.setIconImage(No_ico);
+    }
     /**
     * 12/12/15 - Juliano Felipe
     * Seta icone "Logo 100x100.png"

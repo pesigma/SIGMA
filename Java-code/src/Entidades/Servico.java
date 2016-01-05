@@ -18,12 +18,13 @@ public class Servico {
     boolean sit;
 
     //Construtores
-    public Servico(int idc, String placa, String modelo, int km, String obs) {
+    public Servico(int idc, String placa, String modelo, int km, boolean sit, String obs) {
+        //this.idc = idc;
         this.placa = placa;
         this.modelo = modelo;
         this.km = km;
+        this.sit = sit;
         this.obs = obs;
-        //this.sit = sit;
     }
 
     //Métodos
@@ -67,11 +68,11 @@ public class Servico {
         this.obs = obs;
     }
     
-    /*public String getSit() {
+    public boolean getSit() {
         return sit;
     }
 
     public void setSit(boolean sit) {
         this.sit = sit;
-    }*/
+    }
 }
