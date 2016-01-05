@@ -4,18 +4,16 @@
  * and open the template in the editor.
  */
 package Controles;
-
-import Entidades.Cliente;
-
+import Entidades.Servico;
 /**
- *
+ * 04/01 - Maycon
+ * Controlador do recebimento de serviços
  * @author Maycon
  */
-public class CadastroCControle {
-    
-    public boolean cadastrarcliente(Cliente p) {
+public class CadastroSControle {
+    public boolean cadastrarcliente(Servico p) {
         boolean result = false;
-        if (p != null && p.getNome().length() > 0) {
+        if (p != null && p.getPlaca().length() > 8 && p.getIdcliente() != 0) {
             result = true;
         }
         return result;

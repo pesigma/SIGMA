@@ -12,11 +12,10 @@ package Entidades;
 public class Cliente {
 
     //Atributos
-    int tel, cpf;
-    String nome, obs, end;
+    String nome, obs, end, tel, cpf;
 
     //Construtores
-    public Cliente(int tel, int cpf, String nome, String obs, String end) {
+    public Cliente(String tel, String cpf, String nome, String obs, String end) {
         this.tel = tel;
         this.cpf = cpf;
         this.nome = nome;
@@ -25,19 +24,19 @@ public class Cliente {
     }
 
     //Métodos
-    public int getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(int tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

@@ -1,3 +1,6 @@
 Link Aulas interface Java (Base para a lógica da primeira tela):
 https://www.youtube.com/watch?v=WwHX08JISDk&index=2&list=PLEA1EF325BD74F0E7
 [A primeira aula é uma introdução!!]
+
+Link para aulas de comunicação com sqlite
+https://www.youtube.com/watch?v=wqNNZf4wQeQ

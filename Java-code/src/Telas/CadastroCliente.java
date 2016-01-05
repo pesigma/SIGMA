@@ -283,21 +283,12 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Botão Salvar pressionado
         String nome = jTextField1.getText();
-        //String tel = jTextField2.getText();
-        //String cpf = jTextField3.getText();
+        String tel = jFormattedTextField1.getText();
+        String cpf = jFormattedTextField2.getText();
         String obs = jTextPane2.getText();
         String end = jTextField4.getText();
 
-        int TEL = 0;
-        int CPF = 0;
-        try {
-            //TEL = Integer.parseInt(tel);
-            //CPF = Integer.parseInt(cpf);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro");
-            return;
-        }
-        Cliente p = new Cliente(TEL, CPF, nome, obs, end);
+        Cliente p = new Cliente(tel, cpf, nome, obs, end);
         //Chama o controle para cadastrar
         CadastroCControle C = new CadastroCControle();
         if (C.cadastrarcliente(p)) {
@@ -311,7 +302,6 @@ public class CadastroCliente extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         //Janela de cadastro de clientes fechada
-        System.out.println("Fechando");
         telaanterior.setEnabled(true);
 
     }//GEN-LAST:event_formWindowClosed
@@ -333,13 +323,13 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jFormattedTextField2ActionPerformed
 
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
-        String nometemp = jTextField1.getText();;
+        String nometemp = jTextField1.getText();
         String restemp = nometemp.toUpperCase();
         jTextField1.setText (restemp);
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void jTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusLost
-        String endtemp = jTextField4.getText();;
+        String endtemp = jTextField4.getText();
         String strtemp = endtemp.toUpperCase();
         jTextField4.setText (strtemp);
     }//GEN-LAST:event_jTextField4FocusLost
