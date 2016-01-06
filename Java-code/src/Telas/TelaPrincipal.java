@@ -445,6 +445,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
          */
         this.setEnabled(false);
         new About(this).setVisible(true);
+        //FAZER resolver problemas quando a janela é fechada!!
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -454,7 +455,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
          */
         this.setEnabled(false);
         new CadastroFinancas(this).setVisible(true);
-        //Problemas quando a janela é fechada!!
+        //FAZER resolver problemas quando a janela é fechada!!
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

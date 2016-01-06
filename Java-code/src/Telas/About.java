@@ -32,7 +32,6 @@ public class About extends javax.swing.JFrame {
     }
     
     public TelaPrincipal telaanterior;
-
     /**
      * Creates new form About
      */
@@ -42,6 +41,7 @@ public class About extends javax.swing.JFrame {
         this();
         this.telaanterior = telanterior;
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,10 +62,15 @@ public class About extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("About SIGMA");
         setIconImages(null);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Cambria Math", 0, 36)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo 100x100.png"))); // NOI18N
@@ -144,6 +149,14 @@ public class About extends javax.swing.JFrame {
         this.dispose();
         telaanterior.setEnabled(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        /**
+         * 05/01 - Maycon
+         * Tela fechada
+         */
+        telaanterior.setEnabled(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
