@@ -189,6 +189,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButton7.setText("Excluir");
 
         jButton8.setText("Consultar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Quitar");
 
@@ -239,6 +244,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButton12.setText("Excluir");
 
         jButton13.setText("Consultar");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
 
         jButton14.setText("Quitar");
 
@@ -435,7 +445,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
          * Botão Cadastro de Serviços
          */
         this.setEnabled(false);
-        new CadastroServicos(this).setVisible(true);
+        new CadastroServicos(this, 1).setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
@@ -454,15 +464,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
          * Botão Cadastro de Registros Financeiros
          */
         this.setEnabled(false);
-        new CadastroFinancas(this).setVisible(true);
+        new CadastroFinancas(this, 1).setVisible(true);
         //FAZER resolver problemas quando a janela é fechada!!
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Cadastro de Clientes
+         */
         this.setEnabled(false);
         new CadastroCliente(this, 2).setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Cadastro de Servicos
+         */
+        this.setEnabled(false);
+        new CadastroServicos(this, 2).setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Cadastro de Registros Financeiros
+         */
+        this.setEnabled(false);
+        new CadastroFinancas(this, 2).setVisible(true);
+    }//GEN-LAST:event_jButton13ActionPerformed
    
     /**
      * @param args the command line arguments

@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 public class CadastroServicos extends javax.swing.JFrame {
 
     public TelaPrincipal telaanterior;
+    public int metodo;
 
     /**
      * 05/12 - Maycon
@@ -42,10 +43,30 @@ public class CadastroServicos extends javax.swing.JFrame {
         this.setIconImage(No_ico);
     }
 
-    public CadastroServicos(TelaPrincipal telanterior) {
+    public CadastroServicos(TelaPrincipal telanterior, int option) {
         //Chamar construtor
         this();
-        this.telaanterior = telanterior;
+        this.telaanterior = telanterior; if (option > 1){
+        metodo = option;
+        metodosServicos (option);
+        }
+    }
+    
+    /**
+    * 06/01/16 - Juliano Felipe
+    * Define metodos sobre a janela servicos, reutilizando a mesma
+    * Variavel op chama o respectivo metodo
+     * @param op
+    */
+    public void metodosServicos (int op){
+        if (op==2){//Op==2 - Consulta
+           this.setTitle("Consulta Servicos"); 
+           jFormattedTextField2.setEditable(false);
+           jTextField2.setEditable(false);
+           jCheckBox1.setEnabled(false);
+           jTextPane1.setEnabled(false);
+           jButton1.setText("Consultar");
+        }
     }
 
     /**
@@ -291,6 +312,16 @@ public class CadastroServicos extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        /**
+         * 06/01/16 - Juliano
+         * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
+         */
+        if (metodo==2){
+            //Consultar do banco
+            JOptionPane.showMessageDialog(this, "Consulta");
+            return;
+        }
+        
         /**
          * 04/01 - Maycon
          * Botão salvar pressionado

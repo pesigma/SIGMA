@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 public class CadastroCliente extends javax.swing.JFrame {
 
     public TelaPrincipal telaanterior;
+    public int metodo;
 
     /**
      * Creates new form TelaCadastro
@@ -45,21 +46,25 @@ public class CadastroCliente extends javax.swing.JFrame {
         //Chamar construtor
         this();
         this.telaanterior = telanterior;
-        
-        if (option > 1){
-            metodosCliente (option);
-        }
+        metodo = option;
+        metodosCliente (option);
     }
 
+    /**
+    * 06/01/16 - Juliano Felipe
+    * Define metodos sobre a janela clientes, reutilizando a mesma
+    * Variavel op chama o respectivo metodo
+     * @param op
+    */
     public void metodosCliente (int op){
-        if (op==2){
+        if (op==2){//Op==2 - Consulta
            this.setTitle("Consulta Clientes"); 
            jFormattedTextField1.setEditable(false);
            jFormattedTextField2.setEditable(false);
            jComboBox1.setEnabled(false);
            jTextField4.setEditable(false);
            jTextPane2.setEnabled(false);
-           jButton2.setEnabled(false);
+           jButton2.setText("Consultar");        
         }
     }
     
@@ -297,6 +302,16 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        /**
+         * 06/01/16 - Juliano
+         * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
+         */
+        if (metodo==2){
+            //Consultar do banco
+            JOptionPane.showMessageDialog(this, "Consulta");
+            return;
+        }
+    
         //Botão Salvar pressionado
         String nome = jTextField1.getText();
         String tel = jFormattedTextField1.getText();

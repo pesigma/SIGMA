@@ -7,6 +7,7 @@ package Telas;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import javax.swing.JOptionPane;
 /**
  * PROBLEMAS COM O ALINHAMENTO DOS ITENS!!
  * @author Maycon
@@ -14,6 +15,7 @@ import java.awt.image.BufferedImage;
 public class CadastroFinancas extends javax.swing.JFrame {
 
     public TelaPrincipal telaanterior;
+    public int metodo;
 
     /**
      * 19/12 - Maycon
@@ -21,11 +23,43 @@ public class CadastroFinancas extends javax.swing.JFrame {
      */
     private CadastroFinancas() {
         initComponents();
+        initNoicon ();
     }
-    public CadastroFinancas(TelaPrincipal telanterior) {
+     
+    /**
+    * 06/01/16 - Juliano Felipe
+    * Seta icone 1*1px (para "remover" icone default)
+    */
+    private void initNoicon (){
+        Image No_ico = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
+        this.setIconImage(No_ico);
+    }
+    
+    public CadastroFinancas(TelaPrincipal telanterior, int option) {
         //Chamar construtor
         this();
         this.telaanterior = telanterior;
+        metodo = option;
+        metodosFinancas (option);
+    }
+    
+    /**
+    * 06/01/16 - Juliano Felipe
+    * Define metodos sobre a janela financas, reutilizando a mesma
+    * Variavel op chama o respectivo metodo
+     * @param op
+    */
+    public void metodosFinancas (int op){
+        if (op==2){
+           this.setTitle("Consulta Financas"); 
+           jFormattedTextField1.setEditable(false);
+           jRadioButton1.setEnabled(false);
+           jRadioButton2.setEnabled(false);
+           jCheckBox1.setEnabled(false);
+           jDateChooser1.setEnabled(false);
+           jTextPane2.setEnabled(false);
+           jButton2.setText("Consultar");
+        }
     }
 
     /**
@@ -222,7 +256,17 @@ public class CadastroFinancas extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Botão Salvar pressionado
-        //TODO
+        /**
+         * 06/01/16 - Juliano
+         * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
+         */
+        if (metodo==2){
+            //Consultar do banco
+            JOptionPane.showMessageDialog(this, "Consulta");
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Apenas para mostrar algo salvo");  
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
