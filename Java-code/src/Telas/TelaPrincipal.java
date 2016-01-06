@@ -138,6 +138,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         jButton2.setText("Modificar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Excluir");
 
@@ -494,6 +499,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setEnabled(false);
         new CadastroFinancas(this, 2).setVisible(true);
     }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Cadastro de Registros Financeiros
+         */
+        this.setEnabled(false);
+        new CadastroCliente(this, 3).setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
    
     /**
      * @param args the command line arguments

@@ -57,7 +57,9 @@ public class CadastroCliente extends javax.swing.JFrame {
      * @param op
     */
     public void metodosCliente (int op){
-        if (op==2){//Op==2 - Consulta
+        //Colocado como "cascateamento" pois toda vez que tem que modificar
+        //ou excluir, passa por uma consulta
+        if (op>=2){//Op==2 - Consulta
            this.setTitle("Consulta Clientes"); 
            jFormattedTextField1.setEditable(false);
            jFormattedTextField2.setEditable(false);
@@ -65,6 +67,9 @@ public class CadastroCliente extends javax.swing.JFrame {
            jTextField4.setEditable(false);
            jTextPane2.setEnabled(false);
            jButton2.setText("Consultar");        
+        }
+        if (op==3){//Op==3 - Modificar
+           this.setTitle("Modificação de Clientes");       
         }
     }
     
@@ -299,18 +304,44 @@ public class CadastroCliente extends javax.swing.JFrame {
         //Botão Cancelar pressionado
         this.dispose();
         telaanterior.setEnabled(true);
+        //telaanterior.setExtendedState(telaanterior.MAXIMIZED_BOTH); //Maximiza a tela
+        telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /**
          * 06/01/16 - Juliano
          * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
+         * Idem para op. 3 (modificar).
          */
+        boolean success=false;
         if (metodo==2){
-            //Consultar do banco
-            JOptionPane.showMessageDialog(this, "Consulta");
-            return;
+           do{
+               //Consultar do banco
+               success=true; //Consultado com sucesso
+           } while (success!=true);
+           JOptionPane.showMessageDialog(this, "Consulta"); 
+           return; //Somente consulta, nao necessario salvar dados
         }
+        
+        if (metodo==3){
+            //Display de dados
+            String teste = "Avenida";
+            String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
+            jTextField1.setText(nome);
+            jFormattedTextField1.setText("4533333333");
+            jFormattedTextField2.setText("11111111111");
+            jComboBox1.setSelectedItem(teste); //Seleciona avenida
+            jTextField4.setText("Teste");
+            jTextPane2.setText("Teste");
+            jButton2.setText("Modificar"); 
+            jFormattedTextField1.setEditable(true);
+            jFormattedTextField2.setEditable(true);
+            jComboBox1.setEnabled(true);
+            jTextField4.setEditable(true);
+            jTextPane2.setEnabled(true);
+            return;
+        }    
     
         //Botão Salvar pressionado
         String nome = jTextField1.getText();
