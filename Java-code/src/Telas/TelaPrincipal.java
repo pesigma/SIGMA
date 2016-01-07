@@ -61,26 +61,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        CadastroCliente = new javax.swing.JButton();
+        ModificaCliente = new javax.swing.JButton();
+        ExcluiCliente = new javax.swing.JButton();
+        ConsultaCliente = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        CadastroServico = new javax.swing.JButton();
+        ModificaServico = new javax.swing.JButton();
+        ExcluiServico = new javax.swing.JButton();
+        ConsultaServico = new javax.swing.JButton();
+        QuitaServico = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
+        CadastroFinanca = new javax.swing.JButton();
+        ModificaFinanca = new javax.swing.JButton();
+        ExcluiFinanca = new javax.swing.JButton();
+        ConsultaFinanca = new javax.swing.JButton();
+        QuitaFinanca = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        jButton15 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
+        NovoRelatorio = new javax.swing.JButton();
+        ExcluiRelatorio = new javax.swing.JButton();
+        ConsultaRelatorio = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -130,26 +130,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Clientes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jButton1.setText("Cadastrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        CadastroCliente.setText("Cadastrar");
+        CadastroCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                CadastroClienteActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Modificar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        ModificaCliente.setText("Modificar");
+        ModificaCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                ModificaClienteActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Excluir");
-
-        jButton4.setText("Consultar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        ExcluiCliente.setText("Excluir");
+        ExcluiCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                ExcluiClienteActionPerformed(evt);
+            }
+        });
+
+        ConsultaCliente.setText("Consultar");
+        ConsultaCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultaClienteActionPerformed(evt);
             }
         });
 
@@ -160,47 +165,62 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(CadastroCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ConsultaCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ModificaCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ExcluiCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(CadastroCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addComponent(ConsultaCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(ModificaCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(ExcluiCliente)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Serviços", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jButton5.setText("Cadastrar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        CadastroServico.setText("Cadastrar");
+        CadastroServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                CadastroServicoActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Modificar");
-
-        jButton7.setText("Excluir");
-
-        jButton8.setText("Consultar");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        ModificaServico.setText("Modificar");
+        ModificaServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                ModificaServicoActionPerformed(evt);
             }
         });
 
-        jButton9.setText("Quitar");
+        ExcluiServico.setText("Excluir");
+        ExcluiServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExcluiServicoActionPerformed(evt);
+            }
+        });
+
+        ConsultaServico.setText("Consultar");
+        ConsultaServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultaServicoActionPerformed(evt);
+            }
+        });
+
+        QuitaServico.setText("Quitar");
+        QuitaServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                QuitaServicoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -211,51 +231,66 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(CadastroServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ConsultaServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ModificaServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ExcluiServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(QuitaServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton5)
+                .addComponent(CadastroServico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8)
+                .addComponent(ConsultaServico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
+                .addComponent(ModificaServico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9)
+                .addComponent(QuitaServico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
+                .addComponent(ExcluiServico)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Finanças", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jButton10.setText("Cadastrar");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        CadastroFinanca.setText("Cadastrar");
+        CadastroFinanca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                CadastroFinancaActionPerformed(evt);
             }
         });
 
-        jButton11.setText("Modificar");
-
-        jButton12.setText("Excluir");
-
-        jButton13.setText("Consultar");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        ModificaFinanca.setText("Modificar");
+        ModificaFinanca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                ModificaFinancaActionPerformed(evt);
             }
         });
 
-        jButton14.setText("Quitar");
+        ExcluiFinanca.setText("Excluir");
+        ExcluiFinanca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExcluiFinancaActionPerformed(evt);
+            }
+        });
+
+        ConsultaFinanca.setText("Consultar");
+        ConsultaFinanca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultaFinancaActionPerformed(evt);
+            }
+        });
+
+        QuitaFinanca.setText("Quitar");
+        QuitaFinanca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                QuitaFinancaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -266,37 +301,37 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(ConsultaFinanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ModificaFinanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ExcluiFinanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CadastroFinanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(QuitaFinanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton10)
+                .addComponent(CadastroFinanca)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton13)
+                .addComponent(ConsultaFinanca)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton11)
+                .addComponent(ModificaFinanca)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton14)
+                .addComponent(QuitaFinanca)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12)
+                .addComponent(ExcluiFinanca)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Relatórios", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jButton15.setText("Novo");
+        NovoRelatorio.setText("Novo");
 
-        jButton17.setText("Excluir");
+        ExcluiRelatorio.setText("Excluir");
 
-        jButton18.setText("Consultar");
+        ConsultaRelatorio.setText("Consultar");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -305,20 +340,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(NovoRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ConsultaRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ExcluiRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton15)
+                .addComponent(NovoRelatorio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton18)
+                .addComponent(ConsultaRelatorio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton17)
+                .addComponent(ExcluiRelatorio)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -435,23 +470,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void CadastroClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroClienteActionPerformed
         /**
          * 05/12 - Maycon
          * Botão Cadastrar Clientes
          */
         this.setEnabled(false);
         new CadastroCliente(this, 1).setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_CadastroClienteActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void CadastroServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroServicoActionPerformed
         /**
          * 05/12 - Maycon
          * Botão Cadastro de Serviços
          */
         this.setEnabled(false);
         new CadastroServicos(this, 1).setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_CadastroServicoActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         /**
@@ -463,7 +498,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //FAZER resolver problemas quando a janela é fechada!!
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void CadastroFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroFinancaActionPerformed
         /**
          * 19/12 - Maycon
          * Botão Cadastro de Registros Financeiros
@@ -471,43 +506,104 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setEnabled(false);
         new CadastroFinancas(this, 1).setVisible(true);
         //FAZER resolver problemas quando a janela é fechada!!
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_CadastroFinancaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void ConsultaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaClienteActionPerformed
         /**
          * 06/01/2016 - Juliano Felipe
-         * Botão Cadastro de Clientes
+         * Botão Consulta de Clientes
          */
         this.setEnabled(false);
         new CadastroCliente(this, 2).setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_ConsultaClienteActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void ConsultaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaServicoActionPerformed
         /**
          * 06/01/2016 - Juliano Felipe
-         * Botão Cadastro de Servicos
+         * Botão Consulta de Servicos
          */
         this.setEnabled(false);
         new CadastroServicos(this, 2).setVisible(true);
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_ConsultaServicoActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+    private void ConsultaFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaFinancaActionPerformed
         /**
          * 06/01/2016 - Juliano Felipe
-         * Botão Cadastro de Registros Financeiros
+         * Botão Consulta de Registros Financeiros
          */
         this.setEnabled(false);
         new CadastroFinancas(this, 2).setVisible(true);
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_ConsultaFinancaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void ModificaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificaClienteActionPerformed
         /**
          * 06/01/2016 - Juliano Felipe
-         * Botão Cadastro de Registros Financeiros
+         * Botão Modificar clientes
          */
         this.setEnabled(false);
         new CadastroCliente(this, 3).setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_ModificaClienteActionPerformed
+
+    private void ExcluiClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluiClienteActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Exclusão de clientes
+         */
+        this.setEnabled(false);
+        new CadastroCliente(this, 4).setVisible(true);    }//GEN-LAST:event_ExcluiClienteActionPerformed
+
+    private void ModificaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificaServicoActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Modificar Servicos
+         */
+        this.setEnabled(false);
+        new CadastroServicos(this, 3).setVisible(true);
+    }//GEN-LAST:event_ModificaServicoActionPerformed
+
+    private void ExcluiServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluiServicoActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Exlusão Servicos
+         */
+        this.setEnabled(false);
+        new CadastroServicos(this, 4).setVisible(true);
+    }//GEN-LAST:event_ExcluiServicoActionPerformed
+
+    private void ModificaFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificaFinancaActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Modifica Registro Financeiro
+         */
+        this.setEnabled(false);
+        new CadastroFinancas(this, 3).setVisible(true);
+    }//GEN-LAST:event_ModificaFinancaActionPerformed
+
+    private void ExcluiFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluiFinancaActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Exclui Registro Financeiro
+         */
+        this.setEnabled(false);
+        new CadastroFinancas(this, 4).setVisible(true);
+    }//GEN-LAST:event_ExcluiFinancaActionPerformed
+
+    private void QuitaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitaServicoActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Quitar Servicos
+         */
+        this.setEnabled(false);
+        new CadastroServicos(this, 5).setVisible(true);
+    }//GEN-LAST:event_QuitaServicoActionPerformed
+
+    private void QuitaFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitaFinancaActionPerformed
+        /**
+         * 06/01/2016 - Juliano Felipe
+         * Botão Quita Registro Financeiro
+         */
+        this.setEnabled(false);
+        new CadastroFinancas(this, 5).setVisible(true);    }//GEN-LAST:event_QuitaFinancaActionPerformed
    
     /**
      * @param args the command line arguments
@@ -545,23 +641,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton CadastroCliente;
+    private javax.swing.JButton CadastroFinanca;
+    private javax.swing.JButton CadastroServico;
+    private javax.swing.JButton ConsultaCliente;
+    private javax.swing.JButton ConsultaFinanca;
+    private javax.swing.JButton ConsultaRelatorio;
+    private javax.swing.JButton ConsultaServico;
+    private javax.swing.JButton ExcluiCliente;
+    private javax.swing.JButton ExcluiFinanca;
+    private javax.swing.JButton ExcluiRelatorio;
+    private javax.swing.JButton ExcluiServico;
+    private javax.swing.JButton ModificaCliente;
+    private javax.swing.JButton ModificaFinanca;
+    private javax.swing.JButton ModificaServico;
+    private javax.swing.JButton NovoRelatorio;
+    private javax.swing.JButton QuitaFinanca;
+    private javax.swing.JButton QuitaServico;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu5;

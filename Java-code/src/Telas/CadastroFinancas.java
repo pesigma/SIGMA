@@ -51,7 +51,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
     */
     public void metodosFinancas (int op){
         if (op==2){
-           this.setTitle("Consulta Financas"); 
+           this.setTitle("Consulta de registros financeiros"); 
            jFormattedTextField1.setEditable(false);
            jRadioButton1.setEnabled(false);
            jRadioButton2.setEnabled(false);
@@ -59,6 +59,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
            jDateChooser1.setEnabled(false);
            jTextPane2.setEnabled(false);
            jButton2.setText("Consultar");
+        }
+        if (op==3){//Op==3 - Modificar
+           this.setTitle("Modificação de registros financeiros");       
+        }
+        if (op==4){//Op==4 - Excluir
+           this.setTitle("Exclusão de registros financeiros");       
         }
     }
 
@@ -92,7 +98,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Registros Financeiros");
+        setTitle("Cadastro de registros financeiros");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -260,12 +266,50 @@ public class CadastroFinancas extends javax.swing.JFrame {
          * 06/01/16 - Juliano
          * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
          */
-        if (metodo==2){
-            //Consultar do banco
-            JOptionPane.showMessageDialog(this, "Consulta");
-            return;
+        /*if (metodo==2){
+           boolean success=false;
+           do{
+               //Consultar do banco
+               success=true; //Consultado com sucesso
+           } while (success!=true);
+           JOptionPane.showMessageDialog(this, "Consulta"); 
+           return; //Somente consulta, nao necessario salvar dados
         }
         
+        if (metodo==3){
+            //Display de dados
+            String teste = "Avenida";
+            String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
+            jTextField1.setText(nome);
+            jFormattedTextField1.setText("4533333333");
+            jFormattedTextField2.setText("11111111111");
+            jComboBox1.setSelectedItem(teste); //Seleciona avenida
+            jTextField4.setText("Teste");
+            jTextPane2.setText("Teste");
+            jButton2.setText("Modificar"); 
+            jFormattedTextField1.setEditable(true);
+            jFormattedTextField2.setEditable(true);
+            jComboBox1.setEnabled(true);
+            jTextField4.setEditable(true);
+            jTextPane2.setEnabled(true);
+            return;
+        } 
+        
+        if (metodo==4){
+            //Display de dados
+            String teste = "Avenida";
+            String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
+            jTextField1.setText(nome);
+            jFormattedTextField1.setText("4533333333");
+            jFormattedTextField2.setText("11111111111");
+            jComboBox1.setSelectedItem(teste); //Seleciona avenida
+            jTextField4.setText("Teste");
+            jTextPane2.setText("Teste");
+            jButton2.setText("Excluir"); 
+            jTextField1.setEditable(false);
+            return;
+        }
+        */
         JOptionPane.showMessageDialog(this, "Apenas para mostrar algo salvo");  
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -273,6 +317,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         //Botão Cancelar pressionado
         this.dispose();
         telaanterior.setEnabled(true);
+        telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -285,6 +330,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
          * Tela fechada
          */
         telaanterior.setEnabled(true);
+        telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed
 
     /**

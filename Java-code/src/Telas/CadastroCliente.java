@@ -60,7 +60,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         //Colocado como "cascateamento" pois toda vez que tem que modificar
         //ou excluir, passa por uma consulta
         if (op>=2){//Op==2 - Consulta
-           this.setTitle("Consulta Clientes"); 
+           this.setTitle("Consulta de clientes"); 
            jFormattedTextField1.setEditable(false);
            jFormattedTextField2.setEditable(false);
            jComboBox1.setEnabled(false);
@@ -69,7 +69,10 @@ public class CadastroCliente extends javax.swing.JFrame {
            jButton2.setText("Consultar");        
         }
         if (op==3){//Op==3 - Modificar
-           this.setTitle("Modificação de Clientes");       
+           this.setTitle("Modificação de clientes");       
+        }
+        if (op==4){//Op==4 - Excluir
+           this.setTitle("Exclusão de clientes");       
         }
     }
     
@@ -102,7 +105,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro Clientes");
+        setTitle("Cadastro de clientes");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -313,9 +316,10 @@ public class CadastroCliente extends javax.swing.JFrame {
          * 06/01/16 - Juliano
          * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
          * Idem para op. 3 (modificar).
+         * Idem para op. 4 (excluir).
          */
-        boolean success=false;
         if (metodo==2){
+           boolean success=false;
            do{
                //Consultar do banco
                success=true; //Consultado com sucesso
@@ -341,7 +345,22 @@ public class CadastroCliente extends javax.swing.JFrame {
             jTextField4.setEditable(true);
             jTextPane2.setEnabled(true);
             return;
-        }    
+        } 
+        
+        if (metodo==4){
+            //Display de dados
+            String teste = "Avenida";
+            String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
+            jTextField1.setText(nome);
+            jFormattedTextField1.setText("4533333333");
+            jFormattedTextField2.setText("11111111111");
+            jComboBox1.setSelectedItem(teste); //Seleciona avenida
+            jTextField4.setText("Teste");
+            jTextPane2.setText("Teste");
+            jButton2.setText("Excluir"); 
+            jTextField1.setEditable(false);
+            return;
+        }
     
         //Botão Salvar pressionado
         String nome = jTextField1.getText();
@@ -357,6 +376,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Cadastrado com sucesso");
             this.dispose();
             telaanterior.setEnabled(true);
+            telaanterior.requestFocus(); //Traz o foco para tela anterior
         } else {
             JOptionPane.showMessageDialog(this, "Erro");
         }
@@ -365,7 +385,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         //Janela de cadastro de clientes fechada
         telaanterior.setEnabled(true);
-
+        telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed

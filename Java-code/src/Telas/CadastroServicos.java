@@ -59,13 +59,19 @@ public class CadastroServicos extends javax.swing.JFrame {
      * @param op
     */
     public void metodosServicos (int op){
-        if (op==2){//Op==2 - Consulta
-           this.setTitle("Consulta Servicos"); 
+        if (op>=2){//Op==2 - Consulta
+           this.setTitle("Consulta de serviços"); 
            jFormattedTextField2.setEditable(false);
            jTextField2.setEditable(false);
            jCheckBox1.setEnabled(false);
            jTextPane1.setEnabled(false);
            jButton1.setText("Consultar");
+        }
+        if (op==3){//Op==3 - Modificar
+           this.setTitle("Modificação de serviços");       
+        }
+        if (op==4){//Op==4 - Excluir
+           this.setTitle("Exclusão de serviços");       
         }
     }
 
@@ -95,7 +101,7 @@ public class CadastroServicos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro Serviços");
+        setTitle("Cadastro de serviços");
         setPreferredSize(new java.awt.Dimension(376, 346));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -301,6 +307,7 @@ public class CadastroServicos extends javax.swing.JFrame {
         //Botão Cancelar pressionado
         this.dispose();
         telaanterior.setEnabled(true);
+        telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -309,6 +316,7 @@ public class CadastroServicos extends javax.swing.JFrame {
          * Tela fechada
          */
         telaanterior.setEnabled(true);
+        telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -317,8 +325,39 @@ public class CadastroServicos extends javax.swing.JFrame {
          * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
          */
         if (metodo==2){
-            //Consultar do banco
-            JOptionPane.showMessageDialog(this, "Consulta");
+           boolean success=false;
+           do{
+               //Consultar do banco
+               success=true; //Consultado com sucesso
+           } while (success!=true);
+           JOptionPane.showMessageDialog(this, "Consulta"); 
+           return; //Somente consulta, nao necessario salvar dados
+        }
+        
+        if (metodo==3){
+            //Display de dados
+            jFormattedTextField1.setText("ABCDEFG");
+            jTextField2.setText("150000");
+            jFormattedTextField2.setText("WOLKSVAGEN GOL");
+            jCheckBox1.setSelected(true);
+            jTextPane1.setText("Teste");
+            jButton1.setText("Modificar"); 
+            jFormattedTextField2.setEditable(true);
+            jTextField2.setEditable(true);
+            jCheckBox1.setEnabled(true);
+            jTextPane1.setEnabled(true);
+            return;
+        } 
+        
+        if (metodo==4){
+            //Display de dados
+            jFormattedTextField1.setText("ABCDEFG");
+            jTextField2.setText("150000");
+            jFormattedTextField2.setText("WOLKSVAGEN GOL");
+            jCheckBox1.setSelected(true);
+            jTextPane1.setText("Teste");
+            jButton1.setText("Excluir"); 
+            jFormattedTextField1.setEditable(false);
             return;
         }
         
