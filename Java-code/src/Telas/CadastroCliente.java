@@ -4,18 +4,17 @@
  * and open the template in the editor.
  */
 package Telas;
-
+import ConecBD.ConexaoBanco;
 import Controles.CadastroCControle;
 import Entidades.Cliente;
 import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.sql.Connection;
 
 /**
- * 29/11/15 - Juliano Felipe
- * Alteração para campos formatados.
+ * 29/11/15 - Juliano Felipe Alteração para campos formatados.
  */
-
 /**
  *
  * @author Maycon
@@ -30,14 +29,13 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     private CadastroCliente() {
         initComponents();
-        initNoicon ();
+        initNoicon();
     }
-    
+
     /**
-    * 12/12/15 - Juliano Felipe
-    * Seta icone 1*1px (para "remover" icone default)
-    */
-    private void initNoicon (){
+     * 12/12/15 - Juliano Felipe Seta icone 1*1px (para "remover" icone default)
+     */
+    private void initNoicon() {
         Image No_ico = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
         this.setIconImage(No_ico);
     }
@@ -47,35 +45,35 @@ public class CadastroCliente extends javax.swing.JFrame {
         this();
         this.telaanterior = telanterior;
         metodo = option;
-        metodosCliente (option);
+        metodosCliente(option);
     }
 
     /**
-    * 06/01/16 - Juliano Felipe
-    * Define metodos sobre a janela clientes, reutilizando a mesma
-    * Variavel op chama o respectivo metodo
+     * 06/01/16 - Juliano Felipe Define metodos sobre a janela clientes,
+     * reutilizando a mesma Variavel op chama o respectivo metodo
+     *
      * @param op
-    */
-    public void metodosCliente (int op){
+     */
+    public void metodosCliente(int op) {
         //Colocado como "cascateamento" pois toda vez que tem que modificar
         //ou excluir, passa por uma consulta
-        if (op>=2){//Op==2 - Consulta
-           this.setTitle("Consulta de clientes"); 
-           jFormattedTextField1.setEditable(false);
-           jFormattedTextField2.setEditable(false);
-           jComboBox1.setEnabled(false);
-           jTextField4.setEditable(false);
-           jTextPane2.setEnabled(false);
-           jButton2.setText("Consultar");        
+        if (op >= 2) {//Op==2 - Consulta
+            this.setTitle("Consulta de clientes");
+            jFormattedTextField1.setEditable(false);
+            jFormattedTextField2.setEditable(false);
+            jComboBox1.setEnabled(false);
+            jTextField4.setEditable(false);
+            jTextPane2.setEnabled(false);
+            jButton2.setText("Consultar");
         }
-        if (op==3){//Op==3 - Modificar
-           this.setTitle("Modificação de clientes");       
+        if (op == 3) {//Op==3 - Modificar
+            this.setTitle("Modificação de clientes");
         }
-        if (op==4){//Op==4 - Excluir
-           this.setTitle("Exclusão de clientes");       
+        if (op == 4) {//Op==4 - Excluir
+            this.setTitle("Exclusão de clientes");
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -109,6 +107,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -313,22 +314,21 @@ public class CadastroCliente extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /**
-         * 06/01/16 - Juliano
-         * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
-         * Idem para op. 3 (modificar).
-         * Idem para op. 4 (excluir).
+         * 06/01/16 - Juliano Definido a opcao 2 (consultar), altera-se a funcao
+         * do botao salvar Idem para op. 3 (modificar). Idem para op. 4
+         * (excluir).
          */
-        if (metodo==2){
-           boolean success=false;
-           do{
-               //Consultar do banco
-               success=true; //Consultado com sucesso
-           } while (success!=true);
-           JOptionPane.showMessageDialog(this, "Consulta"); 
-           return; //Somente consulta, nao necessario salvar dados
+        if (metodo == 2) {
+            boolean success = false;
+            do {
+                //Consultar do banco
+                success = true; //Consultado com sucesso
+            } while (success != true);
+            JOptionPane.showMessageDialog(this, "Consulta");
+            return; //Somente consulta, nao necessario salvar dados
         }
-        
-        if (metodo==3){
+
+        if (metodo == 3) {
             //Display de dados
             String teste = "Avenida";
             String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
@@ -338,16 +338,16 @@ public class CadastroCliente extends javax.swing.JFrame {
             jComboBox1.setSelectedItem(teste); //Seleciona avenida
             jTextField4.setText("Teste");
             jTextPane2.setText("Teste");
-            jButton2.setText("Modificar"); 
+            jButton2.setText("Modificar");
             jFormattedTextField1.setEditable(true);
             jFormattedTextField2.setEditable(true);
             jComboBox1.setEnabled(true);
             jTextField4.setEditable(true);
             jTextPane2.setEnabled(true);
             return;
-        } 
-        
-        if (metodo==4){
+        }
+
+        if (metodo == 4) {
             //Display de dados
             String teste = "Avenida";
             String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
@@ -357,11 +357,11 @@ public class CadastroCliente extends javax.swing.JFrame {
             jComboBox1.setSelectedItem(teste); //Seleciona avenida
             jTextField4.setText("Teste");
             jTextPane2.setText("Teste");
-            jButton2.setText("Excluir"); 
+            jButton2.setText("Excluir");
             jTextField1.setEditable(false);
             return;
         }
-    
+
         //Botão Salvar pressionado
         String nome = jTextField1.getText();
         String tel = jFormattedTextField1.getText();
@@ -407,14 +407,18 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
         String nometemp = jTextField1.getText();
         String restemp = nometemp.toUpperCase();
-        jTextField1.setText (restemp);
+        jTextField1.setText(restemp);
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void jTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusLost
         String endtemp = jTextField4.getText();
         String strtemp = endtemp.toUpperCase();
-        jTextField4.setText (strtemp);
+        jTextField4.setText(strtemp);
     }//GEN-LAST:event_jTextField4FocusLost
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

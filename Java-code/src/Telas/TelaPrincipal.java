@@ -5,9 +5,11 @@
  */
 package Telas;
 
+import ConecBD.ConexaoBanco;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.sql.Connection;
 //Para setar o logo.
 
 /**
@@ -16,6 +18,10 @@ import java.awt.image.BufferedImage;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
+    /**
+     * 08/01 - Maycon Conexão com o banco de dados
+     */
+    Connection conn = null;
     /**
      * Creates new form TelaPrincipal
      */
@@ -127,6 +133,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SIGMA");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Clientes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
@@ -604,6 +615,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
          */
         this.setEnabled(false);
         new CadastroFinancas(this, 5).setVisible(true);    }//GEN-LAST:event_QuitaFinancaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        /**
+         * 08/01 - Maycon Conexão com o banco de dados
+         */
+        conn = ConexaoBanco.concliente();
+    }//GEN-LAST:event_formWindowOpened
    
     /**
      * @param args the command line arguments

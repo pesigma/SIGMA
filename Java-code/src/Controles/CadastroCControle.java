@@ -6,13 +6,13 @@
 package Controles;
 
 import Entidades.Cliente;
+import java.sql.Connection;
 
 /**
  *
  * @author Maycon
  */
 public class CadastroCControle {
-    
     public boolean cadastrarcliente(Cliente p) {
         boolean result = false;
         if (p != null && p.getNome().length() > 0) {
