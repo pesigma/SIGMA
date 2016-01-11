@@ -36,4 +36,25 @@ public class ConexaoBanco {
         return null;
 
     }
+
+    public static Connection login() {
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:BDSigma.sqlite");
+            st = conn.createStatement();
+            rs = st.executeQuery("SELECT * FROM Login");
+            //Banco de senhas
+            //JOptionPane.showMessageDialog(null, "Conectado"); Se tudo estiver bem, nem mostra essa janela
+            return conn;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro 0 - Login"); //Colocar no manual
+        }
+        return null;
+
+    }    
+    
 }

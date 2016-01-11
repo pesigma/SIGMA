@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 public class SIGMA {
     public static void main(String[] args) {
-        new TelaPrincipal().setVisible(true);
-        //new Login().setVisible(true);
+        //new TelaPrincipal().setVisible(true);
+        new Login().setVisible(true);
     }
 }
