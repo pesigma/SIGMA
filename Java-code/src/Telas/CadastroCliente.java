@@ -10,7 +10,7 @@ import Entidades.Cliente;
 import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.sql.Connection;
+import java.sql.*;
 
 /**
  * 29/11/15 - Juliano Felipe Alteração para campos formatados.
@@ -23,6 +23,8 @@ public class CadastroCliente extends javax.swing.JFrame {
 
     public TelaPrincipal telaanterior;
     public int metodo;
+    Connection conn = null;
+    String title = null; //Título do frame (Para ser usado nas janelas de aviso, erro, etc
 
     /**
      * Creates new form TelaCadastro
@@ -38,6 +40,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void initNoicon() {
         Image No_ico = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
         this.setIconImage(No_ico);
+        title = this.getTitle(); //Pega título do frame
     }
 
     public CadastroCliente(TelaPrincipal telanterior, int option) {
@@ -312,6 +315,42 @@ public class CadastroCliente extends javax.swing.JFrame {
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private int getid (Statement statement){
+        int id=-1;
+        int numero=0;
+        try {
+            numero = statement.executeUpdate("BDSigma.sqlite", Statement.RETURN_GENERATED_KEYS);
+
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()){
+                id = rs.getInt(1);
+            }
+            rs.close();
+
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            String errore = e.getMessage(); //Salvar, por enquanto
+            id=-1;
+        }
+        return id;
+    }
+    
+    private void insertClient (String tel, String cpf, String nome, String obs, String end){
+        try {
+                                System.out.println("EI");
+            Statement statement = conn.createStatement();
+            int cid=getid(statement);
+            //int cid = 0;
+            statement.executeUpdate("INSERT INTO cliente (cid,nome,cpf,tel,end,obs) "
+            + "VALUES (cid, nome,cpf, tel, end, obs);");
+            statement.close();
+        } catch ( Exception e ) {
+          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+          System.exit(0);
+        }
+    }
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /**
          * 06/01/16 - Juliano Definido a opcao 2 (consultar), altera-se a funcao
@@ -367,18 +406,24 @@ public class CadastroCliente extends javax.swing.JFrame {
         String tel = jFormattedTextField1.getText();
         String cpf = jFormattedTextField2.getText();
         String obs = jTextPane2.getText();
-        String end = jTextField4.getText();
+        
+        Object ruaobj = jComboBox1.getSelectedItem();
+        String ruatemp = ruaobj.toString();
+        String end = ruatemp + "." + jTextField4.getText();
 
         Cliente p = new Cliente(tel, cpf, nome, obs, end);
         //Chama o controle para cadastrar
         CadastroCControle C = new CadastroCControle();
         if (C.cadastrarcliente(p)) {
-            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso");
+            //Insere no banco de dados
+            insertClient (tel, cpf, nome, obs, end);
+            
+            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             telaanterior.setEnabled(true);
             telaanterior.requestFocus(); //Traz o foco para tela anterior
         } else {
-            JOptionPane.showMessageDialog(this, "Erro");
+            JOptionPane.showMessageDialog(this, "Erro", title, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
