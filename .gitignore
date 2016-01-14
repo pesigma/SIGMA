@@ -15,3 +15,4 @@ hs_err_pid*
 /Java-code/SIGMA/nbproject/private/
 /Java-code/build/
 /Java-code/dist/
+*.properties
