@@ -19,10 +19,6 @@ import java.sql.Connection;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     /**
-     * 08/01 - Maycon Conexão com o banco de dados
-     */
-    Connection conn = null;
-    /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
@@ -617,10 +613,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         new CadastroFinancas(this, 5).setVisible(true);    }//GEN-LAST:event_QuitaFinancaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        /**
-         * 08/01 - Maycon Conexão com o banco de dados
-         */
-        conn = ConexaoBanco.concliente();
+
     }//GEN-LAST:event_formWindowOpened
    
     /**

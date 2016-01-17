@@ -5,3 +5,6 @@ https://www.youtube.com/watch?v=WwHX08JISDk&index=2&list=PLEA1EF325BD74F0E7
 Link para aulas de comunicação com sqlite
 https://www.youtube.com/watch?v=wqNNZf4wQeQ
 https://www.youtube.com/watch?v=BUE05Q3cORw
+Add data - https://www.youtube.com/watch?v=U3zO4znmYB0
+Search data - https://www.youtube.com/watch?v=ShLFRsK9-eQ
+Delete data - https://www.youtube.com/watch?v=ccQDinbe9uk

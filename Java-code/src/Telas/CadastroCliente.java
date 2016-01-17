@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Telas;
+
 import ConecBD.ConexaoBanco;
 import Controles.CadastroCControle;
 import Entidades.Cliente;
@@ -21,9 +22,13 @@ import java.sql.*;
  */
 public class CadastroCliente extends javax.swing.JFrame {
 
+    /**
+     * 15/01 - Maycon Conexão com o banco de dados
+     */
+    Connection concliente = null;
+
     public TelaPrincipal telaanterior;
     public int metodo;
-    Connection conn = null;
     String title = null; //Título do frame (Para ser usado nas janelas de aviso, erro, etc
 
     /**
@@ -138,6 +143,11 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField1FocusLost(evt);
+            }
+        });
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
             }
         });
 
@@ -260,7 +270,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -315,14 +325,16 @@ public class CadastroCliente extends javax.swing.JFrame {
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private int getid (Statement statement){
-        int id=-1;
-        int numero=0;
+    /**
+     * Não requerida, pode-se usar o rowid
+    private int getid(Statement statement) {
+        int id = -1;
+        int numero = 0;
         try {
             numero = statement.executeUpdate("BDSigma.sqlite", Statement.RETURN_GENERATED_KEYS);
 
             ResultSet rs = statement.getGeneratedKeys();
-            if (rs.next()){
+            if (rs.next()) {
                 id = rs.getInt(1);
             }
             rs.close();
@@ -331,26 +343,49 @@ public class CadastroCliente extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
             String errore = e.getMessage(); //Salvar, por enquanto
-            id=-1;
+            id = -1;
         }
         return id;
     }
-    
-    private void insertClient (String tel, String cpf, String nome, String obs, String end){
+    */
+
+    private void insertClient(String tel, String cpf, String nome, String obs, String end) {
         try {
-                                System.out.println("EI");
-            Statement statement = conn.createStatement();
-            int cid=getid(statement);
-            //int cid = 0;
-            statement.executeUpdate("INSERT INTO cliente (cid,nome,cpf,tel,end,obs) "
-            + "VALUES (cid, nome,cpf, tel, end, obs);");
-            statement.close();
-        } catch ( Exception e ) {
-          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-          System.exit(0);
+            String sql1 = "Insert into cliente (nome,cpf,tel,end,obs) values (?,?,?,?,?)";
+            PreparedStatement pst = concliente.prepareStatement(sql1);
+            pst.setString(1, nome);
+            pst.setString(2, cpf);
+            pst.setString(3, tel);
+            pst.setString(4, end);
+            pst.setString(5, obs);
+            pst.execute();
+
+            System.out.println("Eh pra ter conseguido!!");
+        } catch (Exception e) {
+            System.out.println("Erro fatal, hora de catar piolho");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
         }
     }
-    
+
+    /* Isolada função feita pelo Juliano, Essa outra acima cria o cliente
+     private void insertClient(String tel, String cpf, String nome, String obs, String end) {
+     try {
+     System.out.println("Tentando inserir cliente");
+     Statement statement = concliente.createStatement();
+     int cid = getid(statement);
+     //int cid = 0;
+     statement.executeUpdate("INSERT INTO cliente (cid,nome,cpf,tel,end,obs) "
+     + "VALUES (cid, nome,cpf, tel, end, obs);");
+     statement.close();
+     System.out.println("Eh pra ter conseguido!!");
+     } catch (Exception e) {
+     System.err.println(e.getClass().getName() + ": " + e.getMessage());
+     System.exit(0);
+     }
+     }
+     */
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /**
          * 06/01/16 - Juliano Definido a opcao 2 (consultar), altera-se a funcao
@@ -363,7 +398,35 @@ public class CadastroCliente extends javax.swing.JFrame {
                 //Consultar do banco
                 success = true; //Consultado com sucesso
             } while (success != true);
-            JOptionPane.showMessageDialog(this, "Consulta");
+
+            /**
+             * 17/01 - Maycon Tentativa de função de consulta
+             */
+            try {
+                String sql2 = "select * from cliente where nome=?";
+                PreparedStatement pst = concliente.prepareStatement(sql2);
+                pst.setString(1, jTextField1.getText());
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    String no = rs.getString("nome");
+                    jTextField1.setText(no);
+                    String te = rs.getString("tel");
+                    jFormattedTextField1.setText(te);
+                    String ce = rs.getString("cpf");
+                    jFormattedTextField2.setText(ce);
+                    String en = rs.getString("end");
+                    jTextField4.setText(en);
+                    String ob = rs.getString("obs");
+                    jTextPane2.setText(ob);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Cliente nao existe ou deu erro nessa budega");
+            }
+            /**
+             * FIM DA TENTATIVA
+             */
+
+            //JOptionPane.showMessageDialog(this, "Consulta");
             return; //Somente consulta, nao necessario salvar dados
         }
 
@@ -406,7 +469,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         String tel = jFormattedTextField1.getText();
         String cpf = jFormattedTextField2.getText();
         String obs = jTextPane2.getText();
-        
+
         Object ruaobj = jComboBox1.getSelectedItem();
         String ruatemp = ruaobj.toString();
         String end = ruatemp + "." + jTextField4.getText();
@@ -414,10 +477,29 @@ public class CadastroCliente extends javax.swing.JFrame {
         Cliente p = new Cliente(tel, cpf, nome, obs, end);
         //Chama o controle para cadastrar
         CadastroCControle C = new CadastroCControle();
+
+        /**
+         * 15/01 - Maycon TESTE PARA VERIFICAÇÃO SE OS DADOS DO CLIENTE FORAM
+         * RECEBIDOS
+         */
+        System.out.println("Nome: ");
+        System.out.println(nome);
+        System.out.println("Telefone: ");
+        System.out.println(tel);
+        System.out.println("CPF: ");
+        System.out.println(cpf);
+        System.out.println("Endereco: ");
+        System.out.println(end);
+        System.out.println("Obs: ");
+        System.out.println(obs);
+        /**
+         * FIM DO TESTE!!!!
+         */
+
         if (C.cadastrarcliente(p)) {
             //Insere no banco de dados
-            insertClient (tel, cpf, nome, obs, end);
-            
+            insertClient(tel, cpf, nome, obs, end);
+
             JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             telaanterior.setEnabled(true);
@@ -462,8 +544,15 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4FocusLost
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
+        /**
+         * 15/01 - Maycon Conexão com o banco de dados
+         */
+        concliente = ConexaoBanco.concliente();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

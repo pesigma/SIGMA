@@ -28,7 +28,8 @@ public class ConexaoBanco {
             st = conn.createStatement();
             rs = st.executeQuery("SELECT * FROM cliente");
             //cliente e o nome da tabela
-            JOptionPane.showMessageDialog(null, "Conectado"); //Comentar no futuro
+            //JOptionPane.showMessageDialog(null, "Conectado"); //Comentar no futuro
+            
             return conn;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro 0"); //Colocar no manual
@@ -37,6 +38,10 @@ public class ConexaoBanco {
 
     }
 
+    /**
+     * Juliano
+     * Conecta ao banco na abertura da tela de login
+    */
     public static Connection login() {
         Connection conn = null;
         Statement st = null;

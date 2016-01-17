@@ -93,7 +93,7 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Usuário"));
 
-        Usuarios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Funcionario1" }));
+        Usuarios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Funcionario" }));
         Usuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsuariosActionPerformed(evt);
@@ -145,8 +145,8 @@ public class Login extends javax.swing.JFrame {
         jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jSeparator1.setMinimumSize(new java.awt.Dimension(50, 3));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Sistema SIGMA");
+        jLabel2.setFont(new java.awt.Font("Cambria", 0, 20)); // NOI18N
+        jLabel2.setText("      SIGMA");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -195,6 +195,11 @@ public class Login extends javax.swing.JFrame {
         BooleanBanco.setSelected(true);
         BooleanBanco.setText("Desconectado");
         BooleanBanco.setToolTipText("");
+        BooleanBanco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BooleanBancoActionPerformed(evt);
+            }
+        });
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -214,7 +219,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(BooleanBanco)
-                .addGap(32, 32, 32))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,10 +238,10 @@ public class Login extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +286,7 @@ public class Login extends javax.swing.JFrame {
                 
                 if (comUser.equals(user)){
                     if (tempo.equals(pass)){
-                        JOptionPane.showMessageDialog(null, "Acessando como " + user + ".", "Acesso permitido", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Acessando como " + user + ".", "Acesso permitido", JOptionPane.INFORMATION_MESSAGE); //TIRAR!!!!
                         new TelaPrincipal().setVisible(true);
                         this.dispose();
                     } else {
@@ -315,6 +320,10 @@ public class Login extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void BooleanBancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BooleanBancoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BooleanBancoActionPerformed
 
     /**
      * @param args the command line arguments
