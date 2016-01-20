@@ -5,7 +5,9 @@
  */
 package Telas;
 
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 /**
@@ -20,6 +22,10 @@ public class About extends javax.swing.JFrame {
     public About() {
         initComponents();
         initNoicon ();
+        
+        //Abre a janela no meio da tela, independente da resolução.
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
     
     /**
@@ -175,6 +181,7 @@ public class About extends javax.swing.JFrame {
         //Botão OK pressionado
         this.dispose();
         telaanterior.setEnabled(true);
+        telaanterior.requestFocus();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -183,6 +190,7 @@ public class About extends javax.swing.JFrame {
          * Tela fechada
          */
         telaanterior.setEnabled(true);
+        telaanterior.requestFocus();
     }//GEN-LAST:event_formWindowClosed
 
     /**

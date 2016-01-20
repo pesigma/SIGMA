@@ -4,13 +4,7 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup3">
-    </Component>
     <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup4">
     </Component>
   </NonVisualComponents>
   <Properties>
