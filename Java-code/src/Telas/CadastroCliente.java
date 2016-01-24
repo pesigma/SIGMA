@@ -8,10 +8,13 @@ package Telas;
 import ConecBD.ConexaoBanco;
 import Controles.CadastroCControle;
 import Entidades.Cliente;
+import java.awt.Dimension; //Usada para "setar" frame no meio da tela
 import javax.swing.JOptionPane;
-import java.awt.Image;
+import java.awt.Image; //Usada para setar logo. Idem para a de baixo
 import java.awt.image.BufferedImage;
+import java.awt.Toolkit;
 import java.sql.*;
+import java.util.regex.Pattern; //Usada apenas para dar "split" na string de endereço, quando necessário
 
 /**
  * 29/11/15 - Juliano Felipe Alteração para campos formatados.
@@ -36,7 +39,12 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     private CadastroCliente() {
         initComponents();
-        initNoicon();
+        
+        //Seta janela para o meio da tela, independente da resolução.
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
+        initNoicon();  //Seta "Logo vazio".
     }
 
     /**
@@ -325,30 +333,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * Não requerida, pode-se usar o rowid
-    private int getid(Statement statement) {
-        int id = -1;
-        int numero = 0;
-        try {
-            numero = statement.executeUpdate("BDSigma.sqlite", Statement.RETURN_GENERATED_KEYS);
-
-            ResultSet rs = statement.getGeneratedKeys();
-            if (rs.next()) {
-                id = rs.getInt(1);
-            }
-            rs.close();
-
-            statement.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            String errore = e.getMessage(); //Salvar, por enquanto
-            id = -1;
-        }
-        return id;
-    }
-    */
-
     private void insertClient(String tel, String cpf, String nome, String obs, String end) {
         try {
             String sql1 = "Insert into cliente (nome,cpf,tel,end,obs) values (?,?,?,?,?)";
@@ -359,6 +343,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             pst.setString(4, end);
             pst.setString(5, obs);
             pst.execute();
+            concliente.close();
 
             System.out.println("Eh pra ter conseguido!!");
         } catch (Exception e) {
@@ -367,24 +352,6 @@ public class CadastroCliente extends javax.swing.JFrame {
             System.exit(0);
         }
     }
-
-    /* Isolada função feita pelo Juliano, Essa outra acima cria o cliente
-     private void insertClient(String tel, String cpf, String nome, String obs, String end) {
-     try {
-     System.out.println("Tentando inserir cliente");
-     Statement statement = concliente.createStatement();
-     int cid = getid(statement);
-     //int cid = 0;
-     statement.executeUpdate("INSERT INTO cliente (cid,nome,cpf,tel,end,obs) "
-     + "VALUES (cid, nome,cpf, tel, end, obs);");
-     statement.close();
-     System.out.println("Eh pra ter conseguido!!");
-     } catch (Exception e) {
-     System.err.println(e.getClass().getName() + ": " + e.getMessage());
-     System.exit(0);
-     }
-     }
-     */
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /**
@@ -414,8 +381,14 @@ public class CadastroCliente extends javax.swing.JFrame {
                     jFormattedTextField1.setText(te);
                     String ce = rs.getString("cpf");
                     jFormattedTextField2.setText(ce);
+                    
                     String en = rs.getString("end");
-                    jTextField4.setText(en);
+                    String[] split = en.split(Pattern.quote(".")); // Split no "." (Ponto final)
+                    String combo = split[0]; // String para ir no jcombobox
+                    String field = split[1]; // String para ir no text field
+                    jComboBox1.setSelectedItem(combo); //Seta item selecionado
+                    jTextField4.setText(field);
+                    
                     String ob = rs.getString("obs");
                     jTextPane2.setText(ob);
                 }

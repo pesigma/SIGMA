@@ -5,7 +5,9 @@
  */
 package Telas;
 
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
 /**
@@ -23,7 +25,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
      */
     private CadastroFinancas() {
         initComponents();
-        initNoicon ();
+        
+        //Seta janela para o meio da tela, independente da resolução.
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
+        initNoicon (); //Seta "Logo vazio".
     }
      
     /**

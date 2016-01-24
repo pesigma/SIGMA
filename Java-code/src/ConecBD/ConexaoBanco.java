@@ -60,6 +60,28 @@ public class ConexaoBanco {
         }
         return null;
 
-    }    
+    }
+    
+    /**
+     * 06/01/16 - Juliano
+     * Conecta ao banco de versão
+    */
+    public static Connection Version() {
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:BDSigma.sqlite");
+            st = conn.createStatement();
+            rs = st.executeQuery("SELECT * FROM Version");
+            return conn;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro 0 - Version"); //Colocar no manual
+        }
+        return null;
+
+    } 
     
 }

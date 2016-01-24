@@ -6,11 +6,9 @@
 package Telas;
 
 import ConecBD.ConexaoBanco;
-import java.awt.Image;
+import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.sql.Connection;
-//Para setar o logo.
 
 /**
  *
@@ -23,17 +21,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
-        initLogo();
+        
+        //Seta janela para o meio da tela, independente da resolução.
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
+        initLogo(); //Seta logo SIGMA
     }
 
-    /**
-    * 12/12/15 - Juliano Felipe
-    * Seta icone 1*1px (para "remover" icone default)
-    */
-    private void initNoicon (){
-        Image No_ico = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
-        this.setIconImage(No_ico);
-    }
     /**
     * 12/12/15 - Juliano Felipe
     * Seta icone "Logo 100x100.png"

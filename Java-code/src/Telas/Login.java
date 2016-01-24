@@ -29,9 +29,12 @@ public class Login extends javax.swing.JFrame {
     */
     public Login() {
         initComponents();
+        
+         //Seta janela para o meio da tela, independente da resolução.
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        initLogo();
+        
+        initLogo(); //Seta logo SIGMA
     }
 
     /**
