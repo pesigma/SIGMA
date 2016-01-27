@@ -275,7 +275,8 @@ public class Login extends javax.swing.JFrame {
         String user = temp.toString();
         String pass = jPasswordField1.getText();
         if (pass == null || pass.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Senha vazia", "Acesso negado", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Senha vazia. Erro. Código: 04-05-01.", "Acesso negado", JOptionPane.WARNING_MESSAGE);
+            //code 04-05-01
             return;
         }
         
@@ -293,7 +294,7 @@ public class Login extends javax.swing.JFrame {
                         new TelaPrincipal().setVisible(true);
                         this.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Senha incorreta", "Acesso negado", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Senha incorreta. Erro. Código: 04-05-02.", "Acesso negado", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 }
@@ -302,7 +303,8 @@ public class Login extends javax.swing.JFrame {
             st.close();
             conn.close();
         } catch (Exception e) {
-            System.err.println("Erro indefinido"); //Definir erro
+            //System.err.println("Erro indefinido"); //Definir erro
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-05-03.", "Acesso negado", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_LoginButtonActionPerformed
 

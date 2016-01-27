@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Maycon
  */
 public class ConexaoBanco {
-
+   
     public static Connection concliente() {
         Connection conn = null;
         Statement st = null;
@@ -32,7 +32,7 @@ public class ConexaoBanco {
             
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro 0"); //Colocar no manual
+            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-01.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
         }
         return null;
 
@@ -56,7 +56,7 @@ public class ConexaoBanco {
             //JOptionPane.showMessageDialog(null, "Conectado"); Se tudo estiver bem, nem mostra essa janela
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro 0 - Login"); //Colocar no manual
+            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-02.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
         }
         return null;
 
@@ -78,7 +78,7 @@ public class ConexaoBanco {
             rs = st.executeQuery("SELECT * FROM Version");
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro 0 - Version"); //Colocar no manual
+            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-03.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);        
         }
         return null;
 

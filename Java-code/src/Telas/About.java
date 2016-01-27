@@ -21,6 +21,7 @@ public class About extends javax.swing.JFrame {
     Connection conn = null;
     String ver=null;
     String date=null;
+    String title=null;          //Título do frame para setar em janelas de erro
     
     /**
      * Creates new form About
@@ -33,6 +34,8 @@ public class About extends javax.swing.JFrame {
         //Abre a janela no meio da tela, independente da resolução.
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
+        title = this.getTitle();        //Salva o título do frame
     }
     
     /**
@@ -141,7 +144,7 @@ public class About extends javax.swing.JFrame {
 
         jLabel9.setText("Data de publicação:");
 
-        DateLabel.setText("DD/MM/AAA");
+        DateLabel.setText("DD/MM/AAAA");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -235,6 +238,7 @@ public class About extends javax.swing.JFrame {
             } catch (Exception e) {
                 e.printStackTrace();
                 String errore = e.getMessage(); //Salvar, por enquanto
+                JOptionPane.showMessageDialog(this, "Erro. Código: 04-01-01.", title, JOptionPane.ERROR_MESSAGE);
             }
         }
         

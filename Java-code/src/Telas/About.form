@@ -195,7 +195,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="DateLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="DD/MM/AAA"/>
+        <Property name="text" type="java.lang.String" value="DD/MM/AAAA"/>
       </Properties>
     </Component>
   </SubComponents>

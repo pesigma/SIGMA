@@ -347,7 +347,7 @@ public class CadastroCliente extends javax.swing.JFrame {
 
             System.out.println("Eh pra ter conseguido!!");
         } catch (Exception e) {
-            System.out.println("Erro fatal, hora de catar piolho");
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-01.", title, JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
@@ -393,7 +393,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                     jTextPane2.setText(ob);
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Cliente nao existe ou deu erro nessa budega");
+                JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-02.", title, JOptionPane.ERROR_MESSAGE);
             }
             /**
              * FIM DA TENTATIVA
@@ -478,7 +478,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             telaanterior.setEnabled(true);
             telaanterior.requestFocus(); //Traz o foco para tela anterior
         } else {
-            JOptionPane.showMessageDialog(this, "Erro", title, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-03.", title, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
