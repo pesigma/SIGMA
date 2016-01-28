@@ -29,6 +29,7 @@ public class CadastroCliente extends javax.swing.JFrame {
      * 15/01 - Maycon Conexão com o banco de dados
      */
     Connection concliente = null;
+    int rowid=-1; //Para ser usado como aux pelos métodos
 
     public TelaPrincipal telaanterior;
     public int metodo;
@@ -334,10 +335,15 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void insertClient(String tel, String cpf, String nome, String obs, String end) {
+        String[] split = nome.split(" ",2);     //split by spaces
+        String fname = split[0]; // Primeiro nome
+        String lname = split[1]; // "Resto do nome"
+        
         try {
-            String sql1 = "Insert into cliente (nome,cpf,tel,end,obs) values (?,?,?,?,?)";
+            String sql1 = "Insert into cliente (nome,cpf,tel,end,obs,lname) values (?,?,?,?,?,?)";
             PreparedStatement pst = concliente.prepareStatement(sql1);
-            pst.setString(1, nome);
+            pst.setString(1, fname);
+            pst.setString(6, lname);
             pst.setString(2, cpf);
             pst.setString(3, tel);
             pst.setString(4, end);
@@ -352,6 +358,81 @@ public class CadastroCliente extends javax.swing.JFrame {
             System.exit(0);
         }
     }
+    
+    //PROBLEMAS ENCONTRADOS
+    //Quando alguns fields estão vazios, os debaixo do primeiro campo vazio não são setados na janela
+    private int selectClient (String nome){
+        /**
+        * 17/01 - Maycon Tentativa de função de consulta
+        */
+        int id=-1;
+        try {
+            //Tem "rowid" no select para pegar o valor do rowid
+            String sql2 = "select rowid, * from cliente where nome=?";
+            PreparedStatement pst = concliente.prepareStatement(sql2);
+            pst.setString(1, nome);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("rowid");
+                String fno = rs.getString("nome");              //}
+                String lno = rs.getString("lname");             //} Pega primeiro e últimos nomes separados e os concatena.
+                String no = fno + " " + lno;                    //}
+                jTextField1.setText(no);
+                String te = rs.getString("tel");
+                jFormattedTextField1.setText(te);
+                String ce = rs.getString("cpf");
+                jFormattedTextField2.setText(ce);
+
+                String en = rs.getString("end");
+                String[] split = en.split(Pattern.quote(".")); // Split no "." (Ponto final)
+                String combo = split[0]; // String para ir no jcombobox
+                String field = split[1]; // String para ir no text field
+                jComboBox1.setSelectedItem(combo); //Seta item selecionado
+                jTextField4.setText(field);
+
+                String ob = rs.getString("obs");
+                jTextPane2.setText(ob);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-02.", title, JOptionPane.ERROR_MESSAGE);
+        }
+        /**
+        * FIM DA TENTATIVA
+        */
+        
+        return id; //Retorna id do cliente
+    }
+    
+    private void updateClient (String tel, String cpf, String nome, String obs, String end, int id){
+        String[] split = nome.split(" ",2);     //split by spaces
+        String fname = split[0]; // Primeiro nome
+        String lname = split[1]; // "Resto do nome"
+        
+        if (rowid==-1){
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-06.", title, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        System.out.println(fname + lname + cpf + tel + end + "  " + obs + "   " + id);
+        
+        try {
+            String sql1 = "UPDATE cliente SET nome=?, cpf=?, tel=?, end=?, obs=?, lname=? WHERE rowid="+id;
+            PreparedStatement pst = concliente.prepareStatement(sql1);            
+            pst.setString(1, fname);
+            pst.setString(6, lname);
+            pst.setString(2, cpf);
+            pst.setString(3, tel);
+            pst.setString(4, end);
+            pst.setString(5, obs);
+            pst.execute();
+            concliente.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-05.", title, JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return;
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /**
@@ -360,80 +441,69 @@ public class CadastroCliente extends javax.swing.JFrame {
          * (excluir).
          */
         if (metodo == 2) {
-            boolean success = false;
-            do {
-                //Consultar do banco
-                success = true; //Consultado com sucesso
-            } while (success != true);
-
-            /**
-             * 17/01 - Maycon Tentativa de função de consulta
-             */
-            try {
-                String sql2 = "select * from cliente where nome=?";
-                PreparedStatement pst = concliente.prepareStatement(sql2);
-                pst.setString(1, jTextField1.getText());
-                ResultSet rs = pst.executeQuery();
-                if (rs.next()) {
-                    String no = rs.getString("nome");
-                    jTextField1.setText(no);
-                    String te = rs.getString("tel");
-                    jFormattedTextField1.setText(te);
-                    String ce = rs.getString("cpf");
-                    jFormattedTextField2.setText(ce);
-                    
-                    String en = rs.getString("end");
-                    String[] split = en.split(Pattern.quote(".")); // Split no "." (Ponto final)
-                    String combo = split[0]; // String para ir no jcombobox
-                    String field = split[1]; // String para ir no text field
-                    jComboBox1.setSelectedItem(combo); //Seta item selecionado
-                    jTextField4.setText(field);
-                    
-                    String ob = rs.getString("obs");
-                    jTextPane2.setText(ob);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-02.", title, JOptionPane.ERROR_MESSAGE);
-            }
-            /**
-             * FIM DA TENTATIVA
-             */
-
-            //JOptionPane.showMessageDialog(this, "Consulta");
+            //Id (no retorno) não é necessário.
+            selectClient (jTextField1.getText());
             return; //Somente consulta, nao necessario salvar dados
         }
 
         if (metodo == 3) {
-            //Display de dados
-            String teste = "Avenida";
-            String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
-            jTextField1.setText(nome);
-            jFormattedTextField1.setText("4533333333");
-            jFormattedTextField2.setText("11111111111");
-            jComboBox1.setSelectedItem(teste); //Seleciona avenida
-            jTextField4.setText("Teste");
-            jTextPane2.setText("Teste");
-            jButton2.setText("Modificar");
-            jFormattedTextField1.setEditable(true);
+            String flag = jButton2.getText();
+            int id=-1;
+            if (flag!="Modificar"){
+                id = selectClient (jTextField1.getText());
+                if (id==-1){
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-04.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    rowid=id;
+                }
+            }else{
+                //Update data and disable jbutton2
+                Object ruaobj = jComboBox1.getSelectedItem();
+                String ruatemp = ruaobj.toString();
+                String end = ruatemp + "." + jTextField4.getText();
+                
+                updateClient (jFormattedTextField1.getText(), jFormattedTextField2.getText(), jTextField1.getText(), jTextPane2.getText(), end, rowid);
+                
+                jButton2.setEnabled(false); //Para não tentar salvar novamente
+            }
+            jFormattedTextField1.setEditable(true); //Todos os fields podem ser alterados novamente
             jFormattedTextField2.setEditable(true);
             jComboBox1.setEnabled(true);
             jTextField4.setEditable(true);
             jTextPane2.setEnabled(true);
+            jButton2.setText("Modificar");
             return;
         }
 
+        //Função bugada
         if (metodo == 4) {
-            //Display de dados
-            String teste = "Avenida";
-            String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
-            jTextField1.setText(nome);
-            jFormattedTextField1.setText("4533333333");
-            jFormattedTextField2.setText("11111111111");
-            jComboBox1.setSelectedItem(teste); //Seleciona avenida
-            jTextField4.setText("Teste");
-            jTextPane2.setText("Teste");
+            String flag = jButton2.getText();
+            int id=-1;
+            if (flag!="Excluir"){
+                id = selectClient (jTextField1.getText());
+                if (id==-1){
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-07.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    rowid=id;
+                }
+            }else{
+                try {
+                    String sql1 = "DELETE FROM cliente WHERE rowid="+rowid;
+                    PreparedStatement pst = concliente.prepareStatement(sql1);            
+                    pst.execute();
+                    concliente.close();
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-08.", title, JOptionPane.ERROR_MESSAGE);
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    System.exit(0);
+                }
+                
+                jButton2.setEnabled(false); //Para não tentar salvar novamente
+            }
             jButton2.setText("Excluir");
-            jTextField1.setEditable(false);
             return;
         }
 
@@ -455,16 +525,11 @@ public class CadastroCliente extends javax.swing.JFrame {
          * 15/01 - Maycon TESTE PARA VERIFICAÇÃO SE OS DADOS DO CLIENTE FORAM
          * RECEBIDOS
          */
-        System.out.println("Nome: ");
-        System.out.println(nome);
-        System.out.println("Telefone: ");
-        System.out.println(tel);
-        System.out.println("CPF: ");
-        System.out.println(cpf);
-        System.out.println("Endereco: ");
-        System.out.println(end);
-        System.out.println("Obs: ");
-        System.out.println(obs);
+        System.out.println("Nome: " + nome);
+        System.out.println("Telefone: " + tel);
+        System.out.println("CPF: " + cpf);
+        System.out.println("Endereco: " + end);
+        System.out.println("Obs: " + obs);
         /**
          * FIM DO TESTE!!!!
          */
@@ -478,7 +543,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             telaanterior.setEnabled(true);
             telaanterior.requestFocus(); //Traz o foco para tela anterior
         } else {
-                JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-03.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-03.", title, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
