@@ -74,6 +74,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     public void metodosCliente(int op) {
         //Colocado como "cascateamento" pois toda vez que tem que modificar
         //ou excluir, passa por uma consulta
+        concliente = ConexaoBanco.concliente(); //Colocado aqui para poder resetar funções sem ter que fechar a janela
         if (op >= 2) {//Op==2 - Consulta
             this.setTitle("Consulta de clientes");
             jFormattedTextField1.setEditable(false);
@@ -362,6 +363,9 @@ public class CadastroCliente extends javax.swing.JFrame {
     //PROBLEMAS ENCONTRADOS
     //Quando alguns fields estão vazios, os debaixo do primeiro campo vazio não são setados na janela
     private int selectClient (String nome){
+        String[] splitname = nome.split(" ",2);     //split by spaces
+        String fname = splitname[0]; // Para garantir que sempre pega o primeiro nome
+        
         /**
         * 17/01 - Maycon Tentativa de função de consulta
         */
@@ -370,7 +374,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             //Tem "rowid" no select para pegar o valor do rowid
             String sql2 = "select rowid, * from cliente where nome=?";
             PreparedStatement pst = concliente.prepareStatement(sql2);
-            pst.setString(1, nome);
+            pst.setString(1, fname);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 id = rs.getInt("rowid");
@@ -431,8 +435,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        return;
-    }
+}
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /**
@@ -465,7 +468,9 @@ public class CadastroCliente extends javax.swing.JFrame {
                 
                 updateClient (jFormattedTextField1.getText(), jFormattedTextField2.getText(), jTextField1.getText(), jTextPane2.getText(), end, rowid);
                 
-                jButton2.setEnabled(false); //Para não tentar salvar novamente
+                //jButton2.setEnabled(false); //Para não tentar salvar novamente
+                metodosCliente(3); //Resetar modificação
+                return;
             }
             jFormattedTextField1.setEditable(true); //Todos os fields podem ser alterados novamente
             jFormattedTextField2.setEditable(true);
@@ -585,7 +590,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         /**
          * 15/01 - Maycon Conexão com o banco de dados
          */
-        concliente = ConexaoBanco.concliente();
+        //concliente = ConexaoBanco.concliente();
+        //Coloquei na função "metodosCliente" para poder resetar funções sem precisar abrir novamente a janela
+        //Já que a cada consulta, a conexão é fechada.
     }//GEN-LAST:event_formWindowOpened
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
