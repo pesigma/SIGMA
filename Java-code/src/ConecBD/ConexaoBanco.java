@@ -35,7 +35,6 @@ public class ConexaoBanco {
             JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-01.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
         }
         return null;
-
     }
 
     /**
@@ -59,7 +58,6 @@ public class ConexaoBanco {
             JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-02.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
         }
         return null;
-
     }
     
     /**
@@ -81,7 +79,5 @@ public class ConexaoBanco {
             JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-03.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);        
         }
         return null;
-
     } 
-    
 }

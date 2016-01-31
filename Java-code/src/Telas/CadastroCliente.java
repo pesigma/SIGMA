@@ -360,6 +360,23 @@ public class CadastroCliente extends javax.swing.JFrame {
         }
     }
     
+    private int selMulClient (String nome, String fname){
+        
+        this.setEnabled(false);
+        MultipleEntries multipleEntries = new MultipleEntries(this, fname);
+        
+        //while (multipleEntries.setVisible(true)){}
+        
+        nome = multipleEntries.ret;
+        rowid = multipleEntries.id;
+        //multipleEntries.parafechar.dispose();
+                
+        System.out.println("ID= " + rowid);
+        
+        //String strFim = rowid + " " + nome; 
+        return rowid;
+    }
+    
     //PROBLEMAS ENCONTRADOS
     //Quando alguns fields estão vazios, os debaixo do primeiro campo vazio não são setados na janela
     private int selectClient (String nome){
@@ -372,10 +389,22 @@ public class CadastroCliente extends javax.swing.JFrame {
         int id=-1;
         try {
             //Tem "rowid" no select para pegar o valor do rowid
-            String sql2 = "select rowid, * from cliente where nome=?";
+            String sql2 = "SELECT rowid, * FROM cliente WHERE nome=?";
             PreparedStatement pst = concliente.prepareStatement(sql2);
             pst.setString(1, fname);
             ResultSet rs = pst.executeQuery();
+            
+            int num_clients=0;
+            while (rs.next()){
+                num_clients++;
+            }
+            //rs.beforeFirst;
+            System.out.println("NUMROWS=" + num_clients);
+            
+            if (num_clients>1){
+                id = selMulClient (nome, fname);
+            }
+            
             if (rs.next()) {
                 id = rs.getInt("rowid");
                 String fno = rs.getString("nome");              //}
@@ -397,7 +426,10 @@ public class CadastroCliente extends javax.swing.JFrame {
                 String ob = rs.getString("obs");
                 jTextPane2.setText(ob);
             }
+                                        System.out.println("OIE");
         } catch (Exception e) {
+            String error = e.getClass().getName();
+            System.out.println("Olha o erro:" + error);
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-02.", title, JOptionPane.ERROR_MESSAGE);
         }
         /**
