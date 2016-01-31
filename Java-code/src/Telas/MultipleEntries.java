@@ -28,13 +28,13 @@ public class MultipleEntries extends javax.swing.JDialog {
     String ret=null;
     int id=-1;
     List<Integer> ids = new ArrayList<>();
+    boolean flag=false;
     
     /**
      * Creates new form MultipleEntries
      */
     public MultipleEntries() {
-        this.setVisible(true);
-        setModal(true);
+        setModal(true); //Deve ser modal para que o programa "espere a seleção na lista".
         
         initComponents();
         
@@ -67,6 +67,30 @@ public class MultipleEntries extends javax.swing.JDialog {
         FillList(1, fname); //1 = Cliente
     }
 
+    /**
+     * 31/01/16 - Juliano Felipe 
+     * Função para tornar String selecionada acessível
+     * @return ret String selecionada na lista
+     */
+    public String getString (){
+        if (flag)
+           return ret;
+        else
+            return null;
+    }
+    
+    /**
+     * 31/01/16 - Juliano Felipe 
+     * Função para tornar id acessível
+     * @return id Id associado à string selecionada na lista
+     */
+    public int getId (){
+        if (flag)
+           return id;
+        else
+            return -1;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,6 +217,8 @@ public class MultipleEntries extends javax.swing.JDialog {
         this.setVisible(false); //Apenas esconde a tela para acessar as variáveis nas outras telas
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior
+        
+        flag=true; //Seta para verdadeiro para saber que nos métodos "get" é o valor real
     }//GEN-LAST:event_SelectButtonActionPerformed
 
     /**

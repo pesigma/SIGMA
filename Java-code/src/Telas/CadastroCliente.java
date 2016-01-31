@@ -361,19 +361,15 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
     
     private int selMulClient (String nome, String fname){
-        
         this.setEnabled(false);
         MultipleEntries multipleEntries = new MultipleEntries(this, fname);
+        multipleEntries.setVisible(true);
         
-        //while (multipleEntries.setVisible(true)){}
+        nome = multipleEntries.getString();
+        rowid = multipleEntries.getId();
         
-        nome = multipleEntries.ret;
-        rowid = multipleEntries.id;
-        //multipleEntries.parafechar.dispose();
-                
-        System.out.println("ID= " + rowid);
+        multipleEntries.parafechar.dispose();
         
-        //String strFim = rowid + " " + nome; 
         return rowid;
     }
     
@@ -395,14 +391,19 @@ public class CadastroCliente extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
             
             int num_clients=0;
-            while (rs.next()){
+            while (rs.next()){ //Descobre o número de linhas retornadas
                 num_clients++;
-            }
-            //rs.beforeFirst;
-            System.out.println("NUMROWS=" + num_clients);
-            
+            }            
             if (num_clients>1){
                 id = selMulClient (nome, fname);
+                
+                //Como teve de consultar para selecionar o nome
+                //Fecho e abro novamente, com consulta por id (retorno o id do outro método)
+                pst.close();
+                rs.close();
+                sql2 = "SELECT rowid, * FROM cliente WHERE rowid="+id;
+                pst = concliente.prepareStatement(sql2);
+                rs = pst.executeQuery();
             }
             
             if (rs.next()) {
@@ -426,7 +427,6 @@ public class CadastroCliente extends javax.swing.JFrame {
                 String ob = rs.getString("obs");
                 jTextPane2.setText(ob);
             }
-                                        System.out.println("OIE");
         } catch (Exception e) {
             String error = e.getClass().getName();
             System.out.println("Olha o erro:" + error);
