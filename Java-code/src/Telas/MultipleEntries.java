@@ -189,7 +189,7 @@ public class MultipleEntries extends javax.swing.JDialog {
                 pst.close();
                 concliente.close();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro. Código: NÃO POSTO.", title, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro. Código: 04-06-01.", title, JOptionPane.ERROR_MESSAGE);
             }
         }
     }

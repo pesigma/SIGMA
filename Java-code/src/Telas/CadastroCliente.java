@@ -373,6 +373,12 @@ public class CadastroCliente extends javax.swing.JFrame {
         return rowid;
     }
     
+    /**
+     * 01/02/16 - Juliano Felipe
+     * Função consulta um cliente no banco de dados, "setando" seus dados nos fields da interface.
+     * @param nome - Nome para consultar no banco de dados, completo ou somente o primeiro nome.
+     * @return id - Id do cliente no banco de dados
+     */
     //PROBLEMAS ENCONTRADOS
     //Quando alguns fields estão vazios, os debaixo do primeiro campo vazio não são setados na janela
     private int selectClient (String nome){
@@ -439,6 +445,16 @@ public class CadastroCliente extends javax.swing.JFrame {
         return id; //Retorna id do cliente
     }
     
+    /**
+     * 01/02/16 - Juliano Felipe
+     * Função modificação de cliente.
+     * @param tel - Telefone do cliente.
+     * @param cpf - CPF do cliente.
+     * @param nome - Nome do cliente.
+     * @param obs - Observação associada ao cliente.
+     * @param end - endereço do cliente.
+     * @param id - Id do cliente no banco de dados.
+     */
     private void updateClient (String tel, String cpf, String nome, String obs, String end, int id){
         String[] split = nome.split(" ",2);     //split by spaces
         String fname = split[0]; // Primeiro nome

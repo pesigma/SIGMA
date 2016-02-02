@@ -53,8 +53,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
     /**
     * 06/01/16 - Juliano Felipe
     * Define metodos sobre a janela financas, reutilizando a mesma
-    * Variavel op chama o respectivo metodo
-     * @param op
+     * @param op - Chama o respectivo metodo.
     */
     public void metodosFinancas (int op){
         if (op==2){
