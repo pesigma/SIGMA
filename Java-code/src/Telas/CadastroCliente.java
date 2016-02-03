@@ -57,19 +57,30 @@ public class CadastroCliente extends javax.swing.JFrame {
         title = this.getTitle(); //Pega título do frame
     }
 
+    /**
+    * 03/02/16 - Juliano Felipe
+    * "Pseudo-construtor", chama o construtor padrão, função de reutilização de jFrame e salva
+    * a instância do jFrame que chamou este (para poder habilitá-lo quando esta tela é fechada.
+    * @param telanterior - Instância da tela anterior. 
+    * @param option - Modo que o jFrame será utilizado (1 para Cadastro, 2 para consulta, etc).
+    */
     public CadastroCliente(TelaPrincipal telanterior, int option) {
         //Chamar construtor
         this();
         this.telaanterior = telanterior;
         metodo = option;
-        metodosCliente(option);
+        if (option > 1)
+            metodosCliente(option);
     }
 
     /**
      * 06/01/16 - Juliano Felipe Define metodos sobre a janela clientes,
      * reutilizando a mesma Variavel op chama o respectivo metodo
-     *
-     * @param op
+     * @param op - Opção de reutilização
+     * 1 - Cadastro (esse método não é chamado, devido a condição de chamada no construtor modificado);
+     * 2 - Consulta;
+     * 3 - Modificação;
+     * 4 - Exclusão;
      */
     public void metodosCliente(int op) {
         //Colocado como "cascateamento" pois toda vez que tem que modificar
@@ -335,6 +346,18 @@ public class CadastroCliente extends javax.swing.JFrame {
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * 03/02/16 - Juliano Felipe
+     * Função que chama a classe "MultipleEntries", que permite o cliente selecionar uma entrada por meio
+     * de um jDialog. No fim, esse método obtém o nome e o id de uma instância da outra classe. Depois de
+     * obter os dados, ela elimina a instância "MultipleEntries" e retorna o id do cliente selecionado pelo
+     * usuário.
+     * @param tel - Telefone do cliente
+     * @param cpf - CPF do cliente
+     * @param nome - Nome completo do cliente (Será dividido para inserão no banco de dados
+     * @param obs - Observações associadas ao cliente.
+     * @param end - Endereço do cliente
+     */
     private void insertClient(String tel, String cpf, String nome, String obs, String end) {
         String[] split = nome.split(" ",2);     //split by spaces
         String fname = split[0]; // Primeiro nome
@@ -360,6 +383,16 @@ public class CadastroCliente extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * 03/02/16 - Juliano Felipe
+     * Função que chama a classe "MultipleEntries", que permite o cliente selecionar uma entrada por meio
+     * de um jDialog. No fim, esse método obtém o nome e o id de uma instância da outra classe. Depois de
+     * obter os dados, ela elimina a instância "MultipleEntries" e retorna o id do cliente selecionado pelo
+     * usuário.
+     * @param nome - Nome completo caso seja necessário
+     * @param fname - Primeiro nome do cliente, usado para consulta de múltiplos nomes no banco de dados
+     * @return id - Id do cliente no banco de dados
+     */
     private int selMulClient (String nome, String fname){
         this.setEnabled(false);
         MultipleEntries multipleEntries = new MultipleEntries(this, fname);

@@ -22,15 +22,11 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form TelaLogin
      */
-    /**
-    * 12/12/15 - Juliano Felipe
-    * Alteração para abrir no meio da tela, independente da resolução do monitor (Possíveis
-    * problemas se executado em computadores com mais de um monitor).
-    */
     public Login() {
         initComponents();
         
          //Seta janela para o meio da tela, independente da resolução.
+         //Possíveis problemas se executado em computadores com mais de um monitor).
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         
@@ -322,7 +318,6 @@ public class Login extends javax.swing.JFrame {
             Color desconectado = new Color(204,0,0);
             BooleanBanco.setBackground(desconectado);
             BooleanBanco.setForeground(desconectado);
-            
         }
     }//GEN-LAST:event_formWindowOpened
 

@@ -7,7 +7,9 @@ package Telas;
 
 import Controles.CadastroSControle;
 import Entidades.Servico;
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
 
@@ -25,6 +27,7 @@ public class CadastroServicos extends javax.swing.JFrame {
     public TelaPrincipal telaanterior;
     public int metodo;
     private String title;
+    private int serviceId=-1;
 
     /**
      * 05/12 - Maycon
@@ -33,6 +36,10 @@ public class CadastroServicos extends javax.swing.JFrame {
     private CadastroServicos() {
         initComponents();
         initNoicon ();
+        
+        //Seta janela para o meio da tela, independente da resolução.
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         
         title = this.getTitle(); //Pega o título do frame
     }
@@ -46,20 +53,31 @@ public class CadastroServicos extends javax.swing.JFrame {
         this.setIconImage(No_ico);
     }
 
+    /**
+    * 03/02/16 - Juliano Felipe
+    * "Pseudo-construtor", chama o construtor padrão, função de reutilização de jFrame e salva
+    * a instância do jFrame que chamou este (para poder habilitá-lo quando esta tela é fechada.
+    * @param telanterior - Instância da tela anterior. 
+    * @param option - Modo que o jFrame será utilizado (1 para Cadastro, 2 para consulta, etc).
+    */
     public CadastroServicos(TelaPrincipal telanterior, int option) {
         //Chamar construtor
         this();
-        this.telaanterior = telanterior; if (option > 1){
+        this.telaanterior = telanterior;
         metodo = option;
-        metodosServicos (option);
-        }
+        if (option > 1)
+            metodosServicos (option);
     }
     
     /**
-    * 06/01/16 - Juliano Felipe
-    * Define metodos sobre a janela servicos, reutilizando a mesma
-    * @param op - chama o respectivo metodo.
-    */
+     * 06/01/16 - Juliano Felipe Define metodos sobre a janela servicos,
+     * reutilizando a mesma Variavel op chama o respectivo metodo
+     * @param op - Opção de reutilização
+     * 1 - Cadastro (esse método não é chamado, devido a condição de chamada no construtor modificado);
+     * 2 - Consulta;
+     * 3 - Modificação;
+     * 4 - Exclusão;
+     */
     public void metodosServicos (int op){
         if (op>=2){//Op==2 - Consulta
            this.setTitle("Consulta de serviços"); 
@@ -326,35 +344,51 @@ public class CadastroServicos extends javax.swing.JFrame {
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed
 
+     private int selectService (String placa){
+        
+        return -1;
+    }
+    
+    private int updateService (String placa, String kms, String modelo, boolean concluido, String cliente, String obs, int servicoId ){
+         
+        return -1;
+    }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         /**
-         * 06/01/16 - Juliano
+         * 03/02/16 - Juliano
          * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
          */
-        if (metodo==2){
-           boolean success=false;
-           do{
-               //Consultar do banco
-               success=true; //Consultado com sucesso
-           } while (success!=true);
-           JOptionPane.showMessageDialog(this, "Consulta"); 
-           return; //Somente consulta, nao necessario salvar dados
+        if (metodo == 2) {
+            //Id (no retorno) não é necessário.
+            selectService (jFormattedTextField1.getText()); //Consulta por PLACA
+            return; //Somente consulta, nao necessario salvar dados
         }
-        
-        if (metodo==3){
-            //Display de dados
-            jFormattedTextField1.setText("ABCDEFG");
-            jTextField2.setText("150000");
-            jFormattedTextField2.setText("WOLKSVAGEN GOL");
-            jCheckBox1.setSelected(true);
-            jTextPane1.setText("Teste");
-            jButton1.setText("Modificar"); 
+
+        if (metodo == 3) {
+            String flag = jButton1.getText();
+            //int serviceId=-1; //Is this necessary?
+            if (!flag.equals("Modificar")){
+                serviceId = selectService (jFormattedTextField1.getText());
+                if (serviceId==-1){
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }else{              
+                updateService (jFormattedTextField1.getText(), jTextField2.getText(), jFormattedTextField2.getText(), jCheckBox1.isSelected(), ClienteField.getText(), jTextPane1.getText(), serviceId);
+                
+                //jButton1.setEnabled(false); //Para não tentar salvar novamente
+                metodosServicos(3); //Resetar modificação
+                return;
+            }
+            jTextField2.setEditable(true); //Todos os fields podem ser alterados novamente
             jFormattedTextField2.setEditable(true);
-            jTextField2.setEditable(true);
             jCheckBox1.setEnabled(true);
+            ClienteField.setEditable(true);
             jTextPane1.setEnabled(true);
+            jButton1.setText("Modificar");
             return;
-        } 
+        }
         
         if (metodo==4){
             //Display de dados

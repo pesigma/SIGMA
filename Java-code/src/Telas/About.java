@@ -48,10 +48,13 @@ public class About extends javax.swing.JFrame {
     }
     
     public TelaPrincipal telaanterior;
-    /**
-     * Creates new form About
-     */
 
+    /**
+    * 03/02/16 - Juliano Felipe
+    * "Pseudo-construtor", chama o construtor padrão, função de reutilização de jFrame e salva
+    * a instância do jFrame que chamou este (para poder habilitá-lo quando esta tela é fechada.
+    * @param telanterior - Instância da tela anterior. 
+    */
     public About(TelaPrincipal telanterior) {
         //Chamar construtor
         this();

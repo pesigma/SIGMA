@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author User
+ * @author Juliano Felipe
  */
 public class MultipleEntries extends javax.swing.JDialog {
     public CadastroCliente telaanterior;

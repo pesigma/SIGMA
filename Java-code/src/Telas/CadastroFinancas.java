@@ -42,6 +42,13 @@ public class CadastroFinancas extends javax.swing.JFrame {
         this.setIconImage(No_ico);
     }
     
+    /**
+    * 03/02/16 - Juliano Felipe
+    * "Pseudo-construtor", chama o construtor padrão, função de reutilização de jFrame e salva
+    * a instância do jFrame que chamou este (para poder habilitá-lo quando esta tela é fechada.
+    * @param telanterior - Instância da tela anterior. 
+    * @param option - Modo que o jFrame será utilizado (1 para Cadastro, 2 para consulta, etc).
+    */
     public CadastroFinancas(TelaPrincipal telanterior, int option) {
         //Chamar construtor
         this();
@@ -51,10 +58,14 @@ public class CadastroFinancas extends javax.swing.JFrame {
     }
     
     /**
-    * 06/01/16 - Juliano Felipe
-    * Define metodos sobre a janela financas, reutilizando a mesma
-     * @param op - Chama o respectivo metodo.
-    */
+     * 06/01/16 - Juliano Felipe Define metodos sobre a janela finacas,
+     * reutilizando a mesma Variavel op chama o respectivo metodo
+     * @param op - Opção de reutilização
+     * 1 - Cadastro (esse método não é chamado, devido a condição de chamada no construtor modificado);
+     * 2 - Consulta;
+     * 3 - Modificação;
+     * 4 - Exclusão;
+     */
     public void metodosFinancas (int op){
         if (op==2){
            this.setTitle("Consulta de registros financeiros"); 
