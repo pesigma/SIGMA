@@ -588,7 +588,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         new CadastroFinancas(this, 5).setVisible(true);    }//GEN-LAST:event_QuitaFinancaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        connGeral = ConexaoBanco.Geral();
+        connGeral = ConexaoBanco.login();
         ConnButton.setEnabled(false);
         //connGeral = null; //Teste para caso queira ver como mostra o banco desconectado!!!
         if (connGeral!=null){

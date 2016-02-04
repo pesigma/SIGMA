@@ -5,83 +5,90 @@
  */
 package Telas;
 
+import ConecBD.ConexaoBanco;
+import Controles.CadastroFControle;
+import Entidades.Financa;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.sql.*;
 import javax.swing.JOptionPane;
+
 /**
  * PROBLEMAS COM O ALINHAMENTO DOS ITENS!!
+ *
  * @author Maycon
  */
 public class CadastroFinancas extends javax.swing.JFrame {
 
     public TelaPrincipal telaanterior;
     public int metodo;
+    Connection confinanca = null;
 
     /**
-     * 19/12 - Maycon
-     * Creates new form TelaServicos
+     * 19/12 - Maycon Creates new form TelaServicos
      */
     private CadastroFinancas() {
         initComponents();
-        
+
         //Seta janela para o meio da tela, independente da resolução.
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        
-        initNoicon (); //Seta "Logo vazio".
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+
+        initNoicon(); //Seta "Logo vazio".
     }
-     
+
     /**
-    * 06/01/16 - Juliano Felipe
-    * Seta icone 1*1px (para "remover" icone default)
-    */
-    private void initNoicon (){
+     * 06/01/16 - Juliano Felipe Seta icone 1*1px (para "remover" icone default)
+     */
+    private void initNoicon() {
         Image No_ico = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
         this.setIconImage(No_ico);
     }
-    
+
     /**
-    * 03/02/16 - Juliano Felipe
-    * "Pseudo-construtor", chama o construtor padrão, função de reutilização de jFrame e salva
-    * a instância do jFrame que chamou este (para poder habilitá-lo quando esta tela é fechada.
-    * @param telanterior - Instância da tela anterior. 
-    * @param option - Modo que o jFrame será utilizado (1 para Cadastro, 2 para consulta, etc).
-    */
+     * 03/02/16 - Juliano Felipe "Pseudo-construtor", chama o construtor padrão,
+     * função de reutilização de jFrame e salva a instância do jFrame que chamou
+     * este (para poder habilitá-lo quando esta tela é fechada.
+     *
+     * @param telanterior - Instância da tela anterior.
+     * @param option - Modo que o jFrame será utilizado (1 para Cadastro, 2 para
+     * consulta, etc).
+     */
     public CadastroFinancas(TelaPrincipal telanterior, int option) {
         //Chamar construtor
         this();
         this.telaanterior = telanterior;
         metodo = option;
-        metodosFinancas (option);
+        metodosFinancas(option);
     }
-    
+
     /**
      * 06/01/16 - Juliano Felipe Define metodos sobre a janela finacas,
      * reutilizando a mesma Variavel op chama o respectivo metodo
-     * @param op - Opção de reutilização
-     * 1 - Cadastro (esse método não é chamado, devido a condição de chamada no construtor modificado);
-     * 2 - Consulta;
-     * 3 - Modificação;
-     * 4 - Exclusão;
+     *
+     * @param op - Opção de reutilização 1 - Cadastro (esse método não é
+     * chamado, devido a condição de chamada no construtor modificado); 2 -
+     * Consulta; 3 - Modificação; 4 - Exclusão;
      */
-    public void metodosFinancas (int op){
-        if (op==2){
-           this.setTitle("Consulta de registros financeiros"); 
-           jFormattedTextField1.setEditable(false);
-           jRadioButton1.setEnabled(false);
-           jRadioButton2.setEnabled(false);
-           jCheckBox1.setEnabled(false);
-           jDateChooser1.setEnabled(false);
-           jTextPane2.setEnabled(false);
-           jButton2.setText("Consultar");
+    public void metodosFinancas(int op) {
+        confinanca = ConexaoBanco.confinanca();
+        if (op == 2) {
+            this.setTitle("Consulta de registros financeiros");
+            jFormattedTextField1.setEditable(false);
+            jRadioButton1.setEnabled(false);
+            jRadioButton2.setEnabled(false);
+            jCheckBox1.setEnabled(false);
+            jDateChooser1.setEnabled(false);
+            jTextPane2.setEnabled(false);
+            jButton2.setText("Consultar");
         }
-        if (op==3){//Op==3 - Modificar
-           this.setTitle("Modificação de registros financeiros");       
+        if (op == 3) {//Op==3 - Modificar
+            this.setTitle("Modificação de registros financeiros");
         }
-        if (op==4){//Op==4 - Excluir
-           this.setTitle("Exclusão de registros financeiros");       
+        if (op == 4) {//Op==4 - Excluir
+            this.setTitle("Exclusão de registros financeiros");
         }
     }
 
@@ -183,11 +190,11 @@ public class CadastroFinancas extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Situação"));
@@ -205,13 +212,11 @@ public class CadastroFinancas extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jCheckBox1)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jCheckBox1)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jCheckBox1)
         );
 
         jButton2.setText("Salvar");
@@ -237,31 +242,33 @@ public class CadastroFinancas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -274,57 +281,81 @@ public class CadastroFinancas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void insertFinanca(boolean tipo, String data, double valor, boolean sit, String obs) {
+
+        confinanca = ConexaoBanco.confinanca();
+        try {
+            String sql1 = "Insert into financa (tipo,data,valor,sit,obs) values (?,?,?,?,?)";
+            PreparedStatement pst = confinanca.prepareStatement(sql1);
+            pst.setBoolean(1, tipo);
+            pst.setString(2, data);
+            pst.setDouble(3, valor);
+            pst.setBoolean(4, sit);
+            pst.setString(5, obs);
+            pst.execute();
+            confinanca.close();
+
+            System.out.println("Eh pra ter conseguido!!");
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(this, "Erro. Código: DEFINIR ERRO!!!!", title, JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.out.println("Nao deu certo aqui!!");
+            System.exit(0);
+        }
+    }
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Botão Salvar pressionado
         /**
-         * 06/01/16 - Juliano
-         * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
+         * 06/01/16 - Juliano Definido a opcao 2 (consultar), altera-se a funcao
+         * do botao salvar 03/02/16 - Maycon Apagada funcao do Juliano, colar
+         * quando fizer-se necessario
          */
-        /*if (metodo==2){
-           boolean success=false;
-           do{
-               //Consultar do banco
-               success=true; //Consultado com sucesso
-           } while (success!=true);
-           JOptionPane.showMessageDialog(this, "Consulta"); 
-           return; //Somente consulta, nao necessario salvar dados
+        //Botão Salvar pressionado
+        double valor = Double.parseDouble(jFormattedTextField1.getText());
+        //String data = jDateChooser1.getDateFormatString();
+        String data = "06/02/2016";
+        boolean sit = jCheckBox1.isEnabled();
+        boolean rec = jRadioButton2.isEnabled();
+        boolean des = jRadioButton1.isEnabled();
+        boolean tipo = false;
+        if (rec == true) {
+            tipo = true;
+        } else if (des == true) {
+            tipo = false;
         }
-        
-        if (metodo==3){
-            //Display de dados
-            String teste = "Avenida";
-            String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
-            jTextField1.setText(nome);
-            jFormattedTextField1.setText("4533333333");
-            jFormattedTextField2.setText("11111111111");
-            jComboBox1.setSelectedItem(teste); //Seleciona avenida
-            jTextField4.setText("Teste");
-            jTextPane2.setText("Teste");
-            jButton2.setText("Modificar"); 
-            jFormattedTextField1.setEditable(true);
-            jFormattedTextField2.setEditable(true);
-            jComboBox1.setEnabled(true);
-            jTextField4.setEditable(true);
-            jTextPane2.setEnabled(true);
-            return;
-        } 
-        
-        if (metodo==4){
-            //Display de dados
-            String teste = "Avenida";
-            String nome = "Pedro de Alcântara Francisco António João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de Bragança e Bourbon";
-            jTextField1.setText(nome);
-            jFormattedTextField1.setText("4533333333");
-            jFormattedTextField2.setText("11111111111");
-            jComboBox1.setSelectedItem(teste); //Seleciona avenida
-            jTextField4.setText("Teste");
-            jTextPane2.setText("Teste");
-            jButton2.setText("Excluir"); 
-            jTextField1.setEditable(false);
-            return;
+        String obs = jTextPane2.getText();
+
+        Financa p = new Financa(tipo, data, valor, obs, sit);
+        //Chama o controle para cadastrar
+        CadastroFControle C = new CadastroFControle();
+
+        /**
+         * 03/02 - Maycon TESTE PARA VERIFICAÇÃO SE OS DADOS DA FINANCA FORAM
+         * RECEBIDOS
+         *
+         */
+        System.out.println("Valor: " + valor);
+        System.out.println("Data: " + data);
+        System.out.println("Tipo: " + tipo);
+        System.out.println("Situacao: " + sit);
+        System.out.println("Obs: " + obs);
+        /**
+         * FIM DO TESTE!!!!
+         */
+
+        if (C.cadastrarfinanca(p)) {
+            //Insere no banco de dados
+            insertFinanca(tipo, data, valor, sit, obs);
+
+            //JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE); ERRO NA EXIBIÇÃO DESSA JANELA!!!!
+            this.dispose();
+            telaanterior.setEnabled(true);
+            telaanterior.requestFocus(); //Traz o foco para tela anterior
+        } else {
+            //JOptionPane.showMessageDialog(this, "Erro. Código: A DEFINIR!!!!", title, JOptionPane.ERROR_MESSAGE);
         }
-        */
-        JOptionPane.showMessageDialog(this, "Apenas para mostrar algo salvo");  
+        JOptionPane.showMessageDialog(this, "Apenas para mostrar algo salvo");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -340,8 +371,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         /**
-         * 05/01 - Maycon
-         * Tela fechada
+         * 05/01 - Maycon Tela fechada
          */
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior

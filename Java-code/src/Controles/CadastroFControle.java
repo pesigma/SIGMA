@@ -14,7 +14,7 @@ import Entidades.Financa;
 public class CadastroFControle {
     public boolean cadastrarfinanca(Financa p) {
         boolean result = false;
-        if (p != null && p.getValor()!=0 && p.getData()!=null && p.getDesc()!=null) {
+        if (p != null && p.getValor()!=0 && p.getData()!=null && p.getobs()!=null) {
             result = true;
         }
         return result;

@@ -12,21 +12,21 @@ package Entidades;
 public class Financa {
     
     //Atributos
-    String tipo, data, desc;
-    boolean sit;
-    float valor;
+    String data, obs;
+    boolean sit, tipo;
+    double valor;
 
     //Construtores
-    public Financa(String tipo, String data, float valor, String desc, boolean sit) {
+    public Financa(boolean tipo, String data, double valor, String obs, boolean sit) {
         this.tipo = tipo;
         this.data = data;
         this.valor = valor;
-        this.desc = desc;
+        this.obs = obs;
         this.sit = sit;
     }
     
     //Métodos
-    public String getTipo() {
+    public boolean getTipo() {
         return tipo;
     }
 
@@ -34,19 +34,19 @@ public class Financa {
         return data;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getobs() {
+        return obs;
     }
 
     public boolean isSit() {
         return sit;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(boolean tipo) {
         this.tipo = tipo;
     }
 
@@ -54,15 +54,15 @@ public class Financa {
         this.data = data;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDesc(String obs) {
+        this.obs = obs;
     }
 
     public void setSit(boolean sit) {
         this.sit = sit;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
     
