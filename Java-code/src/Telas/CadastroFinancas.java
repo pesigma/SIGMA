@@ -500,6 +500,13 @@ public class CadastroFinancas extends javax.swing.JFrame {
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed
 
+    /**
+    * 06/02/16 - Juliano Felipe 
+    * Método para alterar a cor do "Painel de Consulta".
+    * Coloca uma borda igual a padrão, no entando, altera-se a cor.
+    * 
+    * @param cor para pintar a borda.
+    */
     private void PanelColor (Color cor){
         Border line = BorderFactory.createLineBorder(cor);
         TitledBorder Brdr = BorderFactory.createTitledBorder(line,"Consultar Finança");
