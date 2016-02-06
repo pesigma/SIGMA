@@ -135,7 +135,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor"));
 
-        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("$ #,###.00"))));
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -352,7 +352,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
      * Método para pegar a data do jDayChooser (pertencente ao jCalendar)
      * e transformar no padrão salvo no banco de dados.
      * 
-     * @param date - Data a ser transformada para o padrão (obtiva por 
+     * @param date - Data a ser transformada para o padrão (obtida por 
      * ".getDate().toString();")
      * 
      * @return String de data no formato estipulado
@@ -405,6 +405,28 @@ public class CadastroFinancas extends javax.swing.JFrame {
         return day + "/" + month + "/" + year;
     }
     
+    /**
+     * 06/02/16 - Juliano Felipe 
+     * Método para pegar a String do "jFormattedTextField2"
+     * e transformá-la no padrão salvo no banco de dados (double).
+     * 
+     * @param valorText - String a ser transformada para o padrão double.
+     * 
+     * @return valor double convertido.
+     */
+    private double getValor (String valorText){
+        //Split nas vírgulas - Exemplo: 1,234.00  --> 1234.00
+        String[] split = valorText.split(","); //Split on commas
+        int i,j = split.length; //Contagem de "trios separados por virgulas"
+        valorText=""; //String passada por parâmetro não mais necessária,
+                     //A inicializa para ser "convertida".
+        for (i=0; i<j; i++){
+            valorText+=split[i]; //Concatena-se as partes
+        }
+        
+        return Double.parseDouble(valorText);
+    }
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Botão Salvar pressionado
         /**
@@ -413,8 +435,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
          * quando fizer-se necessario
          */
         //Botão Salvar pressionado
-        //double valor = Double.parseDouble(jFormattedTextField2.getText());
-        double valor = 000; //Tentativa de usar formatted, bugado POR ENQUANTO
+        double valor = getValor (jFormattedTextField2.getValue().toString());
         
         String data = getJDate(jDateChooser1.getDate().toString());
         
@@ -448,15 +469,6 @@ public class CadastroFinancas extends javax.swing.JFrame {
          */
 
         if (C.cadastrarfinanca(p)) {
-            System.out.println("ENTER");  //BUGUEI AQUI, CONTROLADOR NÃO RETORNA TRUE, ENTÃO NÃO ENTRA AQUI
-                
-            
-            
-            
-            
-            
-            
-            
             //Insere no banco de dados
             insertFinanca(tipo, data, valor, sit, obs);
 
@@ -498,8 +510,8 @@ public class CadastroFinancas extends javax.swing.JFrame {
     
     private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
         System.out.println ("CONSULTOU UMA FINANÇA");
-        
         PanelColor (Color.GREEN);
+        JOptionPane.showMessageDialog(null, "Não faz nada, só uma ideia.\nA borda ficou verde.", "NOTOU ESSE TITULO, MORTAL", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_SelectButtonActionPerformed
 
     /**
