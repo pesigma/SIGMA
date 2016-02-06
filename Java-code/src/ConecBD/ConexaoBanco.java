@@ -101,7 +101,27 @@ public class ConexaoBanco {
             
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro. Código: DEFINIR ERRO!!!!.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-04.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+    
+    /**
+     * 04/02/2016 - Juliano Felipe 
+     * Conexao "geral"
+     */
+    public static Connection Geral() {
+        Connection conn = null;
+
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:BDSigma.sqlite");
+            //cliente e o nome da tabela
+            //JOptionPane.showMessageDialog(null, "Conectado"); //Comentar no futuro            
+            return conn;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-05.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
