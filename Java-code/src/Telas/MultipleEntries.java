@@ -22,7 +22,9 @@ import java.util.List;
  */
 public class MultipleEntries extends javax.swing.JDialog {
     public CadastroCliente telaanterior;
+    public CadastroServicos anteriorServico;
     public MultipleEntries parafechar;
+    int what_close;
     
     String title=null;
     String ret=null;
@@ -65,6 +67,21 @@ public class MultipleEntries extends javax.swing.JDialog {
         this();
         this.telaanterior = telanterior;
         FillList(1, fname); //1 = Cliente
+        what_close = 1;
+    }
+    
+    /**
+     * 07/02/16 - Juliano Felipe 
+     * Construtor para ser executado quando chamado do método de servicos
+     * @param telanterior Instância de tela para restauração.
+     * @param fname Primeiro nome do cliente, a ser pesquisado no banco de dados
+     */
+    public MultipleEntries(CadastroServicos telanterior, String fname) {
+        //Chamar construtor
+        this();
+        this.anteriorServico = telanterior;
+        FillList(1, fname); //1 = Cliente
+        what_close = 2;
     }
 
     /**
@@ -194,16 +211,39 @@ public class MultipleEntries extends javax.swing.JDialog {
         }
     }
     
+    /**
+     * 07/02/16 - Juliano Felipe 
+     * Método para fechar esta janela e retornar para a anterior, de acordo
+     * com qual janela a chamou.
+     * @param lastDoubleCode Ultimo parte de dois dígitos para código
+     * de erros. Estes últimos dois dígitos indicam de onde foi chamado o método.
+     */
+    private void Closing (String lastDoubleCode){
+        switch (what_close){
+            case 1:
+                telaanterior.setEnabled(true);
+                telaanterior.requestFocus(); //Traz o foco para tela anterior
+                break;
+            case 2:
+                anteriorServico.setEnabled(true);
+                anteriorServico.requestFocus(); //Traz o foco para tela anterior
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Erro ao fechar e retornar para a janela anterior./nCódigo: 04-06-" + lastDoubleCode + ".", title, JOptionPane.ERROR_MESSAGE);
+                //Erro 04-06-02   -   Dispose no botão Cancel
+                //Erro 04-06-03   -   Dispose no "formWindowClosed"
+                //Erro 04-06-04   -   Dispose no botão Select
+        }
+    }
+    
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
-        telaanterior.setEnabled(true);
-        telaanterior.requestFocus(); //Traz o foco para tela anterior
+        Closing ("02");
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         this.dispose();
-        telaanterior.setEnabled(true);
-        telaanterior.requestFocus(); //Traz o foco para tela anterior
+        Closing ("03");
     }//GEN-LAST:event_formWindowClosed
     
     private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
@@ -215,8 +255,8 @@ public class MultipleEntries extends javax.swing.JDialog {
                 
         parafechar=this; //Para salvar a instância desta tela
         this.setVisible(false); //Apenas esconde a tela para acessar as variáveis nas outras telas
-        telaanterior.setEnabled(true);
-        telaanterior.requestFocus(); //Traz o foco para tela anterior
+        
+        Closing ("04");
         
         flag=true; //Seta para verdadeiro para saber que nos métodos "get" é o valor real
     }//GEN-LAST:event_SelectButtonActionPerformed
