@@ -19,7 +19,7 @@ public class Servico {
 
     //Construtores
     public Servico(int idc, String placa, String modelo, int km, boolean sit, String obs) {
-        //this.idc = idc;
+        this.idc = idc;
         this.placa = placa;
         this.modelo = modelo;
         this.km = km;

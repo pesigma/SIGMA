@@ -374,8 +374,8 @@ public class CadastroCliente extends javax.swing.JFrame {
             pst.setString(5, obs);
             pst.execute();
             concliente.close();
+            pst.close();
 
-            System.out.println("Eh pra ter conseguido!!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-01.", title, JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getClass().getName() + ": " + e.getMessage());

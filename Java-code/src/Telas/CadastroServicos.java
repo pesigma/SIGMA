@@ -69,6 +69,7 @@ public class CadastroServicos extends javax.swing.JFrame {
         this();
         this.telaanterior = telanterior;
         metodo = option;
+        IDField.setEditable(false);
         if (option > 1)
             metodosServicos (option);
     }
@@ -129,7 +130,6 @@ public class CadastroServicos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de serviços");
-        setPreferredSize(new java.awt.Dimension(376, 346));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -153,7 +153,7 @@ public class CadastroServicos extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa"));
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAAAAAA")));
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUUUUUU")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -358,14 +358,44 @@ public class CadastroServicos extends javax.swing.JFrame {
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed
 
-     private int selectService (String placa){
+    /**
+     * 09/02/16 - Juliano Felipe
+     * Função para inserção de serviços no banco de dados
+     * @param idCliente - Id do cliente para qual o serviço será prestado
+     * @param placa do veículo
+     * @param modelo do veículo
+     * @param km do veículo no momento de início do serviço
+     * @param situacao do serviço (Concluído=true; não concluido=false)
+     * @param obs a respeito do serviço
+     */
+    private void insertService(int idCliente, String placa, String modelo, int km, boolean situacao, String obs){
+        
+    }
+    
+    /**
+     * 09/02/16 - Juliano Felipe
+     * Função para consulta de serviços no banco de dados.
+     * @param placa do veículo (Consulta por placa).
+     * @return id do serviço pesquisado.
+     */
+    private int selectService (String placa){
         
         return -1;
     }
     
-    private int updateService (String placa, String kms, String modelo, boolean concluido, String cliente, String obs, int servicoId ){
+    /**
+     * 09/02/16 - Juliano Felipe
+     * Função para atualizar dados do serviço no banco de dados.
+     * @param idCliente - Id do cliente para qual o serviço será prestado
+     * @param placa do veículo
+     * @param modelo do veículo
+     * @param km do veículo no momento de início do serviço
+     * @param situacao do serviço (Concluído=true; não concluido=false)
+     * @param obs a respeito do serviço
+     */
+    private void updateService (int idCliente, String placa, String modelo, int km, boolean situacao, String obs){
          
-        return -1;
+        return;
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -388,8 +418,8 @@ public class CadastroServicos extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-            }else{              
-                updateService (jFormattedTextField1.getText(), jTextField2.getText(), jFormattedTextField2.getText(), jCheckBox1.isSelected(), ClienteField.getText(), jTextPane1.getText(), serviceId);
+            }else{ //Ainda não alterei aqui, apenas alterei o protótipo da função. (Quem fazer, cuidado com os "parseInt" e companhia).             
+                updateService (IDField.getText(), jTextField2.getText(), jFormattedTextField2.getText(), jCheckBox1.isSelected(), ClienteField.getText(), jTextPane1.getText(), serviceId);
                 
                 //jButton1.setEnabled(false); //Para não tentar salvar novamente
                 metodosServicos(3); //Resetar modificação
@@ -426,24 +456,27 @@ public class CadastroServicos extends javax.swing.JFrame {
         String modelo = jFormattedTextField2.getText();
         String KM = jTextField2.getText();
         String obs = jTextPane1.getText();
-        boolean sit = jCheckBox1.isEnabled();
-        //FALTA pegar idc!!
-
-        int km=0, idc=1;
+        boolean sit = jCheckBox1.isSelected();  //Outro método para que true seja para "checked" no concluído
+        String txtId = IDField.getText();
+        
+        int km=0, idc=-1;
         try {
             km = Integer.parseInt(KM);
-            //idc = Integer.parseInt(IDC);
+            idc = Integer.parseInt(txtId);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-01.", title, JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getClass().getName() + ": " + e.getMessage());            return;
         }
+        
         Servico N = new Servico(idc, placa, modelo, km, sit, obs);
         //Chama o controle para cadastrar
         CadastroSControle C = new CadastroSControle();
         if (C.cadastrarservico(N)) {
             JOptionPane.showMessageDialog(this, "Cadastrado com sucesso");
+            //insertService(idc, placa, modelo, km, sit, obs);
             this.dispose();
             telaanterior.setEnabled(true);
+            telaanterior.requestFocus(); //Traz o foco para tela anterior
         } else {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-02.", title, JOptionPane.ERROR_MESSAGE);
         }
@@ -466,18 +499,32 @@ public class CadastroServicos extends javax.swing.JFrame {
     */
     private void PanelColor (Color cor){
         Border line = BorderFactory.createLineBorder(cor);
-        TitledBorder Brdr = BorderFactory.createTitledBorder(line,"Consultar Finança");
+        TitledBorder Brdr = BorderFactory.createTitledBorder(line,"Cliente");
         Brdr.setTitleJustification(TitledBorder.LEFT);
         Brdr.setTitlePosition(TitledBorder.TOP);
         ClientePanel.setBorder (Brdr);
     }
     
     private void ConsultarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarClienteActionPerformed
-        String select = ClienteField.getText();
-        if (select.isEmpty() || select.charAt(0)==' '){ //Vazio ou começa com espaço
+        String fname = ClienteField.getText();
+        if (fname.isEmpty() || fname.charAt(0)==' '){ //Vazio ou começa com espaço
             JOptionPane.showMessageDialog(this, "Campo de cliente vazio ou iniciando por espaço. Código: 04-04-03.", title, JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        if (true)
+                
+        this.setEnabled(false);
+        MultipleEntries multipleEntries = new MultipleEntries(this, fname);
+        multipleEntries.setVisible(true);
+        
+        String nome = multipleEntries.getString();
+        int rowid = multipleEntries.getId();
+        
+        multipleEntries.parafechar.dispose();
+        
+        IDField.setText("" + rowid); //Gambiarra de transformação de int para String
+        ClienteField.setText(nome);
+        
+        if (rowid>0) //Retornou um id existente
             PanelColor (Color.GREEN);
     }//GEN-LAST:event_ConsultarClienteActionPerformed
 

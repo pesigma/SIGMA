@@ -186,6 +186,9 @@ public class MultipleEntries extends javax.swing.JDialog {
      * 1 - Clientes;
      */
     private void FillList (int what_is, String ToFill){      
+        String[] splitname = ToFill.split(" ",2);     //split by spaces
+        ToFill = splitname[0]; // Para garantir que sempre pega o primeiro nome        
+        
         if (what_is==1){
             Connection concliente = ConexaoBanco.concliente();
             try {
