@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +25,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MultipleTable extends javax.swing.JDialog {
     public CadastroServicos telaanterior;
+    public MultipleTable parafechar;
     
+    int Idservico=-1; //Id referente ao servico
+    String nomeCliente=""; //Nome do cliente associado ao servico
+    boolean flag=false; //Flag para determinar se os "gets" estão "prontos"
     String title=null;
     int length_row; //Num. of columns on the jTable
     
@@ -153,20 +158,21 @@ public class MultipleTable extends javax.swing.JDialog {
         String fullname=""; //Inicializa a variável nome
         try {
             String sql2 = "SELECT rowid, * FROM cliente WHERE rowid="+rowid;
-            PreparedStatement pst = Mul.prepareStatement(sql2);
-            ResultSet rs = pst.executeQuery();
+            PreparedStatement psta = Mul.prepareStatement(sql2);
+            ResultSet ra = psta.executeQuery();
 
-            if (rs.next()){//i=linha e j=coluna
-                fullname = rs.getString("name");
+            if (ra.next()){//i=linha e j=coluna
+                fullname = ra.getString("nome");
                 fullname += " "; //Adiciona um espaço entre o primeiro nome e o resto
-                fullname += rs.getString("lname");                   
+                fullname += ra.getString("lname");                   
             }
-            rs.close();
-            pst.close();
+            ra.close();
+            psta.close();
             
             return fullname;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-02.", title, JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return null; //Erro
     }
@@ -175,18 +181,19 @@ public class MultipleTable extends javax.swing.JDialog {
      * 07/02/16 - Juliano Felipe 
      * Preenche a matriz de dados conforme consulta no banco de dados.
      * @param placa Placa associada ao serviço.
-     * @return data Matriz com os dados da consulta.
+     * @return data "Matriz" (ArrayList em que cada posição é uma ArrayList) com os dados da consulta.
      */ 
-    private Object[][] getData (String placa){
-        Object [][] data=null;
-        int i=0,j=0; //Indexadores para a matriz de objetos
+    private ArrayList<ArrayList<Object>> getData (String placa){
+        ArrayList<ArrayList<Object>> data = new ArrayList<>();
+        ArrayList<Object> row = new ArrayList();
         int id;
         String fullname;
 
         Connection Mul = ConexaoBanco.Multiple();
         try {
-            String sql2 = "SELECT rowid, * FROM servico WHERE Placa="+placa;
+            String sql2 = "SELECT rowid, * FROM servico WHERE Placa=?";
             PreparedStatement pst = Mul.prepareStatement(sql2);
+            pst.setString(1, placa);
             ResultSet rs = pst.executeQuery();
 
             while (rs.next())
@@ -194,17 +201,22 @@ public class MultipleTable extends javax.swing.JDialog {
                 id = rs.getInt("Idcliente");
                 fullname = getName(id,Mul);
                 
-                data[i][j] = rs.getInt("rowid");                  j++;
-                data[i][j] = rs.getString("Placa");               j++;
-                data[i][j] = rs.getString("Quilometragem");       j++;
-                data[i][j] = rs.getString("Modelo");              j++;
-                data[i][j] = rs.getBoolean ("Situacao");          j++;
-                data[i][j] = fullname;                            j++;
-                data[i][j] = rs.getInt("Idcliente");              j++;
-                data[i][j] = rs.getString("Obs");                 j=0;
+                //pst = Mul.prepareStatement(sql2);
+                //pst.setString(1, placa);
+                //rs = pst.executeQuery();                
                 
-                i++;
+                row.add(rs.getInt("rowid"));                  
+                row.add(rs.getString("Placa"));               
+                row.add(rs.getString("Quilometragem"));       
+                row.add(rs.getString("Modelo"));              
+                row.add(rs.getBoolean ("Situacao"));                          
+                row.add(fullname);                          
+                row.add(rs.getInt("Idcliente"));              
+                row.add(rs.getString("Obs"));                 
                 
+                data.add(row);
+                
+                System.out.println(id + "     " + fullname);
                 //ids.add(rs.getInt("rowid")); 
                 //String names = nome + " " + rs.getString("lname"); //O primeiro nome é o mesmo, então só resgata o "resto" e o concatena.
                 //model.addElement(names); //adiciona os itens para o modelo
@@ -217,7 +229,9 @@ public class MultipleTable extends javax.swing.JDialog {
             
             return data;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-01.", title, JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-01.", title, JOptionPane.ERROR_MESSAGE);
+            //System.err.println(Arrays.toString(e.getStackTrace()));
+            System.err.println("04-07-01: " + e.getClass().getName() + ": " + e.getMessage());
         }
         return null; //Erro
     }
@@ -232,22 +246,47 @@ public class MultipleTable extends javax.swing.JDialog {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.addColumn(columnNames);
         
-        Object [][] data = getData (placa);
-        int i = data.length;
-        int j = data[0].length;
+        ArrayList<ArrayList<Object>> data = getData (placa);
+        int i = data.size();
+        int j = columnNames.length; //Gambiarra para não pegar o size do "ArrayList interno"
         int n,k;
         length_row = j;
        
         Object[] list=null;
         for (n=0; n<i; n++){
-            for (k=0; k<j; k++){
+            list[n] = data.get(n);
+            /*for (k=0; k<j; k++){
                 list[k] = data[n][k];
-            } 
-            model.addRow(list);
+                //data.get(3)
+            } */
+            model.addRow(data);
         }
         jTable.setModel(model);
     }
     
+    /**
+     * 10/02/16 - Juliano Felipe 
+     * Função para tornar String selecionada acessível
+     * @return ret String selecionada na lista
+     */
+    public String getNomeCliente (){
+        if (flag)
+           return nomeCliente;
+        else
+            return null;
+    }
+    
+    /**
+     * 10/02/16 - Juliano Felipe 
+     * Função para tornar id acessível
+     * @return id Id associado à string selecionada na lista
+     */
+    public int getIdservico (){
+        if (flag)
+           return Idservico;
+        else
+            return -1;
+    }
     
     private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
         int row = jTable.getSelectedRow(); 
@@ -260,10 +299,15 @@ public class MultipleTable extends javax.swing.JDialog {
             System.out.println("ROW DATA: " +rowData[i]);
         }
         
+        //If "chamado por servico", setar "Idservico" e "nomeCliente"
+        Idservico = Integer.parseInt(rowData[0].toString());
+        nomeCliente = rowData[5].toString();
+        
+        parafechar=this; //Para salvar a instância desta tela
         this.setVisible(false); //Apenas esconde a tela para acessar as variáveis nas outras telas
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior
-        
+        flag=true;
     }//GEN-LAST:event_SelectButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed

@@ -87,9 +87,10 @@ public class CadastroServicos extends javax.swing.JFrame {
         if (op>=2){//Op==2 - Consulta
            this.setTitle("Consulta de serviços"); 
            jFormattedTextField2.setEditable(false);
-           jTextField2.setEditable(false);
+           KMField.setEditable(false);
            jCheckBox1.setEnabled(false);
            jTextPane1.setEnabled(false);
+           ClienteField.setEnabled(false);
            jButton1.setText("Consultar");
         }
         if (op==3){//Op==3 - Modificar
@@ -114,7 +115,7 @@ public class CadastroServicos extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        KMField = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
         jPanel5 = new javax.swing.JPanel();
@@ -153,7 +154,7 @@ public class CadastroServicos extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa"));
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUUUUUU")));
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -177,21 +178,19 @@ public class CadastroServicos extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Quilometragem"));
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
+        KMField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.000"))));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+            .addComponent(KMField, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(KMField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Modelo"));
@@ -379,6 +378,16 @@ public class CadastroServicos extends javax.swing.JFrame {
      * @return id do serviço pesquisado.
      */
     private int selectService (String placa){
+        this.setEnabled(false);
+        String []columnNames = {"rowid","Placa","Quilometragem","Modelo","Situacao","Nome do Cliente","Idcliente","Obs"};
+        MultipleTable MServiceTable = new MultipleTable (this, columnNames, placa);
+        MServiceTable.setVisible(true);
+        
+        //Gets
+        //nome = MServiceTable.getString();
+        //rowid = MServiceTable.getId();
+        
+        MServiceTable.parafechar.dispose();
         
         return -1;
     }
@@ -395,7 +404,7 @@ public class CadastroServicos extends javax.swing.JFrame {
      */
     private void updateService (int idCliente, String placa, String modelo, int km, boolean situacao, String obs){
          
-        return;
+        //return;
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -419,13 +428,15 @@ public class CadastroServicos extends javax.swing.JFrame {
                     return;
                 }
             }else{ //Ainda não alterei aqui, apenas alterei o protótipo da função. (Quem fazer, cuidado com os "parseInt" e companhia).             
-                updateService (IDField.getText(), jTextField2.getText(), jFormattedTextField2.getText(), jCheckBox1.isSelected(), ClienteField.getText(), jTextPane1.getText(), serviceId);
+                int id = Integer.parseInt(IDField.getText());
+                int km = Integer.parseInt(KMField.getText());
+                updateService (id, jFormattedTextField1.getText(), jFormattedTextField2.getText(), km, jCheckBox1.isSelected(), jTextPane1.getText());
                 
                 //jButton1.setEnabled(false); //Para não tentar salvar novamente
                 metodosServicos(3); //Resetar modificação
                 return;
             }
-            jTextField2.setEditable(true); //Todos os fields podem ser alterados novamente
+            KMField.setEditable(true); //Todos os fields podem ser alterados novamente
             jFormattedTextField2.setEditable(true);
             jCheckBox1.setEnabled(true);
             ClienteField.setEditable(true);
@@ -437,7 +448,7 @@ public class CadastroServicos extends javax.swing.JFrame {
         if (metodo==4){
             //Display de dados
             jFormattedTextField1.setText("ABCDEFG");
-            jTextField2.setText("150000");
+            KMField.setText("150000");
             jFormattedTextField2.setText("WOLKSVAGEN GOL");
             jCheckBox1.setSelected(true);
             jTextPane1.setText("Teste");
@@ -454,7 +465,7 @@ public class CadastroServicos extends javax.swing.JFrame {
         //Botão Salvar pressionado
         String placa = jFormattedTextField1.getText();
         String modelo = jFormattedTextField2.getText();
-        String KM = jTextField2.getText();
+        String KM = KMField.getText();
         String obs = jTextPane1.getText();
         boolean sit = jCheckBox1.isSelected();  //Outro método para que true seja para "checked" no concluído
         String txtId = IDField.getText();
@@ -481,10 +492,6 @@ public class CadastroServicos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-02.", title, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
@@ -568,6 +575,7 @@ public class CadastroServicos extends javax.swing.JFrame {
     private javax.swing.JPanel ClientePanel;
     private javax.swing.JButton ConsultarCliente;
     private javax.swing.JTextField IDField;
+    private javax.swing.JFormattedTextField KMField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
@@ -580,7 +588,6 @@ public class CadastroServicos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 }
