@@ -27,8 +27,7 @@ import javax.swing.border.TitledBorder;
  * @author Maycon
  */
 public class CadastroServicos extends javax.swing.JFrame {
-
-    public TelaPrincipal telaanterior;
+public TelaPrincipal telaanterior;
     public int metodo;
     private String title;
     private int serviceId=-1;
@@ -374,29 +373,28 @@ public class CadastroServicos extends javax.swing.JFrame {
         MServiceTable.setVisible(true);
         
         //Gets
-        //String fullname = MServiceTable.getNomeCliente();
-        int rowidService = MServiceTable.getIdservico();
-        Object[] selRow = MServiceTable.getRowdata();
+        //nome = MServiceTable.getString();
+        int rowid = MServiceTable.getId();
+        Object[] rowDados = MServiceTable.getRow();
         
-        MServiceTable.parafechar.dispose();
+        jFormattedTextField1.setText(rowDados[1].toString());
+        KMField.setText(rowDados[2].toString());
+        jFormattedTextField2.setText(rowDados[3].toString());
         
-        jFormattedTextField1.setText(selRow[1].toString());
-        KMField.setText(selRow[2].toString());
-        jFormattedTextField2.setText(selRow[3].toString());
-        
-        String tmp = selRow[4].toString();
+        String tmp = rowDados[4].toString();
         if (tmp.equals("true")){
             jCheckBox1.setSelected(true);
         } else if (tmp.equals("false")){
             jCheckBox1.setSelected(false);
         }
         
-        ClienteField.setText(selRow[5].toString());
-        IDField.setText(selRow[6].toString());
-        jTextPane1.setText(selRow[7].toString());
+        ClienteField.setText(rowDados[5].toString());
+        IDField.setText(rowDados[6].toString());
+        jTextPane1.setText(rowDados[4].toString());
         
+        MServiceTable.parafechar.dispose();
         
-        return rowidService;
+        return rowid;
     }
     
     /**

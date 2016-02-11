@@ -345,6 +345,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="N&#xe3;o pago"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SitToggleActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="SelectButton">
           <Properties>

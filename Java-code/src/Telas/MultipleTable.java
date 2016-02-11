@@ -14,8 +14,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
  
@@ -26,14 +24,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MultipleTable extends javax.swing.JDialog {
     public CadastroServicos telaanterior;
+    public CadastroFinancas anteriorFinancas;
     public MultipleTable parafechar;
+    int what_close;
     
-    int Idservico=-1; //Id referente ao servico
-    String nomeCliente=""; //Nome do cliente associado ao servico
+    int num_rs=0; //Número de resultados retornados pelo executeQuery, em qualuqer lugar que seja
+    int SelectedId=-1; //RowId referente ao selecionado na lista
+    String nomeCliente=""; //Nome do cliente associado ao servico (só gerado se aberto pelo cadastro de serviços
     boolean flag=false; //Flag para determinar se os "gets" estão "prontos"
     String title=null;
     int length_row; //Num. of columns on the jTable
-    Object[] dataLinha;
+    Object [] rows;
     
     /**
      * Creates new form MultipleTable
@@ -68,8 +69,25 @@ public class MultipleTable extends javax.swing.JDialog {
         //Chamar construtor
         this();
         this.telaanterior = telanterior;
+        this.setTitle("Seleção de serviços");
+        what_close=1;
         CreateTable (columnNames, placa);
-        //System.out.println(Arrays.toString(columnNames)); //Loucura, não? Sem encapsulamento ele imprime um "identificador de objetos java"
+    }
+    
+    /**
+     * 11/02/16 - Juliano Felipe 
+     * Construtor para ser executado quando chamado do método de financas
+     * @param telanterior Instância de tela para restauração.
+     * @param columnNames Vetor de nomes para os Headers da table
+     * @param situacao para consulta no banco de dados (pago ou não pago)
+     */
+    public MultipleTable(CadastroFinancas telanterior, String[] columnNames, String situacao) {
+        //Chamar construtor
+        this();
+        this.anteriorFinancas = telanterior;
+        this.setTitle("Seleção de finanças");
+        what_close = 2;
+        CreateTable (columnNames, situacao);
     }
     
     /**
@@ -100,8 +118,9 @@ public class MultipleTable extends javax.swing.JDialog {
             },
             new String [] {
 
-            }
-        ));
+            })
+            {public boolean isCellEditable(int row, int column){return false;}}
+        );
         jScrollPane1.setViewportView(jTable);
         jTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -148,6 +167,62 @@ public class MultipleTable extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+   /**
+     * 11/02/16 - Juliano Felipe 
+     * Preenche a matriz de dados conforme consulta no banco de dados.
+     * @param situacao sobre a financa a consultar no banco de dados
+     * @return data "Matriz" (ArrayList em que cada posição é uma ArrayList) com os dados da consulta.
+     */ 
+    private ArrayList<ArrayList<Object>> getDataFinancas (String situacao){
+        ArrayList<ArrayList<Object>> data = new ArrayList<>();
+        
+        String sit;  //Pago = true/1; Não pago = false/0
+        if (situacao.equals("Não pago")) sit="0";
+        else sit="1";
+
+        Connection Mul = ConexaoBanco.Multiple();
+        try {
+            String sql2 = "SELECT rowid, * FROM financa WHERE sit=?";
+            PreparedStatement pst = Mul.prepareStatement(sql2);
+            pst.setString(1, sit);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next())
+            {//i=linha e j=coluna
+                ArrayList<Object> row = new ArrayList();           
+                String tmp; //String temporária para selecionar os tipos e transformá-los em algo legível (para o cliente).
+                
+                row.add(rs.getInt("rowid"));                  
+                
+                if(rs.getBoolean("tipo")) tmp = "Receita";
+                else tmp = "Despesa";
+                row.add(tmp);               
+                
+                row.add(rs.getString("data"));       
+                row.add(rs.getDouble("valor"));              
+                
+                if(rs.getBoolean("sit")) tmp = "Quitado";
+                else tmp = "Pendente";
+                row.add(tmp);                          
+                
+                row.add(rs.getString("obs"));                 
+                
+                data.add(row);
+                num_rs++;
+            }
+            rs.close();
+            pst.close();
+            Mul.close();
+            
+            return data;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-06.", title, JOptionPane.ERROR_MESSAGE);
+            //System.err.println(Arrays.toString(e.getStackTrace()));
+            System.err.println("04-07-06: " + e.getClass().getName() + ": " + e.getMessage());
+        }
+        return null; //Erro
+    }
+    
     /**
      * 07/02/16 - Juliano Felipe 
      * Seleciona o nome completo do cliente no banco de dados, table "clientes"
@@ -202,25 +277,29 @@ public class MultipleTable extends javax.swing.JDialog {
                 ArrayList<Object> row = new ArrayList();
                 
                 id = rs.getInt("Idcliente");
-                fullname = getName(id,Mul);               
+                fullname = getName(id,Mul);              
+                
                 row.add(rs.getInt("rowid"));                  
                 row.add(rs.getString("Placa"));               
                 row.add(rs.getString("Quilometragem"));       
                 row.add(rs.getString("Modelo"));              
                 row.add(rs.getBoolean ("Situacao"));                          
                 row.add(fullname);                          
-                row.add(id);              
+                row.add(rs.getInt("Idcliente"));              
                 row.add(rs.getString("Obs"));                 
                 
                 data.add(row);
+                num_rs++;
             }
+            //jList.setModel(model);
+
             rs.close();
             pst.close();
             Mul.close();
             
             return data;
         } catch (Exception e) {
-            //JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-01.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-01.", title, JOptionPane.ERROR_MESSAGE);
             //System.err.println(Arrays.toString(e.getStackTrace()));
             System.err.println("04-07-01: " + e.getClass().getName() + ": " + e.getMessage());
         }
@@ -234,40 +313,58 @@ public class MultipleTable extends javax.swing.JDialog {
      * @param placa para consulta de serviços
      */
     private void CreateTable (String[] columnNames, String placa){
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();       
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
-        ArrayList<ArrayList<Object>> data = getData (placa);
+        ArrayList<ArrayList<Object>> data = new ArrayList();
+        
+        if (what_close==1){ //Mais uma entrada para "what_close" e faz-se um switch
+            data = getData (placa);   
+        } else if (what_close==2){ //Re-aproveitamento de funçao
+            data = getDataFinancas (placa);//Se "what_close" é 2, deve-se consultar finanças
+        }
+         
+        if (num_rs<1){ //Se só for um resultado, seleciona-se a única row?
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-07.\nNenhum resultado encontrado. Tente alterar os dados de consulta.", title, JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+            Closing ("07");
+            return;
+        }
+        
         int i = data.size();
         int j = columnNames.length; //Gambiarra para não pegar o size do "ArrayList interno"
-        int n,k,t;
+        int t,n,k;
         length_row = j;
-        
-        Object column;
+       
         for (t=0; t<j; t++){
-            column = columnNames[t];
-            model.addColumn(column);
+            model.addColumn(columnNames[t]);
         }
         
         Object[] list = new Object [j];
         for (n=0; n<i; n++){
-            ArrayList <Object> aux = new ArrayList();
-            aux = data.get(n); //Pega uma posição (de arraylist) do arraylist
+            ArrayList<Object> aux = new ArrayList();
+            aux = data.get(n);
             for (k=0; k<j; k++){
-                list[k] = aux.get(k); //Pega cada posição do arraylist que veio de uma posição da var. "data"
+                list[k] = aux.get(k);
             } 
             model.addRow(list);
         }
+        
         jTable.setModel(model);
+        //jTable.setEnabled(false);  //Não funciona para desabilitar edição
     }
     
     /**
      * 10/02/16 - Juliano Felipe 
-     * Função para tornar String selecionada acessível
-     * @return ret String selecionada na lista
+     * Função para tornar String selecionada acessível (somente se chamado pelo frame "cadastro Servicos"
+     * @return nomeCliente String selecionada na lista
      */
     public String getNomeCliente (){
         if (flag)
-           return nomeCliente;
+            if (what_close==1){
+                return nomeCliente;
+            } else {
+                return null;
+            }
         else
             return null;
     }
@@ -277,61 +374,85 @@ public class MultipleTable extends javax.swing.JDialog {
      * Função para tornar id acessível
      * @return id Id associado à string selecionada na lista
      */
-    public int getIdservico (){
+    public int getId (){
         if (flag)
-           return Idservico;
+            return SelectedId;
         else
             return -1;
     }
     
     /**
      * 11/02/16 - Juliano Felipe 
-     * Função para tornar data da linha acessível (sem precisar consultar do banco novamente)
-     * @return dataLinha da linha selecionada na lista
+     * Função para tornar a linha acessível sem precisar consultar do banco de dados novamente
+     * @return rows - Dados da linha selecionada, vindos direto do banco, sem alterações
      */
-    public Object[] getRowdata (){
+    public Object[] getRow (){
         if (flag)
-           return dataLinha;
+           return rows;
         else
             return null;
     }
     
     private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
         int row = jTable.getSelectedRow(); 
-        System.out.println("ROW " + row);
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
-        Object[] rowData = new Object [length_row];
+        Object[] rowData= new Object [length_row];
         for (int i=0; i<length_row; i++){ //For para copiar o vetor selecionado.
             rowData[i] = model.getValueAt(row, i);
-            System.out.println("ROW DATA: " +rowData[i]);
         }
         
-        //If "chamado por servico", setar "Idservico" e "nomeCliente"
-        Idservico = Integer.parseInt(rowData[0].toString());
-        nomeCliente = rowData[5].toString();
+        SelectedId = Integer.parseInt(rowData[0].toString());
+        
+        //If "chamado por servico", setar "nomeCliente"
+        if (what_close==1){
+            nomeCliente = rowData[5].toString();
+        } 
         
         parafechar=this; //Para salvar a instância desta tela
         this.setVisible(false); //Apenas esconde a tela para acessar as variáveis nas outras telas
-        telaanterior.setEnabled(true);
-        telaanterior.requestFocus(); //Traz o foco para tela anterior
+        Closing ("03");
         
-        dataLinha = rowData;
+        rows=rowData;
+        
         flag=true;
     }//GEN-LAST:event_SelectButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
-        telaanterior.setEnabled(true);
-        telaanterior.requestFocus(); //Traz o foco para tela anterior
+        Closing ("04");
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         this.dispose();
-        telaanterior.setEnabled(true);
-        telaanterior.requestFocus(); //Traz o foco para tela anterior
+        Closing ("05");
     }//GEN-LAST:event_formWindowClosed
 
+    /**
+     * 11/02/16 - Juliano Felipe 
+     * Método para fechar esta janela e retornar para a anterior, de acordo
+     * com qual janela a chamou.
+     * @param lastDoubleCode Ultimo parte de dois dígitos para código
+     * de erros. Estes últimos dois dígitos indicam de onde foi chamado o método.
+     */
+    private void Closing (String lastDoubleCode){
+        switch (what_close){
+            case 1:
+                telaanterior.setEnabled(true);
+                telaanterior.requestFocus(); //Traz o foco para tela anterior
+                break;
+            case 2:
+                anteriorFinancas.setEnabled(true);
+                anteriorFinancas.requestFocus(); //Traz o foco para tela anterior
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Erro ao fechar e retornar para a janela anterior./nCódigo: 04-06-" + lastDoubleCode + ".", title, JOptionPane.ERROR_MESSAGE);
+                //Erro 04-07-03   -   Dispose no botão Select
+                //Erro 04-07-04   -   Dispose no botão Cancel
+                //Erro 04-07-05   -   Dispose no "formWindowClosed"
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

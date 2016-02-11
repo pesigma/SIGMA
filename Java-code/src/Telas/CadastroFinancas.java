@@ -18,6 +18,7 @@ import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
+import java.text.SimpleDateFormat;
 
 /**
  * PROBLEMAS COM O ALINHAMENTO DOS ITENS!!
@@ -25,11 +26,11 @@ import javax.swing.BorderFactory;
  * @author Maycon
  */
 public class CadastroFinancas extends javax.swing.JFrame {
-
     public TelaPrincipal telaanterior;
     public int metodo;
     Connection confinanca = null;
 
+    String title;
     /**
      * 19/12 - Maycon Creates new form TelaServicos
      */
@@ -40,6 +41,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
+        title = this.getTitle();
         initNoicon(); //Seta "Logo vazio".
     }
 
@@ -248,6 +250,11 @@ public class CadastroFinancas extends javax.swing.JFrame {
         SelectPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)), "Consultar Finança"));
 
         SitToggle.setText("Não pago");
+        SitToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SitToggleActionPerformed(evt);
+            }
+        });
 
         SelectButton.setText("Consultar");
         SelectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -515,11 +522,73 @@ public class CadastroFinancas extends javax.swing.JFrame {
         SelectPanel.setBorder (Brdr);
     }
     
+    /**
+     * 11/02/16 - Juliano Felipe
+     * Função para consulta de finanças no banco de dados.
+     * @param situacao (Pago ou não pago). Seleciona todas as entradas no banco com os tais params.
+     * @return rowid da finança.
+     */
+    private int selectFinanca (String situacao){
+        this.setEnabled(false);
+        String []columnNames = {"rowid","tipo","data","valor","sit","Obs"};
+        MultipleTable MServiceTable = new MultipleTable (this, columnNames, situacao);
+        MServiceTable.setVisible(true);
+        
+        //Gets
+        int rowid = MServiceTable.getId();
+        Object[] rowDados = MServiceTable.getRow();
+        
+        String tmp = rowDados[1].toString();
+        if (tmp.equals("Receita")){
+            jRadioButton1.setSelected(true);
+            jRadioButton2.setSelected(false);
+        } else if (tmp.equals("Despesa")){
+            jRadioButton1.setSelected(false);
+            jRadioButton2.setSelected(true);
+        }
+        
+        try{
+            java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(rowDados[2].toString());
+            jDateChooser1.setDate(date);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.", title, JOptionPane.ERROR_MESSAGE);
+            //System.err.println(Arrays.toString(e.getStackTrace()));
+            System.err.println("04-XX-XX: " + e.getClass().getName() + ": " + e.getMessage());
+        }
+            
+        jFormattedTextField2.setText(rowDados[3].toString());
+                
+        tmp = rowDados[4].toString();
+        if (tmp.equals("Quitado")){
+            jCheckBox1.setSelected(true);
+        } else if (tmp.equals("Pendente")){
+            jCheckBox1.setSelected(false);
+        }
+        
+        jTextPane2.setText(rowDados[5].toString());
+        
+        MServiceTable.parafechar.dispose();
+        
+        return rowid;
+    }
+    
     private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
-        System.out.println ("CONSULTOU UMA FINANÇA");
+        String modo = SitToggle.getText();
+        
+        selectFinanca (modo);
+        
+        System.out.println ("Consultar finança no modo: |" + modo + "|");
         PanelColor (Color.GREEN);
-        JOptionPane.showMessageDialog(null, "Não faz nada, só uma ideia.\nA borda ficou verde.", "NOTOU ESSE TITULO, MORTAL", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_SelectButtonActionPerformed
+
+    private void SitToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SitToggleActionPerformed
+        //Botão toggle da situação
+        if (SitToggle.isSelected()){
+            SitToggle.setText("    Pago    ");
+        } else {
+            SitToggle.setText("Não pago");
+        }
+    }//GEN-LAST:event_SitToggleActionPerformed
 
     /**
      * @param args the command line arguments
