@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -32,6 +33,7 @@ public class MultipleTable extends javax.swing.JDialog {
     boolean flag=false; //Flag para determinar se os "gets" estão "prontos"
     String title=null;
     int length_row; //Num. of columns on the jTable
+    Object[] dataLinha;
     
     /**
      * Creates new form MultipleTable
@@ -67,6 +69,7 @@ public class MultipleTable extends javax.swing.JDialog {
         this();
         this.telaanterior = telanterior;
         CreateTable (columnNames, placa);
+        //System.out.println(Arrays.toString(columnNames)); //Loucura, não? Sem encapsulamento ele imprime um "identificador de objetos java"
     }
     
     /**
@@ -127,9 +130,7 @@ public class MultipleTable extends javax.swing.JDialog {
                         .addComponent(SelectButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(CancelButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -185,7 +186,7 @@ public class MultipleTable extends javax.swing.JDialog {
      */ 
     private ArrayList<ArrayList<Object>> getData (String placa){
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
-        ArrayList<Object> row = new ArrayList();
+        
         int id;
         String fullname;
 
@@ -198,31 +199,21 @@ public class MultipleTable extends javax.swing.JDialog {
 
             while (rs.next())
             {//i=linha e j=coluna
+                ArrayList<Object> row = new ArrayList();
+                
                 id = rs.getInt("Idcliente");
-                fullname = getName(id,Mul);
-                
-                //pst = Mul.prepareStatement(sql2);
-                //pst.setString(1, placa);
-                //rs = pst.executeQuery();                
-                
+                fullname = getName(id,Mul);               
                 row.add(rs.getInt("rowid"));                  
                 row.add(rs.getString("Placa"));               
                 row.add(rs.getString("Quilometragem"));       
                 row.add(rs.getString("Modelo"));              
                 row.add(rs.getBoolean ("Situacao"));                          
                 row.add(fullname);                          
-                row.add(rs.getInt("Idcliente"));              
+                row.add(id);              
                 row.add(rs.getString("Obs"));                 
                 
                 data.add(row);
-                
-                System.out.println(id + "     " + fullname);
-                //ids.add(rs.getInt("rowid")); 
-                //String names = nome + " " + rs.getString("lname"); //O primeiro nome é o mesmo, então só resgata o "resto" e o concatena.
-                //model.addElement(names); //adiciona os itens para o modelo
             }
-            //jList.setModel(model);
-
             rs.close();
             pst.close();
             Mul.close();
@@ -243,23 +234,28 @@ public class MultipleTable extends javax.swing.JDialog {
      * @param placa para consulta de serviços
      */
     private void CreateTable (String[] columnNames, String placa){
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        model.addColumn(columnNames);
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();       
         
         ArrayList<ArrayList<Object>> data = getData (placa);
         int i = data.size();
         int j = columnNames.length; //Gambiarra para não pegar o size do "ArrayList interno"
-        int n,k;
+        int n,k,t;
         length_row = j;
-       
-        Object[] list=null;
+        
+        Object column;
+        for (t=0; t<j; t++){
+            column = columnNames[t];
+            model.addColumn(column);
+        }
+        
+        Object[] list = new Object [j];
         for (n=0; n<i; n++){
-            list[n] = data.get(n);
-            /*for (k=0; k<j; k++){
-                list[k] = data[n][k];
-                //data.get(3)
-            } */
-            model.addRow(data);
+            ArrayList <Object> aux = new ArrayList();
+            aux = data.get(n); //Pega uma posição (de arraylist) do arraylist
+            for (k=0; k<j; k++){
+                list[k] = aux.get(k); //Pega cada posição do arraylist que veio de uma posição da var. "data"
+            } 
+            model.addRow(list);
         }
         jTable.setModel(model);
     }
@@ -288,12 +284,24 @@ public class MultipleTable extends javax.swing.JDialog {
             return -1;
     }
     
+    /**
+     * 11/02/16 - Juliano Felipe 
+     * Função para tornar data da linha acessível (sem precisar consultar do banco novamente)
+     * @return dataLinha da linha selecionada na lista
+     */
+    public Object[] getRowdata (){
+        if (flag)
+           return dataLinha;
+        else
+            return null;
+    }
+    
     private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
         int row = jTable.getSelectedRow(); 
         System.out.println("ROW " + row);
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
-        Object[] rowData=null;
+        Object[] rowData = new Object [length_row];
         for (int i=0; i<length_row; i++){ //For para copiar o vetor selecionado.
             rowData[i] = model.getValueAt(row, i);
             System.out.println("ROW DATA: " +rowData[i]);
@@ -307,6 +315,8 @@ public class MultipleTable extends javax.swing.JDialog {
         this.setVisible(false); //Apenas esconde a tela para acessar as variáveis nas outras telas
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior
+        
+        dataLinha = rowData;
         flag=true;
     }//GEN-LAST:event_SelectButtonActionPerformed
 

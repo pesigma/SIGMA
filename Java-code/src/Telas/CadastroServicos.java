@@ -195,12 +195,6 @@ public class CadastroServicos extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Modelo"));
 
-        jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -333,10 +327,6 @@ public class CadastroServicos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField2ActionPerformed
-
     private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField1ActionPerformed
@@ -384,12 +374,29 @@ public class CadastroServicos extends javax.swing.JFrame {
         MServiceTable.setVisible(true);
         
         //Gets
-        //nome = MServiceTable.getString();
-        //rowid = MServiceTable.getId();
+        //String fullname = MServiceTable.getNomeCliente();
+        int rowidService = MServiceTable.getIdservico();
+        Object[] selRow = MServiceTable.getRowdata();
         
         MServiceTable.parafechar.dispose();
         
-        return -1;
+        jFormattedTextField1.setText(selRow[1].toString());
+        KMField.setText(selRow[2].toString());
+        jFormattedTextField2.setText(selRow[3].toString());
+        
+        String tmp = selRow[4].toString();
+        if (tmp.equals("true")){
+            jCheckBox1.setSelected(true);
+        } else if (tmp.equals("false")){
+            jCheckBox1.setSelected(false);
+        }
+        
+        ClienteField.setText(selRow[5].toString());
+        IDField.setText(selRow[6].toString());
+        jTextPane1.setText(selRow[7].toString());
+        
+        
+        return rowidService;
     }
     
     /**

@@ -188,9 +188,6 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField2">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFormattedTextField2ActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
