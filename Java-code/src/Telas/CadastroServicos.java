@@ -68,7 +68,6 @@ public TelaPrincipal telaanterior;
         this();
         this.telaanterior = telanterior;
         metodo = option;
-        IDField.setEditable(false);
         if (option > 1)
             metodosServicos (option);
     }
@@ -85,11 +84,13 @@ public TelaPrincipal telaanterior;
     public void metodosServicos (int op){
         if (op>=2){//Op==2 - Consulta
            this.setTitle("Consulta de serviços"); 
-           jFormattedTextField2.setEditable(false);
-           KMField.setEditable(false);
+           jFormattedTextField2.setEnabled(false);
+           KMField.setEnabled(false);
            jCheckBox1.setEnabled(false);
            jTextPane1.setEnabled(false);
+           IDField.setEnabled(false);
            ClienteField.setEnabled(false);
+           ConsultarCliente.setEnabled(false);
            jButton1.setText("Consultar");
         }
         if (op==3){//Op==3 - Modificar
@@ -382,15 +383,16 @@ public TelaPrincipal telaanterior;
         jFormattedTextField2.setText(rowDados[3].toString());
         
         String tmp = rowDados[4].toString();
-        if (tmp.equals("true")){
+        if (tmp.equals("Concluído")){
             jCheckBox1.setSelected(true);
-        } else if (tmp.equals("false")){
+        } else if (tmp.equals("Inconcluído")){
             jCheckBox1.setSelected(false);
         }
         
         ClienteField.setText(rowDados[5].toString());
+        PanelColor (Color.GREEN);
         IDField.setText(rowDados[6].toString());
-        jTextPane1.setText(rowDados[4].toString());
+        jTextPane1.setText(rowDados[7].toString());
         
         MServiceTable.parafechar.dispose();
         

@@ -282,8 +282,13 @@ public class MultipleTable extends javax.swing.JDialog {
                 row.add(rs.getInt("rowid"));                  
                 row.add(rs.getString("Placa"));               
                 row.add(rs.getString("Quilometragem"));       
-                row.add(rs.getString("Modelo"));              
-                row.add(rs.getBoolean ("Situacao"));                          
+                row.add(rs.getString("Modelo"));
+                
+                String tmp;
+                if(rs.getBoolean("Situacao")) tmp = "Concluído";
+                else tmp = "Inconcluído";
+                row.add(tmp);
+                
                 row.add(fullname);                          
                 row.add(rs.getInt("Idcliente"));              
                 row.add(rs.getString("Obs"));                 
