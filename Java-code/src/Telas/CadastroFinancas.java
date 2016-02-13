@@ -345,11 +345,9 @@ public class CadastroFinancas extends javax.swing.JFrame {
             pst.execute();
             confinanca.close();
 
-            System.out.println("Eh pra ter conseguido!!");
         } catch (Exception e) {
-            //JOptionPane.showMessageDialog(this, "Erro. Código: DEFINIR ERRO!!!!", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-01", title, JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.out.println("Nao deu certo aqui!!");
             System.exit(0);
         }
     }
@@ -484,7 +482,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
             telaanterior.setEnabled(true);
             telaanterior.requestFocus(); //Traz o foco para tela anterior
         } else {
-            //JOptionPane.showMessageDialog(this, "Erro. Código: A DEFINIR!!!!", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. 04-03-02", title, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -551,9 +549,9 @@ public class CadastroFinancas extends javax.swing.JFrame {
             java.util.Date date = new SimpleDateFormat("dd/MM/yyyy").parse(rowDados[2].toString());
             jDateChooser1.setDate(date);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-03.", title, JOptionPane.ERROR_MESSAGE);
             //System.err.println(Arrays.toString(e.getStackTrace()));
-            System.err.println("04-XX-XX: " + e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("04-03-03: " + e.getClass().getName() + ": " + e.getMessage());
         }
             
         jFormattedTextField2.setText(rowDados[3].toString());

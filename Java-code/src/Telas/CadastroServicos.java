@@ -431,7 +431,7 @@ public TelaPrincipal telaanterior;
             if (!flag.equals("Modificar")){
                 serviceId = selectService (jFormattedTextField1.getText());
                 if (serviceId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-04.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }else{ //Ainda não alterei aqui, apenas alterei o protótipo da função. (Quem fazer, cuidado com os "parseInt" e companhia).             

@@ -220,10 +220,10 @@ public class VisualizacaoErro extends javax.swing.JFrame {
     private void setData (Object[] rowData){
         int i = rowData.length;
         if (i>5){
-            System.err.println ("Erro. Código: 04-XX-XX.\nMais itens que o esperado.");
+            System.err.println ("Erro. Código: 04-09-01.\nMais itens que o esperado.");
             return;
         }else if (i<4){
-            System.err.println ("Erro. Código: 04-XX-XX.\nMenos itens que o esperado.");
+            System.err.println ("Erro. Código: 04-09-02.\nMenos itens que o esperado.");
             return;
         }
         

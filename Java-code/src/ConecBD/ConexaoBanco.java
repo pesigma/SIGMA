@@ -144,7 +144,7 @@ public class ConexaoBanco {
             //JOptionPane.showMessageDialog(null, "Conectado"); //Comentar no futuro            
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-05.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-06.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }

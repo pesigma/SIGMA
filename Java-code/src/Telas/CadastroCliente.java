@@ -69,8 +69,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         this();
         this.telaanterior = telanterior;
         metodo = option;
-        if (option > 1)
-            metodosCliente(option);
+        metodosCliente(option);
     }
 
     /**
@@ -362,9 +361,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         String[] split = nome.split(" ",2);     //split by spaces
         String fname = split[0]; // Primeiro nome
         String lname = split[1]; // "Resto do nome"
-        
+
         try {
-            String sql1 = "Insert into cliente (nome,cpf,tel,end,obs,lname) values (?,?,?,?,?,?)";
+            String sql1 = "INSERT INTO cliente (nome,cpf,tel,end,obs,lname) VALUES (?,?,?,?,?,?)";
             PreparedStatement pst = concliente.prepareStatement(sql1);
             pst.setString(1, fname);
             pst.setString(6, lname);
@@ -379,7 +378,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-01.", title, JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            //System.exit(0);
         }
     }
     

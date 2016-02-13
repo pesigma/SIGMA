@@ -188,9 +188,9 @@ public class Vizualizaca extends javax.swing.JFrame {
             
             return data;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-01.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-0A-01.", title, JOptionPane.ERROR_MESSAGE);
             //System.err.println(Arrays.toString(e.getStackTrace()));
-            System.err.println("04-07-01: " + e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("04-0A-01: " + e.getClass().getName() + ": " + e.getMessage());
         }
         return null; //Erro
     }
@@ -207,7 +207,7 @@ public class Vizualizaca extends javax.swing.JFrame {
         data = getData ();   
         
         if (num_rs<1){ //Se só for um resultado, seleciona-se a única row?
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.\nNenhum resultado encontrado.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-0A-02.\nNenhum resultado encontrado.", title, JOptionPane.ERROR_MESSAGE);
             this.dispose();
             return;
         }
