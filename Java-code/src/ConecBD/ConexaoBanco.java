@@ -100,7 +100,6 @@ public class ConexaoBanco {
             rs = st.executeQuery("SELECT * FROM financa");
             //cliente e o nome da tabela
             //JOptionPane.showMessageDialog(null, "Conectado"); //Comentar no futuro
-            System.out.println("Conexao com o banco de dados feita");
             
             return conn;
         } catch (Exception e) {

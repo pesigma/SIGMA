@@ -5,20 +5,46 @@
  */
 package Telas;
 
+import ConecBD.ConexaoBanco;
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+import java.awt.Point;
 
 /**
  *
  * @author Maycon
  */
 public class Vizualizaca extends javax.swing.JFrame {
-
+    public TelaPrincipal telaanterior;
+    Connection Error = null;
+    int num_rs=0;
+    
+    boolean flag_ToMain=true;
+    int length_row;
+    String title;
+    
     /**
      * Creates new form Vizualização
      */
     public Vizualizaca() {
         initComponents();
+        
+        //Seta janela para o meio da tela, independente da resolução.
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        this.toFront();
+
+        title = this.getTitle();
+        
         initNoicon ();
     }
     
@@ -29,6 +55,20 @@ public class Vizualizaca extends javax.swing.JFrame {
     private void initNoicon (){
         Image No_ico = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
         this.setIconImage(No_ico);
+    }
+    
+    /**
+     * 12/02/16 - Juliano Felipe "Pseudo-construtor", chama o construtor padrão,
+     * salva a instância do jFrame que chamou  este (para poder habilitá-lo quando esta tela é fechada).
+     *
+     * @param telanterior - Instância da tela anterior.
+     * @param columnNames - Nomes para os headers da tabela
+     */
+    public Vizualizaca(TelaPrincipal telanterior, String [] columnNames) {
+        //Chamar construtor
+        this();
+        this.telaanterior = telanterior;
+        CreateTable (columnNames);
     }
 
     /**
@@ -41,38 +81,31 @@ public class Vizualizaca extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        ErrorTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Vizualização de dados");
+        setTitle("Visualização de erros");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ErrorTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+            })
+            {public boolean isCellEditable(int row, int column){return false;}}
+        );
+        ErrorTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ErrorTableMousePressed(evt);
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        });
+        jScrollPane1.setViewportView(ErrorTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,24 +113,127 @@ public class Vizualizaca extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ErrorTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ErrorTableMousePressed
+        ErrorTable =(JTable) evt.getSource();
+        Point p = evt.getPoint();
+        int row = ErrorTable.rowAtPoint(p); //Posição da row.
+        //Pode se pego com "ErrorTable.getSelectedRow()"
+        if (evt.getClickCount() == 2) {
+            //System.out.println("DOIS CLICKS na ROW: " + row);
+            
+            DefaultTableModel model = (DefaultTableModel) ErrorTable.getModel();
+            Object[] rowData= new Object [length_row];
+            for (int i=0; i<length_row; i++){ //For para copiar o vetor selecionado.
+                rowData[i] = model.getValueAt(row, i);
+            }
+            flag_ToMain = false;
+            this.dispose();
+            new VisualizacaoErro (telaanterior, rowData).setVisible(true);
+        }
+    }//GEN-LAST:event_ErrorTableMousePressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        if (flag_ToMain){
+            telaanterior.setEnabled(true);
+            telaanterior.requestFocus(); //Traz o foco para tela anterior
+        }
+    }//GEN-LAST:event_formWindowClosed
+
+    /**
+     * 12/02/16 - Juliano Felipe 
+     * Preenche a matriz de dados conforme consulta no banco de dados.
+     * @return data "Matriz" (ArrayList em que cada posição é uma ArrayList) com os dados da consulta.
+     */ 
+    private ArrayList<ArrayList<Object>> getData (){
+        ArrayList<ArrayList<Object>> data = new ArrayList<>();
+
+        Connection Mul = ConexaoBanco.Multiple();
+        try {
+            String sql2 = "SELECT rowid, * FROM Error";
+            PreparedStatement pst = Mul.prepareStatement(sql2);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next())
+            {//i=linha e j=coluna
+                ArrayList<Object> row = new ArrayList();
+                                
+                row.add(rs.getInt("rowid"));                  
+                row.add(rs.getString("Campo1"));               
+                row.add(rs.getString("Campo2"));       
+                row.add(rs.getString("Campo3"));
+                row.add(rs.getString("Desc"));              
+                
+                data.add(row);
+                num_rs++;
+            }
+            //jList.setModel(model);
+
+            rs.close();
+            pst.close();
+            Mul.close();
+            
+            return data;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-01.", title, JOptionPane.ERROR_MESSAGE);
+            //System.err.println(Arrays.toString(e.getStackTrace()));
+            System.err.println("04-07-01: " + e.getClass().getName() + ": " + e.getMessage());
+        }
+        return null; //Erro
+    }
+    
+    /**
+     * 12/02/16 - Juliano Felipe 
+     * Altera a jtable conforme necessidade (número de colunas, etc)
+     * @param columnNames Vetor de nomes para os Headers da table
+     */
+    private void CreateTable (String[] columnNames){
+        DefaultTableModel model = (DefaultTableModel) ErrorTable.getModel();
+        
+        ArrayList<ArrayList<Object>> data = new ArrayList();
+        data = getData ();   
+        
+        if (num_rs<1){ //Se só for um resultado, seleciona-se a única row?
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.\nNenhum resultado encontrado.", title, JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+            return;
+        }
+        
+        int i = data.size();
+        int j = columnNames.length; //Gambiarra para não pegar o size do "ArrayList interno"
+        int t,n,k;
+        length_row = j;
+       
+        for (t=0; t<j; t++){
+            model.addColumn(columnNames[t]);
+        }
+        
+        Object[] list = new Object [j];
+        for (n=0; n<i; n++){
+            ArrayList<Object> aux = new ArrayList();
+            aux = data.get(n);
+            for (k=0; k<j; k++){
+                list[k] = aux.get(k);
+            } 
+            model.addRow(list);
+        }
+        
+        ErrorTable.setModel(model);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -135,9 +271,7 @@ public class Vizualizaca extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable ErrorTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

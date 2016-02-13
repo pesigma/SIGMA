@@ -548,7 +548,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         }
         
         try{
-            java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(rowDados[2].toString());
+            java.util.Date date = new SimpleDateFormat("dd/MM/yyyy").parse(rowDados[2].toString());
             jDateChooser1.setDate(date);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.", title, JOptionPane.ERROR_MESSAGE);
@@ -577,7 +577,6 @@ public class CadastroFinancas extends javax.swing.JFrame {
         
         selectFinanca (modo);
         
-        System.out.println ("Consultar finança no modo: |" + modo + "|");
         PanelColor (Color.GREEN);
     }//GEN-LAST:event_SelectButtonActionPerformed
 

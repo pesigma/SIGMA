@@ -81,6 +81,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem11 = new javax.swing.JMenuItem();
+        ErrorMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SIGMA");
@@ -407,6 +408,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        ErrorMenu.setText("Consulta de Erros");
+        ErrorMenu.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                ErrorMenuMenuSelected(evt);
+            }
+        });
+        jMenuBar1.add(ErrorMenu);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -603,6 +616,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
             ConnButton.setForeground(desconectado);
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void ErrorMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_ErrorMenuMenuSelected
+        /**
+        * 13/02/16 - Juliano Felipe
+        * Abre a tela de consulta de erros.
+        */
+        String [] columnNames = {"Id", "Cod Pacote", "Cod Arquivo", "Cod Interno", "Descrição"};
+        this.setEnabled(false);
+        new Vizualizaca(this, columnNames).setVisible(true);
+    }//GEN-LAST:event_ErrorMenuMenuSelected
    
     /**
      * @param args the command line arguments
@@ -648,6 +671,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton ConsultaFinanca;
     private javax.swing.JButton ConsultaRelatorio;
     private javax.swing.JButton ConsultaServico;
+    private javax.swing.JMenu ErrorMenu;
     private javax.swing.JButton ExcluiCliente;
     private javax.swing.JButton ExcluiFinanca;
     private javax.swing.JButton ExcluiRelatorio;
