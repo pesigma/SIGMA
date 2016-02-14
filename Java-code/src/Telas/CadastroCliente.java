@@ -8,6 +8,7 @@ package Telas;
 import ConecBD.ConexaoBanco;
 import Controles.CadastroCControle;
 import Entidades.Cliente;
+import java.awt.Color;
 import java.awt.Dimension; //Usada para "setar" frame no meio da tela
 import javax.swing.JOptionPane;
 import java.awt.Image; //Usada para setar logo. Idem para a de baixo
@@ -15,6 +16,9 @@ import java.awt.image.BufferedImage;
 import java.awt.Toolkit;
 import java.sql.*;
 import java.util.regex.Pattern; //Usada apenas para dar "split" na string de endereço, quando necessário
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 /**
  * 29/11/15 - Juliano Felipe Alteração para campos formatados.
@@ -29,7 +33,7 @@ public class CadastroCliente extends javax.swing.JFrame {
      * 15/01 - Maycon Conexão com o banco de dados
      */
     Connection concliente = null;
-    int rowid=-1; //Para ser usado como aux pelos métodos
+    int rowid = -1; //Para ser usado como aux pelos métodos
 
     public TelaPrincipal telaanterior;
     public int metodo;
@@ -40,12 +44,20 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     private CadastroCliente() {
         initComponents();
-        
+
         //Seta janela para o meio da tela, independente da resolução.
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+
         initNoicon();  //Seta "Logo vazio".
+    }
+
+    private void PanelColor(Color cor) {
+        Border line = BorderFactory.createLineBorder(cor);
+        TitledBorder Brdr = BorderFactory.createTitledBorder(line, "Cliente");
+        Brdr.setTitleJustification(TitledBorder.LEFT);
+        Brdr.setTitlePosition(TitledBorder.TOP);
+        jPanel1.setBorder(Brdr);
     }
 
     /**
@@ -58,12 +70,14 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
 
     /**
-    * 03/02/16 - Juliano Felipe
-    * "Pseudo-construtor", chama o construtor padrão, função de reutilização de jFrame e salva
-    * a instância do jFrame que chamou este (para poder habilitá-lo quando esta tela é fechada.
-    * @param telanterior - Instância da tela anterior. 
-    * @param option - Modo que o jFrame será utilizado (1 para Cadastro, 2 para consulta, etc).
-    */
+     * 03/02/16 - Juliano Felipe "Pseudo-construtor", chama o construtor padrão,
+     * função de reutilização de jFrame e salva a instância do jFrame que chamou
+     * este (para poder habilitá-lo quando esta tela é fechada.
+     *
+     * @param telanterior - Instância da tela anterior.
+     * @param option - Modo que o jFrame será utilizado (1 para Cadastro, 2 para
+     * consulta, etc).
+     */
     public CadastroCliente(TelaPrincipal telanterior, int option) {
         //Chamar construtor
         this();
@@ -75,11 +89,10 @@ public class CadastroCliente extends javax.swing.JFrame {
     /**
      * 06/01/16 - Juliano Felipe Define metodos sobre a janela clientes,
      * reutilizando a mesma Variavel op chama o respectivo metodo
-     * @param op - Opção de reutilização
-     * 1 - Cadastro (esse método não é chamado, devido a condição de chamada no construtor modificado);
-     * 2 - Consulta;
-     * 3 - Modificação;
-     * 4 - Exclusão;
+     *
+     * @param op - Opção de reutilização 1 - Cadastro (esse método não é
+     * chamado, devido a condição de chamada no construtor modificado); 2 -
+     * Consulta; 3 - Modificação; 4 - Exclusão;
      */
     public void metodosCliente(int op) {
         //Colocado como "cascateamento" pois toda vez que tem que modificar
@@ -346,19 +359,21 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
-     * 03/02/16 - Juliano Felipe
-     * Função que chama a classe "MultipleEntries", que permite o cliente selecionar uma entrada por meio
-     * de um jDialog. No fim, esse método obtém o nome e o id de uma instância da outra classe. Depois de
-     * obter os dados, ela elimina a instância "MultipleEntries" e retorna o id do cliente selecionado pelo
-     * usuário.
+     * 03/02/16 - Juliano Felipe Função que chama a classe "MultipleEntries",
+     * que permite o cliente selecionar uma entrada por meio de um jDialog. No
+     * fim, esse método obtém o nome e o id de uma instância da outra classe.
+     * Depois de obter os dados, ela elimina a instância "MultipleEntries" e
+     * retorna o id do cliente selecionado pelo usuário.
+     *
      * @param tel - Telefone do cliente
      * @param cpf - CPF do cliente
-     * @param nome - Nome completo do cliente (Será dividido para inserão no banco de dados
+     * @param nome - Nome completo do cliente (Será dividido para inserão no
+     * banco de dados
      * @param obs - Observações associadas ao cliente.
      * @param end - Endereço do cliente
      */
     private void insertClient(String tel, String cpf, String nome, String obs, String end) {
-        String[] split = nome.split(" ",2);     //split by spaces
+        String[] split = nome.split(" ", 2);     //split by spaces
         String fname = split[0]; // Primeiro nome
         String lname = split[1]; // "Resto do nome"
 
@@ -381,69 +396,73 @@ public class CadastroCliente extends javax.swing.JFrame {
             //System.exit(0);
         }
     }
-    
+
     /**
-     * 03/02/16 - Juliano Felipe
-     * Função que chama a classe "MultipleEntries", que permite o cliente selecionar uma entrada por meio
-     * de um jDialog. No fim, esse método obtém o nome e o id de uma instância da outra classe. Depois de
-     * obter os dados, ela elimina a instância "MultipleEntries" e retorna o id do cliente selecionado pelo
-     * usuário.
+     * 03/02/16 - Juliano Felipe Função que chama a classe "MultipleEntries",
+     * que permite o cliente selecionar uma entrada por meio de um jDialog. No
+     * fim, esse método obtém o nome e o id de uma instância da outra classe.
+     * Depois de obter os dados, ela elimina a instância "MultipleEntries" e
+     * retorna o id do cliente selecionado pelo usuário.
+     *
      * @param nome - Nome completo caso seja necessário
-     * @param fname - Primeiro nome do cliente, usado para consulta de múltiplos nomes no banco de dados
+     * @param fname - Primeiro nome do cliente, usado para consulta de múltiplos
+     * nomes no banco de dados
      * @return id - Id do cliente no banco de dados
      */
-    private int selMulClient (String nome, String fname){
+    private int selMulClient(String nome, String fname) {
         this.setEnabled(false);
         MultipleEntries multipleEntries = new MultipleEntries(this, fname);
         multipleEntries.setVisible(true);
-        
+
         nome = multipleEntries.getString();
         rowid = multipleEntries.getId();
-        
+
         multipleEntries.parafechar.dispose();
-        
+
         return rowid;
     }
-    
+
     /**
-     * 01/02/16 - Juliano Felipe
-     * Função consulta um cliente no banco de dados, "setando" seus dados nos fields da interface.
-     * @param nome - Nome para consultar no banco de dados, completo ou somente o primeiro nome.
+     * 01/02/16 - Juliano Felipe Função consulta um cliente no banco de dados,
+     * "setando" seus dados nos fields da interface.
+     *
+     * @param nome - Nome para consultar no banco de dados, completo ou somente
+     * o primeiro nome.
      * @return id - Id do cliente no banco de dados
      */
     //PROBLEMAS ENCONTRADOS
     //Quando alguns fields estão vazios, os debaixo do primeiro campo vazio não são setados na janela
-    private int selectClient (String nome){
-        String[] splitname = nome.split(" ",2);     //split by spaces
+    private int selectClient(String nome) {
+        String[] splitname = nome.split(" ", 2);     //split by spaces
         String fname = splitname[0]; // Para garantir que sempre pega o primeiro nome
-        
+
         /**
-        * 17/01 - Maycon Tentativa de função de consulta
-        */
-        int id=-1;
+         * 17/01 - Maycon Tentativa de função de consulta
+         */
+        int id = -1;
         try {
             //Tem "rowid" no select para pegar o valor do rowid
             String sql2 = "SELECT rowid, * FROM cliente WHERE nome=?";
             PreparedStatement pst = concliente.prepareStatement(sql2);
             pst.setString(1, fname);
             ResultSet rs = pst.executeQuery();
-            
-            int num_clients=0;
-            while (rs.next()){ //Descobre o número de linhas retornadas
+
+            int num_clients = 0;
+            while (rs.next()) { //Descobre o número de linhas retornadas
                 num_clients++;
-            }            
-            if (num_clients>1){
-                id = selMulClient (nome, fname);
-                
+            }
+            if (num_clients > 1) {
+                id = selMulClient(nome, fname);
+
                 //Como teve de consultar para selecionar o nome
                 //Fecho e abro novamente, com consulta por id (retorno o id do outro método)
                 pst.close();
                 rs.close();
-                sql2 = "SELECT rowid, * FROM cliente WHERE rowid="+id;
+                sql2 = "SELECT rowid, * FROM cliente WHERE rowid=" + id;
                 pst = concliente.prepareStatement(sql2);
                 rs = pst.executeQuery();
             }
-            
+
             if (rs.next()) {
                 id = rs.getInt("rowid");
                 String fno = rs.getString("nome");              //}
@@ -471,15 +490,15 @@ public class CadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-02.", title, JOptionPane.ERROR_MESSAGE);
         }
         /**
-        * FIM DA TENTATIVA
-        */
-        
+         * FIM DA TENTATIVA
+         */
+
         return id; //Retorna id do cliente
     }
-    
+
     /**
-     * 01/02/16 - Juliano Felipe
-     * Função modificação de cliente.
+     * 01/02/16 - Juliano Felipe Função modificação de cliente.
+     *
      * @param tel - Telefone do cliente.
      * @param cpf - CPF do cliente.
      * @param nome - Nome do cliente.
@@ -487,20 +506,20 @@ public class CadastroCliente extends javax.swing.JFrame {
      * @param end - endereço do cliente.
      * @param id - Id do cliente no banco de dados.
      */
-    private void updateClient (String tel, String cpf, String nome, String obs, String end, int id){
-        String[] split = nome.split(" ",2);     //split by spaces
+    private void updateClient(String tel, String cpf, String nome, String obs, String end, int id) {
+        String[] split = nome.split(" ", 2);     //split by spaces
         String fname = split[0]; // Primeiro nome
         String lname = split[1]; // "Resto do nome"
-        
-        if (rowid==-1){
+
+        if (rowid == -1) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-06.", title, JOptionPane.ERROR_MESSAGE);
             return;
         }
         System.out.println(fname + lname + cpf + tel + end + "  " + obs + "   " + id);
-        
+
         try {
-            String sql1 = "UPDATE cliente SET nome=?, cpf=?, tel=?, end=?, obs=?, lname=? WHERE rowid="+id;
-            PreparedStatement pst = concliente.prepareStatement(sql1);            
+            String sql1 = "UPDATE cliente SET nome=?, cpf=?, tel=?, end=?, obs=?, lname=? WHERE rowid=" + id;
+            PreparedStatement pst = concliente.prepareStatement(sql1);
             pst.setString(1, fname);
             pst.setString(6, lname);
             pst.setString(2, cpf);
@@ -515,7 +534,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-}
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /**
@@ -525,29 +544,29 @@ public class CadastroCliente extends javax.swing.JFrame {
          */
         if (metodo == 2) {
             //Id (no retorno) não é necessário.
-            selectClient (jTextField1.getText());
+            selectClient(jTextField1.getText());
             return; //Somente consulta, nao necessario salvar dados
         }
 
         if (metodo == 3) {
             String flag = jButton2.getText();
-            int id=-1;
-            if (flag!="Modificar"){
-                id = selectClient (jTextField1.getText());
-                if (id==-1){
+            int id = -1;
+            if (flag != "Modificar") {
+                id = selectClient(jTextField1.getText());
+                if (id == -1) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-04.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
-                    rowid=id;
+                    rowid = id;
                 }
-            }else{
+            } else {
                 //Update data and disable jbutton2
                 Object ruaobj = jComboBox1.getSelectedItem();
                 String ruatemp = ruaobj.toString();
                 String end = ruatemp + "." + jTextField4.getText();
-                
-                updateClient (jFormattedTextField1.getText(), jFormattedTextField2.getText(), jTextField1.getText(), jTextPane2.getText(), end, rowid);
-                
+
+                updateClient(jFormattedTextField1.getText(), jFormattedTextField2.getText(), jTextField1.getText(), jTextPane2.getText(), end, rowid);
+
                 //jButton2.setEnabled(false); //Para não tentar salvar novamente
                 metodosCliente(3); //Resetar modificação
                 return;
@@ -564,19 +583,19 @@ public class CadastroCliente extends javax.swing.JFrame {
         //Função bugada
         if (metodo == 4) {
             String flag = jButton2.getText();
-            int id=-1;
-            if (flag!="Excluir"){
-                id = selectClient (jTextField1.getText());
-                if (id==-1){
+            int id = -1;
+            if (flag != "Excluir") {
+                id = selectClient(jTextField1.getText());
+                if (id == -1) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-07.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
-                    rowid=id;
+                    rowid = id;
                 }
-            }else{
+            } else {
                 try {
-                    String sql1 = "DELETE FROM cliente WHERE rowid="+rowid;
-                    PreparedStatement pst = concliente.prepareStatement(sql1);            
+                    String sql1 = "DELETE FROM cliente WHERE rowid=" + rowid;
+                    PreparedStatement pst = concliente.prepareStatement(sql1);
                     pst.execute();
                     concliente.close();
 
@@ -585,7 +604,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.exit(0);
                 }
-                
+
                 jButton2.setEnabled(false); //Para não tentar salvar novamente
             }
             jButton2.setText("Excluir");
@@ -673,6 +692,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         //concliente = ConexaoBanco.concliente();
         //Coloquei na função "metodosCliente" para poder resetar funções sem precisar abrir novamente a janela
         //Já que a cada consulta, a conexão é fechada.
+        //Seta cor da borda para vermelho ao iniciar a janela
     }//GEN-LAST:event_formWindowOpened
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

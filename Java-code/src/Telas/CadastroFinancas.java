@@ -80,7 +80,11 @@ public class CadastroFinancas extends javax.swing.JFrame {
      */
     public void metodosFinancas(int op) {
         confinanca = ConexaoBanco.confinanca();
+        SitToggle.setEnabled(false);
+        SelectButton.setEnabled(false);
         if (op == 2) {
+            SitToggle.setEnabled(true);
+            SelectButton.setEnabled(true);
             this.setTitle("Consulta de registros financeiros");
             jFormattedTextField2.setEditable(false);
             jRadioButton1.setEnabled(false);
@@ -91,9 +95,13 @@ public class CadastroFinancas extends javax.swing.JFrame {
             jButton2.setText("Consultar");
         }
         if (op == 3) {//Op==3 - Modificar
+            SitToggle.setEnabled(true);
+            SelectButton.setEnabled(true);
             this.setTitle("Modificação de registros financeiros");
         }
         if (op == 4) {//Op==4 - Excluir
+            SitToggle.setEnabled(true);
+            SelectButton.setEnabled(true);
             this.setTitle("Exclusão de registros financeiros");
         }
     }
@@ -436,7 +444,8 @@ public class CadastroFinancas extends javax.swing.JFrame {
         //Botão Salvar pressionado
         /**
          * 06/01/16 - Juliano Definido a opcao 2 (consultar), altera-se a funcao
-         * do botao salvar 03/02/16 - Maycon Apagada funcao do Juliano, colar
+         * do botao salvar 
+         * 03/02/16 - Maycon Apagada funcao do Juliano, colar
          * quando fizer-se necessario
          */
         //Botão Salvar pressionado

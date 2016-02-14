@@ -135,6 +135,9 @@ public TelaPrincipal telaanterior;
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
         });
 
         jButton1.setText("Salvar");
@@ -159,6 +162,11 @@ public TelaPrincipal telaanterior;
             ex.printStackTrace();
         }
         jFormattedTextField1.setToolTipText("");
+        jFormattedTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextField1FocusLost(evt);
+            }
+        });
         jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField1ActionPerformed(evt);
@@ -179,6 +187,16 @@ public TelaPrincipal telaanterior;
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Quilometragem"));
 
         KMField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.000"))));
+        KMField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                KMFieldFocusLost(evt);
+            }
+        });
+        KMField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KMFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -248,10 +266,22 @@ public TelaPrincipal telaanterior;
 
         ClientePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)), "Cliente"));
 
+        ClienteField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClienteFieldActionPerformed(evt);
+            }
+        });
+
         ConsultarCliente.setText("Consultar");
         ConsultarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConsultarClienteActionPerformed(evt);
+            }
+        });
+
+        IDField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDFieldActionPerformed(evt);
             }
         });
 
@@ -520,7 +550,9 @@ public TelaPrincipal telaanterior;
     }
     
     private void ConsultarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarClienteActionPerformed
-        String fname = ClienteField.getText();
+        String fname1 = ClienteField.getText();
+        String fname = fname1.toUpperCase();
+        ClienteField.setText(fname);
         if (fname.isEmpty() || fname.charAt(0)==' '){ //Vazio ou começa com espaço
             JOptionPane.showMessageDialog(this, "Campo de cliente vazio ou iniciando por espaço. Código: 04-04-03.", title, JOptionPane.WARNING_MESSAGE);
             return;
@@ -541,6 +573,34 @@ public TelaPrincipal telaanterior;
         if (rowid>0) //Retornou um id existente
             PanelColor (Color.GREEN);
     }//GEN-LAST:event_ConsultarClienteActionPerformed
+
+    private void KMFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KMFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_KMFieldActionPerformed
+
+    private void IDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IDFieldActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        /**
+         * 14/02 - Maycon
+         * Campo de ID de cliente não é editável logo na abertura da janela
+         */
+        IDField.setEnabled(false);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jFormattedTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextField1FocusLost
+
+    }//GEN-LAST:event_jFormattedTextField1FocusLost
+
+    private void ClienteFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClienteFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ClienteFieldActionPerformed
+
+    private void KMFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_KMFieldFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_KMFieldFocusLost
 
     /**
      * @param args the command line arguments
