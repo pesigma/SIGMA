@@ -80,12 +80,13 @@ public class CadastroFinancas extends javax.swing.JFrame {
      */
     public void metodosFinancas(int op) {
         confinanca = ConexaoBanco.confinanca();
-        SitToggle.setEnabled(false);
-        SelectButton.setEnabled(false);
-        if (op == 2) {
-            SitToggle.setEnabled(true);
-            SelectButton.setEnabled(true);
-            this.setTitle("Consulta de registros financeiros");
+        if (op == 1) {//Op==1 - Consultar
+            SitToggle.setEnabled(false);
+            SelectButton.setEnabled(false);
+            PanelColor(1, Color.GRAY);
+        }
+        if (op >= 2) {
+            this.setTitle("Consulta de finanças");
             jFormattedTextField2.setEditable(false);
             jRadioButton1.setEnabled(false);
             jRadioButton2.setEnabled(false);
@@ -95,14 +96,10 @@ public class CadastroFinancas extends javax.swing.JFrame {
             jButton2.setText("Consultar");
         }
         if (op == 3) {//Op==3 - Modificar
-            SitToggle.setEnabled(true);
-            SelectButton.setEnabled(true);
-            this.setTitle("Modificação de registros financeiros");
+            this.setTitle("Modificação de finanças");
         }
         if (op == 4) {//Op==4 - Excluir
-            SitToggle.setEnabled(true);
-            SelectButton.setEnabled(true);
-            this.setTitle("Exclusão de registros financeiros");
+            this.setTitle("Exclusão de finanças");
         }
     }
 
@@ -117,17 +114,17 @@ public class CadastroFinancas extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jCalendar1 = new com.toedter.calendar.JCalendar();
-        jPanel1 = new javax.swing.JPanel();
+        ValorPanel = new javax.swing.JPanel();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jPanel2 = new javax.swing.JPanel();
+        TipoPanel = new javax.swing.JPanel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
-        jPanel3 = new javax.swing.JPanel();
+        DataPanel = new javax.swing.JPanel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jPanel4 = new javax.swing.JPanel();
+        DescPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
-        jPanel5 = new javax.swing.JPanel();
+        SitPanel = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -136,31 +133,31 @@ public class CadastroFinancas extends javax.swing.JFrame {
         SelectButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de registros financeiros");
+        setTitle("Cadastro de finanças");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor"));
+        ValorPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor"));
 
         jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout ValorPanelLayout = new javax.swing.GroupLayout(ValorPanel);
+        ValorPanel.setLayout(ValorPanelLayout);
+        ValorPanelLayout.setHorizontalGroup(
+            ValorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jFormattedTextField2)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        ValorPanelLayout.setVerticalGroup(
+            ValorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ValorPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo"));
+        TipoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo"));
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Receita");
@@ -168,55 +165,55 @@ public class CadastroFinancas extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Despesa");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout TipoPanelLayout = new javax.swing.GroupLayout(TipoPanel);
+        TipoPanel.setLayout(TipoPanelLayout);
+        TipoPanelLayout.setHorizontalGroup(
+            TipoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TipoPanelLayout.createSequentialGroup()
                 .addComponent(jRadioButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        TipoPanelLayout.setVerticalGroup(
+            TipoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TipoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jRadioButton1)
                 .addComponent(jRadioButton2))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Data"));
+        DataPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data"));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout DataPanelLayout = new javax.swing.GroupLayout(DataPanel);
+        DataPanel.setLayout(DataPanelLayout);
+        DataPanelLayout.setHorizontalGroup(
+            DataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        DataPanelLayout.setVerticalGroup(
+            DataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DataPanelLayout.createSequentialGroup()
                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 3, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Descrição"));
+        DescPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Descrição"));
 
         jTextPane2.setToolTipText("Qualquer observação adicional.");
         jScrollPane2.setViewportView(jTextPane2);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout DescPanelLayout = new javax.swing.GroupLayout(DescPanel);
+        DescPanel.setLayout(DescPanelLayout);
+        DescPanelLayout.setHorizontalGroup(
+            DescPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        DescPanelLayout.setVerticalGroup(
+            DescPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Situação"));
+        SitPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Situação"));
 
         jCheckBox1.setText("Pago");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -225,16 +222,16 @@ public class CadastroFinancas extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout SitPanelLayout = new javax.swing.GroupLayout(SitPanel);
+        SitPanel.setLayout(SitPanelLayout);
+        SitPanelLayout.setHorizontalGroup(
+            SitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SitPanelLayout.createSequentialGroup()
                 .addComponent(jCheckBox1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        SitPanelLayout.setVerticalGroup(
+            SitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jCheckBox1)
         );
 
@@ -300,17 +297,17 @@ public class CadastroFinancas extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DescPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ValorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TipoPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(SitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(DataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(SelectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
@@ -319,22 +316,22 @@ public class CadastroFinancas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ValorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(SelectPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TipoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DescPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
@@ -444,8 +441,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         //Botão Salvar pressionado
         /**
          * 06/01/16 - Juliano Definido a opcao 2 (consultar), altera-se a funcao
-         * do botao salvar 
-         * 03/02/16 - Maycon Apagada funcao do Juliano, colar
+         * do botao salvar 03/02/16 - Maycon Apagada funcao do Juliano, colar
          * quando fizer-se necessario
          */
         //Botão Salvar pressionado
@@ -516,17 +512,38 @@ public class CadastroFinancas extends javax.swing.JFrame {
 
     /**
     * 06/02/16 - Juliano Felipe 
-    * Método para alterar a cor do "Painel de Consulta".
+    * Método para alterar a cor dos painéis.
     * Coloca uma borda igual a padrão, no entando, altera-se a cor.
     * 
+    * @param Borda Int dizendo qual borda deve ser pintada.
     * @param cor para pintar a borda.
     */
-    private void PanelColor (Color cor){
+    private void PanelColor (int Borda, Color cor){
+        String[] titles = {"Valor", "Consultar Finança", "Tipo", "Situação", "Data", "Descrição"};
         Border line = BorderFactory.createLineBorder(cor);
-        TitledBorder Brdr = BorderFactory.createTitledBorder(line,"Consultar Finança");
+        TitledBorder Brdr = BorderFactory.createTitledBorder(line,titles[Borda]);
         Brdr.setTitleJustification(TitledBorder.LEFT);
         Brdr.setTitlePosition(TitledBorder.TOP);
-        SelectPanel.setBorder (Brdr);
+        switch (Borda) {
+            case 0:
+                ValorPanel.setBorder (Brdr);
+                break;
+            case 1:
+                SelectPanel.setBorder (Brdr);
+                break;
+            case 2:
+                TipoPanel.setBorder (Brdr);
+                break;
+            case 3:
+                SitPanel.setBorder (Brdr);
+                break;
+            case 4:
+                DataPanel.setBorder (Brdr);
+                break;
+            case 5:
+                DescPanel.setBorder (Brdr);
+                break;
+            }
     }
     
     /**
@@ -584,7 +601,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         
         selectFinanca (modo);
         
-        PanelColor (Color.GREEN);
+        PanelColor (1,Color.GREEN);
     }//GEN-LAST:event_SelectButtonActionPerformed
 
     private void SitToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SitToggleActionPerformed
@@ -633,9 +650,14 @@ public class CadastroFinancas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel DataPanel;
+    private javax.swing.JPanel DescPanel;
     private javax.swing.JButton SelectButton;
     private javax.swing.JPanel SelectPanel;
+    private javax.swing.JPanel SitPanel;
     private javax.swing.JToggleButton SitToggle;
+    private javax.swing.JPanel TipoPanel;
+    private javax.swing.JPanel ValorPanel;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -643,11 +665,6 @@ public class CadastroFinancas extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane2;

@@ -5,6 +5,8 @@
  */
 package Telas;
 
+
+import ConecBD.ConexaoBanco;
 import Controles.CadastroSControle;
 import Entidades.Servico;
 import java.awt.Color;
@@ -12,10 +14,17 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.AbstractDocument;
+import Controles.UppercaseDocumentFilter;
+import javax.swing.text.DocumentFilter;
+
 
 /**
  * 29/11/15 - Juliano Felipe
@@ -31,6 +40,7 @@ public TelaPrincipal telaanterior;
     public int metodo;
     private String title;
     private int serviceId=-1;
+    Connection Mul = null;
 
     /**
      * 05/12 - Maycon
@@ -45,6 +55,10 @@ public TelaPrincipal telaanterior;
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         
         title = this.getTitle(); //Pega o título do frame
+        
+        DocumentFilter UpperFilter = new UppercaseDocumentFilter();
+        ((AbstractDocument) PlacaField.getDocument()).setDocumentFilter(UpperFilter);
+        ((AbstractDocument) ClienteField.getDocument()).setDocumentFilter(UpperFilter);
     }
     
     /**
@@ -68,8 +82,7 @@ public TelaPrincipal telaanterior;
         this();
         this.telaanterior = telanterior;
         metodo = option;
-        if (option > 1)
-            metodosServicos (option);
+        metodosServicos (option);
     }
     
     /**
@@ -82,6 +95,8 @@ public TelaPrincipal telaanterior;
      * 4 - Exclusão;
      */
     public void metodosServicos (int op){
+        Mul = ConexaoBanco.Multiple();
+        IDField.setEnabled(false);
         if (op>=2){//Op==2 - Consulta
            this.setTitle("Consulta de serviços"); 
            jFormattedTextField2.setEnabled(false);
@@ -99,6 +114,9 @@ public TelaPrincipal telaanterior;
         if (op==4){//Op==4 - Excluir
            this.setTitle("Exclusão de serviços");       
         }
+        if (op==5){//Op==5 - Quitar
+           this.setTitle("Quitar serviços"); //Escolhi essa opção para "4" ser padrão de exclusão entre as janelas - Juliano      
+        }
     }
 
     /**
@@ -112,16 +130,16 @@ public TelaPrincipal telaanterior;
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jPanel3 = new javax.swing.JPanel();
+        PlacaPanel = new javax.swing.JPanel();
+        PlacaField = new javax.swing.JTextField();
+        KMPanel = new javax.swing.JPanel();
         KMField = new javax.swing.JFormattedTextField();
-        jPanel4 = new javax.swing.JPanel();
+        ModeloPanel = new javax.swing.JPanel();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jPanel5 = new javax.swing.JPanel();
+        ObsPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
-        jPanel1 = new javax.swing.JPanel();
+        SitPanel = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
         ClientePanel = new javax.swing.JPanel();
         ClienteField = new javax.swing.JTextField();
@@ -134,9 +152,6 @@ public TelaPrincipal telaanterior;
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
             }
         });
 
@@ -154,134 +169,92 @@ public TelaPrincipal telaanterior;
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa"));
+        PlacaPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa"));
 
-        try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextField1.setToolTipText("");
-        jFormattedTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jFormattedTextField1FocusLost(evt);
-            }
-        });
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFormattedTextField1)
+        javax.swing.GroupLayout PlacaPanelLayout = new javax.swing.GroupLayout(PlacaPanel);
+        PlacaPanel.setLayout(PlacaPanelLayout);
+        PlacaPanelLayout.setHorizontalGroup(
+            PlacaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PlacaField)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        PlacaPanelLayout.setVerticalGroup(
+            PlacaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PlacaPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(PlacaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Quilometragem"));
+        KMPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Quilometragem"));
 
-        KMField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.000"))));
-        KMField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                KMFieldFocusLost(evt);
-            }
-        });
-        KMField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KMFieldActionPerformed(evt);
-            }
-        });
+        KMField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout KMPanelLayout = new javax.swing.GroupLayout(KMPanel);
+        KMPanel.setLayout(KMPanelLayout);
+        KMPanelLayout.setHorizontalGroup(
+            KMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(KMField, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        KMPanelLayout.setVerticalGroup(
+            KMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, KMPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(KMField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Modelo"));
+        ModeloPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Modelo"));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout ModeloPanelLayout = new javax.swing.GroupLayout(ModeloPanel);
+        ModeloPanel.setLayout(ModeloPanelLayout);
+        ModeloPanelLayout.setHorizontalGroup(
+            ModeloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jFormattedTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        ModeloPanelLayout.setVerticalGroup(
+            ModeloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
+        ObsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
 
         jScrollPane1.setViewportView(jTextPane1);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout ObsPanelLayout = new javax.swing.GroupLayout(ObsPanel);
+        ObsPanel.setLayout(ObsPanelLayout);
+        ObsPanelLayout.setHorizontalGroup(
+            ObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        ObsPanelLayout.setVerticalGroup(
+            ObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Situação"));
+        SitPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Situação"));
 
         jCheckBox1.setText("Concluído");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout SitPanelLayout = new javax.swing.GroupLayout(SitPanel);
+        SitPanel.setLayout(SitPanelLayout);
+        SitPanelLayout.setHorizontalGroup(
+            SitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SitPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCheckBox1)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        SitPanelLayout.setVerticalGroup(
+            SitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SitPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jCheckBox1))
         );
 
         ClientePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)), "Cliente"));
 
-        ClienteField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ClienteFieldActionPerformed(evt);
-            }
-        });
-
         ConsultarCliente.setText("Consultar");
         ConsultarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConsultarClienteActionPerformed(evt);
-            }
-        });
-
-        IDField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IDFieldActionPerformed(evt);
             }
         });
 
@@ -317,15 +290,15 @@ public TelaPrincipal telaanterior;
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ClientePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PlacaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(KMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ModeloPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(SitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -337,16 +310,16 @@ public TelaPrincipal telaanterior;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(KMPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PlacaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ModeloPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ClientePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -356,10 +329,6 @@ public TelaPrincipal telaanterior;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Botão Cancelar pressionado
@@ -387,8 +356,27 @@ public TelaPrincipal telaanterior;
      * @param situacao do serviço (Concluído=true; não concluido=false)
      * @param obs a respeito do serviço
      */
-    private void insertService(int idCliente, String placa, String modelo, int km, boolean situacao, String obs){
-        
+    private void insertService(String placa, int km, String modelo,  boolean situacao, int idCliente, String obs) throws Exception{
+        PreparedStatement pst = null;
+        try {
+            String sql1 = "INSERT INTO servico (Placa,Quilometragem,Modelo,Situacao,Idcliente,Obs) VALUES (?,?,?,?,?,?)";
+            pst = Mul.prepareStatement(sql1);
+            pst.setString (1, placa);
+            pst.setInt    (2, km);
+            pst.setString (3, modelo);
+            pst.setBoolean(4, situacao);
+            pst.setInt    (5, idCliente);
+            pst.setString (6, obs);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-06.", title, JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            if (pst != null) 
+                pst.close();
+            if (Mul != null) 
+                Mul.close();
+        }
     }
     
     /**
@@ -408,7 +396,7 @@ public TelaPrincipal telaanterior;
         int rowid = MServiceTable.getId();
         Object[] rowDados = MServiceTable.getRow();
         
-        jFormattedTextField1.setText(rowDados[1].toString());
+        PlacaField.setText(rowDados[1].toString());
         KMField.setText(rowDados[2].toString());
         jFormattedTextField2.setText(rowDados[3].toString());
         
@@ -420,7 +408,7 @@ public TelaPrincipal telaanterior;
         }
         
         ClienteField.setText(rowDados[5].toString());
-        PanelColor (Color.GREEN);
+        PanelColor (4, Color.GREEN);
         IDField.setText(rowDados[6].toString());
         jTextPane1.setText(rowDados[7].toString());
         
@@ -439,73 +427,213 @@ public TelaPrincipal telaanterior;
      * @param situacao do serviço (Concluído=true; não concluido=false)
      * @param obs a respeito do serviço
      */
-    private void updateService (int idCliente, String placa, String modelo, int km, boolean situacao, String obs){
-         
-        //return;
+    private void updateService (String placa, int km, String modelo,  boolean situacao, int idCliente, String obs, int rowid) throws Exception{
+        if (rowid==-1){
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.", title, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        PreparedStatement pst = null;
+        try {
+            String sql1 = "UPDATE servico SET Placa=?, Quilometragem=?, Modelo=?, Situacao=?, Idcliente=?, Obs=? WHERE rowid="+rowid;
+            pst = Mul.prepareStatement(sql1);
+            pst.setString (1, placa);
+            pst.setInt    (2, km);
+            pst.setString (3, modelo);
+            pst.setBoolean(4, situacao);
+            pst.setInt    (5, idCliente);
+            pst.setString (6, obs);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.", title, JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            //System.exit(0);
+        } finally {
+            if (pst != null) 
+                pst.close();
+            if (Mul != null) 
+                Mul.close();
+        }
     }
 
+    /**
+     * 14/02/16 - Juliano Felipe
+     * Função para validar campos obrigatórios. Verifica campos obrigatórios.
+     * Também valida os outros campos (caso não estejam vazios).
+     * @return valido - Todos os campos validos.
+     */
+    private boolean validateFields (){
+        //Obrigatórios placa e idCliente
+        boolean valido=true;
+        
+        //Trecho de placa
+        String placa = PlacaField.getText();
+        int length = placa.length();
+        int num_count=0, char_count=0;
+        for (int i=0; i<length; i++){
+            if (Character.isDigit(placa.charAt(i))) num_count++;
+            else if (Character.isLetter(placa.charAt(i))) char_count++;
+        }
+        if (num_count>3 || char_count>4){ //Placa tem que ter 3 nums. e 4 letras.
+            //BalloonTip(PlacaField, "Placa inválida. Deve conter 3 números e 4 letras, em qualquer ordem.");
+            PanelColor (0, Color.RED);
+            valido=false;
+        } else {
+            PanelColor (0, Color.GREEN);
+        }
+        
+        //Trecho de idcliente
+        int idcliente = Integer.parseInt(IDField.getText());
+        if (idcliente<=0){
+            PanelColor (4, Color.RED);
+            valido=false;
+        }
+        return valido;
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (!validateFields()) return;
+        
         /**
          * 03/02/16 - Juliano
          * Definido a opcao 2 (consultar), altera-se a funcao do botao salvar
          */
+        //Trecho de consultar clientes. Apenas
         if (metodo == 2) {
             //Id (no retorno) não é necessário.
-            selectService (jFormattedTextField1.getText()); //Consulta por PLACA
+            selectService (PlacaField.getText()); //Consulta por PLACA
             return; //Somente consulta, nao necessario salvar dados
         }
 
+        //Trecho de Modificar serviços. Consulta, lista, habilita edição, salva, e chama o "refresh"
+        //(para outra modificação sem fechar a janela).
         if (metodo == 3) {
             String flag = jButton1.getText();
-            //int serviceId=-1; //Is this necessary?
             if (!flag.equals("Modificar")){
-                serviceId = selectService (jFormattedTextField1.getText());
+                serviceId = selectService (PlacaField.getText());
                 if (serviceId==-1){
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-04.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-            }else{ //Ainda não alterei aqui, apenas alterei o protótipo da função. (Quem fazer, cuidado com os "parseInt" e companhia).             
+                jFormattedTextField2.setEnabled(true);
+                KMField.setEnabled(true);
+                jCheckBox1.setEnabled(true);
+                jTextPane1.setEnabled(true);
+                ClienteField.setEnabled(true);
+                ConsultarCliente.setEnabled(true);
+            }else{
                 int id = Integer.parseInt(IDField.getText());
-                int km = Integer.parseInt(KMField.getText());
-                updateService (id, jFormattedTextField1.getText(), jFormattedTextField2.getText(), km, jCheckBox1.isSelected(), jTextPane1.getText());
+                String KM = KMField.getText();
+                String[] split = KM.split(Pattern.quote(".")); // Split no "." (Ponto final)
+                int length = split.length;
+                KM="";
+                for (int i=0; i<length; i++){
+                    KM+= split[i];
+                }
+                split = KM.split(Pattern.quote(","));
+                KM = split[0];
+                try {
+                    updateService (PlacaField.getText(), Integer.parseInt(KM), jFormattedTextField2.getText(),  jCheckBox1.isSelected(), id, jTextPane1.getText(), serviceId);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-05.", title, JOptionPane.ERROR_MESSAGE);
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                }
                 
-                //jButton1.setEnabled(false); //Para não tentar salvar novamente
                 metodosServicos(3); //Resetar modificação
                 return;
             }
-            KMField.setEditable(true); //Todos os fields podem ser alterados novamente
-            jFormattedTextField2.setEditable(true);
-            jCheckBox1.setEnabled(true);
-            ClienteField.setEditable(true);
-            jTextPane1.setEnabled(true);
             jButton1.setText("Modificar");
             return;
         }
         
-        if (metodo==4){
-            //Display de dados
-            jFormattedTextField1.setText("ABCDEFG");
-            KMField.setText("150000");
-            jFormattedTextField2.setText("WOLKSVAGEN GOL");
-            jCheckBox1.setSelected(true);
-            jTextPane1.setText("Teste");
-            jButton1.setText("Excluir"); 
-            jFormattedTextField1.setEditable(false);
+        //Trecho de excluir serviços. Consulta e exclui
+        if (metodo == 4) {
+            String flag = jButton1.getText();
+            if (!flag.equals("Excluir")){
+                serviceId = selectService (PlacaField.getText());
+                if (serviceId==-1){
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }else{
+                try {
+                    String sql1 = "DELETE FROM servico WHERE rowid="+serviceId;
+                    PreparedStatement pst = Mul.prepareStatement(sql1);            
+                    pst.execute();
+                    Mul.close();
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    System.exit(0);
+                }
+                
+                jButton1.setEnabled(false); //Para não tentar Excluir novamente
+                jButton2.setText("Sair");
+            }
+            jButton1.setText("Excluir");
+            return;
+        }
+        
+        //Trecho de quitar serviços. Consulta os dados e força salvar com a situação em true (Quitado)
+        if (metodo==5){
+            String flag = jButton1.getText();
+            if (!flag.equals("Quitar")){
+                serviceId = selectService (PlacaField.getText());
+                if (jCheckBox1.isSelected()){
+                    JOptionPane.showMessageDialog(this, "Serviço já quitado.\nCódigo: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (serviceId==-1){
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }else{
+                int id = Integer.parseInt(IDField.getText());
+                String KM = KMField.getText();
+                String[] split = KM.split(Pattern.quote(".")); // Split no "." (Ponto final)
+                int length = split.length;
+                KM="";
+                for (int i=0; i<length; i++){
+                    KM+= split[i];
+                }
+                split = KM.split(Pattern.quote(","));
+                KM = split[0];
+                try {//Passando "True" no lugar do "jCheckBox1.isSelected()" para o usuário não precisar clicar.
+                    updateService (PlacaField.getText(), Integer.parseInt(KM), jFormattedTextField2.getText(),  true, id, jTextPane1.getText(), serviceId);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                }
+                
+                metodosServicos(5); //Resetar modificação
+                return;
+            }
+            jButton1.setText("Quitar");
             return;
         }
         
         /**
          * 04/01 - Maycon
          * Botão salvar pressionado
-         * FALTA Colocar área para selecao do cliente selecionado
          */
-        //Botão Salvar pressionado
-        String placa = jFormattedTextField1.getText();
+        //Trecho de cadastro de clientes (Chega aqui se não saiu em nenhum trecho antes. Default).
+        String placa = PlacaField.getText();
         String modelo = jFormattedTextField2.getText();
         String KM = KMField.getText();
         String obs = jTextPane1.getText();
         boolean sit = jCheckBox1.isSelected();  //Outro método para que true seja para "checked" no concluído
         String txtId = IDField.getText();
+        
+        String[] split = KM.split(Pattern.quote(".")); // Split no "." (Ponto final)
+        int length = split.length;
+        KM="";
+        for (int i=0; i<length; i++){
+            KM+= split[i];
+        }
+        //KM = KM.replaceAll(",","."); //Se fosse DOUBLE, seria bom trocar a , decimal para o .
+        split = KM.split(Pattern.quote(","));
+        KM = split[0];
         
         int km=0, idc=-1;
         try {
@@ -515,13 +643,18 @@ public TelaPrincipal telaanterior;
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-01.", title, JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getClass().getName() + ": " + e.getMessage());            return;
         }
-        
+               
         Servico N = new Servico(idc, placa, modelo, km, sit, obs);
         //Chama o controle para cadastrar
         CadastroSControle C = new CadastroSControle();
         if (C.cadastrarservico(N)) {
             JOptionPane.showMessageDialog(this, "Cadastrado com sucesso");
-            //insertService(idc, placa, modelo, km, sit, obs);
+            try {
+                insertService(placa, km, modelo, sit, idc, obs);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-05.", title, JOptionPane.ERROR_MESSAGE);
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            }
             this.dispose();
             telaanterior.setEnabled(true);
             telaanterior.requestFocus(); //Traz o foco para tela anterior
@@ -530,29 +663,44 @@ public TelaPrincipal telaanterior;
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
     /**
     * 06/02/16 - Juliano Felipe 
-    * Método para alterar a cor do "Painel de Consulta".
+    * Método para alterar a cor dos painéis.
     * Coloca uma borda igual a padrão, no entando, altera-se a cor.
     * 
+    * @param Borda Int dizendo qual borda deve ser pintada.
     * @param cor para pintar a borda.
     */
-    private void PanelColor (Color cor){
+    private void PanelColor (int Borda, Color cor){
+        String[] titles = {"Placa", "Quilometragem", "Modelo", "Situação", "Cliente", "Observações"};
         Border line = BorderFactory.createLineBorder(cor);
-        TitledBorder Brdr = BorderFactory.createTitledBorder(line,"Cliente");
+        TitledBorder Brdr = BorderFactory.createTitledBorder(line,titles[Borda]);
         Brdr.setTitleJustification(TitledBorder.LEFT);
         Brdr.setTitlePosition(TitledBorder.TOP);
-        ClientePanel.setBorder (Brdr);
+        switch (Borda) {
+            case 0:
+                PlacaPanel.setBorder (Brdr);
+                break;
+            case 1:
+                KMPanel.setBorder (Brdr);
+                break;
+            case 2:
+                ModeloPanel.setBorder (Brdr);
+                break;
+            case 3:
+                SitPanel.setBorder (Brdr);
+                break;
+            case 4:
+                ClientePanel.setBorder (Brdr);
+                break;
+            case 5:
+                ObsPanel.setBorder (Brdr);
+                break;
+            }
     }
     
     private void ConsultarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarClienteActionPerformed
-        String fname1 = ClienteField.getText();
-        String fname = fname1.toUpperCase();
-        ClienteField.setText(fname);
+        String fname = ClienteField.getText();
         if (fname.isEmpty() || fname.charAt(0)==' '){ //Vazio ou começa com espaço
             JOptionPane.showMessageDialog(this, "Campo de cliente vazio ou iniciando por espaço. Código: 04-04-03.", title, JOptionPane.WARNING_MESSAGE);
             return;
@@ -571,36 +719,8 @@ public TelaPrincipal telaanterior;
         ClienteField.setText(nome);
         
         if (rowid>0) //Retornou um id existente
-            PanelColor (Color.GREEN);
+            PanelColor (4, Color.GREEN);
     }//GEN-LAST:event_ConsultarClienteActionPerformed
-
-    private void KMFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KMFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_KMFieldActionPerformed
-
-    private void IDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_IDFieldActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        /**
-         * 14/02 - Maycon
-         * Campo de ID de cliente não é editável logo na abertura da janela
-         */
-        IDField.setEnabled(false);
-    }//GEN-LAST:event_formWindowOpened
-
-    private void jFormattedTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextField1FocusLost
-
-    }//GEN-LAST:event_jFormattedTextField1FocusLost
-
-    private void ClienteFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClienteFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ClienteFieldActionPerformed
-
-    private void KMFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_KMFieldFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_KMFieldFocusLost
 
     /**
      * @param args the command line arguments
@@ -643,17 +763,17 @@ public TelaPrincipal telaanterior;
     private javax.swing.JButton ConsultarCliente;
     private javax.swing.JTextField IDField;
     private javax.swing.JFormattedTextField KMField;
+    private javax.swing.JPanel KMPanel;
+    private javax.swing.JPanel ModeloPanel;
+    private javax.swing.JPanel ObsPanel;
+    private javax.swing.JTextField PlacaField;
+    private javax.swing.JPanel PlacaPanel;
+    private javax.swing.JPanel SitPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
