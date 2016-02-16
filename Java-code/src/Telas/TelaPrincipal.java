@@ -10,6 +10,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,6 +23,8 @@ import java.sql.Connection;
 public class TelaPrincipal extends javax.swing.JFrame {
     Connection connGeral = null;
     
+    int num_rs=0;
+    String title=null;
     /**
      * Creates new form TelaPrincipal
      */
@@ -29,6 +36,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         
         initLogo(); //Seta logo SIGMA
+        
+        title = this.getTitle();
+        fillFinancaTable ();
     }
 
     /**
@@ -37,6 +47,99 @@ public class TelaPrincipal extends javax.swing.JFrame {
     */
     private void initLogo (){
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/Logo 100x100.png")));
+    }
+    
+    /**
+     * 16/02/16 - Juliano Felipe 
+     * Preenche a matriz de dados conforme consulta no banco de dados (finanças não quitadas)
+     * @return data "Matriz" (ArrayList em que cada posição é uma ArrayList) com os dados da consulta.
+     */ 
+    private ArrayList<ArrayList<Object>> getDataFinancas (){
+        ArrayList<ArrayList<Object>> data = new ArrayList<>();
+        
+        String sit="0";  //Pago = true/1; Não pago = false/0
+
+        Connection Mul = ConexaoBanco.Multiple();
+        try {
+            String sql2 = "SELECT rowid, * FROM financa WHERE sit=?";
+            PreparedStatement pst = Mul.prepareStatement(sql2);
+            pst.setString(1, sit);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next())
+            {//i=linha e j=coluna
+                ArrayList<Object> row = new ArrayList();           
+                
+                row.add(rs.getString("data"));       
+                row.add(rs.getDouble("valor"));                                       
+                row.add(rs.getString("obs"));                 
+                
+                data.add(row);
+                num_rs++;
+            }
+            rs.close();
+            pst.close();
+            Mul.close();
+            
+            return data;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-08-XX.", title, JOptionPane.ERROR_MESSAGE);
+            //System.err.println(Arrays.toString(e.getStackTrace()));
+            System.err.println("04-07-06: " + e.getClass().getName() + ": " + e.getMessage());
+        }
+        return null; //Erro
+    }
+    
+    /**
+     * 16/02/16 - Juliano Felipe 
+     * Configura a tabela de financas
+     */
+    private void fillFinancaTable (){
+        DefaultTableModel model = (DefaultTableModel) FinancaTable.getModel();
+        String[] columnNames = {"Data", "Valor", "Observações"};
+        
+        ArrayList<ArrayList<Object>> data = getDataFinancas ();
+         
+        if (num_rs<1){ //Se só for um resultado, seleciona-se a única row?
+            System.err.println("Erro. Código: 04-08-XX.\nErro ao carregar atividades. Nenhum resultado encontrado.");
+            model.addColumn("Erro obtendo finanças");
+            Object[] strErr = {"Não existem finanças"};
+            model.addRow(strErr);
+            Object[] strErr2 = {"com pagamento pendente!"};
+            model.addRow(strErr2);
+            return;
+        }
+        
+        int i = data.size();
+        int j = columnNames.length; //Gambiarra para não pegar o size do "ArrayList interno"
+        int t,n,k;
+       
+        for (t=0; t<j; t++){
+            model.addColumn(columnNames[t]);
+        }
+        
+        Object[] list = new Object [j];
+        for (n=0; n<i; n++){
+            ArrayList<Object> aux = new ArrayList();
+            aux = data.get(n);
+            for (k=0; k<j; k++){
+                list[k] = aux.get(k);
+            } 
+            model.addRow(list);
+        }
+        FinancaTable.setModel(model);
+        
+    }
+    
+    /**
+     * 16/02/16 - Juliano Felipe 
+     * Reseta a table da finanças.
+     */
+    public void RefreshTable (){
+        DefaultTableModel clear = (DefaultTableModel)FinancaTable.getModel();
+        clear.setRowCount(0);
+        clear.setColumnCount(0);
+        fillFinancaTable (); //Preenche novamente
     }
     
     /**
@@ -71,7 +174,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ConsultaRelatorio = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        FinancaTable = new javax.swing.JTable();
         jCalendar1 = new com.toedter.calendar.JCalendar();
         jPanel6 = new javax.swing.JPanel();
         ConnButton = new javax.swing.JToggleButton();
@@ -322,24 +425,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Atividades", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        FinancaTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "(Lista de Contas)", "(Situação)"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable3);
+
+            })
+            {public boolean isCellEditable(int row, int column){return false;}}
+        );
+        jScrollPane3.setViewportView(FinancaTable);
 
         jCalendar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -500,6 +595,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
          */
         this.setEnabled(false);
         new CadastroFinancas(this, 1).setVisible(true);
+        RefreshTable();
         //FAZER resolver problemas quando a janela é fechada!!
     }//GEN-LAST:event_CadastroFinancaActionPerformed
 
@@ -622,7 +718,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         * 13/02/16 - Juliano Felipe
         * Abre a tela de consulta de erros.
         */
-        String [] columnNames = {"Id", "Cod Pacote", "Cod Arquivo", "Cod Interno", "Descrição"};
+        String [] columnNames = {"Id", "Pacote", "Arquivo", "Interno", "Descrição"};
         this.setEnabled(false);
         new Vizualizaca(this, columnNames).setVisible(true);
     }//GEN-LAST:event_ErrorMenuMenuSelected
@@ -676,6 +772,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton ExcluiFinanca;
     private javax.swing.JButton ExcluiRelatorio;
     private javax.swing.JButton ExcluiServico;
+    private javax.swing.JTable FinancaTable;
     private javax.swing.JButton ModificaCliente;
     private javax.swing.JButton ModificaFinanca;
     private javax.swing.JButton ModificaServico;
@@ -696,6 +793,5 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JTable jTable3;
     // End of variables declaration//GEN-END:variables
 }

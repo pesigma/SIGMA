@@ -29,6 +29,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
     public TelaPrincipal telaanterior;
     public int metodo;
     Connection confinanca = null;
+    private int financaId=-1;
 
     String title;
     /**
@@ -41,6 +42,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
+        IDField.setEnabled(false);
         title = this.getTitle();
         initNoicon(); //Seta "Logo vazio".
     }
@@ -79,7 +81,8 @@ public class CadastroFinancas extends javax.swing.JFrame {
      * Consulta; 3 - Modificação; 4 - Exclusão;
      */
     public void metodosFinancas(int op) {
-        confinanca = ConexaoBanco.confinanca();
+        //confinanca = ConexaoBanco.confinanca();
+        //SelectButton.setEnabled (false);
         if (op == 1) {//Op==1 - Consultar
             SitToggle.setEnabled(false);
             SelectButton.setEnabled(false);
@@ -94,12 +97,17 @@ public class CadastroFinancas extends javax.swing.JFrame {
             jDateChooser1.setEnabled(false);
             jTextPane2.setEnabled(false);
             jButton2.setText("Consultar");
+            //Para o cliente não confundir os botões
+            jButton2.setEnabled(false); //de consulta
         }
         if (op == 3) {//Op==3 - Modificar
             this.setTitle("Modificação de finanças");
         }
         if (op == 4) {//Op==4 - Excluir
             this.setTitle("Exclusão de finanças");
+        }
+        if (op == 5) {//Op==5 - Quitar
+            this.setTitle("Quitar finanças");
         }
     }
 
@@ -131,6 +139,8 @@ public class CadastroFinancas extends javax.swing.JFrame {
         SelectPanel = new javax.swing.JPanel();
         SitToggle = new javax.swing.JToggleButton();
         SelectButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        IDField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de finanças");
@@ -148,7 +158,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         ValorPanel.setLayout(ValorPanelLayout);
         ValorPanelLayout.setHorizontalGroup(
             ValorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFormattedTextField2)
+            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
         );
         ValorPanelLayout.setVerticalGroup(
             ValorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,11 +216,11 @@ public class CadastroFinancas extends javax.swing.JFrame {
         DescPanel.setLayout(DescPanelLayout);
         DescPanelLayout.setHorizontalGroup(
             DescPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         DescPanelLayout.setVerticalGroup(
             DescPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
         );
 
         SitPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Situação"));
@@ -286,6 +296,25 @@ public class CadastroFinancas extends javax.swing.JFrame {
                     .addComponent(SelectButton)))
         );
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("ID"));
+
+        IDField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDFieldActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(IDField, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -300,8 +329,11 @@ public class CadastroFinancas extends javax.swing.JFrame {
                     .addComponent(DescPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ValorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TipoPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TipoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ValorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -315,9 +347,11 @@ public class CadastroFinancas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ValorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SelectPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(ValorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SelectPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -338,22 +372,109 @@ public class CadastroFinancas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void insertFinanca(boolean tipo, String data, double valor, boolean sit, String obs) {
+    /**
+     * 11/02/16 - Juliano Felipe
+     * Função para consulta de finanças no banco de dados.
+     * @param situacao (Pago ou não pago). Seleciona todas as entradas no banco com os tais params.
+     * @return rowid da finança.
+     */
+    private int selectFinanca (String situacao){
+        this.setEnabled(false);
+        String []columnNames = {"rowid","tipo","data","valor","sit","Obs"};
+        MultipleTable MServiceTable = new MultipleTable (this, columnNames, situacao);
+        MServiceTable.setVisible(true);
+        
+        //Gets
+        int rowid = MServiceTable.getId();
+        Object[] rowDados = MServiceTable.getRow();
+        
+        String tmp = rowDados[1].toString();
+        if (tmp.equals("Receita")){
+            jRadioButton1.setSelected(true);
+            jRadioButton2.setSelected(false);
+        } else if (tmp.equals("Despesa")){
+            jRadioButton1.setSelected(false);
+            jRadioButton2.setSelected(true);
+        }
+        
+        try{
+            java.util.Date date = new SimpleDateFormat("dd/MM/yyyy").parse(rowDados[2].toString());
+            jDateChooser1.setDate(date);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-03.", title, JOptionPane.ERROR_MESSAGE);
+            //System.err.println(Arrays.toString(e.getStackTrace()));
+            System.err.println("04-03-03: " + e.getClass().getName() + ": " + e.getMessage());
+        }
+            
+        jFormattedTextField2.setText(rowDados[3].toString());
+                
+        tmp = rowDados[4].toString();
+        if (tmp.equals("Quitado")){
+            jCheckBox1.setSelected(true);
+        } else if (tmp.equals("Pendente")){
+            jCheckBox1.setSelected(false);
+        }
+        
+        jTextPane2.setText(rowDados[5].toString());
+        
+        MServiceTable.parafechar.dispose();
+        
+        IDField.setText(""+rowid);
+        return rowid;
+    }
+    
+    private void updateFinanca(boolean tipo, String data, double valor, boolean sit, String obs, int rowid) throws Exception{
+        if (rowid==-1){
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        confinanca = ConexaoBanco.confinanca();
+        if (confinanca==null) System.err.println("Conn Null");
+        PreparedStatement pst = null;
+        try {
+            String sql1 = "UPDATE financa SET tipo=?, data=?, valor=?, sit=?, obs=? WHERE rowid="+rowid;
+            pst = confinanca.prepareStatement(sql1);
+                    if (pst==null) System.err.println ("PST NULL");
+                    System.out.println(tipo);
+            pst.setBoolean(1, tipo);
+            pst.setString (2, data);
+            pst.setDouble (3, valor);
+            pst.setBoolean(4, sit);
+            pst.setString (5, obs);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            //System.exit(0);
+        } finally {
+            if (pst != null) 
+                pst.close();
+            if (confinanca != null) 
+                confinanca.close();
+        }
+    } 
+    
+    private void insertFinanca(boolean tipo, String data, double valor, boolean sit, String obs) throws Exception{
+        confinanca = ConexaoBanco.confinanca();
+        PreparedStatement pst = null;
         try {
             String sql1 = "Insert into financa (tipo,data,valor,sit,obs) values (?,?,?,?,?)";
-            PreparedStatement pst = confinanca.prepareStatement(sql1);
+            pst = confinanca.prepareStatement(sql1);
             pst.setBoolean(1, tipo);
-            pst.setString(2, data);
-            pst.setDouble(3, valor);
+            pst.setString (2, data);
+            pst.setDouble (3, valor);
             pst.setBoolean(4, sit);
-            pst.setString(5, obs);
-            pst.execute();
-            confinanca.close();
-
+            pst.setString (5, obs);
+            pst.executeUpdate();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-01", title, JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
+        } finally {
+            if (pst != null) 
+                pst.close();
+            if (confinanca != null) 
+                confinanca.close();
         }
     }
 
@@ -438,6 +559,113 @@ public class CadastroFinancas extends javax.swing.JFrame {
     }
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //Trecho de Modificar finanças. Consulta, lista, habilita edição, salva, e chama o "refresh"
+        //(para outra modificação sem fechar a janela).       
+        if (metodo == 3) {
+            String flag = jButton2.getText();
+            System.out.println(flag);
+            if (!flag.equals("Modificar")){
+                System.out.println("ENTRA AQUI?");
+                financaId = selectFinanca (SitToggle.getText());
+                if (financaId==-1){
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                jFormattedTextField2.setEditable(true);
+                jRadioButton1.setEnabled(true);
+                jRadioButton2.setEnabled(true);
+                jCheckBox1.setEnabled(true);
+                jDateChooser1.setEnabled(true);
+                jTextPane2.setEnabled(true);
+            }else{
+                boolean rec = jRadioButton2.isEnabled();
+                boolean des = jRadioButton1.isEnabled();
+                boolean tipo = false;
+                if (rec == true) {
+                    tipo = true;
+                } else if (des == true) {
+                    tipo = false;
+                }
+                System.out.println (IDField.getText());
+                try {
+                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isEnabled(), jTextPane2.getText(), Integer.parseInt(IDField.getText()));
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-FF.", title, JOptionPane.ERROR_MESSAGE);
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                }
+                
+                metodosFinancas(3); //Resetar modificação
+                return;
+            }
+            jButton2.setText("Modificar");
+            return;
+        }
+        
+        //Trecho de excluir finanças. Consulta e exclui
+        if (metodo == 4) {
+            String flag = jButton1.getText();
+            if (!flag.equals("Excluir")){
+                financaId = selectFinanca (SitToggle.getText());
+                if (financaId==-1){
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }else{
+                try {
+                    String sql1 = "DELETE FROM servico WHERE rowid="+financaId;
+                    PreparedStatement pst = confinanca.prepareStatement(sql1);            
+                    pst.execute();
+                    confinanca.close();
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    System.exit(0);
+                }
+                
+                jButton2.setEnabled(false); //Para não tentar Excluir novamente
+                jButton1.setText("Sair");
+            }
+            jButton2.setText("Excluir");
+            return;
+        }
+        
+        //Trecho de quitar finanças. Consulta os dados e força salvar com a situação em true (Pago)
+        if (metodo==5){
+            String flag = jButton1.getText();
+            if (!flag.equals("Quitar")){
+                financaId = selectFinanca (SitToggle.getText());
+                if (jCheckBox1.isSelected()){
+                    JOptionPane.showMessageDialog(this, "Finança já quitada.\nCódigo: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (financaId==-1){
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }else{
+                boolean rec = jRadioButton2.isEnabled();
+                boolean des = jRadioButton1.isEnabled();
+                boolean tipo = false;
+                if (rec == true) {
+                    tipo = true;
+                } else if (des == true) {
+                    tipo = false;
+                }
+                try {
+                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isEnabled(), jTextPane2.getText(), financaId);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                }
+                
+                metodosFinancas(5); //Resetar modificação
+                return;
+            }
+            jButton2.setText("Quitar");
+            return;
+        }
+
         //Botão Salvar pressionado
         /**
          * 06/01/16 - Juliano Definido a opcao 2 (consultar), altera-se a funcao
@@ -449,14 +677,15 @@ public class CadastroFinancas extends javax.swing.JFrame {
         
         String data = getJDate(jDateChooser1.getDate().toString());
         
-        boolean sit = jCheckBox1.isEnabled();
-        boolean rec = jRadioButton2.isEnabled();
-        boolean des = jRadioButton1.isEnabled();
+        boolean sit = jCheckBox1.isSelected();
         boolean tipo = false;
-        if (rec == true) {
+        if (jRadioButton2.isSelected()) {
             tipo = true;
-        } else if (des == true) {
+        } else if (jRadioButton1.isSelected()) {
             tipo = false;
+        } else {
+            System.err.println("Erro. Código: 04-07-XX.\nNenhum tipo selecionado");
+            return;
         }
         String obs = jTextPane2.getText();
 
@@ -480,8 +709,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
 
         if (C.cadastrarfinanca(p)) {
             //Insere no banco de dados
-            insertFinanca(tipo, data, valor, sit, obs);
-
+            try {
+                insertFinanca(tipo, data, valor, sit, obs);            
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-05.", title, JOptionPane.ERROR_MESSAGE);
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            }
             //JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE); ERRO NA EXIBIÇÃO DESSA JANELA!!!!
             this.dispose();
             telaanterior.setEnabled(true);
@@ -506,6 +739,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         /**
          * 05/01 - Maycon Tela fechada
          */
+        telaanterior.RefreshTable();
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed
@@ -546,62 +780,34 @@ public class CadastroFinancas extends javax.swing.JFrame {
             }
     }
     
-    /**
-     * 11/02/16 - Juliano Felipe
-     * Função para consulta de finanças no banco de dados.
-     * @param situacao (Pago ou não pago). Seleciona todas as entradas no banco com os tais params.
-     * @return rowid da finança.
-     */
-    private int selectFinanca (String situacao){
-        this.setEnabled(false);
-        String []columnNames = {"rowid","tipo","data","valor","sit","Obs"};
-        MultipleTable MServiceTable = new MultipleTable (this, columnNames, situacao);
-        MServiceTable.setVisible(true);
-        
-        //Gets
-        int rowid = MServiceTable.getId();
-        Object[] rowDados = MServiceTable.getRow();
-        
-        String tmp = rowDados[1].toString();
-        if (tmp.equals("Receita")){
-            jRadioButton1.setSelected(true);
-            jRadioButton2.setSelected(false);
-        } else if (tmp.equals("Despesa")){
-            jRadioButton1.setSelected(false);
-            jRadioButton2.setSelected(true);
-        }
-        
-        try{
-            java.util.Date date = new SimpleDateFormat("dd/MM/yyyy").parse(rowDados[2].toString());
-            jDateChooser1.setDate(date);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-03.", title, JOptionPane.ERROR_MESSAGE);
-            //System.err.println(Arrays.toString(e.getStackTrace()));
-            System.err.println("04-03-03: " + e.getClass().getName() + ": " + e.getMessage());
-        }
-            
-        jFormattedTextField2.setText(rowDados[3].toString());
-                
-        tmp = rowDados[4].toString();
-        if (tmp.equals("Quitado")){
-            jCheckBox1.setSelected(true);
-        } else if (tmp.equals("Pendente")){
-            jCheckBox1.setSelected(false);
-        }
-        
-        jTextPane2.setText(rowDados[5].toString());
-        
-        MServiceTable.parafechar.dispose();
-        
-        return rowid;
-    }
-    
     private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
         String modo = SitToggle.getText();
-        
         selectFinanca (modo);
-        
         PanelColor (1,Color.GREEN);
+        String method = null;
+        switch(metodo){
+            case 2: //Sair sem habilitar o botão
+                return; //e sem alterar o texto.
+            case 3:
+                method = "Modificar";
+                jFormattedTextField2.setEditable(true);
+                jRadioButton1.setEnabled(true);
+                jRadioButton2.setEnabled(true);
+                jCheckBox1.setEnabled(true);
+                jDateChooser1.setEnabled(true);
+                jTextPane2.setEnabled(true);
+                break;
+            case 4:
+                method = "Excluir";
+                break;
+            case 5:
+                method = "Quitar";
+                break;
+            default:
+                System.out.println ("Erro. Código: 04-03-XX. Variável métodos inválida");
+        }
+        jButton2.setText(method);
+        jButton2.setEnabled(true);
     }//GEN-LAST:event_SelectButtonActionPerformed
 
     private void SitToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SitToggleActionPerformed
@@ -612,6 +818,10 @@ public class CadastroFinancas extends javax.swing.JFrame {
             SitToggle.setText("Não pago");
         }
     }//GEN-LAST:event_SitToggleActionPerformed
+
+    private void IDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IDFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -652,6 +862,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DataPanel;
     private javax.swing.JPanel DescPanel;
+    private javax.swing.JTextField IDField;
     private javax.swing.JButton SelectButton;
     private javax.swing.JPanel SelectPanel;
     private javax.swing.JPanel SitPanel;
@@ -665,6 +876,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane2;
