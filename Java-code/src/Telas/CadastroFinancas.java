@@ -425,7 +425,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
     
     private void updateFinanca(boolean tipo, String data, double valor, boolean sit, String obs, int rowid) throws Exception{
         if (rowid==-1){
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-04.", title, JOptionPane.ERROR_MESSAGE);
             return;
         }
         confinanca = ConexaoBanco.confinanca();
@@ -443,7 +443,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
             pst.setString (5, obs);
             pst.executeUpdate();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-05.", title, JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             //System.exit(0);
         } finally {
@@ -568,7 +568,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 System.out.println("ENTRA AQUI?");
                 financaId = selectFinanca (SitToggle.getText());
                 if (financaId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-06.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 jFormattedTextField2.setEditable(true);
@@ -590,7 +590,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 try {
                     updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isEnabled(), jTextPane2.getText(), Integer.parseInt(IDField.getText()));
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-FF.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-07.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                 }
                 
@@ -607,7 +607,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
             if (!flag.equals("Excluir")){
                 financaId = selectFinanca (SitToggle.getText());
                 if (financaId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-08.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }else{
@@ -618,7 +618,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
                     confinanca.close();
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-09.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.exit(0);
                 }
@@ -636,11 +636,11 @@ public class CadastroFinancas extends javax.swing.JFrame {
             if (!flag.equals("Quitar")){
                 financaId = selectFinanca (SitToggle.getText());
                 if (jCheckBox1.isSelected()){
-                    JOptionPane.showMessageDialog(this, "Finança já quitada.\nCódigo: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Finança já quitada.\nCódigo: 04-03-0A.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (financaId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-0B.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }else{
@@ -655,7 +655,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 try {
                     updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isEnabled(), jTextPane2.getText(), financaId);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-0C.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                 }
                 
@@ -684,7 +684,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         } else if (jRadioButton1.isSelected()) {
             tipo = false;
         } else {
-            System.err.println("Erro. Código: 04-07-XX.\nNenhum tipo selecionado");
+            System.err.println("Erro. Código: 04-03-0D.\nNenhum tipo selecionado");
             return;
         }
         String obs = jTextPane2.getText();
@@ -712,10 +712,10 @@ public class CadastroFinancas extends javax.swing.JFrame {
             try {
                 insertFinanca(tipo, data, valor, sit, obs);            
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-05.", title, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-0E.", title, JOptionPane.ERROR_MESSAGE);
                 System.err.println(e.getClass().getName() + ": " + e.getMessage());
             }
-            //JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE); ERRO NA EXIBIÇÃO DESSA JANELA!!!!
+            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             telaanterior.setEnabled(true);
             telaanterior.requestFocus(); //Traz o foco para tela anterior
@@ -804,7 +804,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 method = "Quitar";
                 break;
             default:
-                System.out.println ("Erro. Código: 04-03-XX. Variável métodos inválida");
+                System.out.println ("Erro. Código: 04-03-0F. Variável métodos inválida");
         }
         jButton2.setText(method);
         jButton2.setEnabled(true);

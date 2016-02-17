@@ -593,7 +593,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             try {
                 insertClient(tel, cpf, nome, obs, end);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.", title, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-09.", title, JOptionPane.ERROR_MESSAGE);
                 System.err.println(e.getClass().getName() + ": " + e.getMessage());
             }
             JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE);

@@ -83,7 +83,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             
             return data;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-08-XX.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-08-01.", title, JOptionPane.ERROR_MESSAGE);
             //System.err.println(Arrays.toString(e.getStackTrace()));
             System.err.println("04-07-06: " + e.getClass().getName() + ": " + e.getMessage());
         }
@@ -101,7 +101,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArrayList<ArrayList<Object>> data = getDataFinancas ();
          
         if (num_rs<1){ //Se só for um resultado, seleciona-se a única row?
-            System.err.println("Erro. Código: 04-08-XX.\nErro ao carregar atividades. Nenhum resultado encontrado.");
+            System.err.println("Erro. Código: 04-08-02.\nErro ao carregar atividades. Nenhum resultado encontrado.");
             model.addColumn("Erro obtendo finanças");
             Object[] strErr = {"Não existem finanças"};
             model.addRow(strErr);

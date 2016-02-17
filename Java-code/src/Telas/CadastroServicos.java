@@ -429,7 +429,7 @@ public TelaPrincipal telaanterior;
      */
     private void updateService (String placa, int km, String modelo,  boolean situacao, int idCliente, String obs, int rowid) throws Exception{
         if (rowid==-1){
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-07.", title, JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -445,7 +445,7 @@ public TelaPrincipal telaanterior;
             pst.setString (6, obs);
             pst.executeUpdate();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-XX-XX.", title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-08.", title, JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             //System.exit(0);
         } finally {
@@ -476,6 +476,7 @@ public TelaPrincipal telaanterior;
         }
         if (num_count>3 || char_count>4){ //Placa tem que ter 3 nums. e 4 letras.
             //BalloonTip(PlacaField, "Placa inválida. Deve conter 3 números e 4 letras, em qualquer ordem.");
+            System.err.println("Erro. Código: 04-04-0E");
             PanelColor (0, Color.RED);
             valido=false;
         } else {
@@ -486,6 +487,7 @@ public TelaPrincipal telaanterior;
         int idcliente = Integer.parseInt(IDField.getText());
         if (idcliente<=0){
             PanelColor (4, Color.RED);
+            System.err.println("Erro. Código: 04-04-0F");
             valido=false;
         }
         return valido;
@@ -552,7 +554,7 @@ public TelaPrincipal telaanterior;
             if (!flag.equals("Excluir")){
                 serviceId = selectService (PlacaField.getText());
                 if (serviceId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-09.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }else{
@@ -563,7 +565,7 @@ public TelaPrincipal telaanterior;
                     Mul.close();
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-0A.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.exit(0);
                 }
@@ -581,11 +583,11 @@ public TelaPrincipal telaanterior;
             if (!flag.equals("Quitar")){
                 serviceId = selectService (PlacaField.getText());
                 if (jCheckBox1.isSelected()){
-                    JOptionPane.showMessageDialog(this, "Serviço já quitado.\nCódigo: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Serviço já quitado.\nCódigo: 04-04-0B.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (serviceId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-0C.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }else{
@@ -602,7 +604,7 @@ public TelaPrincipal telaanterior;
                 try {//Passando "True" no lugar do "jCheckBox1.isSelected()" para o usuário não precisar clicar.
                     updateService (PlacaField.getText(), Integer.parseInt(KM), jFormattedTextField2.getText(),  true, id, jTextPane1.getText(), serviceId);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-XX.", title, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-0D.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                 }
                 
