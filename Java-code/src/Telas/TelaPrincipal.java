@@ -7,8 +7,10 @@ package Telas;
 
 import ConecBD.ConexaoBanco;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,43 +23,46 @@ import javax.swing.table.DefaultTableModel;
  * @author Maycon
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+
     Connection connGeral = null;
-    
-    int num_rs=0;
-    String title=null;
+
+    int num_rs = 0;
+    String title = null;
+
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
-        
+
         //Seta janela para o meio da tela, independente da resolução.
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+
         initLogo(); //Seta logo SIGMA
-        
+
         title = this.getTitle();
-        fillFinancaTable ();
+        fillFinancaTable();
     }
 
     /**
-    * 12/12/15 - Juliano Felipe
-    * Seta icone "Logo 100x100.png"
-    */
-    private void initLogo (){
+     * 12/12/15 - Juliano Felipe Seta icone "Logo 100x100.png"
+     */
+    private void initLogo() {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/Logo 100x100.png")));
     }
-    
+
     /**
-     * 16/02/16 - Juliano Felipe 
-     * Preenche a matriz de dados conforme consulta no banco de dados (finanças não quitadas)
-     * @return data "Matriz" (ArrayList em que cada posição é uma ArrayList) com os dados da consulta.
-     */ 
-    private ArrayList<ArrayList<Object>> getDataFinancas (){
+     * 16/02/16 - Juliano Felipe Preenche a matriz de dados conforme consulta no
+     * banco de dados (finanças não quitadas)
+     *
+     * @return data "Matriz" (ArrayList em que cada posição é uma ArrayList) com
+     * os dados da consulta.
+     */
+    private ArrayList<ArrayList<Object>> getDataFinancas() {
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
-        
-        String sit="0";  //Pago = true/1; Não pago = false/0
+
+        String sit = "0";  //Pago = true/1; Não pago = false/0
 
         Connection Mul = ConexaoBanco.Multiple();
         try {
@@ -66,21 +71,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
             pst.setString(1, sit);
             ResultSet rs = pst.executeQuery();
 
-            while (rs.next())
-            {//i=linha e j=coluna
-                ArrayList<Object> row = new ArrayList();           
-                
-                row.add(rs.getString("data"));       
-                row.add(rs.getDouble("valor"));                                       
-                row.add(rs.getString("obs"));                 
-                
+            while (rs.next()) {//i=linha e j=coluna
+                ArrayList<Object> row = new ArrayList();
+
+                row.add(rs.getString("data"));
+                row.add(rs.getDouble("valor"));
+                row.add(rs.getString("obs"));
+
                 data.add(row);
                 num_rs++;
             }
             rs.close();
             pst.close();
             Mul.close();
-            
+
             return data;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-08-01.", title, JOptionPane.ERROR_MESSAGE);
@@ -89,18 +93,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         return null; //Erro
     }
-    
+
     /**
-     * 16/02/16 - Juliano Felipe 
-     * Configura a tabela de financas
+     * 16/02/16 - Juliano Felipe Configura a tabela de financas
      */
-    private void fillFinancaTable (){
+    private void fillFinancaTable() {
         DefaultTableModel model = (DefaultTableModel) FinancaTable.getModel();
         String[] columnNames = {"Data", "Valor", "Observações"};
-        
-        ArrayList<ArrayList<Object>> data = getDataFinancas ();
-         
-        if (num_rs<1){ //Se só for um resultado, seleciona-se a única row?
+
+        ArrayList<ArrayList<Object>> data = getDataFinancas();
+
+        if (num_rs < 1) { //Se só for um resultado, seleciona-se a única row?
             System.err.println("Erro. Código: 04-08-02.\nErro ao carregar atividades. Nenhum resultado encontrado.");
             model.addColumn("Erro obtendo finanças");
             Object[] strErr = {"Não existem finanças"};
@@ -109,39 +112,38 @@ public class TelaPrincipal extends javax.swing.JFrame {
             model.addRow(strErr2);
             return;
         }
-        
+
         int i = data.size();
         int j = columnNames.length; //Gambiarra para não pegar o size do "ArrayList interno"
-        int t,n,k;
-       
-        for (t=0; t<j; t++){
+        int t, n, k;
+
+        for (t = 0; t < j; t++) {
             model.addColumn(columnNames[t]);
         }
-        
-        Object[] list = new Object [j];
-        for (n=0; n<i; n++){
+
+        Object[] list = new Object[j];
+        for (n = 0; n < i; n++) {
             ArrayList<Object> aux = new ArrayList();
             aux = data.get(n);
-            for (k=0; k<j; k++){
+            for (k = 0; k < j; k++) {
                 list[k] = aux.get(k);
-            } 
+            }
             model.addRow(list);
         }
         FinancaTable.setModel(model);
-        
+
     }
-    
+
     /**
-     * 16/02/16 - Juliano Felipe 
-     * Reseta a table da finanças.
+     * 16/02/16 - Juliano Felipe Reseta a table da finanças.
      */
-    public void RefreshTable (){
-        DefaultTableModel clear = (DefaultTableModel)FinancaTable.getModel();
+    public void RefreshTable() {
+        DefaultTableModel clear = (DefaultTableModel) FinancaTable.getModel();
         clear.setRowCount(0);
         clear.setColumnCount(0);
-        fillFinancaTable (); //Preenche novamente
+        fillFinancaTable(); //Preenche novamente
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -181,7 +183,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem11 = new javax.swing.JMenuItem();
         ErrorMenu = new javax.swing.JMenu();
@@ -487,10 +488,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu5.add(jMenuItem12);
-
-        jMenuItem13.setText("Relatar problema");
-        jMenuItem13.setToolTipText("");
-        jMenu5.add(jMenuItem13);
         jMenu5.add(jSeparator2);
 
         jMenuItem11.setText("Sobre o SIGMA");
@@ -557,13 +554,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        // TODO add your handling code here:
+        /**
+         * 18/02 - Maycon Funcao prototipo que chama o manual para o botao
+         * "topicos de ajuda"
+         */
+        String username = System.getProperty("user.name");
+        File pdf = new File("C:/Users/" + username + "/Documents/SIGMA/Manual.pdf");
+        try {
+            Desktop.getDesktop().open(pdf);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro no Desktop: " + ex);
+        }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void CadastroClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroClienteActionPerformed
         /**
-         * 05/12 - Maycon
-         * Botão Cadastrar Clientes
+         * 05/12 - Maycon Botão Cadastrar Clientes
          */
         this.setEnabled(false);
         new CadastroCliente(this, 1).setVisible(true);
@@ -571,8 +577,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void CadastroServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroServicoActionPerformed
         /**
-         * 05/12 - Maycon
-         * Botão Cadastro de Serviços
+         * 05/12 - Maycon Botão Cadastro de Serviços
          */
         this.setEnabled(false);
         new CadastroServicos(this, 1).setVisible(true);
@@ -580,8 +585,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         /**
-         * 05/12 - Maycon
-         * Botão Sobre o SIGMA
+         * 05/12 - Maycon Botão Sobre o SIGMA
          */
         this.setEnabled(false);
         new About(this).setVisible(true);
@@ -590,8 +594,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void CadastroFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroFinancaActionPerformed
         /**
-         * 19/12 - Maycon
-         * Botão Cadastro de Registros Financeiros
+         * 19/12 - Maycon Botão Cadastro de Registros Financeiros
          */
         this.setEnabled(false);
         new CadastroFinancas(this, 1).setVisible(true);
@@ -601,8 +604,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ConsultaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaClienteActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Consulta de Clientes
+         * 06/01/2016 - Juliano Felipe Botão Consulta de Clientes
          */
         this.setEnabled(false);
         new CadastroCliente(this, 2).setVisible(true);
@@ -610,8 +612,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ConsultaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaServicoActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Consulta de Servicos
+         * 06/01/2016 - Juliano Felipe Botão Consulta de Servicos
          */
         this.setEnabled(false);
         new CadastroServicos(this, 2).setVisible(true);
@@ -619,8 +620,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ConsultaFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaFinancaActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Consulta de Registros Financeiros
+         * 06/01/2016 - Juliano Felipe Botão Consulta de Registros Financeiros
          */
         this.setEnabled(false);
         new CadastroFinancas(this, 2).setVisible(true);
@@ -628,8 +628,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ModificaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificaClienteActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Modificar clientes
+         * 06/01/2016 - Juliano Felipe Botão Modificar clientes
          */
         this.setEnabled(false);
         new CadastroCliente(this, 3).setVisible(true);
@@ -637,16 +636,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ExcluiClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluiClienteActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Exclusão de clientes
+         * 06/01/2016 - Juliano Felipe Botão Exclusão de clientes
          */
         this.setEnabled(false);
         new CadastroCliente(this, 4).setVisible(true);    }//GEN-LAST:event_ExcluiClienteActionPerformed
 
     private void ModificaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificaServicoActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Modificar Servicos
+         * 06/01/2016 - Juliano Felipe Botão Modificar Servicos
          */
         this.setEnabled(false);
         new CadastroServicos(this, 3).setVisible(true);
@@ -654,8 +651,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ExcluiServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluiServicoActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Exlusão Servicos
+         * 06/01/2016 - Juliano Felipe Botão Exlusão Servicos
          */
         this.setEnabled(false);
         new CadastroServicos(this, 4).setVisible(true);
@@ -663,8 +659,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ModificaFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificaFinancaActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Modifica Registro Financeiro
+         * 06/01/2016 - Juliano Felipe Botão Modifica Registro Financeiro
          */
         this.setEnabled(false);
         new CadastroFinancas(this, 3).setVisible(true);
@@ -672,8 +667,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ExcluiFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluiFinancaActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Exclui Registro Financeiro
+         * 06/01/2016 - Juliano Felipe Botão Exclui Registro Financeiro
          */
         this.setEnabled(false);
         new CadastroFinancas(this, 4).setVisible(true);
@@ -681,8 +675,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void QuitaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitaServicoActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Quitar Servicos
+         * 06/01/2016 - Juliano Felipe Botão Quitar Servicos
          */
         this.setEnabled(false);
         new CadastroServicos(this, 5).setVisible(true);
@@ -690,8 +683,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void QuitaFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitaFinancaActionPerformed
         /**
-         * 06/01/2016 - Juliano Felipe
-         * Botão Quita Registro Financeiro
+         * 06/01/2016 - Juliano Felipe Botão Quita Registro Financeiro
          */
         this.setEnabled(false);
         new CadastroFinancas(this, 5).setVisible(true);    }//GEN-LAST:event_QuitaFinancaActionPerformed
@@ -700,14 +692,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         connGeral = ConexaoBanco.Geral();
         ConnButton.setEnabled(false);
         //connGeral = null; //Teste para caso queira ver como mostra o banco desconectado!!!
-        if (connGeral!=null){
-            Color conectado = new Color(0,102,0);
+        if (connGeral != null) {
+            Color conectado = new Color(0, 102, 0);
             ConnButton.setBackground(conectado);
             ConnButton.setForeground(conectado);
             ConnButton.setText("   Conectado   ");
         } else {
             ConnButton.setEnabled(false);
-            Color desconectado = new Color(204,0,0);
+            Color desconectado = new Color(204, 0, 0);
             ConnButton.setBackground(desconectado);
             ConnButton.setForeground(desconectado);
         }
@@ -715,14 +707,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void ErrorMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_ErrorMenuMenuSelected
         /**
-        * 13/02/16 - Juliano Felipe
-        * Abre a tela de consulta de erros.
-        */
-        String [] columnNames = {"Id", "Pacote", "Arquivo", "Interno", "Descrição"};
+         * 13/02/16 - Juliano Felipe Abre a tela de consulta de erros.
+         */
+        String[] columnNames = {"Id", "Pacote", "Arquivo", "Interno", "Descrição"};
         this.setEnabled(false);
         new Vizualizaca(this, columnNames).setVisible(true);
     }//GEN-LAST:event_ErrorMenuMenuSelected
-   
+
     /**
      * @param args the command line arguments
      */
@@ -784,7 +775,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
