@@ -466,21 +466,32 @@ public TelaPrincipal telaanterior;
         //Obrigatórios placa e idCliente
         boolean valido=true;
         
-        //Trecho de placa
         String placa = PlacaField.getText();
-        int length = placa.length();
-        int num_count=0, char_count=0;
-        for (int i=0; i<length; i++){
-            if (Character.isDigit(placa.charAt(i))) num_count++;
-            else if (Character.isLetter(placa.charAt(i))) char_count++;
-        }
-        if (num_count>3 || char_count>4){ //Placa tem que ter 3 nums. e 4 letras.
-            //BalloonTip(PlacaField, "Placa inválida. Deve conter 3 números e 4 letras, em qualquer ordem.");
-            System.err.println("Erro. Código: 04-04-0E");
-            PanelColor (0, Color.RED);
-            valido=false;
-        } else {
+        //Regex para o padrão "antigo" de placas. E.g.: ABC-0123 (Sem traço para não bugar)
+        boolean b = Pattern.matches("\\p{Upper}\\p{Upper}\\p{Upper}\\p{Digit}\\p{Digit}\\p{Digit}\\p{Digit}", placa);
+        boolean flag_placa_antiga=false;
+        if (b){
+            System.out.println("REGEX TRUE");
+            flag_placa_antiga = true;
             PanelColor (0, Color.GREEN);
+        }
+        
+        if (!flag_placa_antiga){
+            //Trecho de validação de placa nova
+            int length = placa.length();
+            int num_count=0, char_count=0;
+            for (int i=0; i<length; i++){
+                if (Character.isDigit(placa.charAt(i))) num_count++;
+                else if (Character.isLetter(placa.charAt(i))) char_count++;
+            }
+            if (num_count!=3 || char_count!=4){ //Placa tem que ter 3 nums. e 4 letras.
+                //BalloonTip(PlacaField, "Placa inválida. Deve conter 3 números e 4 letras, em qualquer ordem.");
+                System.err.println("Erro. Código: 04-04-0E");
+                PanelColor (0, Color.RED);
+                valido=false;
+            } else {
+                PanelColor (0, Color.GREEN);
+            }
         }
         
         //Trecho de idcliente

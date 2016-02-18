@@ -90,7 +90,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         }
         if (op >= 2) {
             this.setTitle("Consulta de finanças");
-            jFormattedTextField2.setEditable(false);
+            jFormattedTextField2.setEnabled(false);
             jRadioButton1.setEnabled(false);
             jRadioButton2.setEnabled(false);
             jCheckBox1.setEnabled(false);
@@ -312,7 +312,9 @@ public class CadastroFinancas extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -347,11 +349,10 @@ public class CadastroFinancas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(ValorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(SelectPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ValorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SelectPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -571,15 +572,15 @@ public class CadastroFinancas extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-06.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                jFormattedTextField2.setEditable(true);
+                jFormattedTextField2.setEnabled(true);
                 jRadioButton1.setEnabled(true);
                 jRadioButton2.setEnabled(true);
                 jCheckBox1.setEnabled(true);
                 jDateChooser1.setEnabled(true);
                 jTextPane2.setEnabled(true);
             }else{
-                boolean rec = jRadioButton2.isEnabled();
-                boolean des = jRadioButton1.isEnabled();
+                boolean rec = jRadioButton2.isSelected();
+                boolean des = jRadioButton1.isSelected();
                 boolean tipo = false;
                 if (rec == true) {
                     tipo = true;
@@ -588,7 +589,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 }
                 System.out.println (IDField.getText());
                 try {
-                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isEnabled(), jTextPane2.getText(), Integer.parseInt(IDField.getText()));
+                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isSelected(), jTextPane2.getText(), Integer.parseInt(IDField.getText()));
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-07.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -644,8 +645,8 @@ public class CadastroFinancas extends javax.swing.JFrame {
                     return;
                 }
             }else{
-                boolean rec = jRadioButton2.isEnabled();
-                boolean des = jRadioButton1.isEnabled();
+                boolean rec = jRadioButton2.isSelected();
+                boolean des = jRadioButton1.isSelected();
                 boolean tipo = false;
                 if (rec == true) {
                     tipo = true;
@@ -653,7 +654,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
                     tipo = false;
                 }
                 try {
-                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isEnabled(), jTextPane2.getText(), financaId);
+                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isSelected(), jTextPane2.getText(), financaId);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-0C.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -790,7 +791,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 return; //e sem alterar o texto.
             case 3:
                 method = "Modificar";
-                jFormattedTextField2.setEditable(true);
+                jFormattedTextField2.setEnabled(true);
                 jRadioButton1.setEnabled(true);
                 jRadioButton2.setEnabled(true);
                 jCheckBox1.setEnabled(true);
