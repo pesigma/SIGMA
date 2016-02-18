@@ -471,7 +471,6 @@ public TelaPrincipal telaanterior;
         boolean b = Pattern.matches("\\p{Upper}\\p{Upper}\\p{Upper}\\p{Digit}\\p{Digit}\\p{Digit}\\p{Digit}", placa);
         boolean flag_placa_antiga=false;
         if (b){
-            System.out.println("REGEX TRUE");
             flag_placa_antiga = true;
             PanelColor (0, Color.GREEN);
         }
@@ -494,6 +493,7 @@ public TelaPrincipal telaanterior;
             }
         }
         
+        if(metodo>1) return valido; //Para que não verifique nome na consulta, já que não há um porquê para tal 
         //Trecho de idcliente
         int idcliente = Integer.parseInt(IDField.getText());
         if (idcliente<=0){
@@ -505,7 +505,7 @@ public TelaPrincipal telaanterior;
     }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (!validateFields()) return;
+        boolean validate_flag = validateFields();
         
         /**
          * 03/02/16 - Juliano
@@ -625,6 +625,8 @@ public TelaPrincipal telaanterior;
             jButton1.setText("Quitar");
             return;
         }
+        
+        if (validate_flag) return; //Flag que campos não são validos, no cadastro, retorna e começa novamente
         
         /**
          * 04/01 - Maycon
