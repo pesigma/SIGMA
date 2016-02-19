@@ -6,7 +6,7 @@
 package Entidades;
 
 /**
- *
+ * Entidade financa, possui métodos e valores para o objeto finança
  * @author Maycon
  */
 public class Financa {

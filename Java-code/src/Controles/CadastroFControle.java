@@ -8,7 +8,7 @@ package Controles;
 import Entidades.Financa;
 
 /**
- *
+ * Controlador de financas; verifica se campos preenchidos satisfazem as condições necessárias para criação do objeto
  * @author Maycon
  */
 public class CadastroFControle {

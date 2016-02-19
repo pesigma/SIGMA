@@ -1,6 +1,7 @@
 package sigma;
 import Telas.*;
 /**
+ * Programa de chamada principal
  * @author Anderson Bottega
  * @author Juliano Felipe
  * @author Maycon Queiroz

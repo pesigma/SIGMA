@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.sql.Connection;
 
 /**
- *
+ * Tela com erros listados
  * @author Juliano Felipe
  */
 public class VisualizacaoErro extends javax.swing.JFrame {

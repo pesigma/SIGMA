@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  * 08/01 - Maycon Conexão com o Banco de dados
  */
 /**
- *
+ * Realiza conexões com o banco de dados
  * @author Maycon
  */
 public class ConexaoBanco {

@@ -10,8 +10,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.AttributeSet;
 
 /**
+ *  DocumentFilter para setar letras do field para maiúsculo.
  *  @author Juliano Felipe
- * DocumentFilter para setar letras do field para maiúsculo.
  */
 public class UppercaseDocumentFilter extends DocumentFilter {
   @Override

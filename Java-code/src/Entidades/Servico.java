@@ -6,9 +6,7 @@
 package Entidades;
 
 /**
- * 04/01 - Maycon
- * Entidade serviço
- * FALTA Receber situação
+ * Entidade Servico, possui métodos e valores para o objeto serviço
  * @author Maycon
  */
 public class Servico {

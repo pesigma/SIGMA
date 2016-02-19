@@ -21,7 +21,7 @@ import javax.swing.BorderFactory;
 import java.text.SimpleDateFormat;
 
 /**
- * PROBLEMAS COM O ALINHAMENTO DOS ITENS!!
+ * Tela de cadastro de finanças, mas também é alterada para funcionar como todos os outros métodos (Consulta, exclusão, modificação e quitação)
  *
  * @author Maycon
  */

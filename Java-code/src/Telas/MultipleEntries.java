@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Tela de multiplas entradas voltada para apresentação de vários nomes de clientes
  * @author Juliano Felipe
  */
 public class MultipleEntries extends javax.swing.JDialog {

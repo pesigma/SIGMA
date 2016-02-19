@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  
 
 /**
- *
+ * Tabela genérica de uso geral
  * @author Juliano Felipe
  */
 public class MultipleTable extends javax.swing.JDialog {

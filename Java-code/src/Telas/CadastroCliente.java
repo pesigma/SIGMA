@@ -23,7 +23,7 @@ import javax.swing.text.DocumentFilter;
  * 29/11/15 - Juliano Felipe Alteração para campos formatados.
  */
 /**
- *
+ * Tela de cadastro de clientes, mas também é alterada para funcionar como todos os outros métodos (Consulta, exclusão e modificação)
  * @author Maycon
  */
 public class CadastroCliente extends javax.swing.JFrame {

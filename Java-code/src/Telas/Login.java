@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 
 /**
- *
+ * Tela de Login, recebe usuários e senhas do banco e valida a entrada no programa principal
  * @author Maycon
  */
 public class Login extends javax.swing.JFrame {

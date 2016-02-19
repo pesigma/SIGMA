@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Tela principal do programa
  * @author Maycon
  */
 public class TelaPrincipal extends javax.swing.JFrame {

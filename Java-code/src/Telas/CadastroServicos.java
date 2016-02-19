@@ -32,7 +32,7 @@ import javax.swing.text.DocumentFilter;
  */
 
 /**
- *
+ * Tela de cadastro de serviços, mas também é alterada para funcionar como todos os outros métodos (Consulta, exclusão, modificação e quitação)
  * @author Maycon
  */
 public class CadastroServicos extends javax.swing.JFrame {

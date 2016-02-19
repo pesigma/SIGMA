@@ -6,8 +6,8 @@
 package Controles;
 import Entidades.Servico;
 /**
- * 04/01 - Maycon
- * Controlador do recebimento de serviços
+ *
+ * Controlador de servicos; verifica se campos preenchidos satisfazem as condições necessárias para criação do objeto
  * @author Maycon
  */
 public class CadastroSControle {

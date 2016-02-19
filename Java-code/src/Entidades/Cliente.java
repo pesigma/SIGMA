@@ -6,7 +6,7 @@
 package Entidades;
 
 /**
- *
+ * Entidade cliente, possui métodos e valores para o objeto cliente
  * @author Maycon
  */
 public class Cliente {

@@ -9,7 +9,7 @@ import Entidades.Cliente;
 import java.sql.Connection;
 
 /**
- *
+ * Controlador de clientes; verifica se campos preenchidos satisfazem as condições necessárias para criação do objeto
  * @author Maycon
  */
 public class CadastroCControle {

@@ -14,7 +14,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Sobre o SIGMA, contém autores, versão do sistema e data de publicação
  * @author Maycon
  */
 public class About extends javax.swing.JFrame {
