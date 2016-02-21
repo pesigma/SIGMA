@@ -97,7 +97,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             jFormattedTextField2.setEditable(false);
             jComboBox1.setEnabled(false);
             jTextField4.setEditable(false);
-            jTextPane2.setEnabled(false);
+            jTextPane2.setEditable(false);
             jButton2.setText("Consultar");
         }
         if (op == 3) {//Op==3 - Modificar
@@ -526,7 +526,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             jFormattedTextField2.setEditable(true);
             jComboBox1.setEnabled(true);
             jTextField4.setEditable(true);
-            jTextPane2.setEnabled(true);
+            jTextPane2.setEditable(true);
             jButton2.setText("Modificar");
             return;
         }

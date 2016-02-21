@@ -356,6 +356,34 @@ public class MultipleTable extends javax.swing.JDialog {
         
         jTable.setModel(model);
         //jTable.setEnabled(false);  //Não funciona para desabilitar edição
+        //jTable.removeColumn(jTable.getColumnModel().getColumn(length_row-1)); //Não mostrar a data real
+        if (what_close==1){
+            jTable.getColumnModel().getColumn(0).setMaxWidth(40); //id - max
+            jTable.getColumnModel().getColumn(0).setMinWidth(40); //id - min
+            jTable.getColumnModel().getColumn(1).setMaxWidth(65); //placa
+            jTable.getColumnModel().getColumn(1).setMinWidth(65); //placa
+            jTable.getColumnModel().getColumn(2).setMaxWidth(85); //km
+            jTable.getColumnModel().getColumn(2).setMinWidth(85); //km
+            jTable.getColumnModel().getColumn(3).setMaxWidth(300); //Modelo
+            jTable.getColumnModel().getColumn(3).setMinWidth(200); //Modelo - diferentes para poder "expandir"
+            jTable.getColumnModel().getColumn(4).setMaxWidth(75); //sit
+            jTable.getColumnModel().getColumn(4).setMinWidth(75); //situação
+            jTable.getColumnModel().getColumn(5).setMinWidth(150); //nome - Sem max. para poder "expandir"
+            jTable.getColumnModel().getColumn(6).setMaxWidth(40); //id cliente
+            jTable.getColumnModel().getColumn(6).setMinWidth(40); //idc
+        } else if (what_close==2){
+            jTable.getColumnModel().getColumn(0).setMaxWidth(40); //id
+            jTable.getColumnModel().getColumn(0).setMinWidth(40); //id
+            jTable.getColumnModel().getColumn(1).setMaxWidth(65); //tipo
+            jTable.getColumnModel().getColumn(1).setMinWidth(65); //tipo
+            jTable.getColumnModel().getColumn(2).setMaxWidth(195); //data
+            jTable.getColumnModel().getColumn(2).setMinWidth(195); //data
+            jTable.getColumnModel().getColumn(3).setMaxWidth(100); //valor
+            jTable.getColumnModel().getColumn(3).setMinWidth(100); //valor
+            jTable.getColumnModel().getColumn(4).setMaxWidth(65); //situação
+            jTable.getColumnModel().getColumn(4).setMinWidth(65); //situação
+        }
+        jTable.setAutoResizeMode(jTable.AUTO_RESIZE_LAST_COLUMN); //obs   
     }
     
     /**

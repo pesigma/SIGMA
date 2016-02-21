@@ -35,8 +35,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     /**
      * Número de colunas na tabela de finanças
-     * da tela principal. Há uma 7ª coluna para
-     * armazenamento de "data real", não de display.
+     * da tela principal. Há uma 4ª coluna para
+     * armazenamento de "rowid", não é mostrada.
      * 
      * @author Juliano Felipe
      */
@@ -95,7 +95,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             while (rs.next()) {
                 int rowid = rs.getInt("rowid");
                 boolean tipo = rs.getBoolean("tipo");
-                Date date = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'BRST' yyyy").parse(rs.getString("data"));
+                Date date = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy").parse(rs.getString("data"));
                 double valor = rs.getDouble("valor");
                 boolean situ = rs.getBoolean("sit");
                 String obs = rs.getString("obs");
@@ -176,7 +176,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             model.addRow(list);
         }
         FinancaTable.setModel(model);
-        //Romove VISUALIZAÇÃO de todas as colunas depois da terceira.
+        //Remove VISUALIZAÇÃO da quarta coluna
         FinancaTable.removeColumn(FinancaTable.getColumnModel().getColumn(3)); 
     }
 

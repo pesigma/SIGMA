@@ -43,7 +43,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
-        IDField.setEnabled(false);
+        IDField.setEditable(false);
         title = this.getTitle();
         initNoicon(); //Seta "Logo vazio".
     }
@@ -92,12 +92,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
         }
         if (op >= 2) {
             this.setTitle("Consulta de finanças");
-            jFormattedTextField2.setEnabled(false);
+            jFormattedTextField2.setEditable(false);
             jRadioButton1.setEnabled(false);
             jRadioButton2.setEnabled(false);
             jCheckBox1.setEnabled(false);
             jDateChooser1.setEnabled(false);
-            jTextPane2.setEnabled(false);
+            jTextPane2.setEditable(false);
             jButton2.setText("Consultar");
             //Para o cliente não confundir os botões
             jButton2.setEnabled(false); //de consulta
@@ -427,7 +427,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
             //System.err.println(Arrays.toString(e.getStackTrace()));
             System.err.println("04-03-XX: " + e.getClass().getName() + ": " + e.getMessage());
         }
-        
+        IDField.setText("" + financaId);
         if (tipo.equals("Receita")){
             jRadioButton1.setSelected(true);
             jRadioButton2.setSelected(false);
@@ -647,12 +647,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-06.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                jFormattedTextField2.setEnabled(true);
+                jFormattedTextField2.setEditable(true);
                 jRadioButton1.setEnabled(true);
                 jRadioButton2.setEnabled(true);
                 jCheckBox1.setEnabled(true);
                 jDateChooser1.setEnabled(true);
-                jTextPane2.setEnabled(true);
+                jTextPane2.setEditable(true);
             }else{
                 boolean rec = jRadioButton2.isSelected();
                 boolean des = jRadioButton1.isSelected();
@@ -868,12 +868,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 return; //e sem alterar o texto.
             case 3:
                 method = "Modificar";
-                jFormattedTextField2.setEnabled(true);
+                jFormattedTextField2.setEditable(true);
                 jRadioButton1.setEnabled(true);
                 jRadioButton2.setEnabled(true);
                 jCheckBox1.setEnabled(true);
                 jDateChooser1.setEnabled(true);
-                jTextPane2.setEnabled(true);
+                jTextPane2.setEditable(true);
                 break;
             case 4:
                 method = "Excluir";

@@ -96,15 +96,15 @@ public TelaPrincipal telaanterior;
      */
     public void metodosServicos (int op){
         Mul = ConexaoBanco.Multiple();
-        IDField.setEnabled(false);
+        IDField.setEditable(false);
         if (op>=2){//Op==2 - Consulta
            this.setTitle("Consulta de serviços"); 
-           jFormattedTextField2.setEnabled(false);
-           KMField.setEnabled(false);
+           jFormattedTextField2.setEditable(false);
+           KMField.setEditable(false);
            jCheckBox1.setEnabled(false);
-           jTextPane1.setEnabled(false);
-           IDField.setEnabled(false);
-           ClienteField.setEnabled(false);
+           jTextPane1.setEditable(false);
+           IDField.setEditable(false);
+           ClienteField.setEditable(false);
            ConsultarCliente.setEnabled(false);
            jButton1.setText("Consultar");
         }
@@ -528,11 +528,11 @@ public TelaPrincipal telaanterior;
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-04.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                jFormattedTextField2.setEnabled(true);
-                KMField.setEnabled(true);
+                jFormattedTextField2.setEditable(true);
+                KMField.setEditable(true);
                 jCheckBox1.setEnabled(true);
-                jTextPane1.setEnabled(true);
-                ClienteField.setEnabled(true);
+                jTextPane1.setEditable(true);
+                ClienteField.setEditable(true);
                 ConsultarCliente.setEnabled(true);
             }else{
                 int id = Integer.parseInt(IDField.getText());
