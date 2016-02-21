@@ -487,6 +487,9 @@
                   <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;&#xa;    },&#xa;    new String [] {&#xa;&#xa;    })&#xa;    {public boolean isCellEditable(int row, int column){return false;}}&#xa;    " type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="FinancaTableMousePressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -6,17 +6,24 @@
 package Telas;
 
 import ConecBD.ConexaoBanco;
+import Entidades.Financa;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import javax.swing.JTable;
 
 /**
  * Tela principal do programa
@@ -26,6 +33,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     Connection connGeral = null;
 
+    /**
+     * Número de colunas na tabela de finanças
+     * da tela principal. Há uma 7ª coluna para
+     * armazenamento de "data real", não de display.
+     * 
+     * @author Juliano Felipe
+     */
+    public int length_row=4;
+    private int fin = -1;
+    
     int num_rs = 0;
     String title = null;
 
@@ -40,7 +57,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
         initLogo(); //Seta logo SIGMA
-
+        
+        /*FinancaTable.setAutoCreateRowSorter(true);
+        TableRowSorter sorter = new TableRowSorter(FinancaTable.getModel());
+        FinancaTable.setRowSorter(sorter);*/
+        
         title = this.getTitle();
         fillFinancaTable();
     }
@@ -51,16 +72,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void initLogo() {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/Logo 100x100.png")));
     }
-
+    
     /**
      * 16/02/16 - Juliano Felipe Preenche a matriz de dados conforme consulta no
      * banco de dados (finanças não quitadas)
      *
-     * @return data "Matriz" (ArrayList em que cada posição é uma ArrayList) com
+     * @return data ArrayList de entidades financa com
      * os dados da consulta.
      */
-    private ArrayList<ArrayList<Object>> getDataFinancas() {
-        ArrayList<ArrayList<Object>> data = new ArrayList<>();
+    private ArrayList<Financa> getDataFinancas() {
+        ArrayList<Financa> lista_financa = new ArrayList<>();
 
         String sit = "0";  //Pago = true/1; Não pago = false/0
 
@@ -71,21 +92,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
             pst.setString(1, sit);
             ResultSet rs = pst.executeQuery();
 
-            while (rs.next()) {//i=linha e j=coluna
-                ArrayList<Object> row = new ArrayList();
-
-                row.add(rs.getString("data"));
-                row.add(rs.getDouble("valor"));
-                row.add(rs.getString("obs"));
-
-                data.add(row);
+            while (rs.next()) {
+                int rowid = rs.getInt("rowid");
+                boolean tipo = rs.getBoolean("tipo");
+                Date date = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'BRST' yyyy").parse(rs.getString("data"));
+                double valor = rs.getDouble("valor");
+                boolean situ = rs.getBoolean("sit");
+                String obs = rs.getString("obs");
+                
+                Financa tmp = new Financa(rowid, tipo, date, valor, obs, situ);
+                lista_financa.add(tmp);
                 num_rs++;
             }
             rs.close();
             pst.close();
             Mul.close();
 
-            return data;
+            return lista_financa;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-08-01.", title, JOptionPane.ERROR_MESSAGE);
             //System.err.println(Arrays.toString(e.getStackTrace()));
@@ -95,13 +118,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     /**
+     * 20/02/16 - Juliano Felipe 
+     * Ordena array de entidades financa por data.
+     *
+     * @param data conforme armazenada no banco de dados.
+     * @return data ArrayList ordenada por data.
+     */
+    private ArrayList<Financa> ArraySort (ArrayList<Financa> data){
+        //number_dates = number of rows to be sorted
+        Collections.sort(data, new Comparator<Financa>() {
+        @Override
+        public int compare(Financa o1, Financa o2) {
+            if (o1.getData() == null || o2.getData() == null)
+              return 0;
+            return o1.getData().compareTo(o2.getData());
+        }
+        });
+        return data;
+    }
+    
+    /**
      * 16/02/16 - Juliano Felipe Configura a tabela de financas
      */
     private void fillFinancaTable() {
         DefaultTableModel model = (DefaultTableModel) FinancaTable.getModel();
-        String[] columnNames = {"Data", "Valor", "Observações"};
+        String[] columnNames = {"Data", "Valor", "Observações", "rowid"};
 
-        ArrayList<ArrayList<Object>> data = getDataFinancas();
+        ArrayList<Financa> lista_financa =  getDataFinancas();
 
         if (num_rs < 1) { //Se só for um resultado, seleciona-se a única row?
             System.err.println("Erro. Código: 04-08-02.\nErro ao carregar atividades. Nenhum resultado encontrado.");
@@ -111,27 +154,30 @@ public class TelaPrincipal extends javax.swing.JFrame {
             Object[] strErr2 = {"com pagamento pendente!"};
             model.addRow(strErr2);
             return;
+        } else if (num_rs>1){//Não precisa ordenar se há somente um valor
+            lista_financa = ArraySort (lista_financa);
         }
 
-        int i = data.size();
+        int i = lista_financa.size();
         int j = columnNames.length; //Gambiarra para não pegar o size do "ArrayList interno"
-        int t, n, k;
-
+        int t, n;
+        
         for (t = 0; t < j; t++) {
             model.addColumn(columnNames[t]);
         }
 
         Object[] list = new Object[j];
         for (n = 0; n < i; n++) {
-            ArrayList<Object> aux = new ArrayList();
-            aux = data.get(n);
-            for (k = 0; k < j; k++) {
-                list[k] = aux.get(k);
-            }
+            Financa tmp = lista_financa.get(n);
+            list[0] = tmp.DateToString(tmp.getData()); //Data
+            list[1] = tmp.getValor(); //Valor
+            list[2] = tmp.getobs(); //Observações
+            list[3] = tmp.getRowId(); //rowId
             model.addRow(list);
         }
         FinancaTable.setModel(model);
-
+        //Romove VISUALIZAÇÃO de todas as colunas depois da terceira.
+        FinancaTable.removeColumn(FinancaTable.getColumnModel().getColumn(3)); 
     }
 
     /**
@@ -435,6 +481,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             })
             {public boolean isCellEditable(int row, int column){return false;}}
         );
+        FinancaTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                FinancaTableMousePressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(FinancaTable);
 
         jCalendar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -713,6 +764,29 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setEnabled(false);
         new Vizualizaca(this, columnNames).setVisible(true);
     }//GEN-LAST:event_ErrorMenuMenuSelected
+
+    public int getFinancaId (){
+        return fin;
+    }
+    
+    private void FinancaTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FinancaTableMousePressed
+        /**
+        * 21/02/2016 - Juliano Felipe 
+        * Evento para quitar registros a partir da tabela na janela principal.
+        */
+        FinancaTable =(JTable) evt.getSource();
+        Point p = evt.getPoint();
+        int row = FinancaTable.rowAtPoint(p); //Posição da row.
+        //Pode ser pego com "ErrorTable.getSelectedRow()"
+        if (evt.getClickCount() == 2) {
+            DefaultTableModel model = (DefaultTableModel) FinancaTable.getModel();
+
+            fin = Integer.parseInt(model.getValueAt(row, 3).toString());
+            
+            this.setEnabled(false);
+            new CadastroFinancas(this, 6).setVisible(true);
+        }
+    }//GEN-LAST:event_FinancaTableMousePressed
 
     /**
      * @param args the command line arguments

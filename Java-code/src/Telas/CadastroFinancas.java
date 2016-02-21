@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Tela de cadastro de finanças, mas também é alterada para funcionar como todos os outros métodos (Consulta, exclusão, modificação e quitação)
@@ -78,7 +79,8 @@ public class CadastroFinancas extends javax.swing.JFrame {
      *
      * @param op - Opção de reutilização 1 - Cadastro (esse método não é
      * chamado, devido a condição de chamada no construtor modificado); 2 -
-     * Consulta; 3 - Modificação; 4 - Exclusão;
+     * Consulta; 3 - Modificação; 4 - Exclusão; 5 - Quitar; 6 - Quitar direto
+     * da table da janela principal.
      */
     public void metodosFinancas(int op) {
         //confinanca = ConexaoBanco.confinanca();
@@ -108,6 +110,18 @@ public class CadastroFinancas extends javax.swing.JFrame {
         }
         if (op == 5) {//Op==5 - Quitar
             this.setTitle("Quitar finanças");
+        }
+        if (op == 6) {//Op==6 - Quitar da table
+            //Setar texto dos botões
+            financaId = telaanterior.getFinancaId();
+            if (financaId<=0){
+                System.err.println("Erro. Código: 04-03-XX. Id de finança inválido.");
+            }
+            System.out.println("Uia, entrei aqui. Financa: " + financaId);
+            fillViaId(financaId);
+            
+            jButton2.setText("Quitar");
+            jButton2.setEnabled(true);
         }
     }
 
@@ -375,6 +389,66 @@ public class CadastroFinancas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * 21/02/16 - Juliano Felipe
+     * Função para preencher campos da janela de finanças via id retornado da tabela na janela principal
+     * @param rowid referente a finança selecionado na janela principal.
+     */
+    private void fillViaId (int rowid){
+        Connection Mul = ConexaoBanco.Multiple();
+        String tipo=null,sit=null,obs=null;
+        Date date=null;
+        Double valor=null;
+        try {
+            String sql2 = "SELECT * FROM financa WHERE rowid=?";
+            PreparedStatement pst = Mul.prepareStatement(sql2);
+            pst.setInt(1, rowid);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next())
+            {
+                 //String temporária para selecionar os tipos e transformá-los em algo legível (para o cliente).
+                
+                if(rs.getBoolean("tipo")) tipo = "Receita";
+                else tipo = "Despesa";            
+                
+                date = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'BRST' yyyy").parse(rs.getString("data"));       
+                valor = rs.getDouble("valor");              
+                
+                if(rs.getBoolean("sit")) sit = "Quitado";
+                else sit = "Pendente";                        
+                
+                obs = rs.getString("obs");                 
+            }
+            rs.close();
+            pst.close();
+            Mul.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-XX.", title, JOptionPane.ERROR_MESSAGE);
+            //System.err.println(Arrays.toString(e.getStackTrace()));
+            System.err.println("04-03-XX: " + e.getClass().getName() + ": " + e.getMessage());
+        }
+        
+        if (tipo.equals("Receita")){
+            jRadioButton1.setSelected(true);
+            jRadioButton2.setSelected(false);
+        } else if (tipo.equals("Despesa")){
+            jRadioButton1.setSelected(false);
+            jRadioButton2.setSelected(true);
+        }
+        jDateChooser1.setDate(date);
+            
+        jFormattedTextField2.setText(valor.toString());
+                
+        if (sit.equals("Quitado")){
+            jCheckBox1.setSelected(true);
+        } else if (sit.equals("Pendente")){
+            jCheckBox1.setSelected(false);
+        }
+        
+        jTextPane2.setText(obs);
+    }
+    
+    /**
      * 11/02/16 - Juliano Felipe
      * Função para consulta de finanças no banco de dados.
      * @param situacao (Pago ou não pago). Seleciona todas as entradas no banco com os tais params.
@@ -633,7 +707,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         }
         
         //Trecho de quitar finanças. Consulta os dados e força salvar com a situação em true (Pago)
-        if (metodo==5){
+        if (metodo==5 || metodo==6){
             String flag = jButton1.getText();
             if (!flag.equals("Quitar")){
                 financaId = selectFinanca (SitToggle.getText());
@@ -677,7 +751,8 @@ public class CadastroFinancas extends javax.swing.JFrame {
         //Botão Salvar pressionado
         double valor = getValor (jFormattedTextField2.getValue().toString());
         
-        String data = getJDate(jDateChooser1.getDate().toString());
+        Date data = jDateChooser1.getDate();
+        //getJDate(jDateChooser1.getDate().toString());
         
         boolean sit = jCheckBox1.isSelected();
         boolean tipo = false;
@@ -692,6 +767,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         String obs = jTextPane2.getText();
 
         Financa p = new Financa(tipo, data, valor, obs, sit);
+        String data_tmp = p.TranslateString(p.getData().toString()); //Traduzir String de data
         //Chama o controle para cadastrar
         CadastroFControle C = new CadastroFControle();
 
@@ -712,7 +788,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         if (C.cadastrarfinanca(p)) {
             //Insere no banco de dados
             try {
-                insertFinanca(tipo, data, valor, sit, obs);            
+                insertFinanca(tipo, data_tmp, valor, sit, obs);            
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-0E.", title, JOptionPane.ERROR_MESSAGE);
                 System.err.println(e.getClass().getName() + ": " + e.getMessage());
