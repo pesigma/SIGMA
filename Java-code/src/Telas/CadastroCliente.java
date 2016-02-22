@@ -90,7 +90,8 @@ public class CadastroCliente extends javax.swing.JFrame {
     public void metodosCliente(int op) {
         //Colocado como "cascateamento" pois toda vez que tem que modificar
         //ou excluir, passa por uma consulta
-        concliente = ConexaoBanco.concliente(); //Colocado aqui para poder resetar funções sem ter que fechar a janela
+        if (concliente==null)//Só abre conexão se está tiver sido fechada.
+            concliente = ConexaoBanco.concliente(); //Colocado aqui para poder resetar funções sem ter que fechar a janela
         if (op >= 2) {//Op==2 - Consulta
             this.setTitle("Consulta de clientes");
             jFormattedTextField1.setEditable(false);
@@ -326,9 +327,12 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     private void insertClient(String tel, String cpf, String nome, String obs, String end) throws Exception {
         String[] split = nome.split(" ",2);     //split by spaces
-        String fname = split[0]; // Primeiro nome
-        String lname = split[1]; // "Resto do nome"
-
+        String fname, lname = null;
+        fname = split[0]; // Primeiro nome
+        if (split.length > 1){
+            lname = split[1]; // "Resto do nome"
+        } //Só recebe o "resto" se houver, assim não gera exception
+        
         PreparedStatement pst = null;
         try {
             String sql1 = "INSERT INTO cliente (nome,cpf,tel,end,obs,lname) VALUES (?,?,?,?,?,?)";
@@ -348,8 +352,8 @@ public class CadastroCliente extends javax.swing.JFrame {
         }  finally {
             if (pst != null) 
                 pst.close();
-            if (concliente != null) 
-                concliente.close();
+            /*if (concliente != null) 
+                concliente.close();*/
         }
     }
     
@@ -399,17 +403,40 @@ public class CadastroCliente extends javax.swing.JFrame {
             pst.setString(1, fname);
             ResultSet rs = pst.executeQuery();
             
+            //Dados temporários para atribuir do banco de dados
+            int tmp_id=-1;
+            String fullname=null, tel=null, cpf=null, end=null, obs=null;
             int num_clients=0;
             while (rs.next()){ //Descobre o número de linhas retornadas
                 num_clients++;
-            }            
-            if (num_clients>1){
+                tmp_id=rs.getInt("rowid");
+                fullname = rs.getString("nome") + " " + rs.getString("lname");
+                tel = rs.getString("tel");
+                cpf = rs.getString("cpf");
+                end = rs.getString("end");
+                obs = rs.getString("obs");
+            }
+            pst.close();
+            rs.close();
+            if (num_clients==0){
+                JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-XX.\nNenhum resultado encontrado", title, JOptionPane.WARNING_MESSAGE);
+                return -1;
+            } else if (num_clients==1){
+                jTextField1.setText(fullname);
+                jFormattedTextField1.setText(tel);
+                jFormattedTextField2.setText(cpf);
+                String[] split = end.split(Pattern.quote(".")); // Split no "." (Ponto final)
+                String combo = split[0]; // String para ir no jcombobox
+                String field = split[1]; // String para ir no text field
+                jComboBox1.setSelectedItem(combo); //Seta item selecionado
+                jTextField4.setText(field);
+                jTextPane2.setText(obs);
+                return tmp_id;
+            } else if (num_clients>1){
                 id = selMulClient (nome, fname);
-                
-                //Como teve de consultar para selecionar o nome
-                //Fecho e abro novamente, com consulta por id (retorno o id do outro método)
-                pst.close();
-                rs.close();
+                if (id==0){ //Operação cancelada
+                    return 0;
+                }
                 sql2 = "SELECT rowid, * FROM cliente WHERE rowid="+id;
                 pst = concliente.prepareStatement(sql2);
                 rs = pst.executeQuery();
@@ -435,9 +462,13 @@ public class CadastroCliente extends javax.swing.JFrame {
 
                 String ob = rs.getString("obs");
                 jTextPane2.setText(ob);
+                
+                rs.close();
+                pst.close();
+                //concliente.close();
             }
         } catch (Exception e) {
-            String error = e.getClass().getName();
+            System.err.println("Erro. Código: 04-02-02: " + e.getClass().getName() + ": " + e.getMessage());
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-02.", title, JOptionPane.ERROR_MESSAGE);
         }
         /**
@@ -466,7 +497,6 @@ public class CadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-06.", title, JOptionPane.ERROR_MESSAGE);
             return;
         }
-        System.out.println(fname + lname + cpf + tel + end + "  " + obs + "   " + id);
         
         try {
             String sql1 = "UPDATE cliente SET nome=?, cpf=?, tel=?, end=?, obs=?, lname=? WHERE rowid="+id;
@@ -478,7 +508,8 @@ public class CadastroCliente extends javax.swing.JFrame {
             pst.setString(4, end);
             pst.setString(5, obs);
             pst.execute();
-            concliente.close();
+            pst.close();
+            //concliente.close();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-05.", title, JOptionPane.ERROR_MESSAGE);
@@ -496,6 +527,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         if (metodo == 2) {
             //Id (no retorno) não é necessário.
             selectClient (jTextField1.getText());
+            metodosCliente(2);
             return; //Somente consulta, nao necessario salvar dados
         }
 
@@ -507,6 +539,8 @@ public class CadastroCliente extends javax.swing.JFrame {
                 if (id==-1){
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-04.", title, JOptionPane.ERROR_MESSAGE);
                     return;
+                } else if (id==0) {
+                    return; //Operação cancelada
                 } else {
                     rowid=id;
                 }
@@ -531,7 +565,6 @@ public class CadastroCliente extends javax.swing.JFrame {
             return;
         }
 
-        //Função bugada
         if (metodo == 4) {
             String flag = jButton2.getText();
             int id;
@@ -548,12 +581,12 @@ public class CadastroCliente extends javax.swing.JFrame {
                     String sql1 = "DELETE FROM cliente WHERE rowid="+rowid;
                     PreparedStatement pst = concliente.prepareStatement(sql1);            
                     pst.execute();
-                    concliente.close();
+                    pst.close();
+                    //concliente.close();
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-08.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.exit(0);
                 }
                 metodosCliente(4);
                 jButton2.setEnabled(false); //Para não tentar salvar novamente
@@ -576,18 +609,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         //Chama o controle para cadastrar
         CadastroCControle C = new CadastroCControle();
         
-        /**
-         * 15/01 - Maycon TESTE PARA VERIFICAÇÃO SE OS DADOS DO CLIENTE FORAM
-         * RECEBIDOS
-         */
-        System.out.println("Nome: " + nome);
-        System.out.println("Telefone: " + tel);
-        System.out.println("CPF: " + cpf);
-        System.out.println("Endereco: " + end);
-        System.out.println("Obs: " + obs);
-        /**
-         * FIM DO TESTE!!!!
-         */
         if (C.cadastrarcliente(p)) {
             //Insere no banco de dados
             try {
@@ -603,10 +624,17 @@ public class CadastroCliente extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-03.", title, JOptionPane.ERROR_MESSAGE);
         }
+        metodosCliente(1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         //Janela de cadastro de clientes fechada
+        try{
+            concliente.close();
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-XX.", title, JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed

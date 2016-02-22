@@ -110,6 +110,9 @@ public class MultipleTable extends javax.swing.JDialog {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
         });
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -442,8 +445,6 @@ public class MultipleTable extends javax.swing.JDialog {
             nomeCliente = rowData[5].toString();
         } 
         
-        parafechar=this; //Para salvar a instância desta tela
-        this.setVisible(false); //Apenas esconde a tela para acessar as variáveis nas outras telas
         Closing ("03");
         
         rows=rowData;
@@ -452,14 +453,24 @@ public class MultipleTable extends javax.swing.JDialog {
     }//GEN-LAST:event_SelectButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        this.dispose();
+        SelectedId=0;
+        rows=null;
+        nomeCliente = null;
+        flag=true;
         Closing ("04");
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        this.dispose();
         Closing ("05");
     }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        SelectedId=0;
+        rows=null;
+        nomeCliente = null;
+        flag=true;
+        Closing ("06");
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * 11/02/16 - Juliano Felipe 
@@ -469,6 +480,8 @@ public class MultipleTable extends javax.swing.JDialog {
      * de erros. Estes últimos dois dígitos indicam de onde foi chamado o método.
      */
     private void Closing (String lastDoubleCode){
+        parafechar=this; //Para salvar a instância desta tela
+        this.setVisible(false); //Apenas esconde a tela para acessar as variáveis nas outras telas
         switch (what_close){
             case 1:
                 telaanterior.setEnabled(true);
@@ -483,6 +496,7 @@ public class MultipleTable extends javax.swing.JDialog {
                 //Erro 04-07-03   -   Dispose no botão Select
                 //Erro 04-07-04   -   Dispose no botão Cancel
                 //Erro 04-07-05   -   Dispose no "formWindowClosed"
+                //Erro 04-07-06   -   Dispose no "formWindowClosing"
         }
     }
     

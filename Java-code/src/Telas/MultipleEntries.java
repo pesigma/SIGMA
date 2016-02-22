@@ -129,6 +129,9 @@ public class MultipleEntries extends javax.swing.JDialog {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
         });
 
         jScrollPane1.setViewportView(jList);
@@ -222,6 +225,8 @@ public class MultipleEntries extends javax.swing.JDialog {
      * de erros. Estes últimos dois dígitos indicam de onde foi chamado o método.
      */
     private void Closing (String lastDoubleCode){
+        parafechar=this; //Para salvar a instância desta tela
+        this.setVisible(false); //Apenas esconde a tela para acessar as variáveis nas outras telas
         switch (what_close){
             case 1:
                 telaanterior.setEnabled(true);
@@ -236,16 +241,19 @@ public class MultipleEntries extends javax.swing.JDialog {
                 //Erro 04-06-02   -   Dispose no botão Cancel
                 //Erro 04-06-03   -   Dispose no "formWindowClosed"
                 //Erro 04-06-04   -   Dispose no botão Select
+                //Erro 04-06-05   -   Dispose no "formWindowClosing" - apertando no "X".
         }
     }
     
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        this.dispose();
+        flag = true; //Não selecionou nada
+        id = 0;
         Closing ("02");
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        this.dispose();
+        flag = true;
+        id = 0;
         Closing ("03");
     }//GEN-LAST:event_formWindowClosed
     
@@ -255,14 +263,17 @@ public class MultipleEntries extends javax.swing.JDialog {
         int index = jList.getSelectedIndex(); //Pega o id da posição selecionada
         ret = retorno.toString(); //Transforma objeto em string
         id = ids.get(index); //Pega o id do cliente conforme o index da "jList"
-                
-        parafechar=this; //Para salvar a instância desta tela
-        this.setVisible(false); //Apenas esconde a tela para acessar as variáveis nas outras telas
-        
+                        
         Closing ("04");
         
         flag=true; //Seta para verdadeiro para saber que nos métodos "get" é o valor real
     }//GEN-LAST:event_SelectButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        flag = true;
+        id = 0;
+        Closing ("05");
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

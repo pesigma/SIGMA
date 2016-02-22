@@ -394,6 +394,9 @@ public TelaPrincipal telaanterior;
         //Gets
         //nome = MServiceTable.getString();
         int rowid = MServiceTable.getId();
+        if (rowid<=0){ //Rowid<0 - Erro
+            return rowid; //Rowid==0 - Cancelado
+        }
         Object[] rowDados = MServiceTable.getRow();
         
         PlacaField.setText(rowDados[1].toString());
@@ -527,6 +530,8 @@ public TelaPrincipal telaanterior;
                 if (serviceId==-1){
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-04.", title, JOptionPane.ERROR_MESSAGE);
                     return;
+                } else if (serviceId==0){
+                    return;
                 }
                 jFormattedTextField2.setEditable(true);
                 KMField.setEditable(true);
@@ -567,6 +572,8 @@ public TelaPrincipal telaanterior;
                 if (serviceId==-1){
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-09.", title, JOptionPane.ERROR_MESSAGE);
                     return;
+                }else if (serviceId==0){
+                    return;
                 }
             }else{
                 try {
@@ -593,12 +600,14 @@ public TelaPrincipal telaanterior;
             String flag = jButton1.getText();
             if (!flag.equals("Quitar")){
                 serviceId = selectService (PlacaField.getText());
-                if (jCheckBox1.isSelected()){
-                    JOptionPane.showMessageDialog(this, "Serviço já quitado.\nCódigo: 04-04-0B.", title, JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
                 if (serviceId==-1){
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-0C.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (serviceId==0){
+                    return;
+                }
+                if (jCheckBox1.isSelected()){
+                    JOptionPane.showMessageDialog(this, "Serviço já quitado.\nCódigo: 04-04-0B.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }else{
@@ -626,7 +635,7 @@ public TelaPrincipal telaanterior;
             return;
         }
         
-        if (validate_flag) return; //Flag que campos não são validos, no cadastro, retorna e começa novamente
+        if (!validate_flag) return; //Flag que campos não são validos, no cadastro, retorna e começa novamente
         
         /**
          * 04/01 - Maycon
