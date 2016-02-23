@@ -34,6 +34,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     Connection connGeral = null;
 
     /**
+    * Usurário que logou no sistema. Variável usada apenas para restrição
+    * do evento de dois cliques na tabela. Recebe "Nenhum" para o programa
+    * rodar como usuaário em caso de erro.
+    * 
+    * @author Juliano Felipe
+    */
+    private String user="Administrador";
+    /**
      * Número de colunas na tabela de finanças
      * da tela principal. Há uma 4ª coluna para
      * armazenamento de "rowid", não é mostrada.
@@ -61,11 +69,50 @@ public class TelaPrincipal extends javax.swing.JFrame {
         /*FinancaTable.setAutoCreateRowSorter(true);
         TableRowSorter sorter = new TableRowSorter(FinancaTable.getModel());
         FinancaTable.setRowSorter(sorter);*/
-        
+        UserField.setEditable(false);
+        UserField.setText("   " + user);
+        Permissao (user);
         title = this.getTitle();
         fillFinancaTable();
     }
+    
+    /**
+     * @author Juliano Felipe
+     * Construtor que seta o nível de acesso do usuário.
+     * 
+     * @param user_extern - Usuário que logou. Oriunda da tela de login.
+     */
+    public TelaPrincipal(String user_extern) {
+        this ();
+        user = user_extern;
+        UserField.setText("   " + user_extern);
+        Permissao (user_extern);
+    }
 
+    /**
+     * @author Juliano Felipe
+     * Desabilita os campos conforme o nível de acesso. Dessa maneira,
+     * apenas o administrador possui acesso à todos os campos e botões.
+     * 
+     * @param user - Usuário que logou. Oriunda da tela de login.
+     */
+    private void Permissao (String user){
+        boolean access = false;
+        if (user.equals("Administrador"))
+            access = true;
+        CadastroFinanca.setEnabled(access);
+        ConsultaFinanca.setEnabled(access);
+        ModificaFinanca.setEnabled(access);
+        QuitaFinanca.setEnabled(access);
+        ExcluiFinanca.setEnabled(access);
+        NovoRelatorio.setEnabled(access);
+        ConsultaRelatorio.setEnabled(access);
+        ExcluiRelatorio.setEnabled(access);
+        ExcluiServico.setEnabled(access);
+        ExcluiCliente.setEnabled(access);
+        FinancaTable.setEnabled(access);
+    }
+    
     /**
      * 12/12/15 - Juliano Felipe Seta icone "Logo 100x100.png"
      */
@@ -177,7 +224,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         FinancaTable.setModel(model);
         //Remove VISUALIZAÇÃO da quarta coluna
-        FinancaTable.removeColumn(FinancaTable.getColumnModel().getColumn(3)); 
+        FinancaTable.removeColumn(FinancaTable.getColumnModel().getColumn(3));
+        
+        FinancaTable.getColumnModel().getColumn(0).setMinWidth(75); //Data - min
+        FinancaTable.getColumnModel().getColumn(0).setMaxWidth(75); //Data - max
+        FinancaTable.getColumnModel().getColumn(1).setMinWidth(100); //Valor - min
+        FinancaTable.getColumnModel().getColumn(1).setMaxWidth(100); //Valor - max        
+        
+        FinancaTable.setAutoResizeMode(FinancaTable.AUTO_RESIZE_LAST_COLUMN); //DESC 
+        
+        revalidate();
     }
 
     /**
@@ -226,12 +282,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jCalendar1 = new com.toedter.calendar.JCalendar();
         jPanel6 = new javax.swing.JPanel();
         ConnButton = new javax.swing.JToggleButton();
+        UserField = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem11 = new javax.swing.JMenuItem();
         ErrorMenu = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SIGMA");
@@ -475,7 +533,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Atividades", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Atividades", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         FinancaTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -501,16 +559,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(6, 6, 6))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCalendar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
@@ -522,9 +579,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(ConnButton))
+            .addComponent(ConnButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -532,6 +587,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(ConnButton)
                 .addGap(0, 11, Short.MAX_VALUE))
         );
+
+        UserField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jMenu5.setText("Ajuda");
         jMenu5.setToolTipText("");
@@ -557,16 +614,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu5);
 
         ErrorMenu.setText("Consulta de Erros");
-        ErrorMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                ErrorMenuMenuSelected(evt);
+        ErrorMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ErrorMenuMousePressed(evt);
             }
         });
         jMenuBar1.add(ErrorMenu);
+
+        jMenu1.setText("Deslogar");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu1MousePressed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -577,9 +638,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(UserField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -595,7 +658,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(UserField))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -603,7 +669,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -759,35 +826,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowOpened
 
-    private void ErrorMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_ErrorMenuMenuSelected
-        /**
-         * 13/02/16 - Juliano Felipe Abre a tela de consulta de erros.
-         */
-        String[] columnNames = {"Id", "Pacote", "Arquivo", "Interno", "Descrição"};
-        this.setEnabled(false);
-        new Vizualizaca(this, columnNames).setVisible(true);
-    }//GEN-LAST:event_ErrorMenuMenuSelected
-
     public int getFinancaId (){
         return fin;
     }
     
     private void FinancaTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FinancaTableMousePressed
-        /**
-        * 21/02/2016 - Juliano Felipe 
-        * Evento para quitar registros a partir da tabela na janela principal.
-        */
-        FinancaTable =(JTable) evt.getSource();
-        Point p = evt.getPoint();
-        int row = FinancaTable.rowAtPoint(p); //Posição da row.
-        //Pode ser pego com "ErrorTable.getSelectedRow()"
-        if (evt.getClickCount() == 2) {
-            DefaultTableModel model = (DefaultTableModel) FinancaTable.getModel();
+        if (user.equals("Administrador")){
+            /**
+            * 21/02/2016 - Juliano Felipe 
+            * Evento para quitar registros a partir da tabela na janela principal.
+            */
+            FinancaTable =(JTable) evt.getSource();
+            Point p = evt.getPoint();
+            int row = FinancaTable.rowAtPoint(p); //Posição da row.
+            //Pode ser pego com "ErrorTable.getSelectedRow()"
+            if (evt.getClickCount() == 2) {
+                DefaultTableModel model = (DefaultTableModel) FinancaTable.getModel();
 
-            fin = Integer.parseInt(model.getValueAt(row, 3).toString());
-            
-            this.setEnabled(false);
-            new CadastroFinancas(this, 6).setVisible(true);
+                fin = Integer.parseInt(model.getValueAt(row, 3).toString());
+
+                this.setEnabled(false);
+                new CadastroFinancas(this, 6).setVisible(true);
+            }
         }
     }//GEN-LAST:event_FinancaTableMousePressed
 
@@ -798,6 +858,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
             System.out.println("Maximizado");
         }
     }//GEN-LAST:event_formWindowStateChanged
+
+    private void ErrorMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ErrorMenuMousePressed
+        /**
+         * 13/02/16 - Juliano Felipe Abre a tela de consulta de erros.
+         */
+        String[] columnNames = {"Id", "Pacote", "Arquivo", "Interno", "Descrição"};
+        this.setEnabled(false);
+        new Vizualizaca(this, columnNames).setVisible(true);
+    }//GEN-LAST:event_ErrorMenuMousePressed
+
+    private void jMenu1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MousePressed
+        Object[] choices = {"Sim", "Não"};
+        Object defaultChoice = choices[0];
+        int dialogRet = JOptionPane.showOptionDialog(this, "Deseja realmente deslogar?", "Deslogar", JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE, null, choices, defaultChoice);
+        if(dialogRet == 1) { //==0 para sim
+            return;
+        }
+
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenu1MousePressed
 
     /**
      * @param args the command line arguments
@@ -855,7 +937,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton NovoRelatorio;
     private javax.swing.JButton QuitaFinanca;
     private javax.swing.JButton QuitaServico;
+    private javax.swing.JTextField UserField;
     private com.toedter.calendar.JCalendar jCalendar1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem11;

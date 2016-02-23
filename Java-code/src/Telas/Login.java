@@ -30,6 +30,8 @@ public class Login extends javax.swing.JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         
+        this.requestFocus();
+        
         initLogo(); //Seta logo SIGMA
     }
 
@@ -282,25 +284,26 @@ public class Login extends javax.swing.JFrame {
             while (rs.next()){
                 String comUser = rs.getString("Username");
                 String tempo = rs.getString ("Userpassword");
-                
                 if (comUser.equals(user)){
                     if (tempo.equals(pass)){
                         //Mostra o usuário que entrará no sistema. Comentado por motivos de "uma janela a mais para clicar".
                         //JOptionPane.showMessageDialog(null, "Acessando como " + user + ".", "Acesso permitido", JOptionPane.INFORMATION_MESSAGE);
-                        new TelaPrincipal().setVisible(true);
+                        new TelaPrincipal(user).setVisible(true);
                         this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "Senha incorreta. Erro. Código: 04-05-02.", "Acesso negado", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 }
-            }
-            rs.close();
-            st.close();
-            conn.close();
-        } catch (Exception e) {
+            }           
+            //rs.close();
+            //st.close();
+            //conn.close();
+
+        } catch (Exception e) {            
             //System.err.println("Erro indefinido"); //Definir erro
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-05-03.", "Acesso negado", JOptionPane.ERROR_MESSAGE);
+            System.err.println("04-05-03: " + e.getClass().getName() + ": " + e.getMessage());
         }
     }//GEN-LAST:event_LoginButtonActionPerformed
 

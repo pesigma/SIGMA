@@ -598,6 +598,8 @@ public class CadastroCliente extends javax.swing.JFrame {
                 }
                 metodosCliente(4);
                 jButton2.setEnabled(false); //Para não tentar salvar novamente
+                jButton1.setText("Sair");
+
             }
             jButton2.setText("Excluir");
             return;

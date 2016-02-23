@@ -34,7 +34,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
 
     String title;
     /**
-     * 19/12 - Maycon Creates new form TelaServicos
+     * 19/12 - Maycon Creates new form TelaFinancas
      */
     private CadastroFinancas() {
         initComponents();
@@ -118,7 +118,6 @@ public class CadastroFinancas extends javax.swing.JFrame {
             if (financaId<=0){
                 System.err.println("Erro. Código: 04-03-XX. Id de finança inválido.");
             }
-            System.out.println("Uia, entrei aqui. Financa: " + financaId);
             fillViaId(financaId);
             
             jButton2.setText("Quitar");
@@ -631,9 +630,30 @@ public class CadastroFinancas extends javax.swing.JFrame {
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Trecho de Modificar finanças. Consulta, lista, habilita edição, salva, e chama o "refresh"
-        //(para outra modificação sem fechar a janela).       
+        //(para outra modificação sem fechar a janela).               
         if (metodo == 3) {
             String flag = jButton2.getText();
+            if (flag.equals("Modificar")){
+                boolean rec = jRadioButton2.isSelected();
+                boolean des = jRadioButton1.isSelected();
+                boolean tipo = false;
+                if (rec == true) {
+                    tipo = true;
+                } else if (des == true) {
+                    tipo = false;
+                }
+                try {
+                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isSelected(), jTextPane2.getText(), Integer.parseInt(IDField.getText()));
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-07.", title, JOptionPane.ERROR_MESSAGE);
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                }
+                
+                metodosFinancas(3); //Resetar modificação
+                return;
+            }
+            return;
+            /*String flag = jButton2.getText();
             System.out.println(flag);
             if (!flag.equals("Modificar")){
                 System.out.println("ENTRA AQUI?");
@@ -671,12 +691,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 return;
             }
             jButton2.setText("Modificar");
-            return;
+            return;*/
         }
         
         //Trecho de excluir finanças. Consulta e exclui
         if (metodo == 4) {
-            String flag = jButton1.getText();
+            String flag = jButton2.getText();
             if (!flag.equals("Excluir")){
                 financaId = selectFinanca (SitToggle.getText());
                 if (financaId==-1){
@@ -693,9 +713,9 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 if(dialogRet == 1) {
                     return;
                 }
-                
+                System.out.println(financaId);
                 try {
-                    String sql1 = "DELETE FROM servico WHERE rowid="+financaId;
+                    String sql1 = "DELETE FROM financa WHERE rowid="+financaId;
                     PreparedStatement pst = confinanca.prepareStatement(sql1);            
                     pst.execute();
                     pst.close();
@@ -714,7 +734,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         
         //Trecho de quitar finanças. Consulta os dados e força salvar com a situação em true (Pago)
         if (metodo==5 || metodo==6){
-            String flag = jButton1.getText();
+            String flag = jButton2.getText();
             if (!flag.equals("Quitar")){
                 financaId = selectFinanca (SitToggle.getText());
                 if (financaId==-1){
@@ -737,7 +757,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
                     tipo = false;
                 }
                 try {
-                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isSelected(), jTextPane2.getText(), financaId);
+                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  true, jTextPane2.getText(), financaId);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-0C.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -866,6 +886,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         } else if (id<=-1) {
             System.out.println("Erro. Código: XX-XX-XX");
         }
+        financaId = id;
         PanelColor (1,Color.GREEN);
         String method = null;
         switch(metodo){
