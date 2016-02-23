@@ -40,7 +40,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     * 
     * @author Juliano Felipe
     */
-    private String user="Administrador";
+    private String user="Nenhum";
     /**
      * Número de colunas na tabela de finanças
      * da tela principal. Há uma 4ª coluna para

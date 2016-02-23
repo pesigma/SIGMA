@@ -267,14 +267,22 @@ public class Financa{
                 month = "Dez";                
                 break;
                 //Portugês - Inglês
-            case "Fev": //Os meses não listados permanecem iguais
+            case "Jan":
+                break;
+            case "Fev": 
                 month = "Feb";               
+                break;
+            case "Mar":
                 break;
             case "Abr":
                 month = "Apr";                
                 break;
             case "Mai":
                 month = "May";                
+                break;
+            case "Jun":
+                break;
+            case "Jul":
                 break;
             case "Ago":
                 month = "Aug";                
@@ -285,10 +293,11 @@ public class Financa{
             case "Out":
                 month = "Oct";                
                 break;
+            case "Nov":
+                break;
             case "Dez":
                 month = "Dec";                
                 break;
-                
             default:
                 System.err.println("Erro. Código: XX-XX-XX. Erro na tradução da data (mês).");
                 break;

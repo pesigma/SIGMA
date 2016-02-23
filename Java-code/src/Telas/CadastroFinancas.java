@@ -547,64 +547,6 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 pst.close();
         }
     }
-
-    /**
-     * 06/02/16 - Juliano Felipe 
-     * Método para pegar a data do jDayChooser (pertencente ao jCalendar)
-     * e transformar no padrão salvo no banco de dados.
-     * 
-     * @param date - Data a ser transformada para o padrão (obtida por 
-     * ".getDate().toString();")
-     * 
-     * @return String de data no formato estipulado
-     */
-    private String getJDate(String date){
-        String[] split = date.split(" ",6);     //split by spaces        
-        String day = split[2]; 
-        String month = split[1];
-        String year = split[5];
-        
-        switch (month) {
-            case "Jan":
-                month = "01";
-                break;
-            case "Feb":
-                month = "02";               
-                break;
-            case "Mar":
-                month = "03";                
-                break;
-            case "Apr":
-                month = "04";                
-                break;
-            case "May":
-                month = "05";                
-                break;
-            case "Jun":
-                month = "06";                
-                break;
-            case "Jul":
-                month = "07";                
-                break;
-            case "Aug":
-                month = "08";                
-                break;
-            case "Sep":
-                month = "09";                
-                break;
-            case "Oct":
-                month = "10";                
-                break;
-            case "Nov":
-                month = "11";                
-                break;
-            case "Dec":
-                month = "12";                
-                break;
-            }
-        
-        return day + "/" + month + "/" + year;
-    }
     
     /**
      * 06/02/16 - Juliano Felipe 
@@ -642,8 +584,10 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 } else if (des == true) {
                     tipo = false;
                 }
+                Financa tmp = new Financa();
+                String updateDate = tmp.TranslateString(jDateChooser1.getDate().toString());
                 try {
-                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isSelected(), jTextPane2.getText(), Integer.parseInt(IDField.getText()));
+                    updateFinanca (tipo, updateDate, getValor (jFormattedTextField2.getText()),  jCheckBox1.isSelected(), jTextPane2.getText(), Integer.parseInt(IDField.getText()));
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-07.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -653,59 +597,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 return;
             }
             return;
-            /*String flag = jButton2.getText();
-            System.out.println(flag);
-            if (!flag.equals("Modificar")){
-                System.out.println("ENTRA AQUI?");
-                financaId = selectFinanca (SitToggle.getText());
-                if (financaId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-06.", title, JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else if (financaId==0){
-                    return;
-                }
-                jFormattedTextField2.setEditable(true);
-                jRadioButton1.setEnabled(true);
-                jRadioButton2.setEnabled(true);
-                jCheckBox1.setEnabled(true);
-                jDateChooser1.setEnabled(true);
-                jTextPane2.setEditable(true);
-            }else{
-                boolean rec = jRadioButton2.isSelected();
-                boolean des = jRadioButton1.isSelected();
-                boolean tipo = false;
-                if (rec == true) {
-                    tipo = true;
-                } else if (des == true) {
-                    tipo = false;
-                }
-                System.out.println (IDField.getText());
-                try {
-                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  jCheckBox1.isSelected(), jTextPane2.getText(), Integer.parseInt(IDField.getText()));
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-07.", title, JOptionPane.ERROR_MESSAGE);
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                }
-                
-                metodosFinancas(3); //Resetar modificação
-                return;
-            }
-            jButton2.setText("Modificar");
-            return;*/
         }
         
         //Trecho de excluir finanças. Consulta e exclui
         if (metodo == 4) {
             String flag = jButton2.getText();
-            if (!flag.equals("Excluir")){
-                financaId = selectFinanca (SitToggle.getText());
-                if (financaId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-08.", title, JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else if (financaId==0){
-                    return;
-                }
-            }else{
+            if (flag.equals("Excluir")){
                 Object[] choices = {"Sim", "Não"};
                 Object defaultChoice = choices[0];
                 int dialogRet = JOptionPane.showOptionDialog(this, "Deseja realmente excluir a finança?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 
@@ -722,7 +619,6 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-09.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.exit(0);
                 }
                 
                 jButton2.setEnabled(false); //Para não tentar Excluir novamente
@@ -735,19 +631,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         //Trecho de quitar finanças. Consulta os dados e força salvar com a situação em true (Pago)
         if (metodo==5 || metodo==6){
             String flag = jButton2.getText();
-            if (!flag.equals("Quitar")){
-                financaId = selectFinanca (SitToggle.getText());
-                if (financaId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-0B.", title, JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else if (financaId==0){
-                    return;
-                }
-                if (jCheckBox1.isSelected()){
-                    JOptionPane.showMessageDialog(this, "Finança já quitada.\nCódigo: 04-03-0A.", title, JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }else{
+            if (flag.equals("Quitar")){
                 boolean rec = jRadioButton2.isSelected();
                 boolean des = jRadioButton1.isSelected();
                 boolean tipo = false;
@@ -756,8 +640,10 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 } else if (des == true) {
                     tipo = false;
                 }
+                Financa tmp = new Financa();
+                String updateDate = tmp.TranslateString(jDateChooser1.getDate().toString());
                 try {
-                    updateFinanca (tipo, getJDate(jDateChooser1.getDate().toString()), getValor (jFormattedTextField2.getValue().toString()),  true, jTextPane2.getText(), financaId);
+                    updateFinanca (tipo, updateDate, getValor (jFormattedTextField2.getText()),  true, jTextPane2.getText(), financaId);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-0C.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
