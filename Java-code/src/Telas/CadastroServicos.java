@@ -576,6 +576,14 @@ public TelaPrincipal telaanterior;
                     return;
                 }
             }else{
+                Object[] choices = {"Sim", "Não"};
+                Object defaultChoice = choices[0];
+                int dialogRet = JOptionPane.showOptionDialog(this, "Deseja realmente excluir o serviço?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE, null, choices, defaultChoice);
+                if(dialogRet == 1) {
+                    return;
+                }
+                
                 try {
                     String sql1 = "DELETE FROM servico WHERE rowid="+serviceId;
                     PreparedStatement pst = Mul.prepareStatement(sql1);            

@@ -83,7 +83,8 @@ public class CadastroFinancas extends javax.swing.JFrame {
      * da table da janela principal.
      */
     public void metodosFinancas(int op) {
-        //confinanca = ConexaoBanco.confinanca();
+        if (confinanca==null)//Só abre conexão se está tiver sido fechada.
+            confinanca = ConexaoBanco.confinanca(); //Colocado aqui para poder resetar funções sem ter que fechar a janela
         //SelectButton.setEnabled (false);
         if (op == 1) {//Op==1 - Consultar
             SitToggle.setEnabled(false);
@@ -462,6 +463,9 @@ public class CadastroFinancas extends javax.swing.JFrame {
         
         //Gets
         int rowid = MServiceTable.getId();
+        if (rowid<=0){ //Rowid<0 - Erro
+            return rowid; //Rowid==0 - Cancelado
+        }
         Object[] rowDados = MServiceTable.getRow();
         
         String tmp = rowDados[1].toString();
@@ -474,7 +478,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
         }
         
         try{
-            java.util.Date date = new SimpleDateFormat("dd/MM/yyyy").parse(rowDados[2].toString());
+            java.util.Date date = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy").parse(rowDados[2].toString());
             jDateChooser1.setDate(date);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-03.", title, JOptionPane.ERROR_MESSAGE);
@@ -504,14 +508,10 @@ public class CadastroFinancas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-04.", title, JOptionPane.ERROR_MESSAGE);
             return;
         }
-        confinanca = ConexaoBanco.confinanca();
-        if (confinanca==null) System.err.println("Conn Null");
         PreparedStatement pst = null;
         try {
             String sql1 = "UPDATE financa SET tipo=?, data=?, valor=?, sit=?, obs=? WHERE rowid="+rowid;
             pst = confinanca.prepareStatement(sql1);
-                    if (pst==null) System.err.println ("PST NULL");
-                    System.out.println(tipo);
             pst.setBoolean(1, tipo);
             pst.setString (2, data);
             pst.setDouble (3, valor);
@@ -525,13 +525,10 @@ public class CadastroFinancas extends javax.swing.JFrame {
         } finally {
             if (pst != null) 
                 pst.close();
-            if (confinanca != null) 
-                confinanca.close();
         }
     } 
     
     private void insertFinanca(boolean tipo, String data, double valor, boolean sit, String obs) throws Exception{
-        confinanca = ConexaoBanco.confinanca();
         PreparedStatement pst = null;
         try {
             String sql1 = "Insert into financa (tipo,data,valor,sit,obs) values (?,?,?,?,?)";
@@ -549,8 +546,6 @@ public class CadastroFinancas extends javax.swing.JFrame {
         } finally {
             if (pst != null) 
                 pst.close();
-            if (confinanca != null) 
-                confinanca.close();
         }
     }
 
@@ -646,6 +641,8 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 if (financaId==-1){
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-06.", title, JOptionPane.ERROR_MESSAGE);
                     return;
+                } else if (financaId==0){
+                    return;
                 }
                 jFormattedTextField2.setEditable(true);
                 jRadioButton1.setEnabled(true);
@@ -685,14 +682,23 @@ public class CadastroFinancas extends javax.swing.JFrame {
                 if (financaId==-1){
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-08.", title, JOptionPane.ERROR_MESSAGE);
                     return;
+                } else if (financaId==0){
+                    return;
                 }
             }else{
+                Object[] choices = {"Sim", "Não"};
+                Object defaultChoice = choices[0];
+                int dialogRet = JOptionPane.showOptionDialog(this, "Deseja realmente excluir a finança?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE, null, choices, defaultChoice);
+                if(dialogRet == 1) {
+                    return;
+                }
+                
                 try {
                     String sql1 = "DELETE FROM servico WHERE rowid="+financaId;
                     PreparedStatement pst = confinanca.prepareStatement(sql1);            
                     pst.execute();
-                    confinanca.close();
-
+                    pst.close();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-09.", title, JOptionPane.ERROR_MESSAGE);
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -711,12 +717,14 @@ public class CadastroFinancas extends javax.swing.JFrame {
             String flag = jButton1.getText();
             if (!flag.equals("Quitar")){
                 financaId = selectFinanca (SitToggle.getText());
-                if (jCheckBox1.isSelected()){
-                    JOptionPane.showMessageDialog(this, "Finança já quitada.\nCódigo: 04-03-0A.", title, JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
                 if (financaId==-1){
                     JOptionPane.showMessageDialog(this, "Erro. Código: 04-03-0B.", title, JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (financaId==0){
+                    return;
+                }
+                if (jCheckBox1.isSelected()){
+                    JOptionPane.showMessageDialog(this, "Finança já quitada.\nCódigo: 04-03-0A.", title, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }else{
@@ -771,20 +779,6 @@ public class CadastroFinancas extends javax.swing.JFrame {
         //Chama o controle para cadastrar
         CadastroFControle C = new CadastroFControle();
 
-        /**
-         * 03/02 - Maycon TESTE PARA VERIFICAÇÃO SE OS DADOS DA FINANCA FORAM
-         * RECEBIDOS
-         *
-         */
-        System.out.println("Valor: " + valor);
-        System.out.println("Data: " + data);
-        System.out.println("Tipo: " + tipo);
-        System.out.println("Situacao: " + sit);
-        System.out.println("Obs: " + obs);
-        /**
-         * FIM DO TESTE!!!!
-         */
-
         if (C.cadastrarfinanca(p)) {
             //Insere no banco de dados
             try {
@@ -817,6 +811,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
         /**
          * 05/01 - Maycon Tela fechada
          */
+        try{
+            confinanca.close();
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-XX.", title, JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         telaanterior.RefreshTable();
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior
@@ -860,7 +860,12 @@ public class CadastroFinancas extends javax.swing.JFrame {
     
     private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
         String modo = SitToggle.getText();
-        selectFinanca (modo);
+        int id = selectFinanca (modo);
+        if (id==0){
+            return;
+        } else if (id<=-1) {
+            System.out.println("Erro. Código: XX-XX-XX");
+        }
         PanelColor (1,Color.GREEN);
         String method = null;
         switch(metodo){

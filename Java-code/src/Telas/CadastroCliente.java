@@ -327,7 +327,7 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     private void insertClient(String tel, String cpf, String nome, String obs, String end) throws Exception {
         String[] split = nome.split(" ",2);     //split by spaces
-        String fname, lname = null;
+        String fname, lname = "";
         fname = split[0]; // Primeiro nome
         if (split.length > 1){
             lname = split[1]; // "Resto do nome"
@@ -576,7 +576,15 @@ public class CadastroCliente extends javax.swing.JFrame {
                 } else {
                     rowid=id;
                 }
-            }else{
+            }else{                        
+                Object[] choices = {"Sim", "Não"};
+                Object defaultChoice = choices[0];
+                int dialogRet = JOptionPane.showOptionDialog(this, "Deseja realmente excluir o cliente?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE, null, choices, defaultChoice);
+                if(dialogRet == 1) { //==0 para sim
+                    return;
+                } 
+                
                 try {
                     String sql1 = "DELETE FROM cliente WHERE rowid="+rowid;
                     PreparedStatement pst = concliente.prepareStatement(sql1);            

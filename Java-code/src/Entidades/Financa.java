@@ -194,6 +194,7 @@ public class Financa{
         String month = split[1];
         
         switch (day) {
+            //Inglês - Portugês
             case "Sun":
                 day = "Dom";               
                 break;
@@ -215,10 +216,36 @@ public class Financa{
             case "Sat":
                 day = "Sáb";                
                 break;
+            //Portugês - Inglês    
+            case "Dom":
+                day = "Sun";               
+                break;
+            case "Seg":
+                day = "Mon";                
+                break;
+            case "Ter":
+                day = "Tue";                
+                break;
+            case "Qua":
+                day = "Wed";                
+                break;
+            case "Qui":
+                day = "Thu";                
+                break;
+            case "Sex":
+                day = "Fri";                
+                break;
+            case "Sáb":
+                day = "Sat";                
+                break;
+            default:
+                System.err.println("Erro. Código: XX-XX-XX. Erro na tradução da data (dia).");
+                break;
         }
         
-        switch (month) { //Os outros meses permanecem iguais
-            case "Feb":
+        switch (month) { 
+            //Inglês - Portugês
+            case "Feb": //Os meses não listados permanecem iguais
                 month = "Fev";               
                 break;
             case "Apr":
@@ -238,6 +265,32 @@ public class Financa{
                 break;
             case "Dec":
                 month = "Dez";                
+                break;
+                //Portugês - Inglês
+            case "Fev": //Os meses não listados permanecem iguais
+                month = "Feb";               
+                break;
+            case "Abr":
+                month = "Apr";                
+                break;
+            case "Mai":
+                month = "May";                
+                break;
+            case "Ago":
+                month = "Aug";                
+                break;
+            case "Set":
+                month = "Sep";                
+                break;
+            case "Out":
+                month = "Oct";                
+                break;
+            case "Dez":
+                month = "Dec";                
+                break;
+                
+            default:
+                System.err.println("Erro. Código: XX-XX-XX. Erro na tradução da data (mês).");
                 break;
         }
         

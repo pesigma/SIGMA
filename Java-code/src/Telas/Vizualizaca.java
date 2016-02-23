@@ -232,6 +232,12 @@ public class Vizualizaca extends javax.swing.JFrame {
         }
         
         ErrorTable.setModel(model);
+        
+        for (n=0; n<4; n++){
+            ErrorTable.getColumnModel().getColumn(n).setMaxWidth(45); //IDs - max
+            ErrorTable.getColumnModel().getColumn(n).setMinWidth(45); //IDs - min
+        }
+        ErrorTable.setAutoResizeMode(ErrorTable.AUTO_RESIZE_LAST_COLUMN); //DESC   
     }
     
     /**
