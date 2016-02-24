@@ -243,15 +243,16 @@
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
+              <StringArray count="6">
                 <StringItem index="0" value="Alameda"/>
                 <StringItem index="1" value="Avenida"/>
-                <StringItem index="2" value="Rodovia"/>
-                <StringItem index="3" value="Rua"/>
-                <StringItem index="4" value="Travessa"/>
+                <StringItem index="2" value="Estrada"/>
+                <StringItem index="3" value="Rodovia"/>
+                <StringItem index="4" value="Rua"/>
+                <StringItem index="5" value="Travessa"/>
               </StringArray>
             </Property>
-            <Property name="selectedIndex" type="int" value="3"/>
+            <Property name="selectedIndex" type="int" value="4"/>
             <Property name="toolTipText" type="java.lang.String" value="Selecione o tipo do logradouro"/>
           </Properties>
         </Component>

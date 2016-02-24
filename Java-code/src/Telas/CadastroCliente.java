@@ -224,8 +224,8 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Alameda", "Avenida", "Rodovia", "Rua", "Travessa" }));
-        jComboBox1.setSelectedIndex(3);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Alameda", "Avenida", "Estrada", "Rodovia", "Rua", "Travessa" }));
+        jComboBox1.setSelectedIndex(4);
         jComboBox1.setToolTipText("Selecione o tipo do logradouro");
 
         jTextField4.setToolTipText("");

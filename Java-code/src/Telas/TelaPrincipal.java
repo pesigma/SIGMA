@@ -511,6 +511,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ExcluiRelatorio.setText("Excluir");
 
         ConsultaRelatorio.setText("Consultar");
+        ConsultaRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultaRelatorioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -885,6 +890,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         new Login().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenu1MousePressed
+
+    private void ConsultaRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaRelatorioActionPerformed
+        this.setEnabled(false);
+        new ConsultaRelatorio(this).setVisible(true);
+    }//GEN-LAST:event_ConsultaRelatorioActionPerformed
 
     /**
      * @param args the command line arguments
