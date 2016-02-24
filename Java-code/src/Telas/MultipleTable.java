@@ -6,6 +6,7 @@
 package Telas;
 
 import ConecBD.ConexaoBanco;
+import Controles.ErrorPane;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -14,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
  
 
@@ -219,9 +219,9 @@ public class MultipleTable extends javax.swing.JDialog {
             
             return data;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-06.", title, JOptionPane.ERROR_MESSAGE);
-            //System.err.println(Arrays.toString(e.getStackTrace()));
-            System.err.println("04-07-06: " + e.getClass().getName() + ": " + e.getMessage());
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error( title, "Erro ao obter finanças do banco de dados.", "04-07-06.", error); 
         }
         return null; //Erro
     }
@@ -250,8 +250,9 @@ public class MultipleTable extends javax.swing.JDialog {
             
             return fullname;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-02.", title, JOptionPane.ERROR_MESSAGE);
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error( title, "Erro ao obter nomes dos clientes.", "04-07-02.", error); 
         }
         return null; //Erro
     }
@@ -307,9 +308,9 @@ public class MultipleTable extends javax.swing.JDialog {
             
             return data;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-01.", title, JOptionPane.ERROR_MESSAGE);
-            //System.err.println(Arrays.toString(e.getStackTrace()));
-            System.err.println("04-07-01: " + e.getClass().getName() + ": " + e.getMessage());
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error( title, "Erro ao obter serviços do banco de dados.", "04-07-01.", error); 
         }
         return null; //Erro
     }
@@ -332,7 +333,8 @@ public class MultipleTable extends javax.swing.JDialog {
         }
          
         if (num_rs<1){ //Se só for um resultado, seleciona-se a única row?
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-07-07.\nNenhum resultado encontrado. Tente alterar os dados de consulta.", title, JOptionPane.ERROR_MESSAGE);
+            ErrorPane err = new ErrorPane();
+            err.Warning( title, "Nenhum resultado encontrado. Tente alterar os dados de consulta.", "04-07-07."); 
             this.dispose();
             Closing ("07");
             return;
@@ -492,7 +494,8 @@ public class MultipleTable extends javax.swing.JDialog {
                 anteriorFinancas.requestFocus(); //Traz o foco para tela anterior
                 break;
             default:
-                JOptionPane.showMessageDialog(this, "Erro ao fechar e retornar para a janela anterior./nCódigo: 04-06-" + lastDoubleCode + ".", title, JOptionPane.ERROR_MESSAGE);
+                ErrorPane err = new ErrorPane();
+                err.Error(title, "Erro ao fechar e retornar para a janela anterior.", "04-07-" + lastDoubleCode + ".", "Função closing da janela de seleção tabelada.");
                 //Erro 04-07-03   -   Dispose no botão Select
                 //Erro 04-07-04   -   Dispose no botão Cancel
                 //Erro 04-07-05   -   Dispose no "formWindowClosed"

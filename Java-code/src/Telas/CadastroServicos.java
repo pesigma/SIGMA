@@ -8,6 +8,7 @@ package Telas;
 
 import ConecBD.ConexaoBanco;
 import Controles.CadastroSControle;
+import Controles.ErrorPane;
 import Entidades.Servico;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -369,8 +370,9 @@ public TelaPrincipal telaanterior;
             pst.setString (6, obs);
             pst.executeUpdate();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-06.", title, JOptionPane.ERROR_MESSAGE);
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro na inserção do serviço.", "04-04-06.", error);
         } finally {
             if (pst != null) 
                 pst.close();
@@ -432,7 +434,8 @@ public TelaPrincipal telaanterior;
      */
     private void updateService (String placa, int km, String modelo,  boolean situacao, int idCliente, String obs, int rowid) throws Exception{
         if (rowid==-1){
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-07.", title, JOptionPane.ERROR_MESSAGE);
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro na obtenção do id do serviço.", "04-04-07.", "Id menor ou igual a -1.");
             return;
         }
         
@@ -448,9 +451,9 @@ public TelaPrincipal telaanterior;
             pst.setString (6, obs);
             pst.executeUpdate();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-08.", title, JOptionPane.ERROR_MESSAGE);
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            //System.exit(0);
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro na atualização de dados do serviço.", "04-04-08.", error);
         } finally {
             if (pst != null) 
                 pst.close();
@@ -488,7 +491,8 @@ public TelaPrincipal telaanterior;
             }
             if (num_count!=3 || char_count!=4){ //Placa tem que ter 3 nums. e 4 letras.
                 //BalloonTip(PlacaField, "Placa inválida. Deve conter 3 números e 4 letras, em qualquer ordem.");
-                System.err.println("Erro. Código: 04-04-0E");
+                ErrorPane err = new ErrorPane();
+                err.Warning(title, "Placa no formato inválido segundo novo padrão (3 nums. e 4 letras em qualquer ordem).", "04-04-0E.");
                 PanelColor (0, Color.RED);
                 valido=false;
             } else {
@@ -501,7 +505,8 @@ public TelaPrincipal telaanterior;
         int idcliente = Integer.parseInt(IDField.getText());
         if (idcliente<=0){
             PanelColor (4, Color.RED);
-            System.err.println("Erro. Código: 04-04-0F");
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro na obtenção do id do cliente.", "04-04-0F.", "Id retornado menor ou igual a 0.");
             valido=false;
         }
         return valido;
@@ -528,7 +533,8 @@ public TelaPrincipal telaanterior;
             if (!flag.equals("Modificar")){
                 serviceId = selectService (PlacaField.getText());
                 if (serviceId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-04.", title, JOptionPane.ERROR_MESSAGE);
+                    ErrorPane err = new ErrorPane();
+                    err.Error(title, "Erro na obtenção do id do serviço.", "04-04-04.", "ID igual à -1.");
                     return;
                 } else if (serviceId==0){
                     return;
@@ -553,8 +559,9 @@ public TelaPrincipal telaanterior;
                 try {
                     updateService (PlacaField.getText(), Integer.parseInt(KM), jFormattedTextField2.getText(),  jCheckBox1.isSelected(), id, jTextPane1.getText(), serviceId);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-05.", title, JOptionPane.ERROR_MESSAGE);
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    String error = e.getClass().getName() + ": " + e.getMessage();
+                    ErrorPane err = new ErrorPane();
+                    err.Error(title, "Erro na atualização de dados do serviço.", "04-04-05.", error);
                 }
                 
                 metodosServicos(3); //Resetar modificação
@@ -570,7 +577,8 @@ public TelaPrincipal telaanterior;
             if (!flag.equals("Excluir")){
                 serviceId = selectService (PlacaField.getText());
                 if (serviceId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-09.", title, JOptionPane.ERROR_MESSAGE);
+                    ErrorPane err = new ErrorPane();
+                    err.Error(title, "Erro na obtenção do id do serviço.", "04-04-06.", "ID igual à -1.");
                     return;
                 }else if (serviceId==0){
                     return;
@@ -591,9 +599,9 @@ public TelaPrincipal telaanterior;
                     Mul.close();
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-0A.", title, JOptionPane.ERROR_MESSAGE);
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.exit(0);
+                    String error = e.getClass().getName() + ": " + e.getMessage();
+                    ErrorPane err = new ErrorPane();
+                    err.Error(title, "Erro na exclusão do serviço.", "04-04-0A.", error);
                 }
                 
                 jButton1.setEnabled(false); //Para não tentar Excluir novamente
@@ -609,13 +617,15 @@ public TelaPrincipal telaanterior;
             if (!flag.equals("Quitar")){
                 serviceId = selectService (PlacaField.getText());
                 if (serviceId==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-0C.", title, JOptionPane.ERROR_MESSAGE);
+                    ErrorPane err = new ErrorPane();
+                    err.Error(title, "Erro na obtenção do id do serviço.", "04-04-0C.", "ID igual à -1;");
                     return;
                 } else if (serviceId==0){
                     return;
                 }
                 if (jCheckBox1.isSelected()){
-                    JOptionPane.showMessageDialog(this, "Serviço já quitado.\nCódigo: 04-04-0B.", title, JOptionPane.ERROR_MESSAGE);
+                    ErrorPane err = new ErrorPane();
+                    err.Warning(title, "Serviço já quitado!", "04-04-0B.");
                     return;
                 }
             }else{
@@ -632,8 +642,9 @@ public TelaPrincipal telaanterior;
                 try {//Passando "True" no lugar do "jCheckBox1.isSelected()" para o usuário não precisar clicar.
                     updateService (PlacaField.getText(), Integer.parseInt(KM), jFormattedTextField2.getText(),  true, id, jTextPane1.getText(), serviceId);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-0D.", title, JOptionPane.ERROR_MESSAGE);
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    String error = e.getClass().getName() + ": " + e.getMessage();
+                    ErrorPane err = new ErrorPane();
+                    err.Error(title, "Erro ao quitar serviço.", "04-04-0D.", error);
                 }
                 
                 metodosServicos(5); //Resetar modificação
@@ -672,26 +683,29 @@ public TelaPrincipal telaanterior;
             km = Integer.parseInt(KM);
             idc = Integer.parseInt(txtId);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-01.", title, JOptionPane.ERROR_MESSAGE);
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());            return;
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro ao converter KM/ID do Cliente.", "04-04-01.", error);
         }
                
         Servico N = new Servico(idc, placa, modelo, km, sit, obs);
         //Chama o controle para cadastrar
         CadastroSControle C = new CadastroSControle();
         if (C.cadastrarservico(N)) {
-            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso");
+            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE);
             try {
                 insertService(placa, km, modelo, sit, idc, obs);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-05.", title, JOptionPane.ERROR_MESSAGE);
-                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                String error = e.getClass().getName() + ": " + e.getMessage();
+                ErrorPane err = new ErrorPane();
+                err.Error(title, "Erro ao inserir serviço.", "04-04-05.", error);
             }
             this.dispose();
             telaanterior.setEnabled(true);
             telaanterior.requestFocus(); //Traz o foco para tela anterior
         } else {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-04-02.", title, JOptionPane.ERROR_MESSAGE);
+            ErrorPane err = new ErrorPane();
+            err.Warning(title, "Serviço inválido. Rejeição do controlador", "04-04-02.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -734,7 +748,8 @@ public TelaPrincipal telaanterior;
     private void ConsultarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarClienteActionPerformed
         String fname = ClienteField.getText();
         if (fname.isEmpty() || fname.charAt(0)==' '){ //Vazio ou começa com espaço
-            JOptionPane.showMessageDialog(this, "Campo de cliente vazio ou iniciando por espaço. Código: 04-04-03.", title, JOptionPane.WARNING_MESSAGE);
+            ErrorPane err = new ErrorPane();
+            err.Warning(title, "Campo de cliente vazio ou iniciando por espaço.", "04-04-03.");
             return;
         }
                 

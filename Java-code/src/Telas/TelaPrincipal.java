@@ -6,6 +6,7 @@
 package Telas;
 
 import ConecBD.ConexaoBanco;
+import Controles.ErrorPane;
 import Entidades.Financa;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -157,9 +158,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             return lista_financa;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-08-01.", title, JOptionPane.ERROR_MESSAGE);
-            //System.err.println(Arrays.toString(e.getStackTrace()));
-            System.err.println("04-07-06: " + e.getClass().getName() + ": " + e.getMessage());
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro ao obter finanças do banco", "04-08-01.", error);
         }
         return null; //Erro
     }
@@ -194,10 +195,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArrayList<Financa> lista_financa =  getDataFinancas();
 
         if (num_rs < 1) { //Se só for um resultado, seleciona-se a única row?
-            System.err.println("Erro. Código: 04-08-02.\nErro ao carregar atividades. Nenhum resultado encontrado.");
+            //System.err.println("Erro. Código: 04-08-02.\nErro ao carregar atividades. Nenhum resultado encontrado.");
             model.addColumn("Erro obtendo finanças");
-            Object[] strErr = {"Não existem finanças"};
-            model.addRow(strErr);
+            Object[] strErr0 = {"Warning! Código: 04-08-02"};
+            model.addRow(strErr0);
+            Object[] strErr1 = {"Não existem finanças"};
+            model.addRow(strErr1);
             Object[] strErr2 = {"com pagamento pendente!"};
             model.addRow(strErr2);
             return;
@@ -685,8 +688,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         File pdf = new File("C:/Users/" + username + "/Documents/SIGMA/Manual.pdf");
         try {
             Desktop.getDesktop().open(pdf);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro no Desktop: " + ex);
+        } catch (Exception e) {
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro no desktop.", "04-08-03.", error);
         }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 

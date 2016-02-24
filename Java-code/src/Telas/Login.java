@@ -6,10 +6,10 @@
 package Telas;
 
 import ConecBD.ConexaoBanco;
+import Controles.ErrorPane;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.sql.*;
-import javax.swing.JOptionPane;
 import java.awt.Color;
 
 /**
@@ -273,8 +273,8 @@ public class Login extends javax.swing.JFrame {
         String user = temp.toString();
         String pass = jPasswordField1.getText();
         if (pass == null || pass.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Senha vazia. Erro. Código: 04-05-01.", "Acesso negado", JOptionPane.WARNING_MESSAGE);
-            //code 04-05-01
+            ErrorPane err = new ErrorPane();
+            err.Warning("Acesso negado", "Senha vazia. Acesso negado.", "04-05-01.");
             return;
         }
         
@@ -288,10 +288,13 @@ public class Login extends javax.swing.JFrame {
                     if (tempo.equals(pass)){
                         //Mostra o usuário que entrará no sistema. Comentado por motivos de "uma janela a mais para clicar".
                         //JOptionPane.showMessageDialog(null, "Acessando como " + user + ".", "Acesso permitido", JOptionPane.INFORMATION_MESSAGE);
+                        st.close();
+                        conn.close();
                         new TelaPrincipal(user).setVisible(true);
                         this.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Senha incorreta. Erro. Código: 04-05-02.", "Acesso negado", JOptionPane.ERROR_MESSAGE);
+                        ErrorPane err = new ErrorPane();
+                        err.Warning("Acesso negado", "Senha Incorreta. Acesso negado.", "04-05-02.");       
                         return;
                     }
                 }
@@ -301,9 +304,9 @@ public class Login extends javax.swing.JFrame {
             //conn.close();
 
         } catch (Exception e) {            
-            //System.err.println("Erro indefinido"); //Definir erro
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-05-03.", "Acesso negado", JOptionPane.ERROR_MESSAGE);
-            System.err.println("04-05-03: " + e.getClass().getName() + ": " + e.getMessage());
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Acesso negado", "Erro ao obter Login e Senha.", "04-05-03.", error);
         }
     }//GEN-LAST:event_LoginButtonActionPerformed
 

@@ -5,6 +5,7 @@
  */
 package Telas;
 
+import Controles.ErrorPane;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -220,10 +221,12 @@ public class VisualizacaoErro extends javax.swing.JFrame {
     private void setData (Object[] rowData){
         int i = rowData.length;
         if (i>5){
-            System.err.println ("Erro. Código: 04-09-01.\nMais itens que o esperado.");
+            ErrorPane err = new ErrorPane();
+            err.Warning(title, "Mais itens que o esperado.", "04-09-01.");
             return;
         }else if (i<4){
-            System.err.println ("Erro. Código: 04-09-02.\nMenos itens que o esperado.");
+            ErrorPane err = new ErrorPane();
+            err.Warning(title, "Menos itens que o esperado.", "04-09-02.");
             return;
         }
         

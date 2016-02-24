@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Entidades;
+import Controles.ErrorPane;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -239,7 +240,8 @@ public class Financa{
                 day = "Sat";                
                 break;
             default:
-                System.err.println("Erro. Código: XX-XX-XX. Erro na tradução da data (dia).");
+                ErrorPane err = new ErrorPane();
+                err.Error("Entidade finança", "Erro tradução de data.", "03-02-01.", "String do dia inválida.");
                 break;
         }
         
@@ -299,7 +301,8 @@ public class Financa{
                 month = "Dec";                
                 break;
             default:
-                System.err.println("Erro. Código: XX-XX-XX. Erro na tradução da data (mês).");
+                ErrorPane err = new ErrorPane();
+                err.Error("Entidade finança", "Erro tradução de data.", "03-02-02.", "String do mês inválida.");
                 break;
         }
         

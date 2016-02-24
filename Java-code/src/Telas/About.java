@@ -6,12 +6,12 @@
 package Telas;
 
 import ConecBD.ConexaoBanco;
+import Controles.ErrorPane;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.sql.*;
-import javax.swing.JOptionPane;
 
 /**
  * Sobre o SIGMA, contém autores, versão do sistema e data de publicação
@@ -239,9 +239,9 @@ public class About extends javax.swing.JFrame {
                 st.close();
                 conn.close();
             } catch (Exception e) {
-                e.printStackTrace();
-                String errore = e.getMessage(); //Salvar, por enquanto
-                JOptionPane.showMessageDialog(this, "Erro. Código: 04-01-01.", title, JOptionPane.ERROR_MESSAGE);
+                String error = e.getClass().getName() + ": " + e.getMessage();
+                ErrorPane err = new ErrorPane();
+                err.Error(title, "Erro na obtenção de versões e datas de publicação.", "04-01-01.", error);
             }
         }
         

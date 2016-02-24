@@ -6,7 +6,7 @@
 package ConecBD;
 
 import java.sql.*;
-import javax.swing.JOptionPane;
+import Controles.ErrorPane;
 
 /**
  * 08/01 - Maycon Conexão com o Banco de dados
@@ -32,7 +32,11 @@ public class ConexaoBanco {
             
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-01.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-01.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+            //System.err.println("01-01-01: " + e.getClass().getName() + ": " + e.getMessage());
+            String erro = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Conexão banco de dados", "Erro na conexão com o banco de dados.", "00-01-01.", erro);
         }
         return null;
     }
@@ -56,7 +60,9 @@ public class ConexaoBanco {
             //JOptionPane.showMessageDialog(null, "Conectado"); Se tudo estiver bem, nem mostra essa janela
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-02.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+            String erro = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Conexão banco de dados", "Erro na conexão com o banco de dados.", "00-01-02.", erro);
         }
         return null;
     }
@@ -78,7 +84,9 @@ public class ConexaoBanco {
             rs = st.executeQuery("SELECT * FROM Version");
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-03.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);        
+            String erro = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Conexão banco de dados", "Erro na conexão com o banco de dados.", "00-01-03.", erro);        
         }
         return null;
     } 
@@ -103,7 +111,9 @@ public class ConexaoBanco {
             
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-04.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+            String erro = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Conexão banco de dados", "Erro na conexão com o banco de dados.", "00-01-04.", erro);
         }
         return null;
     }
@@ -124,7 +134,9 @@ public class ConexaoBanco {
             //JOptionPane.showMessageDialog(null, "Conectado"); //Comentar no futuro            
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-05.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+            String erro = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Conexão banco de dados", "Erro na conexão com o banco de dados.", "00-01-05.", erro);
         }
         return null;
     }
@@ -144,7 +156,9 @@ public class ConexaoBanco {
             //JOptionPane.showMessageDialog(null, "Conectado"); //Comentar no futuro            
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-06.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+            String erro = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Conexão banco de dados", "Erro na conexão com o banco de dados.", "00-01-06.", erro);
         }
         return null;
     }

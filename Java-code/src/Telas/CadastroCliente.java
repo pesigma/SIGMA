@@ -7,6 +7,7 @@ package Telas;
 
 import ConecBD.ConexaoBanco;
 import Controles.CadastroCControle;
+import Controles.ErrorPane;
 import Controles.UppercaseDocumentFilter;
 import Entidades.Cliente;
 import java.awt.Dimension; //Usada para "setar" frame no meio da tela
@@ -346,9 +347,9 @@ public class CadastroCliente extends javax.swing.JFrame {
             pst.execute();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-01.", title, JOptionPane.ERROR_MESSAGE);
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            //System.exit(0);
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro na inserção de clientes.", "04-02-01.", error);
         }  finally {
             if (pst != null) 
                 pst.close();
@@ -419,7 +420,8 @@ public class CadastroCliente extends javax.swing.JFrame {
             pst.close();
             rs.close();
             if (num_clients==0){
-                JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-XX.\nNenhum resultado encontrado", title, JOptionPane.WARNING_MESSAGE);
+                ErrorPane err = new ErrorPane();
+                err.Warning(title, "Nenhum cliente encontrado no banco de dados.", "04-02-0A.");
                 return -1;
             } else if (num_clients==1){
                 jTextField1.setText(fullname);
@@ -468,13 +470,10 @@ public class CadastroCliente extends javax.swing.JFrame {
                 //concliente.close();
             }
         } catch (Exception e) {
-            System.err.println("Erro. Código: 04-02-02: " + e.getClass().getName() + ": " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-02.", title, JOptionPane.ERROR_MESSAGE);
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro na obtenção de dados do cliente.", "04-02-02.", error);
         }
-        /**
-        * FIM DA TENTATIVA
-        */
-        
         return id; //Retorna id do cliente
     }
     
@@ -494,7 +493,8 @@ public class CadastroCliente extends javax.swing.JFrame {
         String lname = split[1]; // "Resto do nome"
         
         if (rowid==-1){
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-06.", title, JOptionPane.ERROR_MESSAGE);
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro na atualização dos dados do cliente.", "04-02-06.", "Erro no id do cliente.");
             return;
         }
         
@@ -512,9 +512,9 @@ public class CadastroCliente extends javax.swing.JFrame {
             //concliente.close();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-05.", title, JOptionPane.ERROR_MESSAGE);
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro na atualização dos dados do cliente", "04-02-05.", error);
         }
 }
 
@@ -537,7 +537,8 @@ public class CadastroCliente extends javax.swing.JFrame {
             if (!flag.equals("Modificar")){
                 id = selectClient (jTextField1.getText());
                 if (id==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-04.", title, JOptionPane.ERROR_MESSAGE);
+                    ErrorPane err = new ErrorPane();
+                    err.Error(title, "Erro na consulta dos dados do cliente.", "04-02-06.", "Erro no id do cliente.");
                     return;
                 } else if (id==0) {
                     return; //Operação cancelada
@@ -571,7 +572,8 @@ public class CadastroCliente extends javax.swing.JFrame {
             if (!flag.equals("Excluir")){
                 id = selectClient (jTextField1.getText());
                 if (id==-1){
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-07.", title, JOptionPane.ERROR_MESSAGE);
+                    ErrorPane err = new ErrorPane();
+                    err.Error(title, "Erro na consulta dos dados do cliente.", "04-02-07.", "Erro no id do cliente.");
                     return;
                 } else {
                     rowid=id;
@@ -593,8 +595,9 @@ public class CadastroCliente extends javax.swing.JFrame {
                     //concliente.close();
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-08.", title, JOptionPane.ERROR_MESSAGE);
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    String error = e.getClass().getName() + ": " + e.getMessage();
+                    ErrorPane err = new ErrorPane();
+                    err.Error(title, "Erro na exclusão do cliente", "04-02-08.", error);
                 }
                 metodosCliente(4);
                 jButton2.setEnabled(false); //Para não tentar salvar novamente
@@ -624,15 +627,17 @@ public class CadastroCliente extends javax.swing.JFrame {
             try {
                 insertClient(tel, cpf, nome, obs, end);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-09.", title, JOptionPane.ERROR_MESSAGE);
-                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                String error = e.getClass().getName() + ": " + e.getMessage();
+                ErrorPane err = new ErrorPane();
+                err.Error(title, "Erro na inserção do cliente", "04-02-09.", error);
             }
             JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             telaanterior.setEnabled(true);
             telaanterior.requestFocus(); //Traz o foco para tela anterior
         } else {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-03.", title, JOptionPane.ERROR_MESSAGE);
+            ErrorPane err = new ErrorPane();
+            err.Warning(title, "Cliente inválido. Rejeição do controlador.", "04-02-03.");
         }
         metodosCliente(1);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -642,8 +647,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         try{
             concliente.close();
         } catch (Exception e){
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-02-XX.", title, JOptionPane.ERROR_MESSAGE);
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro no fechamento da conexão com o banco de dados.", "04-02-0B", error);
         }
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior

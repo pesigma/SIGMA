@@ -6,6 +6,7 @@
 package Telas;
 
 import ConecBD.ConexaoBanco;
+import Controles.ErrorPane;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -14,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.awt.Point;
@@ -188,9 +188,9 @@ public class Vizualizaca extends javax.swing.JFrame {
             
             return data;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-0A-01.", title, JOptionPane.ERROR_MESSAGE);
-            //System.err.println(Arrays.toString(e.getStackTrace()));
-            System.err.println("04-0A-01: " + e.getClass().getName() + ": " + e.getMessage());
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error(title, "Erro ao obter erros da tabela de erros!", "04-0A-01.", error);
         }
         return null; //Erro
     }
@@ -207,7 +207,8 @@ public class Vizualizaca extends javax.swing.JFrame {
         data = getData ();   
         
         if (num_rs<1){ //Se só for um resultado, seleciona-se a única row?
-            JOptionPane.showMessageDialog(this, "Erro. Código: 04-0A-02.\nNenhum resultado encontrado.", title, JOptionPane.ERROR_MESSAGE);
+            ErrorPane err = new ErrorPane();
+            err.Warning(title, "Erro, nenhum erro encontrado!", "04-0A-02.");
             this.dispose();
             return;
         }

@@ -6,12 +6,12 @@
 package Telas;
 
 import ConecBD.ConexaoBanco;
+import Controles.ErrorPane;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.sql.*;
-import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -212,7 +212,9 @@ public class MultipleEntries extends javax.swing.JDialog {
                 pst.close();
                 concliente.close();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro. Código: 04-06-01.", title, JOptionPane.ERROR_MESSAGE);
+                String error = e.getClass().getName() + ": " + e.getMessage();
+                ErrorPane err = new ErrorPane();
+                err.Error("Seleção de nome", "Erro ao obter nomes dos clientes.", "04-06-01.", error);
             }
         }
     }
@@ -237,7 +239,8 @@ public class MultipleEntries extends javax.swing.JDialog {
                 anteriorServico.requestFocus(); //Traz o foco para tela anterior
                 break;
             default:
-                JOptionPane.showMessageDialog(this, "Erro ao fechar e retornar para a janela anterior./nCódigo: 04-06-" + lastDoubleCode + ".", title, JOptionPane.ERROR_MESSAGE);
+                ErrorPane err = new ErrorPane();
+                err.Error(title, "Erro ao fechar e retornar para a janela anterior.", "04-06-" + lastDoubleCode + ".", "Função closing da janela de seleção.");
                 //Erro 04-06-02   -   Dispose no botão Cancel
                 //Erro 04-06-03   -   Dispose no "formWindowClosed"
                 //Erro 04-06-04   -   Dispose no botão Select
