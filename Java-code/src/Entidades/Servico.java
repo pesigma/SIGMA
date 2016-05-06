@@ -11,9 +11,13 @@ package Entidades;
  */
 public class Servico {
     //Atributos
-    String placa, modelo, obs;
-    int km, idc;
+    String placa, 
+           modelo,
+           obs;
+    int km, 
+        idc;
     boolean sit;
+    int rowid;
 
     //Construtores
     public Servico(int idc, String placa, String modelo, int km, boolean sit, String obs) {
@@ -73,4 +77,13 @@ public class Servico {
     public void setSit(boolean sit) {
         this.sit = sit;
     }
+
+    public int getRowid() {
+        return rowid;
+    }
+
+    public void setRowid(int rowid) {
+        this.rowid = rowid;
+    }
+    
 }

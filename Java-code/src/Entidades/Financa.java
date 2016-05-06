@@ -44,7 +44,7 @@ public class Financa{
     }
     
     //Métodos
-    public int getRowId() {
+    public int getRowid() {
         return rowid;
     }
     
@@ -56,7 +56,7 @@ public class Financa{
         return data;
     }
 
-    public String getobs() {
+    public String getObs() {
         return obs;
     }
 
@@ -68,7 +68,7 @@ public class Financa{
         return valor;
     }
 
-    public void setRowId(int rowid){
+    public void setRowid(int rowid){
         this.rowid = rowid;
     }
     

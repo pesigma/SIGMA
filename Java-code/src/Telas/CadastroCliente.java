@@ -618,7 +618,12 @@ public class CadastroCliente extends javax.swing.JFrame {
         String ruatemp = ruaobj.toString();
         String end = ruatemp + "." + jTextField4.getText();
 
-        Cliente p = new Cliente(tel, cpf, nome, obs, end);
+        String[] split = nome.split(" ",2);     //split by spaces
+        String lname = "";
+        if (split.length > 1)
+            lname = split[1];
+        
+        Cliente p = new Cliente(split[0], lname, obs, end, tel, cpf);
         //Chama o controle para cadastrar
         CadastroCControle C = new CadastroCControle();
         

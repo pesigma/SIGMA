@@ -221,8 +221,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             Financa tmp = lista_financa.get(n);
             list[0] = tmp.DateToString(tmp.getData()); //Data
             list[1] = tmp.getValor(); //Valor
-            list[2] = tmp.getobs(); //Observações
-            list[3] = tmp.getRowId(); //rowId
+            list[2] = tmp.getObs(); //Observações
+            list[3] = tmp.getRowid(); //rowId
             model.addRow(list);
         }
         FinancaTable.setModel(model);

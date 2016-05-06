@@ -12,15 +12,26 @@ package Entidades;
 public class Cliente {
 
     //Atributos
-    String nome, obs, end, tel, cpf;
+    String nome,
+           sobrenome,
+           obs, 
+           end, 
+           tel, 
+           cpf;
+    int rowid;
 
     //Construtores
-    public Cliente(String tel, String cpf, String nome, String obs, String end) {
-        this.tel = tel;
-        this.cpf = cpf;
+    public Cliente(String nome, String sobrenome, String obs, String end, String tel, String cpf) {
         this.nome = nome;
+        this.sobrenome = sobrenome;
         this.obs = obs;
         this.end = end;
+        this.tel = tel;
+        this.cpf = cpf;
+    }
+    
+    public Cliente (int rowid){
+        this.rowid = rowid;
     }
 
     //Métodos
@@ -64,4 +75,19 @@ public class Cliente {
         this.end = end;
     }
 
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public int getRowid() {
+        return rowid;
+    }
+
+    public void setRowid(int rowid) {
+        this.rowid = rowid;
+    }
 }
