@@ -29,6 +29,10 @@ public class Servico {
         this.obs = obs;
     }
 
+    public Servico(int rowid) {
+        this.rowid = rowid;
+    }
+
     //Métodos
     public int getIdcliente() {
         return idc;

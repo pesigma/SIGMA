@@ -32,7 +32,7 @@ public class DAOServico {
             pst.setInt    (5, sr.getIdcliente());
             pst.setString (6, sr.getObs());
             pst.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             String error = e.getClass().getName() + ": " + e.getMessage();
             ErrorPane err = new ErrorPane();
             err.Error("Título", "Erro na inserção do serviço.", "04-04-06.", error);
@@ -44,14 +44,36 @@ public class DAOServico {
         }
     }
     
-    public static ArrayList<Servico> select (String name){
+    private static ArrayList<Servico> selectAll (String placa){
         ArrayList<Servico> data = new ArrayList ();
         
         return data;
     }
     
-    public static void delete (Servico cl){
+    public static Servico select (String placa){
         
+        return new Servico(1);
+    }
+    
+    public static void delete (Servico sr) throws SQLException{
+       Connection servico = ConexaoBanco.Multiple();
+        PreparedStatement pst = null;
+        try {
+            String sql1 = "DELETE FROM financa "
+                        + "WHERE rowid=" + Integer.toString(sr.getRowid());
+            pst = servico.prepareStatement(sql1);            
+            pst.execute();
+
+        } catch (SQLException e) {
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Título", "Erro na exclusão do cliente", "04-02-08.", error);
+        } finally {
+            if (pst != null) 
+                pst.close();
+            if (servico != null) 
+                servico.close();
+        } 
     }
     
     public static void update (Servico sr) throws SQLException{
@@ -65,8 +87,8 @@ public class DAOServico {
         Connection servico = ConexaoBanco.concliente();
         PreparedStatement pst = null;
         try {
-            String sql1 = "UPDATE servico SET Placa=?, Quilometragem=?, Modelo=?, Situacao=?, Idcliente=?, "
-                        + "Obs=? WHERE rowid="+sr.getRowid();
+            String sql1 = "UPDATE servico SET Placa=?, Quilometragem=?, Modelo=?, Situacao=?, Idcliente=?, Obs=? "
+                        + "WHERE rowid="+sr.getRowid();
             pst = servico.prepareStatement(sql1);
             pst.setString (1, sr.getPlaca());
             pst.setInt    (2, sr.getKm());
@@ -75,7 +97,7 @@ public class DAOServico {
             pst.setInt    (5, sr.getIdcliente());
             pst.setString (6, sr.getObs());
             pst.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             String error = e.getClass().getName() + ": " + e.getMessage();
             ErrorPane err = new ErrorPane();
             err.Error("Título", "Erro na atualização de dados do serviço.", "04-04-08.", error);

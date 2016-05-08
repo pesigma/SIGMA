@@ -95,7 +95,7 @@ public TelaPrincipal telaanterior;
      * 3 - Modificação;
      * 4 - Exclusão;
      */
-    public void metodosServicos (int op){
+    private void metodosServicos (int op){
         Mul = ConexaoBanco.Multiple();
         IDField.setEditable(false);
         if (op>=2){//Op==2 - Consulta

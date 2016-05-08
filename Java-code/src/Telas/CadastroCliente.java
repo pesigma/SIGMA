@@ -88,7 +88,7 @@ public class CadastroCliente extends javax.swing.JFrame {
      * 3 - Modificação;
      * 4 - Exclusão;
      */
-    public void metodosCliente(int op) {
+    private void metodosCliente(int op) {
         //Colocado como "cascateamento" pois toda vez que tem que modificar
         //ou excluir, passa por uma consulta
         if (concliente==null)//Só abre conexão se está tiver sido fechada.

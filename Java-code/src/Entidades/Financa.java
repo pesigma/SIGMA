@@ -17,7 +17,8 @@ public class Financa{
     //Atributos
     Date data;
     String obs;
-    boolean sit, tipo;
+    boolean sit, 
+            tipo;
     double valor;
     int rowid;
 
@@ -37,6 +38,10 @@ public class Financa{
         this.valor = valor;
         this.obs = obs;
         this.sit = sit;
+    }
+
+    public Financa(int rowid) {
+        this.rowid = rowid;
     }
     
     public Financa() {

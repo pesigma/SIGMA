@@ -28,7 +28,8 @@ public class DAOCliente {
         
         PreparedStatement pst = null;
         try {
-            String sql1 = "INSERT INTO cliente (nome,cpf,tel,end,obs,lname) VALUES (?,?,?,?,?,?)";
+            String sql1 = "INSERT INTO cliente (nome,cpf,tel,end,obs,lname) "
+                        + "VALUES (?,?,?,?,?,?)";
             pst = concliente.prepareStatement(sql1);
             pst.setString(1, cl.getNome());
             pst.setString(6, cl.getSobrenome());
@@ -38,7 +39,7 @@ public class DAOCliente {
             pst.setString(5, cl.getEnd());
             pst.execute();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             String error = e.getClass().getName() + ": " + e.getMessage();
             ErrorPane err = new ErrorPane();
             err.Error("Título", "Erro na inserção de clientes.", "04-02-01.", error);
@@ -50,17 +51,39 @@ public class DAOCliente {
         }
     }
     
-    public static ArrayList<Cliente> select (String name){
+    private static ArrayList<Cliente> selectAll (String name){
         ArrayList<Cliente> data = new ArrayList ();
         
         return data;
     }
     
-    public static void delete (Cliente cl){
+    public static Cliente select (String name){
         
+        return new Cliente(1);
     }
     
-    public static void update (Cliente cl){
+    public static void delete (Cliente cl) throws SQLException{
+        Connection concliente = ConexaoBanco.concliente();
+        PreparedStatement pst = null;
+        try {
+            String sql1 = "DELETE FROM cliente "
+                        + "WHERE rowid=" + Integer.toString(cl.getRowid());
+            pst = concliente.prepareStatement(sql1);            
+            pst.execute();
+
+        } catch (SQLException e) {
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Título", "Erro na exclusão do cliente", "04-02-08.", error);
+        } finally {
+            if (pst != null) 
+                pst.close();
+            if (concliente != null) 
+                concliente.close();
+        }
+    }
+    
+    public static void update (Cliente cl) throws SQLException{
         if (cl.getRowid()==-1){
             ErrorPane err = new ErrorPane();
             err.Error("Título", "Erro na atualização dos dados do cliente.", "04-02-06.",
@@ -69,11 +92,11 @@ public class DAOCliente {
         }
         
         Connection concliente = ConexaoBanco.concliente();
-        
+        PreparedStatement pst=null;
         try {
             String sql1 = "UPDATE cliente SET nome=?, cpf=?, tel=?, end=?, obs=?, lname=?" 
                        + " WHERE rowid="+ Integer.toString(cl.getRowid());
-            PreparedStatement pst = concliente.prepareStatement(sql1);            
+            pst = concliente.prepareStatement(sql1);            
             pst.setString(1, cl.getNome());
             pst.setString(6, cl.getSobrenome());
             pst.setString(2, cl.getEnd());
@@ -84,11 +107,15 @@ public class DAOCliente {
             pst.close();
             //concliente.close();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             String error = e.getClass().getName() + ": " + e.getMessage();
             ErrorPane err = new ErrorPane();
             err.Error("Título", "Erro na atualização dos dados do cliente", "04-02-05.", error);
+        } finally {
+            if (pst != null) 
+                pst.close();
+            if (concliente != null) 
+                concliente.close();
         }
     }
-    
 }

@@ -21,20 +21,54 @@ public class DAOFinanca {
         Connection confinanca = ConexaoBanco.confinanca();
         
         PreparedStatement pst = null;
-        try {
-            String sql1 = "Insert into financa (tipo,data,valor,sit,obs) values (?,?,?,?,?)";
+        //try {
+            String sql1 = "INSERT into financa (tipo,data,valor,sit,obs) "
+                        + "VALUES (?,?,?,?,?)";
             pst = confinanca.prepareStatement(sql1);
             pst.setBoolean(1, fin.getTipo());
-            pst.setString (2, fin.getData().toString());
+            pst.setString (2, fin.TranslateString(fin.getData().toString()));
             pst.setDouble (3, fin.getValor());
             pst.setBoolean(4, fin.isSit());
             pst.setString (5, fin.getObs());
             pst.executeUpdate();
-        } catch (Exception e) {
+        /*} catch (SQLException e) {
             String error = e.getClass().getName() + ": " + e.getMessage();
             ErrorPane err = new ErrorPane();
-            err.Error("Título", "Erro na inserção de dados da finança.", "04-03-01.", error);
+            err.Error("Título", "Erro na inserção de dados da finança.", "04-03-66.", error);
+            e.printStackTrace();
         }  finally {
+            if (pst != null) 
+                pst.close();
+            if (confinanca != null) 
+                confinanca.close();
+        }*/
+    }
+    
+    private static ArrayList<Financa> selectAll (boolean sit){
+        ArrayList<Financa> data = new ArrayList ();
+        
+        return data;
+    }
+    
+    public static Financa select (boolean sit){
+        
+        return new Financa(1);
+    }
+    
+    public static void delete (Financa fin) throws SQLException{       
+        Connection confinanca = ConexaoBanco.confinanca();
+        PreparedStatement pst = null;
+        try {
+            String sql1 = "DELETE FROM financa "
+                        + "WHERE rowid=" + Integer.toString(fin.getRowid());
+            pst = confinanca.prepareStatement(sql1);            
+            pst.execute();
+
+        } catch (SQLException e) {
+            String error = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Título", "Erro na exclusão do cliente", "04-02-08.", error);
+        } finally {
             if (pst != null) 
                 pst.close();
             if (confinanca != null) 
@@ -42,17 +76,7 @@ public class DAOFinanca {
         }
     }
     
-    public static ArrayList<Financa> select (String name){
-        ArrayList<Financa> data = new ArrayList ();
-        
-        return data;
-    }
-    
-    public static void delete (Financa fin){
-        
-    }
-    
-    public static void update (Financa fin){
+    public static void update (Financa fin) throws SQLException{
         if (fin.getRowid()==-1){
             ErrorPane err = new ErrorPane();
             err.Error("Título", "Erro na atualização de dados da finança.", 
@@ -72,10 +96,15 @@ public class DAOFinanca {
             pst.setBoolean(4, fin.isSit());
             pst.setString (5, fin.getObs());
             pst.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             String error = e.getClass().getName() + ": " + e.getMessage();
             ErrorPane err = new ErrorPane();
             err.Error("Título", "Erro na atualização de dados da finança.", "04-03-05.", error);
+        } finally {
+            if (pst != null) 
+                pst.close();
+            if (confinanca != null) 
+                confinanca.close();
         }
     }
 }

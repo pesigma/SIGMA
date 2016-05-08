@@ -83,7 +83,7 @@ public class CadastroFinancas extends javax.swing.JFrame {
      * Consulta; 3 - Modificação; 4 - Exclusão; 5 - Quitar; 6 - Quitar direto
      * da table da janela principal.
      */
-    public void metodosFinancas(int op) {
+    private void metodosFinancas(int op) {
         if (confinanca==null)//Só abre conexão se está tiver sido fechada.
             confinanca = ConexaoBanco.confinanca(); //Colocado aqui para poder resetar funções sem ter que fechar a janela
         //SelectButton.setEnabled (false);
