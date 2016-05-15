@@ -5,7 +5,7 @@
  */
 package Telas;
 
-import ConecBD.ConexaoBanco;
+import ConecBD.*;
 import Controles.ErrorPane;
 import Entidades.Financa;
 import java.awt.Color;
@@ -507,6 +507,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Relatórios", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         NovoRelatorio.setText("Novo");
+        NovoRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NovoRelatorioActionPerformed(evt);
+            }
+        });
 
         ExcluiRelatorio.setText("Excluir");
 
@@ -593,7 +598,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(ConnButton)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         UserField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -895,6 +900,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setEnabled(false);
         new ConsultaRelatorio(this).setVisible(true);
     }//GEN-LAST:event_ConsultaRelatorioActionPerformed
+
+    private void NovoRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NovoRelatorioActionPerformed
+        /**
+         * 14/05 - Maycon
+         * Chama o escritor de Latex
+         */
+        EscritaRelatorio ER = new EscritaRelatorio();
+    }//GEN-LAST:event_NovoRelatorioActionPerformed
 
     /**
      * @param args the command line arguments

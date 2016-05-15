@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,12 +19,12 @@ import java.util.logging.Logger;
  *
  * @author Juliano
  */
-public class BatWriter {   
+public class BatWriter {     
     public BatWriter(){
         writeBat ();
     }
     
-    private boolean writeBat (){
+    public boolean writeBat (){
         final File file = new File("Exemplo.bat");
         try {
             file.createNewFile();
@@ -44,13 +46,13 @@ public class BatWriter {
         writer.close(); //Close já dá writer.flush(); mas em alguns casos pode ser recomendado fazer separado.
         //Finalização de criação de comandos
         
-        try {
+        /*try {
             Process runBat = Runtime.getRuntime().exec("cmd /c " + file);
             runBat.waitFor();
             file.delete();
         } catch (IOException | InterruptedException ex) {
             return false;
-        } //Finalização de execução de arquivo
+        } //Finalização de execução de arquivo*/
         
         return true;
     }
