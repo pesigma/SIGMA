@@ -104,8 +104,6 @@ public class DAOCliente {
             pst.setString(4, cl.getEnd());
             pst.setString(5, cl.getObs());
             pst.execute();
-            pst.close();
-            //concliente.close();
 
         } catch (SQLException e) {
             String error = e.getClass().getName() + ": " + e.getMessage();

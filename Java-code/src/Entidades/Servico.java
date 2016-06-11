@@ -5,11 +5,13 @@
  */
 package Entidades;
 
+import java.util.Comparator;
+
 /**
  * Entidade Servico, possui métodos e valores para o objeto serviço
  * @author Maycon
  */
-public class Servico {
+public class Servico implements Comparable{
     //Atributos
     String placa, 
            modelo,
@@ -19,7 +21,8 @@ public class Servico {
     boolean sit;
     int rowid;
 
-    //Construtores
+    // <editor-fold defaultstate="collapsed" desc="Construtores">
+    
     public Servico(int idc, String placa, String modelo, int km, boolean sit, String obs) {
         this.idc = idc;
         this.placa = placa;
@@ -33,7 +36,10 @@ public class Servico {
         this.rowid = rowid;
     }
 
-    //Métodos
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    
     public int getIdcliente() {
         return idc;
     }
@@ -90,4 +96,73 @@ public class Servico {
         this.rowid = rowid;
     }
     
+    // </editor-fold>
+    
+    @Override
+    public String toString() {
+        String sitStr;
+        if (sit == true) sitStr = "Quitado";
+        else sitStr = "Pendente";
+        
+        return "Servico{" + "Placa: " + placa + ", Modelo: " + modelo + ", Obs.: " + obs + ", Km: " + km + ", IDC: " + idc + ", Situação: " + sitStr + ", Rowid: " + rowid + '}';
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="Comparators">
+    
+    /**
+     * Odenação pela situação. Preferência para "true" ser maior.
+     * Assim, se dois forem falsos ou dois forem true, é 0.
+     * Se {@link Servico#sit} for true e that for false, é 1.
+     * Se {@link Servico#sit} for false e that for true, é -1.
+     * @param that Boolean para ser comparado.
+     * @return     int referente ao valor da comparação.
+     */
+    @Override
+    public int compareTo(Object that) {
+        boolean bool = false; //Parece deselegante
+        if (that instanceof Boolean) bool = (boolean) that;
+        else throw new ClassCastException ("Objeto a ser comparado não é um Boolean!");
+        
+        int thisB = 0;
+        if (this.sit == true) thisB = 1;
+        
+        int thatB = 0;
+        if (bool == true) thatB = 1;
+        
+        return thisB - thatB;
+    }
+    
+    public static Comparator<String> placaComparator (){
+        return (String o1, String o2) -> {
+            if (o1== null || o2 == null)
+                return 0;
+            return o1.compareTo(o2);
+        };
+    }
+    
+    public static Comparator<String> modeloComparator (){
+        return Servico.placaComparator();
+    }
+    
+    public static Comparator<String> obsComparator (){
+        return Servico.placaComparator();
+    }
+    
+    public static Comparator<Integer> kmComparator (){
+        return (Integer o1, Integer o2) -> {
+            if (o1== null || o2 == null)
+                return 0;
+            return o1.compareTo(o2);
+        };
+    }
+    
+    public static Comparator<Integer> idClienteComparator (){
+        return Servico.kmComparator();
+    }
+    
+    public static Comparator<Boolean> situacaoComparator (){
+        return (Boolean o1, Boolean o2) -> o1.compareTo(o2);
+    }
+    
+//</editor-fold>
 }

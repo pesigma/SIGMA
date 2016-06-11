@@ -6,13 +6,14 @@
 package Entidades;
 import Controles.ErrorPane;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * Entidade financa, possui métodos e valores para o objeto finança
  * @author Maycon
  */
-public class Financa{
+public class Financa implements Comparable{
     
     //Atributos
     Date data;
@@ -22,7 +23,8 @@ public class Financa{
     double valor;
     int rowid;
 
-    //Construtores
+    // <editor-fold defaultstate="collapsed" desc="Construtores">
+    
     public Financa(boolean tipo, Date data, double valor, String obs, boolean sit) {
         this.tipo = tipo;
         this.data = data;
@@ -48,7 +50,10 @@ public class Financa{
 
     }
     
-    //Métodos
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    
     public int getRowid() {
         return rowid;
     }
@@ -97,21 +102,25 @@ public class Financa{
         this.valor = valor;
     }
     
+    // </editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Parsing">
+    
     /** 20/02/2016
-    * Método para transformar tipo "java.util.Date" para
-    * String de data (ignora qualquer coisa que não seja
-    * o dia, mês ou ano). Usada pelos métodos de vizualização,
-    * não salvando esse formato de strings no banco de dados.
-    * @author Juliano Felipe
-    * 
-    * @param data armazenada no banco de dados
-    * 
-    * @return String no formato "dd/mm/aaaa".
-    */
+     * Método para transformar tipo "java.util.Date" para
+     * String de data (ignora qualquer coisa que não seja
+     * o dia, mês ou ano). Usada pelos métodos de vizualização,
+     * não salvando esse formato de strings no banco de dados.
+     * @author Juliano Felipe
+     *
+     * @param data armazenada no banco de dados
+     *
+     * @return String no formato "dd/mm/aaaa".
+     */
     public String DateToString (Date data){
         String StringData = data.toString();
-        String[] split = StringData.split(" ",6);     //split by spaces        
-        String day = split[2]; 
+        String[] split = StringData.split(" ",6);     //split by spaces
+        String day = split[2];
         String month = split[1];
         String year = split[5];
         
@@ -120,59 +129,59 @@ public class Financa{
                 month = "01";
                 break;
             case "Feb":
-                month = "02";               
+                month = "02";
                 break;
             case "Mar":
-                month = "03";                
+                month = "03";
                 break;
             case "Apr":
-                month = "04";                
+                month = "04";
                 break;
             case "May":
-                month = "05";                
+                month = "05";
                 break;
             case "Jun":
-                month = "06";                
+                month = "06";
                 break;
             case "Jul":
-                month = "07";                
+                month = "07";
                 break;
             case "Aug":
-                month = "08";                
+                month = "08";
                 break;
             case "Sep":
-                month = "09";                
+                month = "09";
                 break;
             case "Oct":
-                month = "10";                
+                month = "10";
                 break;
             case "Nov":
-                month = "11";                
+                month = "11";
                 break;
             case "Dec":
-                month = "12";                
+                month = "12";
                 break;
-            }
+        }
         
         return day + "/" + month + "/" + year;
     }
     
     /** 20/02/2016
-    * Método para transformar String de data para o tipo
-    * "java.util.Date" (ignora qualquer coisa que não seja
-    * o dia, mês ou ano; setando o tempo para meia-noite).
-    * @author Juliano Felipe
-    * 
-    * @param data do pacote Util do java.
-    * 
-    * @return Date com hh:mm:ss setados em 0.
-    * 
-    * @throws Exception de string fora do formato esperado 
-    * para conversão.
-    */
+     * Método para transformar String de data para o tipo
+     * "java.util.Date" (ignora qualquer coisa que não seja
+     * o dia, mês ou ano; setando o tempo para meia-noite).
+     * @author Juliano Felipe
+     *
+     * @param data do pacote Util do java.
+     *
+     * @return Date com hh:mm:ss setados em 0.
+     *
+     * @throws Exception de string fora do formato esperado
+     * para conversão.
+     */
     public Date StringToDate (String data) throws Exception{
-        String[] split = data.split(" ",6);     //split by spaces        
-        String day = split[2]; 
+        String[] split = data.split(" ",6);     //split by spaces
+        String day = split[2];
         String month = split[1];
         String year = split[5];
         data = day+month+year;
@@ -181,68 +190,68 @@ public class Financa{
     }
     
     /** 20/02/2016
-    * Método para traduzir data (Dia, Mês).
-    * jDayChooser retorna dados em inglês, estes são
-    * armazenados no banco. No momento de "parsing",
-    * deve-ser tê-los de acordo com o locale BR (em pt-br)
-    * @author Juliano Felipe
-    * 
-    * @param data armazenada no banco de dados.
-    * Formato: SimpleDateFormat("E MMM dd HH:mm:ss z yyyy")
-    * Exemplo: "Sáb Dez 20 22:23:58 BRST 2016"
-    * 
-    * @return String com dia e mês traduzidos.
-    */
+     * Método para traduzir data (Dia, Mês).
+     * jDayChooser retorna dados em inglês, estes são
+     * armazenados no banco. No momento de "parsing",
+     * deve-ser tê-los de acordo com o locale BR (em pt-br)
+     * @author Juliano Felipe
+     *
+     * @param data armazenada no banco de dados.
+     * Formato: SimpleDateFormat("E MMM dd HH:mm:ss z yyyy")
+     * Exemplo: "Sáb Dez 20 22:23:58 BRST 2016"
+     *
+     * @return String com dia e mês traduzidos.
+     */
     public String TranslateString (String data){
         String StringData = data;
-        String[] split = StringData.split(" ",3);     //split by spaces        
-        String day = split[0]; 
+        String[] split = StringData.split(" ",3);     //split by spaces
+        String day = split[0];
         String month = split[1];
         
         switch (day) {
             //Inglês - Portugês
             case "Sun":
-                day = "Dom";               
+                day = "Dom";
                 break;
             case "Mon":
-                day = "Seg";                
+                day = "Seg";
                 break;
             case "Tue":
-                day = "Ter";                
+                day = "Ter";
                 break;
             case "Wed":
-                day = "Qua";                
+                day = "Qua";
                 break;
             case "Thu":
-                day = "Qui";                
+                day = "Qui";
                 break;
             case "Fri":
-                day = "Sex";                
+                day = "Sex";
                 break;
             case "Sat":
-                day = "Sáb";                
+                day = "Sáb";
                 break;
-            //Portugês - Inglês    
+                //Portugês - Inglês
             case "Dom":
-                day = "Sun";               
+                day = "Sun";
                 break;
             case "Seg":
-                day = "Mon";                
+                day = "Mon";
                 break;
             case "Ter":
-                day = "Tue";                
+                day = "Tue";
                 break;
             case "Qua":
-                day = "Wed";                
+                day = "Wed";
                 break;
             case "Qui":
-                day = "Thu";                
+                day = "Thu";
                 break;
             case "Sex":
-                day = "Fri";                
+                day = "Fri";
                 break;
             case "Sáb":
-                day = "Sat";                
+                day = "Sat";
                 break;
             default:
                 ErrorPane err = new ErrorPane();
@@ -250,60 +259,60 @@ public class Financa{
                 break;
         }
         
-        switch (month) { 
+        switch (month) {
             //Inglês - Portugês
             case "Feb": //Os meses não listados permanecem iguais
-                month = "Fev";               
+                month = "Fev";
                 break;
             case "Apr":
-                month = "Abr";                
+                month = "Abr";
                 break;
             case "May":
-                month = "Mai";                
+                month = "Mai";
                 break;
             case "Aug":
-                month = "Ago";                
+                month = "Ago";
                 break;
             case "Sep":
-                month = "Set";                
+                month = "Set";
                 break;
             case "Oct":
-                month = "Out";                
+                month = "Out";
                 break;
             case "Dec":
-                month = "Dez";                
+                month = "Dez";
                 break;
                 //Portugês - Inglês
             case "Jan":
                 break;
-            case "Fev": 
-                month = "Feb";               
+            case "Fev":
+                month = "Feb";
                 break;
             case "Mar":
                 break;
             case "Abr":
-                month = "Apr";                
+                month = "Apr";
                 break;
             case "Mai":
-                month = "May";                
+                month = "May";
                 break;
             case "Jun":
                 break;
             case "Jul":
                 break;
             case "Ago":
-                month = "Aug";                
+                month = "Aug";
                 break;
             case "Set":
-                month = "Sep";                
+                month = "Sep";
                 break;
             case "Out":
-                month = "Oct";                
+                month = "Oct";
                 break;
             case "Nov":
                 break;
             case "Dez":
-                month = "Dec";                
+                month = "Dec";
                 break;
             default:
                 ErrorPane err = new ErrorPane();
@@ -311,7 +320,65 @@ public class Financa{
                 break;
         }
         
-        data = day + " " + month + " " + split[2];        
+        data = day + " " + month + " " + split[2];
         return data;
     }
+    
+    //</editor-fold>
+    
+    @Override
+    public String toString() {
+        String sitStr;
+        if (sit == true) sitStr = "Quitada";
+        else sitStr = "Pendente";
+        
+        String tipStr;
+        if (tipo == true) tipStr = "Receita";
+        else tipStr = "Despesa";
+        
+        return "Financa{" + "Data: " + data + ", Obs.: " + obs + ", Situação: " + sitStr + ", Tipo: " + tipStr + ", Valor: " + valor + ", Rowid: " + rowid + '}';
+    }
+    
+    //<editor-fold defaultstate="collapsed" desc="Comparators">
+    
+    /**
+     * Compara por data.
+     * @param o
+     * @return
+     */
+    @Override
+    public int compareTo(Object o) {
+        Financa fin=null;
+        if (o instanceof Financa) fin = (Financa) o;
+        else throw new ClassCastException ("Objeto a ser comparado não é uma Finança!");
+        
+        if (this.getData() == null || fin.getData() == null)
+            return 0;
+        return this.getData().compareTo(fin.getData());
+    }
+    
+    public static Comparator<String> obsComparator (){
+        return (String o1, String o2) -> {
+            if (o1== null || o2 == null)
+                return 0;
+            return o1.compareTo(o2);
+        };
+    }
+    
+    public static Comparator<Boolean> situacaoComparator (){
+        return (Boolean o1, Boolean o2) -> o1.compareTo(o2);
+    }
+    
+    public static Comparator<Boolean> tipoComparator (){
+        return Financa.situacaoComparator ();
+    }
+    
+    public static Comparator<Double> valorComparator (){
+        return (Double o1, Double o2) -> o1.compareTo(o2);
+    }
+    
+    //RowId não será necessário, já que ao pegar do banco
+    //vem ordenado por RowId
+    
+    //</editor-fold>
 }

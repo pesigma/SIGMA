@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import javax.swing.JTable;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Tela principal do programa
@@ -173,15 +174,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      * @return data ArrayList ordenada por data.
      */
     private ArrayList<Financa> ArraySort (ArrayList<Financa> data){
-        //number_dates = number of rows to be sorted
-        Collections.sort(data, new Comparator<Financa>() {
-        @Override
-        public int compare(Financa o1, Financa o2) {
-            if (o1.getData() == null || o2.getData() == null)
-              return 0;
-            return o1.getData().compareTo(o2.getData());
-        }
-        });
+        Collections.sort(data);
         return data;
     }
     
@@ -237,6 +230,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         FinancaTable.setAutoResizeMode(FinancaTable.AUTO_RESIZE_LAST_COLUMN); //DESC 
         
         revalidate();
+        
+        //Sorters. NÃ£o Ã© necessÃ¡rio o de Data, pois esse jÃ¡ Ã© implementado com o "compareTo" da Financa
+        TableRowSorter sorter = new TableRowSorter(model);
+        sorter.setComparator(1, Financa.valorComparator());
+        sorter.setComparator(2, Financa.obsComparator());
+        FinancaTable.setRowSorter(sorter);
     }
 
     /**

@@ -21,7 +21,7 @@ public class DAOFinanca {
         Connection confinanca = ConexaoBanco.confinanca();
         
         PreparedStatement pst = null;
-        //try {
+        try {
             String sql1 = "INSERT into financa (tipo,data,valor,sit,obs) "
                         + "VALUES (?,?,?,?,?)";
             pst = confinanca.prepareStatement(sql1);
@@ -31,7 +31,7 @@ public class DAOFinanca {
             pst.setBoolean(4, fin.isSit());
             pst.setString (5, fin.getObs());
             pst.executeUpdate();
-        /*} catch (SQLException e) {
+        } catch (SQLException e) {
             String error = e.getClass().getName() + ": " + e.getMessage();
             ErrorPane err = new ErrorPane();
             err.Error("Título", "Erro na inserção de dados da finança.", "04-03-66.", error);
@@ -41,9 +41,10 @@ public class DAOFinanca {
                 pst.close();
             if (confinanca != null) 
                 confinanca.close();
-        }*/
+        }
     }
     
+    //selectAll (Object data, String queryExcerpt).
     private static ArrayList<Financa> selectAll (boolean sit){
         ArrayList<Financa> data = new ArrayList ();
         
