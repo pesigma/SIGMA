@@ -5,7 +5,7 @@
  */
 package Controles;
 
-import Entidades.Financa;
+import tolteco.sigma.model.entidades.Financa;
 
 /**
  * Controlador de financas; verifica se campos preenchidos satisfazem as condições necessárias para criação do objeto

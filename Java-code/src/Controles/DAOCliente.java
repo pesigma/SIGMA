@@ -6,7 +6,7 @@
 package Controles;
 
 import ConecBD.ConexaoBanco;
-import Entidades.Cliente;
+import tolteco.sigma.model.entidades.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

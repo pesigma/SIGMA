@@ -8,7 +8,7 @@ package Telas;
 import ConecBD.ConexaoBanco;
 import Controles.CadastroFControle;
 import Controles.ErrorPane;
-import Entidades.Financa;
+import tolteco.sigma.model.entidades.Financa;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;

@@ -7,7 +7,7 @@ package Telas;
 
 import ConecBD.*;
 import Controles.ErrorPane;
-import Entidades.Financa;
+import tolteco.sigma.model.entidades.Financa;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -22,10 +22,13 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /**
  * Tela principal do programa
@@ -76,6 +79,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Permissao (user);
         title = this.getTitle();
         fillFinancaTable();
+        Console.setEditable(false);
+        ConsoleINFO("Paranauês adicionados");
+        ConsoleWARN("Look out! Time is running out!");
+        ConsoleERR("Erros severos. Hora de fazer a materia novamente de novo mais uma vez.");
     }
     
     /**
@@ -285,6 +292,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         ConnButton = new javax.swing.JToggleButton();
         UserField = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Console = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -602,6 +611,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         UserField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jScrollPane1.setViewportView(Console);
+
         jMenu5.setText("Ajuda");
         jMenu5.setToolTipText("");
 
@@ -663,26 +674,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(37, 37, 37))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(UserField))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(242, 242, 242))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(UserField))
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
 
         pack();
@@ -908,6 +927,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
         EscritaRelatorio ER = new EscritaRelatorio();
     }//GEN-LAST:event_NovoRelatorioActionPerformed
 
+    public void ConsoleINFO(String msg){
+        StyledDocument doc = Console.getStyledDocument();
+        
+        Style style = Console.addStyle("I'm a Style", null);
+        StyleConstants.setForeground(style, Color.BLACK);
+
+        try { doc.insertString(doc.getLength(), "\n" +  msg,style); }
+        catch (BadLocationException e){e.printStackTrace();}
+    }
+   
+    public void ConsoleWARN(String msg){
+        StyledDocument doc = Console.getStyledDocument();
+
+        Style style = Console.addStyle("I'm a Style", null);
+        StyleConstants.setForeground(style, Color.ORANGE);
+        
+        try { doc.insertString(doc.getLength(), "\n" +  msg,style); }
+        catch (BadLocationException e){e.printStackTrace();}
+    }
+    
+    public void ConsoleERR(String msg){
+        StyledDocument doc = Console.getStyledDocument();
+
+        Style style = Console.addStyle("I'm a Style", null);
+        StyleConstants.setForeground(style, Color.RED);
+        
+        try { doc.insertString(doc.getLength(),"\n" +  msg,style); }
+        catch (BadLocationException e){e.printStackTrace();}
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -948,6 +997,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton CadastroFinanca;
     private javax.swing.JButton CadastroServico;
     private javax.swing.JToggleButton ConnButton;
+    private javax.swing.JTextPane Console;
     private javax.swing.JButton ConsultaCliente;
     private javax.swing.JButton ConsultaFinanca;
     private javax.swing.JButton ConsultaRelatorio;
@@ -977,6 +1027,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     // End of variables declaration//GEN-END:variables

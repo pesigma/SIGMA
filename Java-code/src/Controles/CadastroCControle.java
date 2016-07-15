@@ -5,7 +5,7 @@
  */
 package Controles;
 
-import Entidades.Cliente;
+import tolteco.sigma.model.entidades.Cliente;
 import java.sql.Connection;
 
 /**

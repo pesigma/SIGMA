@@ -13,13 +13,13 @@ import java.util.Comparator;
  */
 public class Cliente implements Comparable{
     //Atributos
-    String nome,
-           sobrenome,
-           obs, 
-           end, 
-           tel, 
-           cpf;
-    int rowid;
+    private String nome,
+                sobrenome,
+                obs, 
+                end, 
+                tel, 
+                cpf;
+    private int rowid;
 
     // <editor-fold defaultstate="collapsed" desc="Construtores">
     
@@ -100,7 +100,7 @@ public class Cliente implements Comparable{
     
     @Override
     public String toString() {
-        return "Cliente{" + "Nome: " + nome + ", Sobrenome: " + sobrenome + ", Obs.: " + obs + ", Endereço: " + end + ", Telefone: " + tel + ", CPF: " + cpf + ", Rowid: " + rowid + '}';
+        return "Cliente{" + "Nome: " + nome + ", Sobrenome: " + sobrenome + ", Obs.: " + obs + ", Endereço: " + end + ", Telefone: " + tel + ", CPF: " + cpf + ", Rowid: " + rowid + '}' + "\n";
     }
     
     //<editor-fold defaultstate="collapsed" desc="Comparators">

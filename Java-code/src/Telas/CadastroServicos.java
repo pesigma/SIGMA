@@ -9,7 +9,7 @@ package Telas;
 import ConecBD.ConexaoBanco;
 import Controles.CadastroSControle;
 import Controles.ErrorPane;
-import Entidades.Servico;
+import tolteco.sigma.model.entidades.Servico;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;

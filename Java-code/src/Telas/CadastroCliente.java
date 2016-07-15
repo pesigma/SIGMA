@@ -9,7 +9,7 @@ import ConecBD.ConexaoBanco;
 import Controles.CadastroCControle;
 import Controles.ErrorPane;
 import Controles.UppercaseDocumentFilter;
-import Entidades.Cliente;
+import tolteco.sigma.model.entidades.Cliente;
 import java.awt.Dimension; //Usada para "setar" frame no meio da tela
 import javax.swing.JOptionPane;
 import java.awt.Image; //Usada para setar logo. Idem para a de baixo
@@ -656,6 +656,9 @@ public class CadastroCliente extends javax.swing.JFrame {
             ErrorPane err = new ErrorPane();
             err.Error(title, "Erro no fechamento da conexão com o banco de dados.", "04-02-0B", error);
         }
+        telaanterior.ConsoleINFO("Paranauês adicionados");
+        telaanterior.ConsoleWARN("Look out! Time is running out!");
+        telaanterior.ConsoleERR("Erros severos. Hora de fazer a materia novamente de novo mais uma vez.");
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed

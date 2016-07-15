@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Controles;
-import Entidades.Servico;
+import tolteco.sigma.model.entidades.Servico;
 /**
  *
  * Controlador de servicos; verifica se campos preenchidos satisfazem as condições necessárias para criação do objeto

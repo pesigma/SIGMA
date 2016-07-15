@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entidades;
-
-import javax.swing.table.DefaultTableModel;
+package tolteco.sigma.model.dao.jdbc;
 
 /**
- * TODO: Table Model para todos as Entidades.
- * 
- * @author Juliano Felipe
+ *
+ * @author Juliano_Felipe
  */
-public class ClienteTableModel extends DefaultTableModel{
+public class JDBCServicoDAO {
     
 }
