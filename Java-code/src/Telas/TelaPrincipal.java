@@ -23,18 +23,22 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.Collections;
 import java.util.Date;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import tolteco.sigma.utils.console.BufferedPaneOutputStream;
+import tolteco.sigma.utils.console.PaneHandler;
 
 /**
  * Tela principal do programa
  * @author Maycon
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+    private static final Logger LOG = Logger.getLogger(TelaPrincipal.class.getName());
 
     Connection connGeral = null;
 
@@ -79,10 +83,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Permissao (user);
         title = this.getTitle();
         fillFinancaTable();
+        
         Console.setEditable(false);
         ConsoleINFO("Paranauês adicionados");
         ConsoleWARN("Look out! Time is running out!");
-        ConsoleERR("Erros severos. Hora de fazer a materia novamente de novo mais uma vez.");
+        ConsoleERR("Erros severos. Hora de fazer a materia novamente de novo mais uma vez.\n\n");
+        
+        BufferedPaneOutputStream oStream = new BufferedPaneOutputStream(Console);
+        LOG.addHandler(new PaneHandler(oStream));
+        LOG.info("MSG");
     }
     
     /**
