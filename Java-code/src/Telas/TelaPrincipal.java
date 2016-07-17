@@ -26,19 +26,15 @@ import java.util.Date;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
-import tolteco.sigma.utils.console.BufferedPaneOutputStream;
-import tolteco.sigma.utils.console.PaneHandler;
+import tolteco.sigma.utils.logging.BufferedPaneOutputStream;
+import tolteco.sigma.utils.logging.PaneHandler;
 
 /**
  * Tela principal do programa
  * @author Maycon
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-    private static final Logger LOG = Logger.getLogger(TelaPrincipal.class.getName());
+    public static final Logger ConsoleLOG = Logger.getLogger(TelaPrincipal.class.getName());
 
     Connection connGeral = null;
 
@@ -49,7 +45,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     * 
     * @author Juliano Felipe
     */
-    private String user="Nenhum";
+    private String user="Administrador";   //// Setado assim para poder usar todas as funcs sem precisar logar...
     /**
      * Número de colunas na tabela de finanças
      * da tela principal. Há uma 4ª coluna para
@@ -85,13 +81,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         fillFinancaTable();
         
         Console.setEditable(false);
-        ConsoleINFO("Paranauês adicionados");
-        ConsoleWARN("Look out! Time is running out!");
-        ConsoleERR("Erros severos. Hora de fazer a materia novamente de novo mais uma vez.\n\n");
         
         BufferedPaneOutputStream oStream = new BufferedPaneOutputStream(Console);
-        LOG.addHandler(new PaneHandler(oStream));
-        LOG.info("MSG");
+        ConsoleLOG.addHandler(new PaneHandler(oStream));
+        ConsoleLOG.info("Mensagem de teste! c:\n");
     }
     
     /**
@@ -683,9 +676,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -935,37 +928,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
          */
         EscritaRelatorio ER = new EscritaRelatorio();
     }//GEN-LAST:event_NovoRelatorioActionPerformed
-
-    public void ConsoleINFO(String msg){
-        StyledDocument doc = Console.getStyledDocument();
-        
-        Style style = Console.addStyle("I'm a Style", null);
-        StyleConstants.setForeground(style, Color.BLACK);
-
-        try { doc.insertString(doc.getLength(), "\n" +  msg,style); }
-        catch (BadLocationException e){e.printStackTrace();}
-    }
    
-    public void ConsoleWARN(String msg){
-        StyledDocument doc = Console.getStyledDocument();
-
-        Style style = Console.addStyle("I'm a Style", null);
-        StyleConstants.setForeground(style, Color.ORANGE);
-        
-        try { doc.insertString(doc.getLength(), "\n" +  msg,style); }
-        catch (BadLocationException e){e.printStackTrace();}
-    }
-    
-    public void ConsoleERR(String msg){
-        StyledDocument doc = Console.getStyledDocument();
-
-        Style style = Console.addStyle("I'm a Style", null);
-        StyleConstants.setForeground(style, Color.RED);
-        
-        try { doc.insertString(doc.getLength(),"\n" +  msg,style); }
-        catch (BadLocationException e){e.printStackTrace();}
-    }
-    
     /**
      * @param args the command line arguments
      */
@@ -1041,3 +1004,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     // End of variables declaration//GEN-END:variables
 }
+
+//OH no, tem funções antigas aqui em baixo...
+/*
+    public void ConsoleINFO(String msg){
+        StyledDocument doc = Console.getStyledDocument();
+        
+        Style style = Console.addStyle("I'm a Style", null);
+        StyleConstants.setForeground(style, Color.BLACK);
+
+        try { doc.insertString(doc.getLength(), "\n" +  msg,style); }
+        catch (BadLocationException e){e.printStackTrace();}
+    }
+   
+    public void ConsoleWARN(String msg){
+        StyledDocument doc = Console.getStyledDocument();
+
+        Style style = Console.addStyle("I'm a Style", null);
+        StyleConstants.setForeground(style, Color.ORANGE);
+        
+        try { doc.insertString(doc.getLength(), "\n" +  msg,style); }
+        catch (BadLocationException e){e.printStackTrace();}
+    }
+    
+    public void ConsoleERR(String msg){
+        StyledDocument doc = Console.getStyledDocument();
+
+        Style style = Console.addStyle("I'm a Style", null);
+        StyleConstants.setForeground(style, Color.RED);
+        
+        try { doc.insertString(doc.getLength(),"\n" +  msg,style); }
+        catch (BadLocationException e){e.printStackTrace();}
+    }
+*/

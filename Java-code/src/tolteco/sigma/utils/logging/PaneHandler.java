@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.utils.console;
+package tolteco.sigma.utils.logging;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.logging.Formatter;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
@@ -17,7 +16,7 @@ import java.util.logging.StreamHandler;
  * @author Juliano Felipe da Silva
  */
 public class PaneHandler extends StreamHandler {
-
+    private final BufferedPaneOutputStream stream;
     /*private void init(){
         setFormatter(new SimpleFormatter());
         try{
@@ -29,7 +28,7 @@ public class PaneHandler extends StreamHandler {
                 exe.printStackTrace();
             }
         }
-    }*/
+    }*/ //Double Encoding
     
     /**
      * Constrói um Handler usando a stream direcionada
@@ -37,7 +36,8 @@ public class PaneHandler extends StreamHandler {
      * @param outStream Stream já instanciada.
      */
     public PaneHandler(BufferedPaneOutputStream outStream) {
-        this(outStream, new SimpleFormatter());
+        //this(outStream, new SimpleFormatter());
+        this(outStream, new SigmaConsoleFormatter());
     }
 
     /**
@@ -48,6 +48,7 @@ public class PaneHandler extends StreamHandler {
      */
     public PaneHandler(BufferedPaneOutputStream outStream, Formatter formatter) {
         super(outStream, formatter);
+        stream = outStream;
     }
     
     @Override
@@ -57,8 +58,15 @@ public class PaneHandler extends StreamHandler {
 
     @Override
     public synchronized void publish(LogRecord record) {
+        if (record.getLevel() == Level.INFO)
+            stream.setCurrentAttributeSet( stream.INFO );
+        if (record.getLevel() == Level.WARNING)
+            stream.setCurrentAttributeSet( stream.WARNING );
+        if (record.getLevel() == Level.SEVERE)
+            stream.setCurrentAttributeSet( stream.SEVERE );
         super.publish(record); 
         flush();
+        stream.setCurrentAttributeSet( stream.NORMAL );
     }
     
 }

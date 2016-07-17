@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.utils.console;
+package tolteco.sigma.utils.logging;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import static java.time.temporal.TemporalQueries.offset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextPane;
@@ -30,10 +29,43 @@ public class BufferedPaneOutputStream extends OutputStream {
     private final StyledDocument doc;
     private final String encoding;
     
-    private AttributeSet normal;
-    private AttributeSet info;
-    private AttributeSet err;
-    private AttributeSet warn;
+    /**
+     * Array de atributos usados pela stream.
+     * As posições são delimitadas pelas constantes
+     * como:
+     * {@link tolteco.sigma.utils.console.BufferedPaneOutputStream.NORMAL}
+     * {@link tolteco.sigma.utils.console.BufferedPaneOutputStream.ERROR}
+     */
+    private AttributeSet[] attributes = new AttributeSet[4];
+    /**
+     * Constante que localiza posição dos
+     * atributos usados normalmente pela
+     * stream.
+     */
+    public final int NORMAL=0;
+    /**
+     * Constante que localiza posição dos
+     * atributos usados na impressão de
+     * informações pela stream.
+     */
+    public final int INFO=1;
+    /**
+     * Constante que localiza posição dos
+     * atributos usados na impressão de
+     * warnings pela stream.
+     */
+    public final int WARNING=2;
+    /**
+     * Constante que localiza posição dos
+     * atributos usados na impressão de
+     * erros pela stream.
+     */
+    public final int SEVERE=3;
+    /**
+     * Variável que indica qual deve ser o atributo
+     * usado para imprimir (NORMAL, INFO, etc).
+     */
+    private int flushSwitch;
     
     /*
     Por enquanto, não há como especificar o tamanho do Buffer.
@@ -48,6 +80,12 @@ public class BufferedPaneOutputStream extends OutputStream {
      */
     public BufferedPaneOutputStream(JTextPane pane) {
         this(pane, "UTF-8", null, null, null, null);
+        /*
+        É deselegante passar null e fazer a verificação no outro
+        construtor, mas não consigo pensar em como criar um attributeset
+        anonimamente para passar para o construtor "Geral".
+        Talvez, fazer um attributeset do sistema?
+        */
     }
     
     /**
@@ -86,25 +124,37 @@ public class BufferedPaneOutputStream extends OutputStream {
         doc = pane.getStyledDocument();
         encoding = Charset;
         
-        SimpleAttributeSet standard = new SimpleAttributeSet();
-        StyleConstants.setForeground(standard, Color.BLACK);
-        StyleConstants.setBackground(standard, Color.WHITE);
-        StyleConstants.setBold(standard, false);
+        
         if (attribs == null){
-            normal = standard;
+            SimpleAttributeSet standard = new SimpleAttributeSet();
+            StyleConstants.setForeground(standard, Color.BLACK);
+            StyleConstants.setBackground(standard, Color.WHITE);
+            StyleConstants.setBold(standard, false);
+            attributes[NORMAL] = standard;
         }
         if (info == null){
+            SimpleAttributeSet standard = new SimpleAttributeSet();
             StyleConstants.setForeground(standard, Color.BLUE);
-            this.info = standard;
+            StyleConstants.setBackground(standard, Color.WHITE);
+            StyleConstants.setBold(standard, false);
+            attributes[INFO] = standard;
         }
         if (warn == null){
+            SimpleAttributeSet standard = new SimpleAttributeSet();
             StyleConstants.setForeground(standard, Color.ORANGE);
-            this.warn = standard;
+            StyleConstants.setBackground(standard, Color.WHITE);
+            StyleConstants.setBold(standard, false);
+            attributes[WARNING] = standard;
         }
         if (err == null){
+            SimpleAttributeSet standard = new SimpleAttributeSet();
             StyleConstants.setForeground(standard, Color.RED);
-            this.err = standard;
+            StyleConstants.setBackground(standard, Color.WHITE);
+            StyleConstants.setBold(standard, false);
+            attributes[SEVERE] = standard;
         }
+        
+        flushSwitch=NORMAL;
     } 
 
     /**
@@ -116,7 +166,7 @@ public class BufferedPaneOutputStream extends OutputStream {
     @Override
     public void flush() throws IOException {
         try {
-            doc.insertString(doc.getLength(), buffer.toString(encoding), normal);
+            doc.insertString(doc.getLength(), buffer.toString(encoding), attributes[flushSwitch]);
         } catch (BadLocationException ex) {
             Logger.getLogger(BufferedPaneOutputStream.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -136,10 +186,9 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @throws IOException Em erro.
      */
     public void writeInfo(int b) throws IOException {
-        AttributeSet temp = normal;
-        normal = info;
+        flushSwitch = INFO;
         write(b);
-        normal = temp;
+        flushSwitch = NORMAL;
     }
     
     /**
@@ -149,10 +198,9 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @throws IOException Em erro.
      */
     public void writeWarning(int b) throws IOException {
-        AttributeSet temp = normal;
-        normal = warn;
+        flushSwitch = WARNING;
         write(b);
-        normal = temp;
+        flushSwitch = NORMAL;
     }
     
     /**
@@ -162,20 +210,19 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @throws IOException Em erro.
      */
     public void writeErr(int b) throws IOException {
-        AttributeSet temp = normal;
-        normal = err;
+        flushSwitch = SEVERE;
         write(b);
-        normal = temp;
+        flushSwitch = NORMAL;
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Gettesr & Setters de atributos">
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters de atributos">
     /**
      * Retorna os atributos usados
      * para a escrita padrão.
      * @return AttributeSet padrão.
      */ 
     public AttributeSet getNormal() {
-        return normal;
+        return attributes[NORMAL];
     }
     
     /**
@@ -184,7 +231,7 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @param normal AttributeSet para warnings.
      */
     public void setNormal(AttributeSet normal) {
-        this.normal = normal;
+        attributes[NORMAL] = normal;
     }
     
     /**
@@ -193,7 +240,7 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @return AttributeSet de infos..
      */
     public AttributeSet getInfo() {
-        return info;
+        return attributes[INFO];
     }
     
     /**
@@ -202,7 +249,7 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @param info AttributeSet para infos..
      */
     public void setInfo(AttributeSet info) {
-        this.info = info;
+        attributes[INFO] = info;
     }
     
     /**
@@ -210,8 +257,8 @@ public class BufferedPaneOutputStream extends OutputStream {
      * para a escrita de erros.
      * @return AttributeSet de erros.
      */
-    public AttributeSet getErr() {
-        return err;
+    public AttributeSet getSevere() {
+        return attributes[SEVERE];
     }
     
     /**
@@ -219,8 +266,8 @@ public class BufferedPaneOutputStream extends OutputStream {
      * erros.
      * @param err AttributeSet para erros.
      */
-    public void setErr(AttributeSet err) {
-        this.err = err;
+    public void setSevere(AttributeSet err) {
+        attributes[SEVERE] = err;
     }
     
     /**
@@ -229,7 +276,7 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @return AttributeSet de warnings.
      */
     public AttributeSet getWarn() {
-        return warn;
+        return attributes[WARNING];
     }
     
     /**
@@ -238,7 +285,7 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @param warn AttributeSet para warnings.
      */
     public void setWarn(AttributeSet warn) {
-        this.warn = warn;
+        attributes[WARNING] = warn;
     }
     
     /**
@@ -265,5 +312,21 @@ public class BufferedPaneOutputStream extends OutputStream {
     public String getCharsetName() {
         return encoding;
     }
-//</editor-fold>
+    //</editor-fold>
+
+    /**
+     * Troca o {@link import javax.swing.text.AttributeSet}
+     * usado na impressão. Para tornar a chamada mais
+     * persistente à mudanças, use os códigos como:
+     * {@link tolteco.sigma.utils.console.BufferedPaneOutputStream.NORMAL}
+     * {@link tolteco.sigma.utils.console.BufferedPaneOutputStream.SEVERE}
+     * etc.
+     * @param attributeSet para ser usado na impressão. 
+     */
+    public void setCurrentAttributeSet(int attributeSet){
+        if ((attributeSet > attributes.length)  || attributeSet<0)
+            throw new ArrayIndexOutOfBoundsException("Não existe atributo na posição: "+attributeSet);
+        
+        flushSwitch = attributeSet;
+    }
 }

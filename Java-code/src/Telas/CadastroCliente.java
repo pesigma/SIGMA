@@ -636,7 +636,10 @@ public class CadastroCliente extends javax.swing.JFrame {
                 ErrorPane err = new ErrorPane();
                 err.Error(title, "Erro na inserção do cliente", "04-02-09.", error);
             }
-            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", title, JOptionPane.INFORMATION_MESSAGE);
+            StringBuilder sb = new StringBuilder("Cliente adicionado: ");
+            sb.append(nome).append("\n");
+            TelaPrincipal.ConsoleLOG.info(sb.toString());
             this.dispose();
             telaanterior.setEnabled(true);
             telaanterior.requestFocus(); //Traz o foco para tela anterior
@@ -656,9 +659,6 @@ public class CadastroCliente extends javax.swing.JFrame {
             ErrorPane err = new ErrorPane();
             err.Error(title, "Erro no fechamento da conexão com o banco de dados.", "04-02-0B", error);
         }
-        telaanterior.ConsoleINFO("Paranauês adicionados");
-        telaanterior.ConsoleWARN("Look out! Time is running out!");
-        telaanterior.ConsoleERR("Erros severos. Hora de fazer a materia novamente de novo mais uma vez.");
         telaanterior.setEnabled(true);
         telaanterior.requestFocus(); //Traz o foco para tela anterior
     }//GEN-LAST:event_formWindowClosed
