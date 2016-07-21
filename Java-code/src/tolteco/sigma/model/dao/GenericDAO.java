@@ -10,6 +10,8 @@ import java.util.List;
 /**
  *
  * @author Juliano Felipe da Silva
+ * @param <T> Dado genérico para ser
+ *            atribuído à um DAO.
  */
 public interface GenericDAO<T> {
     

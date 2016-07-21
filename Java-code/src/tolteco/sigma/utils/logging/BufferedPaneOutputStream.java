@@ -24,17 +24,34 @@ import javax.swing.text.StyledDocument;
  * @author Juliano Felipe da Silva
  */
 public class BufferedPaneOutputStream extends OutputStream {
+    /**
+     * {@link java.io.ByteArrayOutputStream} interno. 
+     */
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+    /**
+     * {@link import javax.swing.JTextPane} destino da stream.
+     */
     private final JTextPane pane;
+    /**
+     * {@link javax.swing.text.StyledDocument} do
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#pane}
+     * onde são inseridos os characteres propriamente.
+     */
     private final StyledDocument doc;
+    /**
+     * String que representa o nome
+     * da codificaçao (charset) usada
+     * para codificar os bytes.
+     */
     private final String encoding;
     
     /**
      * Array de atributos usados pela stream.
-     * As posições são delimitadas pelas constantes
-     * como:
-     * {@link tolteco.sigma.utils.console.BufferedPaneOutputStream.NORMAL}
-     * {@link tolteco.sigma.utils.console.BufferedPaneOutputStream.ERROR}
+     * As posições são delimitadas pelas constantes:
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#NORMAL}
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#INFO}
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#WARNING}
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#SEVERE}
      */
     private AttributeSet[] attributes = new AttributeSet[4];
     /**
@@ -63,13 +80,17 @@ public class BufferedPaneOutputStream extends OutputStream {
     public final int SEVERE=3;
     /**
      * Variável que indica qual deve ser o atributo
-     * usado para imprimir (NORMAL, INFO, etc).
+     * usado para imprimir dentre (em ordem ascendente de prioridade):
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#NORMAL}
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#INFO}
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#WARNING}
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#SEVERE}
      */
     private int flushSwitch;
     
     /*
     Por enquanto, não há como especificar o tamanho do Buffer.
-    O padrão, inicial, do "ByteArrayOutputStream" é 32 Bytes
+    O padrão, inicial, do {@link java.io.ByteArrayOutputStream}. é 32 Bytes
     */
     
     /**
@@ -108,14 +129,11 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @param Charset Codificação a ser usada nos bytes.
      * @param attribs Attributos para saida normal, se nulo
      *                fundo é branco e fonte é preta.
-     * @param info    Attributos para saida pelo método:
-     *                {@link PaneOutputStream.writeInfo(int)}.
+     * @param info    Attributos para saida de infos.:
      *                Se nulo, fundo branco e fonte azul.
-     * @param warn    Attributos para saida pelo método:
-     *                {@link PaneOutputStream.writeWarning(int)}.
+     * @param warn    Attributos para saida de warnings.
      *                Se nulo, fundo branco e fonte laranja.
-     * @param err     Attributos para saida pelo método:
-     *                {@link PaneOutputStream.writeErr(int)}.
+     * @param err     Attributos para saida erros.
      *                Se nulo, fundo branco e fonte vermelha.
      */
     public BufferedPaneOutputStream(JTextPane pane, String Charset, AttributeSet attribs, AttributeSet info, AttributeSet warn, AttributeSet err){
@@ -159,8 +177,9 @@ public class BufferedPaneOutputStream extends OutputStream {
 
     /**
      * Sobrecarrega flush da classe pai, para usar
-     * o atributo {@link PaneOutputStream.normal} e a
-     * codificação {@link PaneOutputStream.encoding}.
+     * o atributo especificado por:
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStreamPaneOutputStream#flushSwitch} e a
+     * codificação {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#encoding}.
      * @throws IOException Em erro.
      */
     @Override
@@ -173,6 +192,14 @@ public class BufferedPaneOutputStream extends OutputStream {
         buffer.reset();
     }
     
+    /**
+     * Escreve os 8 bits menos significativos
+     * no buffer:
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#buffer}
+     * @param b inteiro cujos 8 bits menos significativos serão
+     *          transformados em um byte.
+     * @throws IOException
+     */
     @Override
     public void write(int b) throws IOException {
         buffer.write(b);
@@ -180,8 +207,10 @@ public class BufferedPaneOutputStream extends OutputStream {
     }
     
     /**
-     * Escreve na Stream usando os atributos
-     * {@link PaneOutputStream.info}
+     * Escreve na Stream usando os atributos indicados no array
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#attributes},
+     * pela posição:
+     * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#INFO}
      * @param b Byte a escrever.
      * @throws IOException Em erro.
      */
