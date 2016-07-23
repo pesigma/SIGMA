@@ -1,0 +1,20 @@
+Juliano: Ideias para implementar:
+    - Colocar uma "cópia" de todas as operações nos menus (Add cliente, modif. cliente, Add serviço, etc)
+    
+    - Ter um menu "Exibir" que modifica a exibição da tela principal, que, talvez, será constituída de abas,
+      como "Principal", "Clientes", etc. Exibindo, ou não, tais abas, ocuparia menos/mais memória.
+    
+    - Fazer ícones custmizados para add, alterar, etc.
+    
+    - Sub-menu de configuração: Para alterar tanto de itens máximos de log, etc.
+    
+    - Alinhar alguns menus para a direita (Ajuda), para tanto, talvez tenha-se que
+      adicioná-los fora do editor do NetBeans (e.g. em código de próprio punho).
+    
+    - Adicionar um "RESOUCE BUNDLE" para tornar o sistema internacional.
+
+    - Classe "User" com permissões e etc. O sistema pega a permissão da instância do User que está usando o
+      sistema no momento.
+
+    - Tela de login lista todos os users cujo acesso seja maior que 1 (0=Root, 1=Admin, 2=Funcionario).
+      -- Isto é, root ficará "invisível": Para acessar digite "root" e a senha no campo.

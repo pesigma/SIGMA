@@ -28,6 +28,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 import tolteco.sigma.utils.logging.BufferedPaneOutputStream;
 import tolteco.sigma.utils.logging.PaneHandler;
+import tolteco.sigma.view.images.ImageHandler;
 
 /**
  * Tela principal do programa
@@ -116,19 +117,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ModificaFinanca.setEnabled(access);
         QuitaFinanca.setEnabled(access);
         ExcluiFinanca.setEnabled(access);
+        FinancaTable.setEnabled(access);
+        
         NovoRelatorio.setEnabled(access);
         ConsultaRelatorio.setEnabled(access);
         ExcluiRelatorio.setEnabled(access);
+        
         ExcluiServico.setEnabled(access);
         ExcluiCliente.setEnabled(access);
-        FinancaTable.setEnabled(access);
+        
+        
     }
     
     /**
      * 12/12/15 - Juliano Felipe Seta icone "Logo 100x100.png"
      */
     private void initLogo() {
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/Logo 100x100.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(ImageHandler.getWindowIcon()));
     }
     
     /**

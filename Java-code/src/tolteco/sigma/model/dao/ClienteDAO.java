@@ -15,9 +15,5 @@ import tolteco.sigma.model.entidades.Cliente;
  */
 public interface ClienteDAO extends GenericDAO<Cliente> {
     
-    List<Cliente> selectAllClientes() throws DatabaseException;
-    
-    //Collection<Inscrito> listarInscritos(); 
-    
-    //...
+    //List<Cliente> selectAllClientes() throws DatabaseException;
 }

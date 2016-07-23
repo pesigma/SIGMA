@@ -31,4 +31,5 @@ public abstract class DAOFactory {
     
     public abstract ServicoDAO getServicoDAO();
     
+    public abstract UsuarioDAO getUsuarioDAO();
 }

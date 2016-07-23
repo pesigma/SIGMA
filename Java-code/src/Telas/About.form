@@ -173,7 +173,7 @@
               <Font name="Cambria Math" size="36" style="0"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Images/Logo 100x100.png"/>
+              <Image iconType="3" name="/tolteco/sigma/view/images/Logo 100x100.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value=" SIGMA"/>
           </Properties>
