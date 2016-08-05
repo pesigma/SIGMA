@@ -6,8 +6,10 @@
 package tolteco.sigma.view.cliente;
 
 /**
- *
- * @author User
+ * Painel de busca de clientes.
+ * Podem ser buscados por diversos
+ * atributos (nome, id, etc).
+ * @author Juliano Felipe
  */
 public class BuscarCliente extends javax.swing.JPanel {
 

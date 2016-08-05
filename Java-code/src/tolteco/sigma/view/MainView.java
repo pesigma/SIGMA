@@ -7,7 +7,7 @@ package tolteco.sigma.view;
 
 /**
  *
- * @author User
+ * @author Juliano Felipe
  */
 public class MainView extends javax.swing.JPanel {
 

@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.cliente;
+package tolteco.sigma.utils;
 
 import javax.swing.JPanel;
+import tolteco.sigma.view.cliente.MainCliente;
 
 /**
- *
- * @author User
+ * Classe com um frame para testes.
+ * @author Juliano Felipe
  */
 public class TestCliente extends javax.swing.JFrame {
 
@@ -20,6 +21,7 @@ public class TestCliente extends javax.swing.JFrame {
         initComponents();
         JPanel panel = new MainCliente();
         guias.add(panel);
+        guias.setTitleAt(0, "Clientes");
     }
 
     /**

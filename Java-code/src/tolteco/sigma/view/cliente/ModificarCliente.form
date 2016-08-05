@@ -25,14 +25,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jButton2" min="-2" pref="107" max="-2" attributes="0"/>
-                      <EmptySpace pref="492" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButton1" min="-2" pref="107" max="-2" attributes="0"/>
                   </Group>
                   <Component id="ObsPanel" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="EndPanel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="NomePanel" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="NomePanel" max="32767" attributes="0"/>
+                          <Component id="EndPanel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -195,7 +195,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="EndBox" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="EndField" pref="254" max="32767" attributes="0"/>
+                  <Component id="EndField" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

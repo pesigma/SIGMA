@@ -6,8 +6,8 @@
 package tolteco.sigma.view.cliente;
 
 /**
- *
- * @author User
+ * Painel de adição de clientes.
+ * @author Juliano Felipe
  */
 public class AdicionarCliente extends javax.swing.JPanel {
 
