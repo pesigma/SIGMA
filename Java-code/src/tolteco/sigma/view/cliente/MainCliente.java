@@ -126,7 +126,7 @@ public class MainCliente extends javax.swing.JPanel {
             AdicionarCliente add = new AdicionarCliente();
             Panel.setViewportView( add );
         }
-
+        
         ultimoPanelAdicionado = OperacaoCliente.Adicionar;
     }//GEN-LAST:event_AddActionPerformed
 

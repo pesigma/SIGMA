@@ -10,6 +10,7 @@ import tolteco.sigma.model.dao.ClienteDAO;
 import tolteco.sigma.model.dao.FinancaDAO;
 import tolteco.sigma.model.dao.ServicoDAO;
 import tolteco.sigma.model.dao.UsuarioDAO;
+import tolteco.sigma.model.dao.VersionDAO;
 
 
 /**
@@ -20,7 +21,8 @@ public class JDBCDAOFactory extends DAOFactory {
     private static ClienteDAO clienteDAO;
     private static FinancaDAO financaDAO;
     private static ServicoDAO servicoDAO;
-    private static UsuarioDAO usuarioDAO;
+    private static UsuarioDAO usuarioDAO; 
+    private static VersionDAO versionDAO;
     
     @Override
     public ClienteDAO getClienteDAO() {
@@ -52,6 +54,14 @@ public class JDBCDAOFactory extends DAOFactory {
             usuarioDAO = new JDBCUsuarioDAO();
         }
         return usuarioDAO;
+    }
+
+    @Override
+    public VersionDAO getVersionDAO() {
+        if (versionDAO == null) {
+            versionDAO = new JDBCVersionDAO();
+        }
+        return versionDAO;
     }
     
 }

@@ -8,7 +8,7 @@ package tolteco.sigma.model.dao;
 import tolteco.sigma.model.dao.jdbc.JDBCDAOFactory;
 
 /**
- *
+ * Fábrica de DAOs.
  * @author Juliano Felipe da Silva
  */
 public abstract class DAOFactory {
@@ -32,4 +32,6 @@ public abstract class DAOFactory {
     public abstract ServicoDAO getServicoDAO();
     
     public abstract UsuarioDAO getUsuarioDAO();
+    
+    public abstract VersionDAO getVersionDAO();
 }

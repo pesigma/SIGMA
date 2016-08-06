@@ -18,3 +18,5 @@ Juliano: Ideias para implementar:
 
     - Tela de login lista todos os users cujo acesso seja maior que 1 (0=Root, 1=Admin, 2=Funcionario).
       -- Isto é, root ficará "invisível": Para acessar digite "root" e a senha no campo.
+
+    - Configurações. Arquivo com configurações do sistema. Classe para escrever o arquivo novamente caso ele não exista.
