@@ -77,9 +77,9 @@ public class MainView extends javax.swing.JPanel {
         FinancasPanelLayout.setHorizontalGroup(
             FinancasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FinancasPanelLayout.createSequentialGroup()
-                .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE))
         );
         FinancasPanelLayout.setVerticalGroup(
             FinancasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

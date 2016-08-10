@@ -6,7 +6,9 @@
 package tolteco.sigma.utils;
 
 import javax.swing.JPanel;
+import tolteco.sigma.view.MainView;
 import tolteco.sigma.view.cliente.MainCliente;
+import tolteco.sigma.view.financas.MainFinanca;
 
 /**
  * Classe com um frame para testes.
@@ -19,9 +21,17 @@ public class TestCliente extends javax.swing.JFrame {
      */
     public TestCliente() {
         initComponents();
-        JPanel panel = new MainCliente();
+        JPanel panel = new MainView();
         guias.add(panel);
-        guias.setTitleAt(0, "Clientes");
+        guias.setTitleAt(0, "Principal");
+        
+        JPanel panel1 = new MainCliente();
+        guias.add(panel1);
+        guias.setTitleAt(1, "Clientes");
+        
+        JPanel panel2 = new MainFinanca();
+        guias.add(panel2);
+        guias.setTitleAt(2, "Finanças");
     }
 
     /**
@@ -55,14 +65,14 @@ public class TestCliente extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Windows look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

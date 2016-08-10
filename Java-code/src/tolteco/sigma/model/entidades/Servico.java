@@ -120,7 +120,7 @@ public class Servico implements Comparable{
      * @param that Objeto para ser comparado.
      * @return     int referente ao valor da comparação.
      */
-    @Override 6a546 //Checar o objeto de passagem como param (É Servico ou inteiro, etc).
+    @Override //Checar o objeto de passagem como param (É Servico ou inteiro, etc).
     public int compareTo(Object that) {
         Servico thatService = null; //Parece deselegante
         if (that instanceof Servico) thatService = (Servico) that;

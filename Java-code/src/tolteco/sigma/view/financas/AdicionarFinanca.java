@@ -5,7 +5,8 @@
  */
 package tolteco.sigma.view.financas;
 
-import tolteco.sigma.view.cliente.*;
+import tolteco.sigma.model.entidades.FinancaTipo;
+import tolteco.sigma.model.entidades.Situacao;
 
 /**
  * Painel de adição de finanças.
@@ -31,15 +32,14 @@ public class AdicionarFinanca extends javax.swing.JPanel {
 
         Tipo = new javax.swing.ButtonGroup();
         ValorPanel = new javax.swing.JPanel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        ValorField = new javax.swing.JFormattedTextField();
         SituacaoPanel = new javax.swing.JPanel();
-        TelFField = new javax.swing.JFormattedTextField();
+        PagoCheck = new javax.swing.JCheckBox();
         TipoPanel = new javax.swing.JPanel();
         ReceitaRadio = new javax.swing.JRadioButton();
         DespesaRadio = new javax.swing.JRadioButton();
         DataPanel = new javax.swing.JPanel();
-        EndBox = new javax.swing.JComboBox();
-        EndField = new javax.swing.JTextField();
+        DataChooser = new com.toedter.calendar.JDateChooser();
         ObsPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         ObsPane = new javax.swing.JTextPane();
@@ -49,45 +49,42 @@ public class AdicionarFinanca extends javax.swing.JPanel {
 
         ValorPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor"));
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+        ValorField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
         javax.swing.GroupLayout ValorPanelLayout = new javax.swing.GroupLayout(ValorPanel);
         ValorPanel.setLayout(ValorPanelLayout);
         ValorPanelLayout.setHorizontalGroup(
             ValorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(ValorField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         ValorPanelLayout.setVerticalGroup(
             ValorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(ValorField, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         SituacaoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Situação"));
 
-        try {
-            TelFField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        TelFField.setText("");
-        TelFField.setToolTipText("");
+        PagoCheck.setText("Paga");
 
         javax.swing.GroupLayout SituacaoPanelLayout = new javax.swing.GroupLayout(SituacaoPanel);
         SituacaoPanel.setLayout(SituacaoPanelLayout);
         SituacaoPanelLayout.setHorizontalGroup(
             SituacaoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TelFField, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+            .addGroup(SituacaoPanelLayout.createSequentialGroup()
+                .addComponent(PagoCheck)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         SituacaoPanelLayout.setVerticalGroup(
             SituacaoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SituacaoPanelLayout.createSequentialGroup()
-                .addComponent(TelFField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(SituacaoPanelLayout.createSequentialGroup()
+                .addComponent(PagoCheck)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         TipoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo"));
 
         Tipo.add(ReceitaRadio);
+        ReceitaRadio.setSelected(true);
         ReceitaRadio.setText("Receita");
 
         Tipo.add(DespesaRadio);
@@ -113,26 +110,19 @@ public class AdicionarFinanca extends javax.swing.JPanel {
 
         DataPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data"));
 
-        EndBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Alameda", "Avenida", "Estrada", "Rodovia", "Rua", "Travessa" }));
-        EndBox.setSelectedIndex(4);
-        EndBox.setToolTipText("Selecione o tipo do logradouro");
-
-        EndField.setToolTipText("");
-
         javax.swing.GroupLayout DataPanelLayout = new javax.swing.GroupLayout(DataPanel);
         DataPanel.setLayout(DataPanelLayout);
         DataPanelLayout.setHorizontalGroup(
             DataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DataPanelLayout.createSequentialGroup()
-                .addComponent(EndBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EndField, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
+                .addComponent(DataChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         DataPanelLayout.setVerticalGroup(
             DataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(EndBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(EndField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DataPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(DataChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         ObsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
@@ -148,13 +138,18 @@ public class AdicionarFinanca extends javax.swing.JPanel {
         );
         ObsPanelLayout.setVerticalGroup(
             ObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
         );
 
         jButton2.setText("Salvar");
         jButton2.setMaximumSize(new java.awt.Dimension(75, 23));
         jButton2.setMinimumSize(new java.awt.Dimension(75, 23));
         jButton2.setPreferredSize(new java.awt.Dimension(75, 23));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -179,14 +174,13 @@ public class AdicionarFinanca extends javax.swing.JPanel {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(ObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ValorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TipoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(SituacaoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ValorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SituacaoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TipoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(DataPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -203,9 +197,9 @@ public class AdicionarFinanca extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(DataPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(SituacaoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(SituacaoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -219,24 +213,53 @@ public class AdicionarFinanca extends javax.swing.JPanel {
        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        DecidirTipoSituacao decisao = new DecidirTipoSituacao();
+        FinancaTipo tipo = decisao.decidirTipo();
+        Situacao situacao = decisao.decidirSituacao();
+        
+        System.out.println("TIPO: " + tipo.getDescricao());
+        System.out.println("SIT : " + situacao.getDescricao());
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    /**
+     * Classe interna para decisão de
+     * atributos de finanças.
+     */
+    private class DecidirTipoSituacao{
+        private FinancaTipo decidirTipo (){
+            if (ReceitaRadio.isSelected())
+                return FinancaTipo.RECEITA;
+            else if (DespesaRadio.isSelected())
+                return FinancaTipo.DESPESA;
+            else 
+                throw new IllegalArgumentException("Nenhum JRadioButton selecionado "
+                    + "impossível decidir o tipo da finança.");
+        }
+        
+        private Situacao decidirSituacao (){
+            if (PagoCheck.isSelected())
+                return Situacao.FINACAPAGA;
+            else 
+                return Situacao.PENDENTE;
+        }
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser DataChooser;
     private javax.swing.JPanel DataPanel;
     private javax.swing.JRadioButton DespesaRadio;
-    private javax.swing.JComboBox EndBox;
-    private javax.swing.JTextField EndField;
     private javax.swing.JTextPane ObsPane;
     private javax.swing.JPanel ObsPanel;
+    private javax.swing.JCheckBox PagoCheck;
     private javax.swing.JRadioButton ReceitaRadio;
     private javax.swing.JPanel SituacaoPanel;
-    private javax.swing.JFormattedTextField TelFField;
     private javax.swing.ButtonGroup Tipo;
     private javax.swing.JPanel TipoPanel;
+    private javax.swing.JFormattedTextField ValorField;
     private javax.swing.JPanel ValorPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
