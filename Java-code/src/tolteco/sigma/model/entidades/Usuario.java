@@ -16,31 +16,72 @@ package tolteco.sigma.model.entidades;
 public class Usuario {
     private final int userId;
     private final String userName;
-    private final int accessLevel;
-
-    public Usuario(int userId, String userName, int accessLevel ) {
+    private final Access accessLevel;
+    private char[] pass;
+    
+    public Usuario(int userId, String userName, Access accessLevel, char[] pass) {
         this.userId = userId;
         this.userName = userName;
         this.accessLevel = accessLevel;
+        this.pass = pass;
+        
+        for (int i=0; i<pass.length; i++){
+            pass[0] = '\0';
+        }
     }
 
+    /**
+     * Construtor de cópia.
+     * @param user para copiar
+     */
+    public Usuario(Usuario user){
+        this.accessLevel = user.getAccessLevel();
+        this.userId = user.getUserId();
+        this.userName = user.getUserName();
+    }
+    
     public boolean canDoOperation(Tipo tipo, Opcao op){
         switch (accessLevel) {
-            case 0: //Root
+            case ROOT:
                 return true;
                 
-            case 1: //Admin
+            case ADMINISTRADOR:
                 //Nao pode fazer nada com usuários nem configs.
                 return !(tipo==Tipo.CONFIG || tipo==Tipo.USER);
                 
-            case 2: //Funcionario
+            case FUNCIONARIO: //Funcionario
                 //Nao pode fazer nada com financa nem relatorios.
                 //Tambem nao pode deletar nada.
                 if (tipo==Tipo.FINANCA || tipo==Tipo.RELATORIO) return false;
                 return op != Opcao.DELETE;
                 
-            default: //Nao identificado
+            default:
                 return false;
         }
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public Access getAccessLevel() {
+        return accessLevel;
+    }
+
+    public char[] getPass(){
+        return pass;
+    }
+    
+    /**
+     * Nulifica todos os chars
+     * da senha. Por segurança.
+     */
+    public void clearPass(){
+        for (int i=0; i<pass.length; i++)
+            pass[0] = '\0';
     }
 }

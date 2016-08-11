@@ -6,6 +6,7 @@
 package tolteco.sigma.model.dao;
 
 import java.util.Date;
+import tolteco.sigma.model.entidades.Version;
 
 /**
  * DAO referente à controle de
@@ -19,4 +20,6 @@ public interface VersionDAO {
     void createMajorRelease(String name, String notes);
     
     void createMinorRelease(Date date, String notes);
+    
+    Version fetchLatestVersion();
 }

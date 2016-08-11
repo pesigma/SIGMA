@@ -38,6 +38,7 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
 
     @Override
     public Usuario search(int primaryKey) throws DatabaseException {
+        usuario com senha
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -46,4 +47,11 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    /**
+     * Retorna uma instância de um usuário.
+     * @return usuário instânciado.
+     */
+    private Usuario getInstance(){
+        return null;
+    }   
 }

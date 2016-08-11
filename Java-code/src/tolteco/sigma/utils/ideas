@@ -1,7 +1,10 @@
+Ideias com um "X" no lado esquerdo foram inválidadas, mas serão mantidas para referências futuras.
+Ideias com um "V" no lado esquerdo foram devidamente aceitas e implementadas.
+
 Juliano: Ideias para implementar:
-    - Colocar uma "cópia" de todas as operações nos menus (Add cliente, modif. cliente, Add serviço, etc)
+X   - Colocar uma "cópia" de todas as operações nos menus (Add cliente, modif. cliente, Add serviço, etc)
     
-    - Ter um menu "Exibir" que modifica a exibição da tela principal, que, talvez, será constituída de abas,
+X    - Ter um menu "Exibir" que modifica a exibição da tela principal, que, talvez, será constituída de abas,
       como "Principal", "Clientes", etc. Exibindo, ou não, tais abas, ocuparia menos/mais memória.
     
     - Fazer ícones custmizados para add, alterar, etc.

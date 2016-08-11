@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package tolteco.sigma.model.dao;
+import java.util.List;
 import tolteco.sigma.model.entidades.Usuario;
 //import br.unioeste.sgev.model.pessoas.Palestrante;
 //import br.unioeste.sgev.model.pessoas.Pessoa;
@@ -13,4 +14,10 @@ import tolteco.sigma.model.entidades.Usuario;
  * @author Juliano Felipe da Silva
  */
 public interface UsuarioDAO extends GenericDAO<Usuario> {
+    /**
+     * Seleciona todos os usuários com nível
+     * de acesso
+     * @return 
+     */
+    List<Usuario> selectAllNonRoot();
 }

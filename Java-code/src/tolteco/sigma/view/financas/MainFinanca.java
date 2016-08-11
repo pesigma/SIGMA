@@ -17,7 +17,7 @@ import tolteco.sigma.view.cliente.*;
  */
 public class MainFinanca extends javax.swing.JPanel {
     private OperacaoFinanca ultimoPanelAdicionado = null;
-    
+
     /**
      * Creates new form MainCliente
      */
@@ -42,7 +42,7 @@ public class MainFinanca extends javax.swing.JPanel {
         Panel = new javax.swing.JScrollPane();
 
         Add.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        Add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/Costumer/AddCostumer.png"))); // NOI18N
+        Add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/General/Buttons/Add.png"))); // NOI18N
         Add.setText("Adicionar");
         Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,7 +51,7 @@ public class MainFinanca extends javax.swing.JPanel {
         });
 
         Edit.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        Edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/Costumer/EditCostumer.png"))); // NOI18N
+        Edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/General/Buttons/Edit.png"))); // NOI18N
         Edit.setText("Modificar");
         Edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,7 +60,7 @@ public class MainFinanca extends javax.swing.JPanel {
         });
 
         Delete.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/Costumer/DeleteCostumer.png"))); // NOI18N
+        Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/General/Buttons/Delete.png"))); // NOI18N
         Delete.setText("Excluir");
         Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,7 +69,7 @@ public class MainFinanca extends javax.swing.JPanel {
         });
 
         Search.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        Search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/Costumer/SearchCostumer.png"))); // NOI18N
+        Search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/General/Buttons/Search.png"))); // NOI18N
         Search.setText("Buscar");
         Search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,7 +78,7 @@ public class MainFinanca extends javax.swing.JPanel {
         });
 
         List.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        List.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/Costumer/ListCostumer.png"))); // NOI18N
+        List.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/General/Buttons/List.png"))); // NOI18N
         List.setText("Listar");
         List.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,16 +95,15 @@ public class MainFinanca extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Panel)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Add)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Edit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(List, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(List, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,10 +114,10 @@ public class MainFinanca extends javax.swing.JPanel {
                     .addComponent(Add)
                     .addComponent(Edit)
                     .addComponent(Delete)
-                    .addComponent(List)
-                    .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                    .addComponent(Search)
+                    .addComponent(List))
+                .addGap(16, 16, 16)
+                .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
