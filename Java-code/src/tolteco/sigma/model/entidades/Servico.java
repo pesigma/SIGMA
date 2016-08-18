@@ -5,14 +5,14 @@
  */
 package tolteco.sigma.model.entidades;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import java.util.Comparator;
+import java.util.Observable;
 
 /**
  * Entidade Servico, possui métodos e valores para o objeto serviço
  * @author Maycon
  */
-public class Servico implements Comparable{
+public class Servico extends Observable implements Comparable{
     //Atributos
     String placa, 
            modelo,

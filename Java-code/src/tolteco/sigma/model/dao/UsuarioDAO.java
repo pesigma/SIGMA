@@ -14,10 +14,4 @@ import tolteco.sigma.model.entidades.Usuario;
  * @author Juliano Felipe da Silva
  */
 public interface UsuarioDAO extends GenericDAO<Usuario> {
-    /**
-     * Seleciona todos os usuários com nível
-     * de acesso
-     * @return 
-     */
-    List<Usuario> selectAllNonRoot();
 }

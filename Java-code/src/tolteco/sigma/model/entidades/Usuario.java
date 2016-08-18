@@ -5,6 +5,8 @@
  */
 package tolteco.sigma.model.entidades;
 
+import java.util.Observable;
+
 /**
  * Classe totalmente segura
  * que identifica o usuário
@@ -13,7 +15,7 @@ package tolteco.sigma.model.entidades;
  * de "segurança".
  * @author Juliano_Felipe
  */
-public class Usuario {
+public class Usuario extends Observable implements Comparable<Usuario> {
     private final int userId;
     private final String userName;
     private final Access accessLevel;
@@ -83,5 +85,10 @@ public class Usuario {
     public void clearPass(){
         for (int i=0; i<pass.length; i++)
             pass[0] = '\0';
+    }
+
+    @Override
+    public int compareTo(Usuario o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

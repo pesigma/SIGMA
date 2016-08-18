@@ -5,9 +5,13 @@
  */
 package tolteco.sigma.view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
+import net.java.balloontip.BalloonTip;
 import tolteco.sigma.utils.DefaultConfigs;
 import tolteco.sigma.view.cliente.MainCliente;
 import tolteco.sigma.view.financas.MainFinanca;
@@ -42,6 +46,21 @@ public class MainFrame extends javax.swing.JFrame {
             BarraDeMenu.add(Box.createHorizontalGlue());
             BarraDeMenu.add(jmenu);
         }
+        
+        JButton logOut = new JButton("Logout");
+        logOut.setIcon(
+            new javax.swing.ImageIcon(
+                getClass().getResource("/tolteco/sigma/view/images/User/LogOut.png")));
+        logOut.setPreferredSize( new Dimension (100,26));
+        BarraDeMenu.add(logOut);
+        
+        JButton exit = new JButton("Sair");
+        exit.setIcon(
+            new javax.swing.ImageIcon(
+                getClass().getResource("/tolteco/sigma/view/images/User/SystemOut.png")));
+        exit.setPreferredSize( new Dimension (90,26));
+        BarraDeMenu.add(exit);
+        //BalloonTip bal = new BalloonTip(panel, "Tooltip msg");
     }
 
     /**
@@ -59,6 +78,13 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SIGMA");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         PainelGuias.setMinimumSize(new java.awt.Dimension(887, 580));
 
@@ -80,11 +106,16 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(PainelGuias, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        ViewUtils.centerFrame(this);
+        ViewUtils.setSIGMAIcon(this);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * Método principal para a criação de um frame.

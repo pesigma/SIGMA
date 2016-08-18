@@ -8,12 +8,13 @@ import Controles.ErrorPane;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Observable;
 
 /**
  * Entidade financa, possui métodos e valores para o objeto finança
  * @author Maycon
  */
-public class Financa implements Comparable {
+public class Financa extends Observable implements Comparable {
     
     //Atributos
     Date data;

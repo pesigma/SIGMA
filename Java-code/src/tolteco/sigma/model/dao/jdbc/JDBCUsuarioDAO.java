@@ -38,7 +38,6 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
 
     @Override
     public Usuario search(int primaryKey) throws DatabaseException {
-        usuario com senha
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

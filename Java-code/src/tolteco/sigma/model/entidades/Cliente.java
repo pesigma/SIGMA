@@ -6,12 +6,13 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Comparator;
+import java.util.Observable;
 
 /**
  * Entidade cliente, possui métodos e valores para o objeto cliente
  * @author Maycon
  */
-public class Cliente implements Comparable{
+public class Cliente extends Observable implements Comparable{
     //Atributos
     private String nome,
                 sobrenome,
