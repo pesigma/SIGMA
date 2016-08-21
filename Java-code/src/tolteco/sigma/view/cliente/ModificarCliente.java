@@ -151,7 +151,7 @@ public class ModificarCliente extends javax.swing.JPanel {
         );
         ObsPanelLayout.setVerticalGroup(
             ObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
         );
 
         jButton2.setText("Salvar");

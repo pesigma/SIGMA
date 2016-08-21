@@ -139,7 +139,7 @@ public class AdicionarCliente extends javax.swing.JPanel {
         );
         ObsPanelLayout.setVerticalGroup(
             ObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
         );
 
         jButton2.setText("Salvar");

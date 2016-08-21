@@ -5,13 +5,12 @@
  */
 package tolteco.sigma.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
-import net.java.balloontip.BalloonTip;
 import tolteco.sigma.utils.DefaultConfigs;
 import tolteco.sigma.view.cliente.MainCliente;
 import tolteco.sigma.view.financas.MainFinanca;
@@ -29,6 +28,9 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
+        //new Font(DefaultConfigs.SYSTEMFONT, Font.BOLD|Font.ITALIC, 16)
+        PainelGuias.setFont( new Font(DefaultConfigs.SYSTEMFONT, Font.PLAIN, 16) );
+                
         JPanel panel = new MainView();
         PainelGuias.add(panel);
         PainelGuias.setTitleAt(0, "Principal");

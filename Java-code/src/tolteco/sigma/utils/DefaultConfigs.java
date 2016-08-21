@@ -19,6 +19,12 @@ public class DefaultConfigs {
     public static final String SYSTEMLOOK = "Windows";
     
     /**
+     * Define a fonte padrão do sistema.
+     * SOMENTE USADA NAS ABAS, POR ENQUANTO.
+     */
+    public static final String SYSTEMFONT = "Dialog";
+    
+    /**
      * Tais são as dimensões MÁXIMAS dos paineis internos,
      * no padrão estabelecido agora.
      * Ex.: {@link tolteco.sigma.view.cliente.AdicionarCliente}
