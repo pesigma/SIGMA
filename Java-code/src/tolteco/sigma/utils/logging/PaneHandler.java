@@ -8,6 +8,7 @@ package tolteco.sigma.utils.logging;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
+import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
 
 /**
@@ -16,13 +17,26 @@ import java.util.logging.StreamHandler;
  */
 public class PaneHandler extends StreamHandler {
     private final BufferedPaneOutputStream stream;
+    /*private void init(){
+        setFormatter(new SimpleFormatter());
+        try{
+            setEncoding("UTF-8");
+        } catch (IOException ex){
+            try{
+                setEncoding(null);
+            } catch (IOException exe){
+                exe.printStackTrace();
+            }
+        }
+    }*/ //Double Encoding
     
     /**
      * Constrói um Handler usando a stream direcionada
-     * à JTextPanes, com um {@link tolteco.sigma.utils.logging.SigmaConsoleFormatter}.
+     * à JTextPanes, com um {@link java.util.logging.SimpleFormatter}.
      * @param outStream Stream já instanciada.
      */
     public PaneHandler(BufferedPaneOutputStream outStream) {
+        //this(outStream, new SimpleFormatter());
         this(outStream, new SigmaConsoleFormatter());
     }
 

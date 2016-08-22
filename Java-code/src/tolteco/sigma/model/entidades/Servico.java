@@ -6,29 +6,30 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Comparator;
+import java.util.Observable;
 
 /**
  * Entidade Servico, possui métodos e valores para o objeto serviço
  * @author Maycon
  */
-public class Servico implements Comparable{
+public class Servico extends Observable implements Comparable{
     //Atributos
     String placa, 
            modelo,
            obs;
     int km, 
         idc;
-    boolean sit;
+    Situacao situacao;
     int rowid;
 
     // <editor-fold defaultstate="collapsed" desc="Construtores">
     
-    public Servico(int idc, String placa, String modelo, int km, boolean sit, String obs) {
+    public Servico(int idc, String placa, String modelo, int km, Situacao sit, String obs) {
         this.idc = idc;
         this.placa = placa;
         this.modelo = modelo;
         this.km = km;
-        this.sit = sit;
+        this.situacao = sit;
         this.obs = obs;
     }
 
@@ -80,12 +81,12 @@ public class Servico implements Comparable{
         this.obs = obs;
     }
     
-    public boolean getSit() {
-        return sit;
+    public Situacao getSituacao() {
+        return situacao;
     }
 
-    public void setSit(boolean sit) {
-        this.sit = sit;
+    public void setSituacao(Situacao situacao) {
+        this.situacao = situacao;
     }
 
     public int getRowid() {
@@ -99,37 +100,35 @@ public class Servico implements Comparable{
     // </editor-fold>
     
     @Override
-    public String toString() {
-        String sitStr;
-        if (sit == true) sitStr = "Quitado";
-        else sitStr = "Pendente";
-        
-        return "Servico{" + "Placa: " + placa + ", Modelo: " + modelo + ", Obs.: " + obs + ", Km: " + km + ", IDC: " + idc + ", Situação: " + sitStr + ", Rowid: " + rowid + '}';
+    public String toString() {       
+        return "Servico{" + "Placa: " + placa + 
+               ", Modelo: " + modelo + ", Obs.: " + obs + 
+               ", Km: " + km + ", IDC: " + idc + 
+               ", Situação: " + situacao.getDescricao() + 
+               ", Rowid: " + rowid + '}';
     }
 
     //<editor-fold defaultstate="collapsed" desc="Comparators">
     
     /**
-     * Odenação pela situação. Preferência para "true" ser maior.
-     * Assim, se dois forem falsos ou dois forem true, é 0.
-     * Se {@link Servico#sit} for true e that for false, é 1.
-     * Se {@link Servico#sit} for false e that for true, é -1.
-     * @param that Boolean para ser comparado.
+     * Odenação pela situação. Preferência para codigos mais próximos
+     * de zero serem maiores. Por exemplo:
+     * {@link tolteco.sigma.model.entidades.Situacao#PENDENTE}
+     * tem um valor menor que
+     * {@link tolteco.sigma.model.entidades.Situacao#SERVICOPAGO},
+     * portanto, o primeiro é mais prioritário.
+     * @param that Objeto para ser comparado.
      * @return     int referente ao valor da comparação.
      */
-    @Override
+    @Override //Checar o objeto de passagem como param (É Servico ou inteiro, etc).
     public int compareTo(Object that) {
-        boolean bool = false; //Parece deselegante
-        if (that instanceof Boolean) bool = (boolean) that;
-        else throw new ClassCastException ("Objeto a ser comparado não é um Boolean!");
+        Servico thatService = null; //Parece deselegante
+        if (that instanceof Servico) thatService = (Servico) that;
+        else throw new ClassCastException ("Objeto a ser comparado não é um Serviço!");
         
-        int thisB = 0;
-        if (this.sit == true) thisB = 1;
-        
-        int thatB = 0;
-        if (bool == true) thatB = 1;
-        
-        return thisB - thatB;
+             if (this.situacao.getCodigo() > thatService.situacao.getCodigo()) return -1;
+        else if (this.situacao.getCodigo() == thatService.situacao.getCodigo()) return 0;
+        else return 1;
     }
     
     public static Comparator<String> placaComparator (){

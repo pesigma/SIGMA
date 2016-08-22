@@ -9,6 +9,8 @@ import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.ClienteDAO;
 import tolteco.sigma.model.dao.FinancaDAO;
 import tolteco.sigma.model.dao.ServicoDAO;
+import tolteco.sigma.model.dao.UsuarioDAO;
+import tolteco.sigma.model.dao.VersionDAO;
 
 
 /**
@@ -17,24 +19,49 @@ import tolteco.sigma.model.dao.ServicoDAO;
  */
 public class JDBCDAOFactory extends DAOFactory {
     private static ClienteDAO clienteDAO;
+    private static FinancaDAO financaDAO;
+    private static ServicoDAO servicoDAO;
+    private static UsuarioDAO usuarioDAO; 
+    private static VersionDAO versionDAO;
     
     @Override
     public ClienteDAO getClienteDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        /*if (clienteDAO == null) {
+        if (clienteDAO == null) {
             clienteDAO = new JDBCClienteDAO();
         }
-        return clienteDAO;*/
+        return clienteDAO;
     }
 
     @Override
     public FinancaDAO getFinancaDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (financaDAO == null) {
+            financaDAO = new JDBCFinancaDAO();
+        }
+        return financaDAO;
     }
 
     @Override
     public ServicoDAO getServicoDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (servicoDAO == null) {
+            servicoDAO = new JDBCServicoDAO();
+        }
+        return servicoDAO;
+    }
+
+    @Override
+    public UsuarioDAO getUsuarioDAO() {
+        if (usuarioDAO == null) {
+            usuarioDAO = new JDBCUsuarioDAO();
+        }
+        return usuarioDAO;
+    }
+
+    @Override
+    public VersionDAO getVersionDAO() {
+        if (versionDAO == null) {
+            versionDAO = new JDBCVersionDAO();
+        }
+        return versionDAO;
     }
     
 }

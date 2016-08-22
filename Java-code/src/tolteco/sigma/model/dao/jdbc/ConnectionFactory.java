@@ -15,15 +15,13 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
     private static Connection conn;
-    private static final String URL = "jdbc:postgresql://localhost/sgev";
+    private static final String URL = "jdbc:sqlite:BDSigma.sqlite";
     
     public static Connection getConnection() {
         if (conn == null) {
             try {
-                //https://jdbc.postgresql.org/
-                Class.forName("org.postgresql.Driver");
-                conn = DriverManager.getConnection(URL, 
-                        "postgres", "12345");
+                Class.forName("org.sqlite.JDBC");
+                conn = DriverManager.getConnection(URL);
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
                 System.exit(1);                        
@@ -32,3 +30,26 @@ public class ConnectionFactory {
         return conn;
     }
 }
+
+//Como era feito antes...
+/*Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:BDSigma.sqlite");
+            st = conn.createStatement();
+            rs = st.executeQuery("SELECT * FROM cliente");
+            //cliente e o nome da tabela
+            //JOptionPane.showMessageDialog(null, "Conectado"); //Comentar no futuro
+            
+            return conn;
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(null, "Erro. Código: 00-01-01.", "Conexão banco de dados", JOptionPane.ERROR_MESSAGE);
+            //System.err.println("01-01-01: " + e.getClass().getName() + ": " + e.getMessage());
+            String erro = e.getClass().getName() + ": " + e.getMessage();
+            ErrorPane err = new ErrorPane();
+            err.Error("Conexão banco de dados", "Erro na conexão com o banco de dados.", "00-01-01.", erro);
+        }
+        return null;*/

@@ -6,12 +6,13 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Comparator;
+import java.util.Observable;
 
 /**
  * Entidade cliente, possui métodos e valores para o objeto cliente
  * @author Maycon
  */
-public class Cliente implements Comparable{
+public class Cliente extends Observable implements Comparable{
     //Atributos
     private String nome,
                 sobrenome,
@@ -19,7 +20,8 @@ public class Cliente implements Comparable{
                 end, 
                 tel, 
                 cpf;
-    private int rowid;
+    private int clienteId,
+                userId; //Quem adicionou o cliente
 
     // <editor-fold defaultstate="collapsed" desc="Construtores">
     
@@ -31,15 +33,33 @@ public class Cliente implements Comparable{
         this.tel = tel;
         this.cpf = cpf;
     }
-    
-    public Cliente (int rowid){
-        this.rowid = rowid;
+
+    public Cliente(String nome, String sobrenome, String obs, String end, String tel, String cpf, int userId) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.obs = obs;
+        this.end = end;
+        this.tel = tel;
+        this.cpf = cpf;
+        this.userId = userId;
     }
     
-    // </editor-fold>
+    public Cliente (int rowid){
+        this.clienteId = rowid;
+    }
 
-    // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
+        
+    public int getUserId() {
+        return userId;
+    }
+    
+    public void setUserId(int userId) {    
+        this.userId = userId;
+    }
+
     public String getTel() {
         return tel;
     }
@@ -88,19 +108,19 @@ public class Cliente implements Comparable{
         this.sobrenome = sobrenome;
     }
 
-    public int getRowid() {
-        return rowid;
+    public int getClienteId() {
+        return clienteId;
     }
 
-    public void setRowid(int rowid) {
-        this.rowid = rowid;
+    public void setClienteId(int clienteId) {
+        this.clienteId = clienteId;
     }
 
     // </editor-fold>
     
     @Override
     public String toString() {
-        return "Cliente{" + "Nome: " + nome + ", Sobrenome: " + sobrenome + ", Obs.: " + obs + ", Endereço: " + end + ", Telefone: " + tel + ", CPF: " + cpf + ", Rowid: " + rowid + '}' + "\n";
+        return "Cliente{" + "Nome: " + nome + ", Sobrenome: " + sobrenome + ", Obs.: " + obs + ", Endereço: " + end + ", Telefone: " + tel + ", CPF: " + cpf + ", Rowid: " + clienteId + '}' + "\n";
     }
     
     //<editor-fold defaultstate="collapsed" desc="Comparators">

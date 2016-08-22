@@ -8,38 +8,39 @@ import Controles.ErrorPane;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Observable;
 
 /**
  * Entidade financa, possui métodos e valores para o objeto finança
  * @author Maycon
  */
-public class Financa implements Comparable{
+public class Financa extends Observable implements Comparable {
     
     //Atributos
     Date data;
     String obs;
-    boolean sit, 
-            tipo;
+    Situacao situacao;
+    FinancaTipo tipo;
     double valor;
     int rowid;
 
     // <editor-fold defaultstate="collapsed" desc="Construtores">
     
-    public Financa(boolean tipo, Date data, double valor, String obs, boolean sit) {
+    public Financa(FinancaTipo tipo, Date data, double valor, String obs, Situacao sit) {
         this.tipo = tipo;
         this.data = data;
         this.valor = valor;
         this.obs = obs;
-        this.sit = sit;
+        this.situacao = sit;
     }
     
-    public Financa(int rowid, boolean tipo, Date data, double valor, String obs, boolean sit) {
+    public Financa(int rowid, FinancaTipo tipo, Date data, double valor, String obs, Situacao sit) {
         this.rowid = rowid;
         this.tipo = tipo;
         this.data = data;
         this.valor = valor;
         this.obs = obs;
-        this.sit = sit;
+        this.situacao = sit;
     }
 
     public Financa(int rowid) {
@@ -58,7 +59,7 @@ public class Financa implements Comparable{
         return rowid;
     }
     
-    public boolean getTipo() {
+    public FinancaTipo getTipo() {
         return tipo;
     }
 
@@ -70,8 +71,8 @@ public class Financa implements Comparable{
         return obs;
     }
 
-    public boolean isSit() {
-        return sit;
+    public Situacao getSituacao() {
+        return situacao;
     }
 
     public double getValor() {
@@ -82,7 +83,7 @@ public class Financa implements Comparable{
         this.rowid = rowid;
     }
     
-    public void setTipo(boolean tipo) {
+    public void setTipo(FinancaTipo tipo) {
         this.tipo = tipo;
     }
 
@@ -94,8 +95,8 @@ public class Financa implements Comparable{
         this.obs = obs;
     }
 
-    public void setSit(boolean sit) {
-        this.sit = sit;
+    public void setSituacao(Situacao sit) {
+        this.situacao = sit;
     }
 
     public void setValor(double valor) {
@@ -327,16 +328,11 @@ public class Financa implements Comparable{
     //</editor-fold>
     
     @Override
-    public String toString() {
-        String sitStr;
-        if (sit == true) sitStr = "Quitada";
-        else sitStr = "Pendente";
-        
-        String tipStr;
-        if (tipo == true) tipStr = "Receita";
-        else tipStr = "Despesa";
-        
-        return "Financa{" + "Data: " + data + ", Obs.: " + obs + ", Situação: " + sitStr + ", Tipo: " + tipStr + ", Valor: " + valor + ", Rowid: " + rowid + '}';
+    public String toString() {       
+        return "Financa{" + "Data: " + data + 
+               ", Obs.: " + obs + ", Situação: " + situacao.getDescricao() + 
+               ", Tipo: " + tipo.getDescricao() + ", Valor: " + valor + 
+               ", Rowid: " + rowid + '}';
     }
     
     //<editor-fold defaultstate="collapsed" desc="Comparators">

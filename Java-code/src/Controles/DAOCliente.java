@@ -67,7 +67,7 @@ public class DAOCliente {
         PreparedStatement pst = null;
         try {
             String sql1 = "DELETE FROM cliente "
-                        + "WHERE rowid=" + Integer.toString(cl.getRowid());
+                        + "WHERE rowid=" + Integer.toString(cl.getClienteId());
             pst = concliente.prepareStatement(sql1);            
             pst.execute();
 
@@ -84,7 +84,7 @@ public class DAOCliente {
     }
     
     public static void update (Cliente cl) throws SQLException{
-        if (cl.getRowid()==-1){
+        if (cl.getClienteId()==-1){
             ErrorPane err = new ErrorPane();
             err.Error("Título", "Erro na atualização dos dados do cliente.", "04-02-06.",
                     "Erro no id do cliente.");
@@ -95,7 +95,7 @@ public class DAOCliente {
         PreparedStatement pst=null;
         try {
             String sql1 = "UPDATE cliente SET nome=?, cpf=?, tel=?, end=?, obs=?, lname=?" 
-                       + " WHERE rowid="+ Integer.toString(cl.getRowid());
+                       + " WHERE rowid="+ Integer.toString(cl.getClienteId());
             pst = concliente.prepareStatement(sql1);            
             pst.setString(1, cl.getNome());
             pst.setString(6, cl.getSobrenome());
