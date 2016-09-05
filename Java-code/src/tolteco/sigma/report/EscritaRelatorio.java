@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tolteco.sigma.utils;
+package tolteco.sigma.report;
 
 import java.awt.Desktop;
 import java.io.BufferedWriter;
@@ -13,29 +8,41 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.dao.jdbc.JDBCFinancaDAO;
+import tolteco.sigma.model.entidades.Financa;
 
 /**
- *
+ * Codigo de escrita de relatorios em PDF do SIGMA
  * @author Maycon
  */
 public class EscritaRelatorio {
     private final StringBuilder QUERY = new StringBuilder();
     
     private String namefile = "Relatorio(";
-    private String A = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-    private String B = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-
-    public EscritaRelatorio() {
-        writeReport();
-    }
+    private String A = new SimpleDateFormat("dd/MM/YYYY").format(new Date());
+    private String B = new SimpleDateFormat("dd-MM-YYYY").format(new Date());
 
     /**
      * 14/05 - Maycon
      * Escreve o Latex
+     * @param tipo : tipo de relatorio solicitado
+     * @return : true se tudo ocorreu bem
+     * @throws DatabaseException 
      */
-    private boolean writeReport() {
+    private boolean writeReport(int tipo) throws DatabaseException {
+        String t;
+        if (tipo == 0){
+            t = "Mensal";
+        } else if (tipo == 1){
+            t = "Anual";
+        } else {
+            t = "Nao definido";
+        }
+        JDBCFinancaDAO jfd = new JDBCFinancaDAO();
         namefile = namefile + B;
         namefile = namefile + ").tex";
         final File file = new File(namefile);
@@ -43,7 +50,7 @@ public class EscritaRelatorio {
             file.createNewFile();
         } catch (IOException ex) {
             return false;
-        } //Finalização de criação de arquivo
+        } //Finalização de criacao de arquivo
 
         PrintWriter writer;
         try {
@@ -51,7 +58,16 @@ public class EscritaRelatorio {
         } catch (IOException ex) {
             Logger.getLogger(EscritaRelatorio.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }//Finalização de inicialização de escritor
+        }//Finalizacao de inicializacao de escritor
+        
+        /**
+         * 04/09 - Maycon
+         * Executa metodo que busca os dados e os tras em um ArrayList para serem adicionados a escrita depois
+         */
+        List<Financa> data = jfd.toReport(tipo);
+        if (data == null){
+            return false;
+        }
 
         QUERY.append("\\documentclass[11pt]{article}\n")
             .append("\\usepackage[brazilian]{babel}\n")
@@ -103,7 +119,7 @@ public class EscritaRelatorio {
             .append("\\begin{flushleft}\n")
             .append("\\line(1,0){485}\\\\\n")
             .append("Data de Emissão: ").append(A).append("\\\\\n")
-            .append("Tipo de Relatório: \n")
+            .append("Tipo de Relatório: ").append(t).append("\\\\\n")
             .append("\\line(1,0){485}\\\\\n")
             .append("\\end{flushleft}\n")
             .append("\n")
@@ -115,7 +131,7 @@ public class EscritaRelatorio {
             .append("    \\begin{tabularx}{\\textwidth}{l l l l}\n")
             .append("    Data\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ & Situação\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ & Observacoes\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ & Valor \\\\\n")
             .append("		\\hline\n")
-            .append("    04/01/2016 & Quitado & Conserto X & 485   \\\\\n")
+            .append("    04/01/2016 & Quitado & Conserto X & 485   \\\\\n")//Aqui vai comecar o agrupamento
             .append("    06/01/2016 & Quitado & exemplo de texto & 125   \\\\\n")
             .append("		07/01/2016 & Não Quitado & freio de charrete & 387  \\\\\n")
             .append("    17/01/2016 & Quitado & Bolinho de aipim & 387  \\\\\n")

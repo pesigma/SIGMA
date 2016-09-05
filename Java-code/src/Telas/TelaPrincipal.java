@@ -5,7 +5,7 @@
  */
 package Telas;
 
-import tolteco.sigma.utils.EscritaRelatorio;
+import tolteco.sigma.report.EscritaRelatorio;
 import ConecBD.*;
 import Controles.ErrorPane;
 import tolteco.sigma.model.entidades.Financa;

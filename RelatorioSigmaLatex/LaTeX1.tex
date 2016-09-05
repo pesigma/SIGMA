@@ -1,0 +1,43 @@
+\documentclass{article}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\begin{document}
+
+\begin{tabular}{| c | L{3cm} | C{3cm} | R{3cm} |}
+foo &
+A cell with text that wraps around, is raggedright and allows \newline
+    manual line breaks &
+A cell with text that wraps around, is centered and allows \newline
+    manual line breaks &
+A cell with text that wraps around, is raggedleft and allows \newline
+    manual line breaks \\
+\end{tabular}
+
+
+\begin{table}[htbp]
+\centering\caption{Valores reais e valores preditos pelos modelos SARIMA para as estações}\label{real}
+%\tiny
+%\scriptsize
+\footnotesize
+%\small
+\begin{tabular}{rrr|rr|rr|rr|rr|rr}\hline
+\multicolumn{12}{c}{Mês}                                                                      \\
+\cline{2-13} Estação      & \multicolumn{2}{c|}{Novembro} & \multicolumn{2}{c|}{Dezembro} & \multicolumn{2}{c|}{Janeiro} & \multicolumn{2}{c|}{fevereiro} & \multicolumn{2}{c|}{Março} & \multicolumn{2}{c}{Abril}  \\
+\cline{2-13} & \multicolumn{1}{c}{Real} & \multicolumn{1}{c|}{Previsto} & \multicolumn{1}{c}{Real} & \multicolumn{1}{c|}{Previsto} & \multicolumn{1}{c}{Real} & \multicolumn{1}{c|}{Previsto} & \multicolumn{1}{c}{Real} & \multicolumn{1}{c|}{Previsto} & \multicolumn{1}{c}{Real} & \multicolumn{1}{c|}{Previsto} & \multicolumn{1}{c}{Real} & \multicolumn{1}{c}{Previsto} \\
+\cline{2-13}\multicolumn{1}{c}{Estação 02} & 19,2  & 20,1  & 20,4  & 21,1  & 20,9 & 21,5 & 21,9  & 21,4  & 19,8 & 20,9 & 19,0 &19,2 \\
+\multicolumn{1}{c}{Estação 03}  & 18,9  & 20,2  & 19,9  & 21,0  & 20,4  & 21,3   & 21,1   & 21,5  & 19,1  & 20,3  & 18,3  & 18,4 \\
+\multicolumn{1}{c}{Estação 04}  & 19,0  & 20,4  & 20,1  & 21,2  & 20,8  & 21,6   & 21,7   & 21,6  & 19,7  & 20,6  & 19,0  & 18,8 \\
+\multicolumn{1}{c}{Estação 06}  & 18,8  & 20,2  & 20,0  & 21,1  & 20,7  & 21,7   & 20,9   & 21,5  & 19,4  & 20,3  & 17,7  & 18,3 \\
+\multicolumn{1}{c}{Estação 43}  & 18,1  & 19,8  & 19,6  & 20,5  & 19,6  & 20,7   & 20,9   & 21,0  & 18,8  & 20,2  & 18,0  & 18,3 \\
+\multicolumn{1}{c}{Estação 44}  & 18,8  & 20,1  & 20,7  & 20,9  & 20,6  & 21,4   & 21,7   & 21,6  & 19,7  & 20,7  & 19,1  & 18,9 \\
+\multicolumn{1}{c}{Estação 45}  & 17,2  & 18,7  & 18,1  & 19,8  & 18,4  & 20,4   & 19,4   & 20,5  & 16,9  & 19,4  & 15,6  & 16,5 \\
+\multicolumn{1}{c}{Estação 47}  & 19,0  & 20,0  & 19,8  & 20,8  & 20,5  & 21,2   & 22,0   & 21,6  & 19,9  & 21,0  & 19,0  & 18,7 \\
+\hline
+\end{tabular}
+\end{table}
+
+\end{document}
