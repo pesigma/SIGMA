@@ -1,4 +1,4 @@
-package tolteco.sigma.report;
+package tolteco.sigma.utils.report;
 
 import java.awt.Desktop;
 import java.io.BufferedWriter;

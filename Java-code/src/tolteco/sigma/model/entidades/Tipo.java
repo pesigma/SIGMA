@@ -11,12 +11,12 @@ package tolteco.sigma.model.entidades;
  * @author Juliano_Felipe
  */
 public enum Tipo {
-    USER(0),
-    CONFIG(1),
-    FINANCA(2),
-    SERVICO(3),
-    RELATORIO(4),
-    CLIENTE(5);
+    USER(1),
+    CONFIG(2),
+    FINANCA(4),
+    SERVICO(8),
+    RELATORIO(16),
+    CLIENTE(32);
 
     
     private final int value;
