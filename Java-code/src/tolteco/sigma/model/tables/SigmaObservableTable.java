@@ -9,7 +9,7 @@ import java.util.Observable;
 
 /**
  *
- * @author JFPS
+ * @author Juliano Felipe
  */
 public interface SigmaObservableTable extends Observable {
     

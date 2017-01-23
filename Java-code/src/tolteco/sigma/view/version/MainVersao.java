@@ -5,8 +5,8 @@
  */
 package tolteco.sigma.view.version;
 
-import tolteco.sigma.view.financas.*;
-import tolteco.sigma.view.cliente.*;
+import tolteco.sigma.controller.VersaoController;
+import tolteco.sigma.view.interfaces.MainEntity;
 
 /**
  * Tela principal para operação com clientes.
@@ -16,7 +16,7 @@ import tolteco.sigma.view.cliente.*;
  * {@link tolteco.sigma.view.cliente.OperacaoCliente}.
  * @author Juliano Felipe
  */
-public class MainVersao extends javax.swing.JPanel{
+public class MainVersao extends javax.swing.JPanel implements MainEntity<VersaoController>{
     private OperacaoVersao ultimoPanelAdicionado = null;
 
     /**

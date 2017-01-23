@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.controller;
-
-import tolteco.sigma.model.entidades.Cliente;
+package tolteco.sigma.utils.eventsAndListeners;
 
 /**
- *
- * @author Juliano Felipe
+ * Interface de listeners do sistema.
+ * @author JFPS
  */
-public class ClienteController implements GenericController<Cliente>{
-    
+public interface SigmaListener {
+    public void eventHappened(SigmaEvent event);
 }

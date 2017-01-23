@@ -5,6 +5,9 @@
  */
 package tolteco.sigma.view.cliente;
 
+import tolteco.sigma.controller.ClienteController;
+import tolteco.sigma.view.interfaces.MainEntity;
+
 /**
  * Tela principal para operação com clientes.
  * Nela que escolhe-se qual painel será exibido.
@@ -13,7 +16,7 @@ package tolteco.sigma.view.cliente;
  * {@link tolteco.sigma.view.cliente.OperacaoCliente}.
  * @author Juliano Felipe
  */
-public class MainCliente extends javax.swing.JPanel{
+public class MainCliente extends javax.swing.JPanel implements MainEntity<ClienteController>{
     private OperacaoCliente ultimoPanelAdicionado = null;
     
     /**

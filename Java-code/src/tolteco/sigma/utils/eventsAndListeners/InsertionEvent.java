@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.controller;
-
-import tolteco.sigma.model.entidades.Cliente;
+package tolteco.sigma.utils.eventsAndListeners;
 
 /**
- *
+ * Evento onde o objeto foi inserido.
  * @author Juliano Felipe
  */
-public class ClienteController implements GenericController<Cliente>{
+public class InsertionEvent extends SigmaEvent {
+    
+    public InsertionEvent(Object source) {
+        super(source);
+    }
     
 }

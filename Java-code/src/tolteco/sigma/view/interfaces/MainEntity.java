@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.utils;
+package tolteco.sigma.view.interfaces;
 
-import java.util.EventObject;
+import tolteco.sigma.controller.GenericController;
 
 /**
  *
- * @author JFPS
+ * @author Juliano Felipe
+ * @param <T>
  */
-public class ChangeEvent extends EventObject {
-    
-    public ChangeEvent(Object source) {
-        super(source);
-    }
+public interface MainEntity<T extends GenericController> {
     
 }

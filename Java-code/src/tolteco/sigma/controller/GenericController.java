@@ -7,7 +7,7 @@ package tolteco.sigma.controller;
 
 /**
  *
- * @author JFPS
+ * @author Juliano Felipe
  */
 public interface GenericController<T> {
     

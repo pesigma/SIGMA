@@ -5,7 +5,8 @@
  */
 package tolteco.sigma.view.financas;
 
-import tolteco.sigma.view.cliente.*;
+import tolteco.sigma.controller.FinancaController;
+import tolteco.sigma.view.interfaces.MainEntity;
 
 /**
  * Tela principal para operação com clientes.
@@ -15,7 +16,7 @@ import tolteco.sigma.view.cliente.*;
  * {@link tolteco.sigma.view.cliente.OperacaoCliente}.
  * @author Juliano Felipe
  */
-public class MainFinanca extends javax.swing.JPanel{
+public class MainFinanca extends javax.swing.JPanel implements MainEntity<FinancaController>{
     private OperacaoFinanca ultimoPanelAdicionado = null;
 
     /**
@@ -151,7 +152,7 @@ public class MainFinanca extends javax.swing.JPanel{
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         if (ultimoPanelAdicionado != OperacaoFinanca.Buscar){ //Singleton - Sort of
-            BuscarFinancaSwing add = new BuscarFinancaSwing();
+            BuscarFinanca add = new BuscarFinanca();
             Panel.setViewportView( add );
         }
 

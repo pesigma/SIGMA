@@ -9,7 +9,7 @@ import tolteco.sigma.model.entidades.Version;
 
 /**
  *
- * @author JFPS
+ * @author Juliano Felipe
  */
 public class VersaoController implements GenericController<Version>{
     

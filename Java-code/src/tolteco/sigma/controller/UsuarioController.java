@@ -9,7 +9,7 @@ import tolteco.sigma.model.entidades.Usuario;
 
 /**
  *
- * @author JFPS
+ * @author Juliano Felipe
  */
 public class UsuarioController implements GenericController<Usuario>{
     

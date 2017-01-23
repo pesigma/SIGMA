@@ -9,7 +9,7 @@ import tolteco.sigma.model.entidades.Financa;
 
 /**
  *
- * @author JFPS
+ * @author Juliano Felipe
  */
 public class FinancaController implements GenericController<Financa>{
     

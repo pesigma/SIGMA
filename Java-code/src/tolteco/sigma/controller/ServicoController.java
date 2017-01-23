@@ -9,7 +9,7 @@ import tolteco.sigma.model.entidades.Servico;
 
 /**
  *
- * @author JFPS
+ * @author Juliano Felipe
  */
 public class ServicoController implements GenericController<Servico>{
     
