@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.version;
+package tolteco.sigma.view.financas;
 
-import tolteco.sigma.view.financas.*;
 import tolteco.sigma.view.cliente.*;
 
 /**
@@ -15,12 +14,12 @@ import tolteco.sigma.view.cliente.*;
  * (número de clientes mostrados?)
  * @author Juliano Felipe
  */
-public class ListarVersao extends javax.swing.JPanel {
+public class ListarFinancaSwing extends javax.swing.JPanel {
 
     /**
      * Creates new form ListarCliente
      */
-    public ListarVersao() {
+    public ListarFinancaSwing() {
         initComponents();
     }
 

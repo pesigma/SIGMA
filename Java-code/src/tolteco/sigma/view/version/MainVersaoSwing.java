@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.financas;
+package tolteco.sigma.view.version;
 
+import tolteco.sigma.view.financas.*;
 import tolteco.sigma.view.cliente.*;
 
 /**
@@ -15,13 +16,13 @@ import tolteco.sigma.view.cliente.*;
  * {@link tolteco.sigma.view.cliente.OperacaoCliente}.
  * @author Juliano Felipe
  */
-public class MainFinanca extends javax.swing.JPanel {
-    private OperacaoFinanca ultimoPanelAdicionado = null;
+public class MainVersaoSwing extends javax.swing.JPanel {
+    private OperacaoVersao ultimoPanelAdicionado = null;
 
     /**
      * Creates new form MainCliente
      */
-    public MainFinanca() {
+    public MainVersaoSwing() {
         initComponents();
     }
 
@@ -123,48 +124,48 @@ public class MainFinanca extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
-        if (ultimoPanelAdicionado != OperacaoFinanca.Adicionar){ //Singleton - Sort of
-            AdicionarFinanca add = new AdicionarFinanca();
+        if (ultimoPanelAdicionado != OperacaoVersao.Adicionar){ //Singleton - Sort of
+            AdicionarVersaoSwing add = new AdicionarVersaoSwing();
             Panel.setViewportView( add );
         }
         
-        ultimoPanelAdicionado = OperacaoFinanca.Adicionar;
+        ultimoPanelAdicionado = OperacaoVersao.Adicionar;
     }//GEN-LAST:event_AddActionPerformed
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        if (ultimoPanelAdicionado != OperacaoFinanca.Modificar){ //Singleton - Sort of
-            ModificarFinanca modif = new ModificarFinanca();
+        if (ultimoPanelAdicionado != OperacaoVersao.Modificar){ //Singleton - Sort of
+            ModificarVersaoSwing modif = new ModificarVersaoSwing();
             Panel.setViewportView( modif );
         }
         
-        ultimoPanelAdicionado = OperacaoFinanca.Modificar;
+        ultimoPanelAdicionado = OperacaoVersao.Modificar;
     }//GEN-LAST:event_EditActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        if (ultimoPanelAdicionado != OperacaoFinanca.Remover){ //Singleton - Sort of
-            RemoverFinanca add = new RemoverFinanca();
+        if (ultimoPanelAdicionado != OperacaoVersao.Remover){ //Singleton - Sort of
+            RemoverVersaoSwing add = new RemoverVersaoSwing();
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = OperacaoFinanca.Remover;
+        ultimoPanelAdicionado = OperacaoVersao.Remover;
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        if (ultimoPanelAdicionado != OperacaoFinanca.Buscar){ //Singleton - Sort of
-            BuscarFinanca add = new BuscarFinanca();
+        if (ultimoPanelAdicionado != OperacaoVersao.Buscar){ //Singleton - Sort of
+            BuscarVersaoSwing add = new BuscarVersaoSwing();
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = OperacaoFinanca.Buscar;
+        ultimoPanelAdicionado = OperacaoVersao.Buscar;
     }//GEN-LAST:event_SearchActionPerformed
 
     private void ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListActionPerformed
-        if (ultimoPanelAdicionado != OperacaoFinanca.Listar){ //Singleton - Sort of
-            ListarFinanca add = new ListarFinanca();
+        if (ultimoPanelAdicionado != OperacaoVersao.Listar){ //Singleton - Sort of
+            ListarVersaoSwing add = new ListarVersaoSwing();
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = OperacaoFinanca.Listar;
+        ultimoPanelAdicionado = OperacaoVersao.Listar;
     }//GEN-LAST:event_ListActionPerformed
 
 

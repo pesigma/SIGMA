@@ -3,21 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.cliente;
+package tolteco.sigma.view.version;
+
+import tolteco.sigma.view.financas.*;
+import tolteco.sigma.view.cliente.*;
 
 /**
- * Painel para listar todos os clientes
- * no banco de dados.
- * Alguma restrição pode ser imposta
- * (número de clientes mostrados?)
+ * Painel para deleção de clientes.
+ * Possui uma busca diminuta para 
+ * selecionar qual cliente será
+ * excluído.
  * @author Juliano Felipe
  */
-public class ListarCliente extends javax.swing.JPanel {
+public class RemoverVersaoSwing extends javax.swing.JPanel {
 
     /**
-     * Creates new form ListarCliente
+     * Creates new form RemoverCliente
      */
-    public ListarCliente() {
+    public RemoverVersaoSwing() {
         initComponents();
     }
 
@@ -30,28 +33,19 @@ public class ListarCliente extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSpinner1 = new javax.swing.JSpinner();
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(663, Short.MAX_VALUE)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 705, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(440, Short.MAX_VALUE)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 475, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSpinner jSpinner1;
     // End of variables declaration//GEN-END:variables
 }

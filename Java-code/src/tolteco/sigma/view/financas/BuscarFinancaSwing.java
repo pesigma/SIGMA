@@ -13,12 +13,12 @@ import tolteco.sigma.view.cliente.*;
  * atributos (nome, id, etc).
  * @author Juliano Felipe
  */
-public class BuscarFinanca extends javax.swing.JPanel {
+public class BuscarFinancaSwing extends javax.swing.JPanel {
 
     /**
      * Creates new form BuscarCliente
      */
-    public BuscarFinanca() {
+    public BuscarFinancaSwing() {
         initComponents();
     }
 

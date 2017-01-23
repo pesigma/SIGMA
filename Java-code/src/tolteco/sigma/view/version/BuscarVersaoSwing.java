@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.cliente;
+package tolteco.sigma.view.version;
+
+import tolteco.sigma.view.financas.*;
+import tolteco.sigma.view.cliente.*;
 
 /**
  * Painel de busca de clientes.
@@ -11,12 +14,12 @@ package tolteco.sigma.view.cliente;
  * atributos (nome, id, etc).
  * @author Juliano Felipe
  */
-public class BuscarCliente extends javax.swing.JPanel {
+public class BuscarVersaoSwing extends javax.swing.JPanel {
 
     /**
      * Creates new form BuscarCliente
      */
-    public BuscarCliente() {
+    public BuscarVersaoSwing() {
         initComponents();
     }
 

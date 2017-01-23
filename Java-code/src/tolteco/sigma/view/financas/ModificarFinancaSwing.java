@@ -13,12 +13,12 @@ import tolteco.sigma.view.cliente.*;
  * selecionar qual cliente modificar.
  * @author Juliano Felipe
  */
-public class ModificarFinanca extends javax.swing.JPanel {
+public class ModificarFinancaSwing extends javax.swing.JPanel {
 
     /**
      * Creates new form Cliente
      */
-    public ModificarFinanca() {
+    public ModificarFinancaSwing() {
         initComponents();
     }
 

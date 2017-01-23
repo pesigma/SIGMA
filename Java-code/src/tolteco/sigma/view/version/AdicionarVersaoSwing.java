@@ -13,12 +13,12 @@ import tolteco.sigma.model.entidades.Situacao;
  * Painel de adição de finanças.
  * @author Juliano Felipe
  */
-public class AdicionarVersao extends javax.swing.JPanel {
+public class AdicionarVersaoSwing extends javax.swing.JPanel {
 
     /**
      * Creates new form Cliente
      */
-    public AdicionarVersao() {
+    public AdicionarVersaoSwing() {
         initComponents();
     }
 

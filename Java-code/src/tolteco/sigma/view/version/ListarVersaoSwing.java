@@ -3,21 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.cliente;
+package tolteco.sigma.view.version;
+
+import tolteco.sigma.view.financas.*;
+import tolteco.sigma.view.cliente.*;
 
 /**
- * Painel para deleção de clientes.
- * Possui uma busca diminuta para 
- * selecionar qual cliente será
- * excluído.
+ * Painel para listar todos os clientes
+ * no banco de dados.
+ * Alguma restrição pode ser imposta
+ * (número de clientes mostrados?)
  * @author Juliano Felipe
  */
-public class RemoverCliente extends javax.swing.JPanel {
+public class ListarVersaoSwing extends javax.swing.JPanel {
 
     /**
-     * Creates new form RemoverCliente
+     * Creates new form ListarCliente
      */
-    public RemoverCliente() {
+    public ListarVersaoSwing() {
         initComponents();
     }
 

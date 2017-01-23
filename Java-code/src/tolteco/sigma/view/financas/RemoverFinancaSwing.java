@@ -14,12 +14,12 @@ import tolteco.sigma.view.cliente.*;
  * excluído.
  * @author Juliano Felipe
  */
-public class RemoverFinanca extends javax.swing.JPanel {
+public class RemoverFinancaSwing extends javax.swing.JPanel {
 
     /**
      * Creates new form RemoverCliente
      */
-    public RemoverFinanca() {
+    public RemoverFinancaSwing() {
         initComponents();
     }
 

@@ -13,13 +13,13 @@ package tolteco.sigma.view.cliente;
  * {@link tolteco.sigma.view.cliente.OperacaoCliente}.
  * @author Juliano Felipe
  */
-public class MainCliente extends javax.swing.JPanel {
+public class MainClienteSwing extends javax.swing.JPanel {
     private OperacaoCliente ultimoPanelAdicionado = null;
     
     /**
      * Creates new form MainCliente
      */
-    public MainCliente() {
+    public MainClienteSwing() {
         initComponents();
     }
 
@@ -122,7 +122,7 @@ public class MainCliente extends javax.swing.JPanel {
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         if (ultimoPanelAdicionado != OperacaoCliente.Adicionar){ //Singleton - Sort of
-            AdicionarCliente add = new AdicionarCliente();
+            AdicionarClienteSwing add = new AdicionarClienteSwing();
             Panel.setViewportView( add );
         } else {
             Panel.setVisible(true);
@@ -133,7 +133,7 @@ public class MainCliente extends javax.swing.JPanel {
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
         if (ultimoPanelAdicionado != OperacaoCliente.Modificar){ //Singleton - Sort of
-            ModificarCliente modif = new ModificarCliente();
+            ModificarClienteSwing modif = new ModificarClienteSwing();
             Panel.setViewportView( modif );
         }
         
@@ -142,7 +142,7 @@ public class MainCliente extends javax.swing.JPanel {
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         if (ultimoPanelAdicionado != OperacaoCliente.Remover){ //Singleton - Sort of
-            RemoverCliente add = new RemoverCliente();
+            RemoverClienteSwing add = new RemoverClienteSwing();
             Panel.setViewportView( add );
         }
 
@@ -151,7 +151,7 @@ public class MainCliente extends javax.swing.JPanel {
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         if (ultimoPanelAdicionado != OperacaoCliente.Buscar){ //Singleton - Sort of
-            BuscarCliente add = new BuscarCliente();
+            BuscarClienteSwing add = new BuscarClienteSwing();
             Panel.setViewportView( add );
         }
 
@@ -160,7 +160,7 @@ public class MainCliente extends javax.swing.JPanel {
 
     private void ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListActionPerformed
         if (ultimoPanelAdicionado != OperacaoCliente.Listar){ //Singleton - Sort of
-            ListarCliente add = new ListarCliente();
+            ListarClienteSwing add = new ListarClienteSwing();
             Panel.setViewportView( add );
         }
 

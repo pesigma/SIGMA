@@ -12,12 +12,12 @@ import tolteco.sigma.model.entidades.Situacao;
  * Painel de adição de finanças.
  * @author Juliano Felipe
  */
-public class AdicionarFinanca extends javax.swing.JPanel {
+public class AdicionarFinancaSwing extends javax.swing.JPanel {
 
     /**
      * Creates new form Cliente
      */
-    public AdicionarFinanca() {
+    public AdicionarFinancaSwing() {
         initComponents();
     }
 
@@ -196,7 +196,7 @@ public class AdicionarFinanca extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(DataPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(SituacaoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(SituacaoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
