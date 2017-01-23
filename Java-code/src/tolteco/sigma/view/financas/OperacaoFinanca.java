@@ -52,11 +52,11 @@ public enum OperacaoFinanca {
      *                                  de componente seja passado.
      */
     public static OperacaoFinanca porInstancia (Component componente){
-             if (componente instanceof AdicionarFinancaSwing) return Adicionar;
-        else if (componente instanceof ModificarFinancaSwing) return Modificar;
+             if (componente instanceof AdicionarFinanca) return Adicionar;
+        else if (componente instanceof ModificarFinanca) return Modificar;
         else if (componente instanceof BuscarFinancaSwing)    return Buscar;
-        else if (componente instanceof ListarFinancaSwing)    return Listar; 
-        else if (componente instanceof RemoverFinancaSwing)   return Remover;
+        else if (componente instanceof ListarFinanca)    return Listar; 
+        else if (componente instanceof RemoverFinanca)   return Remover;
         else throw new IllegalArgumentException("Componente inválido.");
     }
     
@@ -67,8 +67,8 @@ public enum OperacaoFinanca {
      * @return Instância do componente identificado pela enum.
      */
     public static Component operacaoPorTipo (OperacaoFinanca tipo){
-             if (tipo == Adicionar)   return new AdicionarFinancaSwing();
-        else if (tipo == Modificar)   return new ModificarFinancaSwing();
+             if (tipo == Adicionar)   return new AdicionarFinanca();
+        else if (tipo == Modificar)   return new ModificarFinanca();
         else if (tipo == Buscar)      return new BuscarFinancaSwing();
         else{
             String methodName = Thread.currentThread().getStackTrace()[1]

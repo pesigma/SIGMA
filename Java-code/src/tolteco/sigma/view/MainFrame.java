@@ -12,8 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import tolteco.sigma.utils.DefaultConfigs;
-import tolteco.sigma.view.cliente.MainClienteSwing;
-import tolteco.sigma.view.financas.MainFinancaSwing;
+import tolteco.sigma.view.cliente.MainCliente;
+import tolteco.sigma.view.financas.MainFinanca;
 
 /**
  *
@@ -35,11 +35,11 @@ public class MainFrame extends javax.swing.JFrame {
         PainelGuias.add(panel);
         PainelGuias.setTitleAt(0, "Principal");
         
-        JPanel panel1 = new MainClienteSwing();
+        JPanel panel1 = new MainCliente();
         PainelGuias.add(panel1);
         PainelGuias.setTitleAt(1, "Clientes");
         
-        JPanel panel2 = new MainFinancaSwing();
+        JPanel panel2 = new MainFinanca();
         PainelGuias.add(panel2);
         PainelGuias.setTitleAt(2, "Finanças");
         

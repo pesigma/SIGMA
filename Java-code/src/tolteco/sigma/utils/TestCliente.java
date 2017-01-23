@@ -7,8 +7,8 @@ package tolteco.sigma.utils;
 
 import javax.swing.JPanel;
 import tolteco.sigma.view.MainView;
-import tolteco.sigma.view.cliente.MainClienteSwing;
-import tolteco.sigma.view.financas.MainFinancaSwing;
+import tolteco.sigma.view.cliente.MainCliente;
+import tolteco.sigma.view.financas.MainFinanca;
 
 /**
  * Classe com um frame para testes.
@@ -25,11 +25,11 @@ public class TestCliente extends javax.swing.JFrame {
         guias.add(panel);
         guias.setTitleAt(0, "Principal");
         
-        JPanel panel1 = new MainClienteSwing();
+        JPanel panel1 = new MainCliente();
         guias.add(panel1);
         guias.setTitleAt(1, "Clientes");
         
-        JPanel panel2 = new MainFinancaSwing();
+        JPanel panel2 = new MainFinanca();
         guias.add(panel2);
         guias.setTitleAt(2, "Finanças");
     }

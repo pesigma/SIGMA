@@ -53,11 +53,11 @@ public enum OperacaoVersao {
      *                                  de componente seja passado.
      */
     public static OperacaoVersao porInstancia (Component componente){
-             if (componente instanceof AdicionarVersaoSwing) return Adicionar;
-        else if (componente instanceof ModificarVersaoSwing) return Modificar;
-        else if (componente instanceof BuscarVersaoSwing)    return Buscar;
-        else if (componente instanceof ListarVersaoSwing)    return Listar; 
-        else if (componente instanceof RemoverVersaoSwing)   return Remover;
+             if (componente instanceof AdicionarVersao) return Adicionar;
+        else if (componente instanceof ModificarVersao) return Modificar;
+        else if (componente instanceof BuscarVersao)    return Buscar;
+        else if (componente instanceof ListarVersao)    return Listar; 
+        else if (componente instanceof RemoverVersao)   return Remover;
         else throw new IllegalArgumentException("Componente inválido.");
     }
     
@@ -68,9 +68,9 @@ public enum OperacaoVersao {
      * @return Instância do componente identificado pela enum.
      */
     public static Component operacaoPorTipo (OperacaoVersao tipo){
-             if (tipo == Adicionar)   return new AdicionarVersaoSwing();
-        else if (tipo == Modificar)   return new ModificarVersaoSwing();
-        else if (tipo == Buscar)      return new BuscarVersaoSwing();
+             if (tipo == Adicionar)   return new AdicionarVersao();
+        else if (tipo == Modificar)   return new ModificarVersao();
+        else if (tipo == Buscar)      return new BuscarVersao();
         else{
             String methodName = Thread.currentThread().getStackTrace()[1]
                                 .getMethodName();

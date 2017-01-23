@@ -9,6 +9,6 @@ package tolteco.sigma.controller;
  *
  * @author JFPS
  */
-public class GenericController<T> {
+public interface GenericController<T> {
     
 }

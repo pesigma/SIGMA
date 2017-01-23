@@ -5,10 +5,12 @@
  */
 package tolteco.sigma.controller;
 
+import tolteco.sigma.model.entidades.Financa;
+
 /**
  *
  * @author JFPS
  */
-public class FinancaController {
+public class FinancaController implements GenericController<Financa>{
     
 }

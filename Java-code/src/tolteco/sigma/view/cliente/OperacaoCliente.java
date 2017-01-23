@@ -51,11 +51,11 @@ public enum OperacaoCliente {
      *                                  de componente seja passado.
      */
     public static OperacaoCliente porInstancia (Component componente){
-             if (componente instanceof AdicionarClienteSwing) return Adicionar;
-        else if (componente instanceof ModificarClienteSwing) return Modificar;
-        else if (componente instanceof BuscarClienteSwing)    return Buscar;
-        else if (componente instanceof ListarClienteSwing)    return Listar; 
-        else if (componente instanceof RemoverClienteSwing)   return Remover;
+             if (componente instanceof AdicionarCliente) return Adicionar;
+        else if (componente instanceof ModificarCliente) return Modificar;
+        else if (componente instanceof BuscarCliente)    return Buscar;
+        else if (componente instanceof ListarCliente)    return Listar; 
+        else if (componente instanceof RemoverCliente)   return Remover;
         else throw new IllegalArgumentException("Componente inválido.");
     }
     
@@ -66,9 +66,9 @@ public enum OperacaoCliente {
      * @return Instância do componente identificado pela enum.
      */
     public static Component operacaoPorTipo (OperacaoCliente tipo){
-             if (tipo == Adicionar)   return new AdicionarClienteSwing();
-        else if (tipo == Modificar)   return new ModificarClienteSwing();
-        else if (tipo == Buscar)      return new BuscarClienteSwing();
+             if (tipo == Adicionar)   return new AdicionarCliente();
+        else if (tipo == Modificar)   return new ModificarCliente();
+        else if (tipo == Buscar)      return new BuscarCliente();
         else{
             String methodName = Thread.currentThread().getStackTrace()[1]
                                 .getMethodName();

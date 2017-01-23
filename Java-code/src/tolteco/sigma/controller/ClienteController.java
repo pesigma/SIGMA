@@ -5,10 +5,12 @@
  */
 package tolteco.sigma.controller;
 
+import tolteco.sigma.model.entidades.Cliente;
+
 /**
  *
  * @author JFPS
  */
-public class ClienteController {
+public class ClienteController implements GenericController<Cliente>{
     
 }

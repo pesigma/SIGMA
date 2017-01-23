@@ -5,10 +5,12 @@
  */
 package tolteco.sigma.controller;
 
+import tolteco.sigma.model.entidades.Servico;
+
 /**
  *
  * @author JFPS
  */
-public class ServicoController {
+public class ServicoController implements GenericController<Servico>{
     
 }

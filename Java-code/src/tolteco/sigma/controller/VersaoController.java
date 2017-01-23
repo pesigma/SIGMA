@@ -5,10 +5,12 @@
  */
 package tolteco.sigma.controller;
 
+import tolteco.sigma.model.entidades.Version;
+
 /**
  *
  * @author JFPS
  */
-public class VersaoController {
+public class VersaoController implements GenericController<Version>{
     
 }
