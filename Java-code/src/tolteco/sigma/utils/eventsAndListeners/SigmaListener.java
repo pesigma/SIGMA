@@ -10,5 +10,21 @@ package tolteco.sigma.utils.eventsAndListeners;
  * @author JFPS
  */
 public interface SigmaListener {
-    public void eventHappened(SigmaEvent event);
+    default public void eventHappened(SigmaEvent event){
+               if (event instanceof ChangePropertyEvent){
+            changePropertyEventHappened( (ChangePropertyEvent) event);
+        } else if (event instanceof DeletionEvent){
+            deletionEventHappened((DeletionEvent) event);
+        } else if (event instanceof InsertionEvent){
+            insertionEventHappened((InsertionEvent) event);
+        } else {
+            throw new IllegalStateException("Evento não catalogado.");
+        }
+    }
+    
+    public void changePropertyEventHappened(ChangePropertyEvent event);
+    
+    public void deletionEventHappened(DeletionEvent event);
+    
+    public void insertionEventHappened(InsertionEvent event);
 }
