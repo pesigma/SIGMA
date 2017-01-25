@@ -35,12 +35,32 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
      */
     private List<T> entidades;
     
-    /// MÉTODOS ABAIXO PRECISAM SER IMPLEMENTADOS POR CADA TIPO DE TABELA
-    /*@Override
+    /**
+     * Retorna o objeto que está
+     * na linha "row".
+     * @param row Linha para obter
+     *            o objeto.
+     * @return    Objeto na linha "row".
+     */
+    public T getValueAtRow(int row){
+        return entidades.get(row);
+    }
+    
+    /**
+     * Retorna o número de elementos
+     * na tabela. A lista pode (em teoria),
+     * ultrapassar o valor {@link Integer#MAX_VALUE},
+     * então se tal ocorrer, o valor máximo é retornado.
+     * 
+     * @return inteiro representando o número de elementos.
+     */
+    @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return entidades.size();
     }
 
+    /// MÉTODOS ABAIXO PRECISAM SER IMPLEMENTADOS POR CADA TIPO DE TABELA
+    /*
     @Override
     public int getColumnCount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -51,32 +71,62 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }*/
     
+    /**
+     * Método para adicionar Listeners à
+     * tabela.
+     * @param listener SigmaListener.
+     */
     public final void addListener(SigmaListener listener){
         listeners.add( listener );
     }
 
+    /**
+     * Método para remover Listeners da
+     * tabela.
+     * @param listener SigmaListener.
+     */
     public final void removeListener(SigmaListener listener){
         listeners.remove( listener );
     }
     
+    /**
+     * Método para disparar um evento
+     * genérico.
+     * @param event evento genérico Sigma.
+     */
     protected final void fireSigmaEvent(SigmaEvent event){
         listeners.forEach((listener) -> {
             listener.eventHappened(event);
         });
     }
     
+    /**
+     * Método para disparar um evento de 
+     * alteração de propriedade.
+     * @param event evento Sigma.
+     */
     protected final void fireChangeProperty(ChangePropertyEvent event){
         listeners.forEach((listener) -> {
             listener.changePropertyEventHappened(event);
         });
     }
     
+    /**
+     * Método para disparar um evento de 
+     * deleção.
+     * @param event evento Sigma.
+     */
     protected final void fireDeletion(DeletionEvent event){
         listeners.forEach((listener) -> {
             listener.deletionEventHappened(event);
         });
     }
     
+    /**
+     * Método para disparar um evento de 
+     * inserção.
+     * @param event evento Sigma.
+     */
     protected final void fireInsertion(InsertionEvent event){
         listeners.forEach((listener) -> {
             listener.insertionEventHappened(event);

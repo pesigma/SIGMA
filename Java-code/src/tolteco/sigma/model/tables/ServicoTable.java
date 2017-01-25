@@ -12,20 +12,34 @@ import tolteco.sigma.model.entidades.Servico;
  * @author Juliano
  */
 public class ServicoTable extends SigmaAbstractTableModel<Servico>{
-
-    @Override
-    public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    private final int COLUMN_COUNT = 7;
+    private final int PLACA        = 0;
+    private final int MODELO       = 1;
+    private final int OBS          = 2;
+    private final int KM           = 3;
+    private final int CLIENTE_ID   = 4;
+    private final int SITUACAO     = 5;
+    private final int ROWID        = 6;
+    
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return COLUMN_COUNT;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Servico servico = getValueAtRow(rowIndex);
+        switch(columnIndex){
+            case PLACA:      return servico.getPlaca();
+            case MODELO:     return servico.getModelo();
+            case OBS:        return servico.getObs();
+            case KM:         return servico.getKm();
+            case CLIENTE_ID: return servico.getIdcliente();
+            case SITUACAO:   return servico.getSituacao();
+            case ROWID:      return servico.getRowid();
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + columnIndex + ".");
+        }
     }
-    
 }

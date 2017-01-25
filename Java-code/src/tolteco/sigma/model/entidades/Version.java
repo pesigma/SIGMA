@@ -58,4 +58,62 @@ public class Version {
             String.format("%0" + MAXTRAILING + "d", minorVersion) + 
             " (" + majorName + ')';
     }
+
+    public int getMajorVersion() {
+        return majorVersion;
+    }
+
+    public void setMajorVersion(int majorVersion) {
+        this.majorVersion = majorVersion;
+    }
+
+    public int getMajorName() {
+        return majorName;
+    }
+
+    public void setMajorName(int majorName) {
+        this.majorName = majorName;
+    }
+
+    public Date getMajorDate() {
+        return majorDate;
+    }
+
+    public void setMajorDate(Date majorDate) {
+        this.majorDate = majorDate;
+    }
+
+    public String getMajorNotes() {
+        return majorNotes;
+    }
+
+    public void setMajorNotes(String majorNotes) {
+        this.majorNotes = majorNotes;
+    }
+
+    public int getMinorVersion() {
+        return minorVersion;
+    }
+
+    public void setMinorVersion(int minorVersion) {
+        this.minorVersion = minorVersion;
+    }
+
+    public Date getMinorDate() {
+        return minorDate;
+    }
+
+    public void setMinorDate(Date minorDate) {
+        this.minorDate = minorDate;
+    }
+
+    public String getMinorNotes() {
+        return minorNotes;
+    }
+
+    public void setMinorNotes(String minorNotes) {
+        this.minorNotes = minorNotes;
+    }
+    
+    
 }

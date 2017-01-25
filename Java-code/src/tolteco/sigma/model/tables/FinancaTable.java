@@ -12,20 +12,33 @@ import tolteco.sigma.model.entidades.Financa;
  * @author Juliano
  */
 public class FinancaTable extends SigmaAbstractTableModel<Financa>{
-
-    @Override
-    public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    private final int COLUMN_COUNT = 6;
+    private final int DATA         = 0;
+    private final int OBS          = 1;
+    private final int SITUACAO     = 2;
+    private final int TIPO         = 3;
+    private final int VALOR        = 4;
+    private final int ROWID        = 5;
+    
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return COLUMN_COUNT;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Financa financa = getValueAtRow(rowIndex);
+        switch(columnIndex){
+            case DATA:     return financa.getData();
+            case OBS:      return financa.getObs();
+            case SITUACAO: return financa.getSituacao();
+            case TIPO:     return financa.getTipo();
+            case VALOR:    return financa.getValor();
+            case ROWID:    return financa.getRowid();
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + columnIndex + ".");
+        }
     }
     
 }
