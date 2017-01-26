@@ -5,12 +5,49 @@
  */
 package tolteco.sigma.controller;
 
+import java.util.List;
+import tolteco.sigma.model.dao.DAOFactory;
+import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Version;
 
 /**
  *
  * @author Juliano Felipe
  */
-public class VersaoController implements GenericController<Version>{
+public class VersaoController extends GenericController<Version>{
+
+    public VersaoController(DAOFactory dao) {
+        super(dao);
+    }
+
+    @Override
+    public boolean insert(Version t) throws DatabaseException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean remove(Version t) throws DatabaseException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean update(Version t) throws DatabaseException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Version> selectAll() throws DatabaseException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Version search(int primaryKey) throws DatabaseException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Version> select(String nome) throws DatabaseException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

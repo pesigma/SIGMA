@@ -6,6 +6,7 @@
 package tolteco.sigma.model.tables;
 
 import tolteco.sigma.model.entidades.Servico;
+import tolteco.sigma.model.entidades.Situacao;
 
 /**
  *
@@ -39,7 +40,41 @@ public class ServicoTable extends SigmaAbstractTableModel<Servico>{
             case ROWID:      return servico.getRowid();
             default:
                 throw new IndexOutOfBoundsException(
-                "Exceeded Max Column Count: " + columnIndex +  " out of " + columnIndex + ".");
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
         }
     }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch(columnIndex){
+            case PLACA:      return String.class;
+            case MODELO:     return String.class;
+            case OBS:        return String.class;
+            case KM:         return Integer.class;
+            case CLIENTE_ID: return Integer.class;
+            case SITUACAO:   return Situacao.class;
+            case ROWID:      return Integer.class;
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
+        }
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        switch(column){
+            case PLACA:      return "Placa";
+            case MODELO:     return "Modelo";
+            case OBS:        return "Observações";
+            case KM:         return "Quilometragem";
+            case CLIENTE_ID: return "ID Cliente";
+            case SITUACAO:   return "Situação";
+            case ROWID:      return "ID Serviço";
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + column +  " out of " + COLUMN_COUNT + ".");
+        }
+    }
+    
+    
 }

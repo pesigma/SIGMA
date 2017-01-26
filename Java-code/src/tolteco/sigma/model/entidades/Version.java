@@ -17,14 +17,14 @@ public class Version {
     private static final int MAXTRAILING = 3;
     
     private int majorVersion;
-    private int majorName;
+    private String majorName;
     private Date majorDate;
     private String majorNotes;
     private int minorVersion;
     private Date minorDate;
     private String minorNotes;
 
-    public Version(int majorVersion, int majorName, Date majorDate, String majorNotes, int minorVersion, Date minorDate, String minorNotes) {
+    public Version(int majorVersion, String majorName, Date majorDate, String majorNotes, int minorVersion, Date minorDate, String minorNotes) {
         this.majorVersion = majorVersion;
         this.majorName = majorName;
         this.majorDate = majorDate;
@@ -67,11 +67,11 @@ public class Version {
         this.majorVersion = majorVersion;
     }
 
-    public int getMajorName() {
+    public String getMajorName() {
         return majorName;
     }
 
-    public void setMajorName(int majorName) {
+    public void setMajorName(String majorName) {
         this.majorName = majorName;
     }
 

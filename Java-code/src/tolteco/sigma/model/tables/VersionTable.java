@@ -5,6 +5,7 @@
  */
 package tolteco.sigma.model.tables;
 
+import java.util.Date;
 import tolteco.sigma.model.entidades.Version;
 
 /**
@@ -12,14 +13,14 @@ import tolteco.sigma.model.entidades.Version;
  * @author Juliano
  */
 public class VersionTable extends SigmaAbstractTableModel<Version>{
-    private final int COLUMN_COUNT = 7;
-    private final int MAJOR_VER    = 0;
-    private final int MAJOR_NAME   = 1;
-    private final int MAJOR_DATE   = 2;
-    private final int MAJOR_NOTES  = 3;
-    private final int MINOR_VER    = 4;
-    private final int MINOR_DATE   = 5;
-    private final int MINOR_NOTES  = 6;
+    private static final int COLUMN_COUNT = 7;
+    private static final int MAJOR_VER    = 0;
+    private static final int MAJOR_NAME   = 1;
+    private static final int MAJOR_DATE   = 2;
+    private static final int MAJOR_NOTES  = 3;
+    private static final int MINOR_VER    = 4;
+    private static final int MINOR_DATE   = 5;
+    private static final int MINOR_NOTES  = 6;
     
     @Override
     public int getColumnCount() {
@@ -39,7 +40,39 @@ public class VersionTable extends SigmaAbstractTableModel<Version>{
             case MINOR_NOTES: return version.getMinorNotes();
             default:
                 throw new IndexOutOfBoundsException(
-                "Exceeded Max Column Count: " + columnIndex +  " out of " + columnIndex + ".");
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
+        }
+    }
+    
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch(columnIndex){
+            case MAJOR_VER:   return Integer.class;
+            case MAJOR_NAME:  return String.class;
+            case MAJOR_DATE:  return Date.class;
+            case MAJOR_NOTES: return String.class;
+            case MINOR_VER:   return Integer.class;
+            case MINOR_DATE:  return Date.class;
+            case MINOR_NOTES: return String.class;
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
+        }
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        switch(column){
+            case MAJOR_VER:   return "Major Version";
+            case MAJOR_NAME:  return "Major Name";
+            case MAJOR_DATE:  return "Major Date";
+            case MAJOR_NOTES: return "Major Notes";
+            case MINOR_VER:   return "Minor Version";
+            case MINOR_DATE:  return "Minor Date";
+            case MINOR_NOTES: return "Minor Notes";
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + column +  " out of " + COLUMN_COUNT + ".");
         }
     }
 }
