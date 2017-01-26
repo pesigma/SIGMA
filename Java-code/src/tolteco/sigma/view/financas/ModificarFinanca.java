@@ -5,7 +5,10 @@
  */
 package tolteco.sigma.view.financas;
 
+import java.util.Date;
 import tolteco.sigma.model.entidades.Financa;
+import tolteco.sigma.model.entidades.FinancaTipo;
+import tolteco.sigma.model.entidades.Situacao;
 import tolteco.sigma.view.interfaces.Modificar;
 
 /**
@@ -318,4 +321,38 @@ public class ModificarFinanca extends javax.swing.JPanel implements Modificar<Fi
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+    /*private static final String EMPTY="";
+    
+    @Override
+    public void cleanAllFields() {
+        ValorField.setText(EMPTY);
+        DataChooser.setCalendar(null);
+        ObsPane.setText(EMPTY);
+        
+        PagoCheck.setSelected(false);
+        ReceitaRadio.setSelected(true);
+    }
+
+    @Override
+    public void fillAllFields(Financa object) {
+        ValorField.setText(Double.toString(object.getValor()));
+        DataChooser.setDate(object.getData());
+        ObsPane.setText(object.getObs());
+        
+        PagoCheck.setSelected(false);
+        ReceitaRadio.setSelected(true);
+    }
+
+    @Override
+    public Financa getInstance() {
+        double valor = new Double(ValorField.getText());
+        Date data = DataChooser.getDate();
+        String obs = ObsPane.getText();
+        
+        AdicionarFinanca.DecidirTipoSituacao decisao = new AdicionarFinanca.DecidirTipoSituacao();
+        FinancaTipo tipo = decisao.decidirTipo();
+        Situacao situacao = decisao.decidirSituacao();
+        
+        return new Financa(tipo, data, valor, obs, situacao);
+    }*/
 }

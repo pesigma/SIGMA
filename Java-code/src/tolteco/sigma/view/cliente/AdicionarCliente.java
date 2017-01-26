@@ -229,4 +229,40 @@ public class AdicionarCliente extends javax.swing.JPanel implements Adicionar<Cl
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
+
+    private static final String EMPTY="";
+    
+    @Override
+    public void cleanAllFields() {
+        NomeField.setText(EMPTY);
+        CPFfField.setText(EMPTY);
+        TelFField.setText(EMPTY);
+        ObsPane.setText(EMPTY);
+        
+        EndBox.setSelectedItem("Rua");
+        EndField.setText(EMPTY);
+    }
+
+    @Override
+    public void fillAllFields(Cliente object) {
+        NomeField.setText(object.getNome() + object.getSobrenome());
+        CPFfField.setText(object.getCpf());
+        TelFField.setText(object.getTel());
+        ObsPane.setText(object.getObs());
+        
+        String end = object.getEnd();
+        EndBox.setSelectedItem(end.substring(0,end.indexOf(' ')));
+        EndField.setText(end.substring(end.indexOf(' ')+1));
+    }
+
+    @Override
+    public Cliente getInstance() {
+        String nome = NomeField.getText();
+        String cpf = CPFfField.getText();
+        String tel = TelFField.getText();
+        String obs = ObsPane.getText();
+        String end = (String) EndBox.getSelectedItem() + EndField.getText();
+        
+        return new Cliente(nome.substring(0,end.indexOf(' ')), nome.substring(end.indexOf(' ')+1), obs, end, tel, cpf, Sistema.getUserID());
+    }
 }
