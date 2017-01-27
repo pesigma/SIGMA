@@ -69,6 +69,10 @@ public class Servico extends Observable implements Comparable{
         return km;
     }
 
+    public void setKm(int km) {
+        this.km = km;
+    }
+    
     public void setNome(int km) {
         this.km = km;
     }

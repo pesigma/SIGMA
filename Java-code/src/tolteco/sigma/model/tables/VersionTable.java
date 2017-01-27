@@ -29,7 +29,7 @@ public class VersionTable extends SigmaAbstractTableModel<Version>{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Version version = getValueAtRow(rowIndex);
+        Version version = getRow(rowIndex);
         switch(columnIndex){
             case MAJOR_VER:   return version.getMajorVersion();
             case MAJOR_NAME:  return version.getMajorName();
@@ -73,6 +73,25 @@ public class VersionTable extends SigmaAbstractTableModel<Version>{
             default:
                 throw new IndexOutOfBoundsException(
                 "Exceeded Max Column Count: " + column +  " out of " + COLUMN_COUNT + ".");
+        }
+    }
+    
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Version version = getRow(rowIndex);
+        
+        switch(columnIndex){
+            case MAJOR_VER:   version.setMajorVersion((int) aValue);
+            case MAJOR_NAME:  version.setMajorName((String) aValue);
+            case MAJOR_DATE:  version.setMajorDate((Date) aValue);
+            case MAJOR_NOTES: version.setMajorNotes((String) aValue);
+            case MINOR_VER:   version.setMinorVersion((int) aValue);
+            case MINOR_DATE:  version.setMinorDate((Date) aValue);
+            case MINOR_NOTES: version.setMinorNotes((String) aValue);
+
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
         }
     }
 }

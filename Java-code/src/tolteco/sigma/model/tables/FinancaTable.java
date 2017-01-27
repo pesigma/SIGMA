@@ -30,7 +30,7 @@ public class FinancaTable extends SigmaAbstractTableModel<Financa>{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Financa financa = getValueAtRow(rowIndex);
+        Financa financa = getRow(rowIndex);
         switch(columnIndex){
             case DATA:     return financa.getData();
             case OBS:      return financa.getObs();
@@ -74,4 +74,20 @@ public class FinancaTable extends SigmaAbstractTableModel<Financa>{
         }
     }
     
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Financa financa = getRow(rowIndex);
+        
+        switch(columnIndex){
+            case DATA:     financa.setData((Date) aValue);
+            case OBS:      financa.setDesc((String) aValue);
+            case SITUACAO: financa.setSituacao((Situacao) aValue);
+            case TIPO:     financa.setTipo((FinancaTipo) aValue);
+            case VALOR:    financa.setValor((double) aValue);
+            case ROWID:    financa.setRowid((int) aValue);
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
+        }
+    }   
 }

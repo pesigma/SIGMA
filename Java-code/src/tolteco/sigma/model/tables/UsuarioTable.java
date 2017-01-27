@@ -27,7 +27,7 @@ public class UsuarioTable extends SigmaAbstractTableModel<Usuario>{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Usuario user = getValueAtRow(rowIndex);
+        Usuario user = getRow(rowIndex);
         switch(columnIndex){
             case USER_ID:      return user.getUserId();
             case USER_NAME:    return user.getUserName();
@@ -62,6 +62,21 @@ public class UsuarioTable extends SigmaAbstractTableModel<Usuario>{
             default:
                 throw new IndexOutOfBoundsException(
                 "Exceeded Max Column Count: " + column +  " out of " + COLUMN_COUNT + ".");
+        }
+    }
+    
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Usuario usuario = getRow(rowIndex);
+        
+        switch(columnIndex){
+            case USER_ID:      usuario.setUserId((int) aValue);
+            case USER_NAME:    usuario.setUserName((String) aValue);
+            case ACCESS_LEVEL: usuario.setAccessLevel((Access) aValue);
+            case PASS:         usuario.setPass((char[]) aValue);
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
         }
     }
 }

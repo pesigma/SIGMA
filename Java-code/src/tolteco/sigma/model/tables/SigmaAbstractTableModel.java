@@ -35,6 +35,10 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
      */
     private List<T> entidades;
     
+    protected final List<T> getList(){
+        return entidades;
+    }
+    
     /**
      * Retorna o objeto que está
      * na linha "row".
@@ -42,8 +46,12 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
      *            o objeto.
      * @return    Objeto na linha "row".
      */
-    public T getValueAtRow(int row){
+    public T getRow(int row){
         return entidades.get(row);
+    }
+    
+    public void setRow(T object, int row){
+        entidades.add(row, object);
     }
     
     /**

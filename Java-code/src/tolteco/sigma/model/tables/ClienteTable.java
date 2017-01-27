@@ -6,6 +6,7 @@
 package tolteco.sigma.model.tables;
 
 import tolteco.sigma.model.entidades.Cliente;
+import tolteco.sigma.model.entidades.Situacao;
 
 /**
  *
@@ -29,7 +30,7 @@ public class ClienteTable extends SigmaAbstractTableModel<Cliente>{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Cliente cliente = getValueAtRow(rowIndex);
+        Cliente cliente = getRow(rowIndex);
         switch(columnIndex){
             case NOME:       return cliente.getNome();
             case SOBRENOME:  return cliente.getSobrenome();
@@ -76,6 +77,25 @@ public class ClienteTable extends SigmaAbstractTableModel<Cliente>{
             default:
                 throw new IndexOutOfBoundsException(
                 "Exceeded Max Column Count: " + column +  " out of " + COLUMN_COUNT + ".");
+        }
+    }
+    
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Cliente cliente = getRow(rowIndex);
+        
+        switch(columnIndex){
+            case NOME:       cliente.setNome((String) aValue);
+            case SOBRENOME:  cliente.setSobrenome((String) aValue);
+            case OBS:        cliente.setObs((String) aValue);
+            case ENDERECO:   cliente.setEnd((String) aValue);
+            case TELEFONE:   cliente.setTel((String) aValue);
+            case CPF:        cliente.setCpf((String) aValue);
+            case CLIENTE_ID: cliente.setClienteId((int) aValue);
+            case USER_ID:    cliente.setUserId((int) aValue);
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
         }
     }
 }

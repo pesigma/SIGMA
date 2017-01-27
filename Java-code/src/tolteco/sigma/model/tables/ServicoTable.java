@@ -29,7 +29,7 @@ public class ServicoTable extends SigmaAbstractTableModel<Servico>{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Servico servico = getValueAtRow(rowIndex);
+        Servico servico = getRow(rowIndex);
         switch(columnIndex){
             case PLACA:      return servico.getPlaca();
             case MODELO:     return servico.getModelo();
@@ -76,5 +76,22 @@ public class ServicoTable extends SigmaAbstractTableModel<Servico>{
         }
     }
     
-    
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Servico servico = getRow(rowIndex);
+        
+        switch(columnIndex){
+            case PLACA:      servico.setPlaca((String) aValue);
+            case MODELO:     servico.setModelo((String) aValue);
+            case OBS:        servico.setObs((String) aValue);
+            case KM:         servico.setKm((int) aValue);
+            case CLIENTE_ID: servico.setIdcliente((int) aValue);
+            case SITUACAO:   servico.setSituacao((Situacao) aValue);
+            case ROWID:      servico.setRowid((int) aValue);
+            default:
+                throw new IndexOutOfBoundsException(
+                "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
+        }
+    }
+
 }

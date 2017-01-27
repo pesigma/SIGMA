@@ -16,9 +16,9 @@ import java.util.Observable;
  * @author Juliano_Felipe
  */
 public class Usuario extends Observable implements Comparable<Usuario> {
-    private final int userId;
-    private final String userName;
-    private final Access accessLevel;
+    private int userId;
+    private String userName;
+    private Access accessLevel;
     private char[] pass;
     
     public Usuario(int userId, String userName, Access accessLevel, char[] pass) {
@@ -62,21 +62,39 @@ public class Usuario extends Observable implements Comparable<Usuario> {
         }
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+    
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    
+    public void setAccessLevel(Access accessLevel) {
+        this.accessLevel = accessLevel;
+    }
+    
+    public void setPass(char[] pass) {
+        this.pass = pass;
+    }
+    
     public int getUserId() {
         return userId;
     }
-
+    
     public String getUserName() {
         return userName;
     }
-
+    
     public Access getAccessLevel() {
         return accessLevel;
     }
-
+    
     public char[] getPass(){
         return pass;
     }
+//</editor-fold>
     
     /**
      * Nulifica todos os chars
