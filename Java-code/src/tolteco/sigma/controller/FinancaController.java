@@ -26,32 +26,32 @@ public class FinancaController extends GenericController<Financa>{
 
     @Override
     public boolean insert(Financa t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return financaDAO.insert(t);
     }
 
     @Override
     public boolean remove(Financa t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return financaDAO.insert(t);
     }
 
     @Override
     public boolean update(Financa t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return financaDAO.insert(t);
     }
 
     @Override
     public List<Financa> selectAll() throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return financaDAO.selectAll();
     }
 
     @Override
     public Financa search(int primaryKey) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return financaDAO.search(primaryKey);
     }
 
     @Override
     public List<Financa> select(String nome) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return financaDAO.select(nome);
     }
     
 }

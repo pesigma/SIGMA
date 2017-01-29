@@ -16,7 +16,7 @@ import tolteco.sigma.model.entidades.Version;
  * eles serão privados.
  * @author Juliano Felipe da Silva
  */
-public interface VersionDAO {
+public interface VersionDAO extends GenericDAO<Version>{
     void createMajorRelease(String name, String notes);
     
     void createMinorRelease(Date date, String notes);

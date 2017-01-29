@@ -26,32 +26,32 @@ public class UsuarioController extends GenericController<Usuario>{
 
     @Override
     public boolean insert(Usuario t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return usuarioDAO.insert(t);
     }
 
     @Override
     public boolean remove(Usuario t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return usuarioDAO.remove(t);
     }
 
     @Override
     public boolean update(Usuario t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return usuarioDAO.update(t);
     }
 
     @Override
     public List<Usuario> selectAll() throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return usuarioDAO.selectAll();
     }
 
     @Override
     public Usuario search(int primaryKey) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return usuarioDAO.search(primaryKey);
     }
 
     @Override
     public List<Usuario> select(String nome) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return usuarioDAO.select(nome);
     }
     
 }

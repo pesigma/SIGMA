@@ -27,32 +27,32 @@ public class ServicoController extends GenericController<Servico>{
 
     @Override
     public boolean insert(Servico t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return servicoDAO.insert(t);
     }
 
     @Override
     public boolean remove(Servico t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return servicoDAO.insert(t);
     }
 
     @Override
     public boolean update(Servico t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return servicoDAO.insert(t);
     }
 
     @Override
     public List<Servico> selectAll() throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return servicoDAO.selectAll();
     }
 
     @Override
     public Servico search(int primaryKey) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return servicoDAO.search(primaryKey);
     }
 
     @Override
     public List<Servico> select(String nome) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return servicoDAO.select(nome);
     }
     
 }

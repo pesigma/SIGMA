@@ -26,32 +26,32 @@ public class ClienteController extends GenericController<Cliente>{
 
     @Override
     public boolean insert(Cliente t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return clienteDAO.insert(t);
     }
 
     @Override
     public boolean remove(Cliente t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return clienteDAO.remove(t);
     }
 
     @Override
     public boolean update(Cliente t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return clienteDAO.update(t);
     }
 
     @Override
     public List<Cliente> selectAll() throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return clienteDAO.selectAll();
     }
 
     @Override
     public Cliente search(int primaryKey) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return clienteDAO.search(primaryKey);
     }
 
     @Override
     public List<Cliente> select(String nome) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return clienteDAO.select(nome);
     }
 
 }
