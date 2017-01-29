@@ -9,7 +9,7 @@ import java.util.Date;
 import tolteco.sigma.model.entidades.Version;
 
 /**
- *
+ * Tabela de versão.
  * @author Juliano
  */
 public class VersionTable extends SigmaAbstractTableModel<Version>{

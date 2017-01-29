@@ -6,13 +6,13 @@
 package tolteco.sigma.utils.eventsAndListeners;
 
 /**
- * Evento de deleção.
+ * Evento de pesquisa.
  * 
  * @author Juliano Felipe
  */
-public class DeletionEvent extends SigmaEvent {
+public class SearchEvent extends SigmaEvent {
     
-    public DeletionEvent(Object source) {
+    public SearchEvent(Object source) {
         super(source);
     }
     

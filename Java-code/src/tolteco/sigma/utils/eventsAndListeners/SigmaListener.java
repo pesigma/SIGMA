@@ -5,11 +5,13 @@
  */
 package tolteco.sigma.utils.eventsAndListeners;
 
+import java.util.List;
+
 /**
  * Interface de listeners do sistema.
  * @author JFPS
  */
-public interface SigmaListener {
+public interface SigmaListener<T> {
     default public void eventHappened(SigmaEvent event){
                if (event instanceof ChangePropertyEvent){
             changePropertyEventHappened( (ChangePropertyEvent) event);
@@ -22,9 +24,13 @@ public interface SigmaListener {
         }
     }
     
-    public void changePropertyEventHappened(ChangePropertyEvent event);
+    public boolean changePropertyEventHappened(ChangePropertyEvent event);
     
-    public void deletionEventHappened(DeletionEvent event);
+    public boolean deletionEventHappened(DeletionEvent event);
     
-    public void insertionEventHappened(InsertionEvent event);
+    public boolean insertionEventHappened(InsertionEvent event);
+    
+    public T searchEventHappened(SearchEvent event);
+    
+    public List<T> selectMultipleEventHappened(SelectMultipleEvent event);
 }

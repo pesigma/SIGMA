@@ -8,6 +8,7 @@ package tolteco.sigma.controller;
 import java.util.List;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.dao.VersionDAO;
 import tolteco.sigma.model.entidades.Version;
 
 /**
@@ -16,8 +17,12 @@ import tolteco.sigma.model.entidades.Version;
  */
 public class VersaoController extends GenericController<Version>{
 
+    private final VersionDAO versaoDAO;
+    
     public VersaoController(DAOFactory dao) {
         super(dao);
+        
+        versaoDAO = dao.getVersionDAO();
     }
 
     @Override

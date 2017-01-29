@@ -8,6 +8,7 @@ package tolteco.sigma.controller;
 import java.util.List;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.dao.ServicoDAO;
 import tolteco.sigma.model.entidades.Servico;
 
 /**
@@ -16,8 +17,12 @@ import tolteco.sigma.model.entidades.Servico;
  */
 public class ServicoController extends GenericController<Servico>{
 
+    private final ServicoDAO servicoDAO;
+    
     public ServicoController(DAOFactory dao) {
         super(dao);
+        
+        servicoDAO = dao.getServicoDAO();
     }
 
     @Override

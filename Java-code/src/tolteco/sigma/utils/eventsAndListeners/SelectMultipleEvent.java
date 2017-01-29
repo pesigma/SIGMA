@@ -6,14 +6,23 @@
 package tolteco.sigma.utils.eventsAndListeners;
 
 /**
- * Evento de deleção.
+ * Evento de retorno de listas.
  * 
  * @author Juliano Felipe
  */
-public class DeletionEvent extends SigmaEvent {
+public class SelectMultipleEvent extends SigmaEvent {
     
-    public DeletionEvent(Object source) {
+    private final boolean selectAll;
+    
+    public SelectMultipleEvent(Object source, boolean selectAll) {
         super(source);
+        this.selectAll = selectAll;
     }
+
+    public boolean isSelectAll() {
+        return selectAll;
+    }
+    
+    
     
 }
