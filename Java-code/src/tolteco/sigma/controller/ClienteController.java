@@ -10,23 +10,52 @@ import tolteco.sigma.model.dao.ClienteDAO;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
+import tolteco.sigma.model.tables.ClienteTable;
+import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 
 /**
  *
  * @author Juliano Felipe
  */
-public class ClienteController extends GenericController<Cliente>{
+public class ClienteController extends GenericController<Cliente, ClienteTable>{
     
     private final ClienteDAO clienteDAO;
-    
-    public ClienteController(DAOFactory dao) {
-        super(dao);
+
+    public ClienteController(DAOFactory dao, SigmaAbstractTableModel model) {
+        super(dao, model);
         clienteDAO = dao.getClienteDAO();
     }
-
+    
     @Override
     public boolean insert(Cliente t) throws DatabaseException {
-        return clienteDAO.insert(t);
+        boolean ins = clienteDAO.insert(t);
+        
+        if (ins){
+            List<Cliente> clientes = clienteDAO.select(t.getNome());
+            int key = -1;
+            
+            for (Cliente client : clientes){
+                if (client.equals(t)){
+                    key = client.getClienteId();
+                    t = client;
+                }
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na inserção de cliente. Obtenção de código de inserção"
+                + " falhou.");
+            } else{
+                model.addRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na inserção de cliente. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override

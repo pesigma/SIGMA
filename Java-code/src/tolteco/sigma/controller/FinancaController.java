@@ -10,23 +10,52 @@ import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.FinancaDAO;
 import tolteco.sigma.model.entidades.Financa;
+import tolteco.sigma.model.tables.FinancaTable;
+import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 
 /**
  *
  * @author Juliano Felipe
  */
-public class FinancaController extends GenericController<Financa>{
+public class FinancaController extends GenericController<Financa, FinancaTable>{
 
     private final FinancaDAO financaDAO;
-    
-    public FinancaController(DAOFactory dao) {
-        super(dao);
+
+    public FinancaController(DAOFactory dao, SigmaAbstractTableModel model) {
+        super(dao, model);
         financaDAO = dao.getFinancaDAO();
     }
 
     @Override
     public boolean insert(Financa t) throws DatabaseException {
-        return financaDAO.insert(t);
+        boolean ins = financaDAO.insert(t);
+        
+        if (ins){
+            List<Financa> financas = financaDAO.select(t.getData());
+            int key = -1;
+            
+            for (Financa financa : financas){
+                if (financa.equals(t)){
+                    key = financa.getRowid();
+                    t = financa;
+                }
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na inserção de finança. Obtenção de código de inserção"
+                + " falhou.");
+            } else{
+                model.addRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na inserção de finança. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override

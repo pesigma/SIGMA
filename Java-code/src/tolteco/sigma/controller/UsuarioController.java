@@ -10,23 +10,52 @@ import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.UsuarioDAO;
 import tolteco.sigma.model.entidades.Usuario;
+import tolteco.sigma.model.tables.SigmaAbstractTableModel;
+import tolteco.sigma.model.tables.UsuarioTable;
 
 /**
  *
  * @author Juliano Felipe
  */
-public class UsuarioController extends GenericController<Usuario>{
+public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
 
     private final UsuarioDAO usuarioDAO;
-    
-    public UsuarioController(DAOFactory dao) {
-        super(dao);
+
+    public UsuarioController(DAOFactory dao, SigmaAbstractTableModel model) {
+        super(dao, model);
         usuarioDAO = dao.getUsuarioDAO();
     }
-
+    
     @Override
     public boolean insert(Usuario t) throws DatabaseException {
-        return usuarioDAO.insert(t);
+        boolean ins = usuarioDAO.insert(t);
+        
+        if (ins){
+            List<Usuario> usuarios = usuarioDAO.select(t.getUserName());
+            int key = -1;
+            
+            for (Usuario usuario : usuarios){
+                if (usuario.equals(t)){
+                    key = usuario.getUserId();
+                    t = usuario;
+                }
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na inserção de usuario. Obtenção de código de inserção"
+                + " falhou.");
+            } else{
+                model.addRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na inserção de usuario. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;
 import tolteco.sigma.utils.eventsAndListeners.InsertionEvent;
@@ -22,12 +23,14 @@ import tolteco.sigma.utils.eventsAndListeners.SigmaListener;
  * @author Juliano Felipe
  * @param <T> Entidade para controle.
  */
-public abstract class GenericController<T> implements SigmaListener{
+public abstract class GenericController<T, Model extends SigmaAbstractTableModel> implements SigmaListener{
         
     protected DAOFactory dao = null;
+    protected SigmaAbstractTableModel model = null;
     
-    protected GenericController(DAOFactory dao) {
+    protected GenericController(DAOFactory dao, SigmaAbstractTableModel model) {
         this.dao = dao;
+        this.model = model;
     }
     
     public abstract boolean insert(T t) throws DatabaseException;

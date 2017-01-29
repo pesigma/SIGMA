@@ -10,24 +10,52 @@ import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.ServicoDAO;
 import tolteco.sigma.model.entidades.Servico;
+import tolteco.sigma.model.tables.ServicoTable;
+import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 
 /**
  *
  * @author Juliano Felipe
  */
-public class ServicoController extends GenericController<Servico>{
+public class ServicoController extends GenericController<Servico, ServicoTable>{
 
     private final ServicoDAO servicoDAO;
-    
-    public ServicoController(DAOFactory dao) {
-        super(dao);
-        
+
+    public ServicoController(DAOFactory dao, SigmaAbstractTableModel model) {
+        super(dao, model);
         servicoDAO = dao.getServicoDAO();
     }
-
+    
     @Override
     public boolean insert(Servico t) throws DatabaseException {
-        return servicoDAO.insert(t);
+        boolean ins = servicoDAO.insert(t);
+        
+        if (ins){
+            List<Servico> servicos = servicoDAO.select(t.getPlaca());
+            int key = -1;
+            
+            for (Servico servico : servicos){
+                if (servico.equals(t)){
+                    key = servico.getRowid();
+                    t = servico;
+                }
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na inserção de serviço. Obtenção de código de inserção"
+                + " falhou.");
+            } else{
+                model.addRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na inserção de serviço. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override

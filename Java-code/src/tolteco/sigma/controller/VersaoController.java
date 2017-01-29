@@ -11,24 +11,52 @@ import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.VersionDAO;
 import tolteco.sigma.model.entidades.Version;
+import tolteco.sigma.model.tables.SigmaAbstractTableModel;
+import tolteco.sigma.model.tables.VersionTable;
 
 /**
  *
  * @author Juliano Felipe
  */
-public class VersaoController extends GenericController<Version>{
+public class VersaoController extends GenericController<Version, VersionTable>{
 
     private final VersionDAO versionDAO;
-    
-    public VersaoController(DAOFactory dao) {
-        super(dao);
-        
+
+    public VersaoController(DAOFactory dao, SigmaAbstractTableModel model) {
+        super(dao, model);
         versionDAO = dao.getVersionDAO();
     }
-
+    
     @Override
     public boolean insert(Version t) throws DatabaseException {
-        return versionDAO.insert(t);
+        boolean ins = versionDAO.insert(t);
+        
+        if (ins){
+            List<Version> versoes = versionDAO.select(t.getMajorName());
+            int key = -1;
+            
+            for (Version versao: versoes){
+                if (versao.equals(t)){
+                    key = versao.getRowid();
+                    t = versao;
+                }
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na inserção de versão. Obtenção de código de inserção"
+                + " falhou.");
+            } else{
+                model.addRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na inserção de versão. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override

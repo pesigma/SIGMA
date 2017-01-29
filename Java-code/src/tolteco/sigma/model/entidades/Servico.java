@@ -12,7 +12,7 @@ import java.util.Observable;
  * Entidade Servico, possui métodos e valores para o objeto serviço
  * @author Maycon
  */
-public class Servico extends Observable implements Comparable{
+public class Servico implements Comparable<Servico>{
     //Atributos
     String placa, 
            modelo,
@@ -125,7 +125,7 @@ public class Servico extends Observable implements Comparable{
      * @return     int referente ao valor da comparação.
      */
     @Override //Checar o objeto de passagem como param (É Servico ou inteiro, etc).
-    public int compareTo(Object that) {
+    public int compareTo(Servico that) {
         Servico thatService = null; //Parece deselegante
         if (that instanceof Servico) thatService = (Servico) that;
         else throw new ClassCastException ("Objeto a ser comparado não é um Serviço!");

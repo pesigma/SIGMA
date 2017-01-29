@@ -5,6 +5,8 @@
  */
 package tolteco.sigma.model.dao;
 
+import java.util.Date;
+import java.util.List;
 import tolteco.sigma.model.entidades.Financa;
 
 /**
@@ -12,5 +14,7 @@ import tolteco.sigma.model.entidades.Financa;
  * @author Juliano_Felipe
  */
 public interface FinancaDAO extends GenericDAO<Financa>{
+    public List<Financa> toReport(int tipo) throws DatabaseException;
     
+    public List<Financa> select(Date date) throws DatabaseException;
 }

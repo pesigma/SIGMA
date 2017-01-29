@@ -54,6 +54,18 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         entidades.add(row, object);
     }
     
+    public void addRow(T object){
+        entidades.add(object);
+    }
+    
+    public void removeRow(T object){
+        entidades.remove(object);
+    }
+    
+    public void removeRow(int row){
+        entidades.remove(row);
+    }
+    
     /**
      * Retorna o número de elementos
      * na tabela. A lista pode (em teoria),

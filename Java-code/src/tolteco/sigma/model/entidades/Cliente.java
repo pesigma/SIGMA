@@ -6,13 +6,12 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Comparator;
-import java.util.Observable;
 
 /**
  * Entidade cliente, possui métodos e valores para o objeto cliente
  * @author Maycon
  */
-public class Cliente extends Observable implements Comparable{
+public class Cliente implements Comparable<Cliente>{
     //Atributos
     private String nome,
                 sobrenome,
@@ -137,7 +136,7 @@ public class Cliente extends Observable implements Comparable{
      * @see http://www.javapractices.com/topic/TopicAction.do?Id=207
      */
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Cliente o) {
         String str=null;
         if (o instanceof String) str = (String) o;
         else throw new ClassCastException ("Objeto a ser comparado não é uma String!");

@@ -8,13 +8,12 @@ import Controles.ErrorPane;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Observable;
 
 /**
  * Entidade financa, possui métodos e valores para o objeto finança
  * @author Maycon
  */
-public class Financa extends Observable implements Comparable {
+public class Financa implements Comparable<Financa> {
     
     //Atributos
     Date data;
@@ -343,7 +342,7 @@ public class Financa extends Observable implements Comparable {
      * @return
      */
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Financa o) {
         Financa fin=null;
         if (o instanceof Financa) fin = (Financa) o;
         else throw new ClassCastException ("Objeto a ser comparado não é uma Finança!");

@@ -15,7 +15,7 @@ import java.util.Observable;
  * de "segurança".
  * @author Juliano_Felipe
  */
-public class Usuario extends Observable implements Comparable<Usuario> {
+public class Usuario implements Comparable<Usuario> {
     private int userId;
     private String userName;
     private Access accessLevel;

@@ -42,6 +42,11 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO implements FinancaDAO {
     public List<Financa> select(String nome) throws DatabaseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public List<Financa> select(Date date) throws DatabaseException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     /**
      * 04/09 - Maycon Funcao que retorna um Array de registros para serem
@@ -51,6 +56,7 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO implements FinancaDAO {
      * @return
      * @throws DatabaseException
      */
+    @Override
     public List<Financa> toReport(int tipo) throws DatabaseException {
         String data = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
         if (tipo == 0) { //Mensal
