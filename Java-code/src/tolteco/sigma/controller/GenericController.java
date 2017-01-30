@@ -39,6 +39,9 @@ public abstract class GenericController<T, Model extends SigmaAbstractTableModel
     
     public abstract boolean update(T t) throws DatabaseException;
     
+    /*
+    REMOVER OS 3 ABAIXO DEPENDENDO DA IMPLEMENTAÇÃO DO MVC
+    */
     public abstract List<T> selectAll() throws DatabaseException;
     
     public abstract T search(int primaryKey) throws DatabaseException;

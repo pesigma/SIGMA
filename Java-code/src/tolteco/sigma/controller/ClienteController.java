@@ -39,6 +39,14 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
                     key = client.getClienteId();
                     t = client;
                 }
+                /*
+                Essa atribuição maluca é para poder obter o
+                id do cliente.
+                Não fará muito sentido sem adaptar o "equals"
+                para funcionar com ou sem id
+                
+                Esse parada vai 
+                */
             }
             
             if (key==-1){ 
@@ -60,12 +68,59 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
 
     @Override
     public boolean remove(Cliente t) throws DatabaseException {
-        return clienteDAO.remove(t);
+        boolean rem = clienteDAO.remove(t);
+        
+        if (rem){
+            Cliente cliente = clienteDAO.search(t.getClienteId());
+            int key = -1;
+            if (cliente.equals(t)){
+                key = cliente.getClienteId();
+                t = cliente;
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na remoção de cliente. Obtenção de ID falhou.");
+            } else{
+                model.setRow(t); //Opção de updade de linha
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na remoção de cliente. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override
     public boolean update(Cliente t) throws DatabaseException {
-        return clienteDAO.update(t);
+        boolean upd = clienteDAO.update(t);
+        
+        if (upd){
+            Cliente cliente = clienteDAO.search(t.getClienteId());
+            int key = -1;
+            if (cliente.equals(t)){
+                key = cliente.getClienteId();
+                t = cliente;
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na atualização de cliente. Obtenção de ID de cliente"
+                + " falhou.");
+            } else{
+                model.removeRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na atualização de cliente. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override

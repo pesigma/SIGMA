@@ -9,6 +9,7 @@ import java.util.List;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.UsuarioDAO;
+import tolteco.sigma.model.entidades.Servico;
 import tolteco.sigma.model.entidades.Usuario;
 import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 import tolteco.sigma.model.tables.UsuarioTable;
@@ -60,12 +61,56 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
 
     @Override
     public boolean remove(Usuario t) throws DatabaseException {
-        return usuarioDAO.remove(t);
+        boolean rem = usuarioDAO.remove(t);
+        
+        if (rem){
+            Usuario usuario = usuarioDAO.search(t.getUserId());
+            int key = -1;
+            if (usuario.equals(t)){
+                key = usuario.getUserId();
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na remoção de usuário. Obtenção de ID falhou.");
+            } else{
+                model.removeRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na remoção de usuário. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override
     public boolean update(Usuario t) throws DatabaseException {
-        return usuarioDAO.update(t);
+        boolean upd = usuarioDAO.update(t);
+        
+        if (upd){
+            Usuario usuario = usuarioDAO.search(t.getUserId());
+            int key = -1;
+            if (usuario.equals(t)){
+                key = usuario.getUserId();
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na atualização de usuário. Obtenção de ID falhou.");
+            } else{
+                model.setRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na atualização de usuário. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override

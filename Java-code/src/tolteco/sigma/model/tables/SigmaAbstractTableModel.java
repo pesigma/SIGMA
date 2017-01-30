@@ -8,6 +8,7 @@ package tolteco.sigma.model.tables;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.table.AbstractTableModel;
+import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;
 import tolteco.sigma.utils.eventsAndListeners.InsertionEvent;
@@ -52,6 +53,25 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
     
     public void setRow(T object, int row){
         entidades.add(row, object);
+    }
+    
+    public void setRow(T object) throws DatabaseException{
+        int indexToUpdate = -1;
+        int counter=0;
+        for(T entidade : entidades){
+            if (entidade.equals(object)){
+                indexToUpdate = counter;
+                break;
+            }
+            counter++;
+        }
+        
+        if (indexToUpdate == -1){
+            throw new DatabaseException("Objeto inexistente na tabela de "
+                  + object.getClass() + ". Impossível atualizar.");
+        }
+        
+        entidades.set(10, object);
     }
     
     public void addRow(T object){

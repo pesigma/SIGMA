@@ -17,7 +17,7 @@ import tolteco.sigma.model.tables.VersionTable;
 /**
  *
  * @author Juliano Felipe
- */
+ */ 
 public class VersaoController extends GenericController<Version, VersionTable>{
 
     private final VersionDAO versionDAO;
@@ -61,12 +61,56 @@ public class VersaoController extends GenericController<Version, VersionTable>{
 
     @Override
     public boolean remove(Version t) throws DatabaseException {
-        return versionDAO.insert(t);
+        boolean rem = versionDAO.remove(t);
+        
+        if (rem){
+            Version version = versionDAO.search(t.getRowid());
+            int key = -1;
+            if (version.equals(t)){
+                key = version.getRowid();
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na remoção de versão. Obtenção de ID falhou.");
+            } else{
+                model.removeRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na remoção de versão. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override
     public boolean update(Version t) throws DatabaseException {
-        return versionDAO.insert(t);
+        boolean rem = versionDAO.update(t);
+        
+        if (rem){
+            Version version = versionDAO.search(t.getRowid());
+            int key = -1;
+            if (version.equals(t)){
+                key = version.getRowid();
+            }
+            
+            if (key==-1){ 
+                throw new DatabaseException(
+                "Falha na atualização de versão. Obtenção de ID falhou.");
+            } else{
+                model.setRow(t);
+            }
+            
+        } else {
+            throw new DatabaseException(
+                "Falha na atualização de versão. Persistência no banco de dados"
+                + " falhou.");
+        }
+        
+        return false;
     }
 
     @Override
