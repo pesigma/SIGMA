@@ -90,4 +90,25 @@ public class FinancaTable extends SigmaAbstractTableModel<Financa>{
                 "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
         }
     }   
+    
+    @Override
+    public Financa search(int key) {
+        for (Financa financa : getList()){
+            if (financa.getRowid() == key)
+                return financa;
+        }
+        return null;
+    }
+
+    @Override
+    public int search(Financa object) {
+        int DIDNOT_FIND_ROW=-1;
+        int counter=0;
+        for (Financa financa : getList()){
+            if (financa.equals(object))
+                return counter;
+            counter++;
+        }
+        return DIDNOT_FIND_ROW;
+    }
 }

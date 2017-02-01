@@ -94,4 +94,25 @@ public class VersionTable extends SigmaAbstractTableModel<Version>{
                 "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
         }
     }
+    
+    @Override
+    public Version search(int key) {
+        for (Version version : getList()){
+            if (version.getRowid()== key)
+                return version;
+        }
+        return null;
+    }
+
+    @Override
+    public int search(Version object) {
+        int DIDNOT_FIND_ROW=-1;
+        int counter=0;
+        for (Version version : getList()){
+            if (version.equals(object))
+                return counter;
+            counter++;
+        }
+        return DIDNOT_FIND_ROW;
+    }
 }

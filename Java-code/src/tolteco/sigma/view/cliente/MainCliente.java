@@ -18,13 +18,23 @@ import tolteco.sigma.view.interfaces.MainEntity;
  */
 public class MainCliente extends javax.swing.JPanel implements MainEntity<ClienteController>{
     private OperacaoCliente ultimoPanelAdicionado = null;
+    private final ClienteController controller;
+    
     
     /**
      * Creates new form MainCliente
      */
     public MainCliente() {
         initComponents();
+        controller = new ClienteController(null, null);
     }
+
+    public MainCliente(ClienteController controller) {
+        this.controller = controller;
+        initComponents();
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

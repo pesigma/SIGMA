@@ -94,4 +94,24 @@ public class ServicoTable extends SigmaAbstractTableModel<Servico>{
         }
     }
 
+    @Override
+    public Servico search(int key) {
+        for (Servico servico : getList()){
+            if (servico.getRowid()== key)
+                return servico;
+        }
+        return null;
+    }
+
+    @Override
+    public int search(Servico object) {
+        int DIDNOT_FIND_ROW=-1;
+        int counter=0;
+        for (Servico servico : getList()){
+            if (servico.equals(object))
+                return counter;
+            counter++;
+        }
+        return DIDNOT_FIND_ROW;
+    }
 }

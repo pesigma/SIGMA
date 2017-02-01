@@ -6,7 +6,6 @@
 package tolteco.sigma.model.tables;
 
 import tolteco.sigma.model.entidades.Cliente;
-import tolteco.sigma.model.entidades.Situacao;
 
 /**
  *
@@ -97,5 +96,26 @@ public class ClienteTable extends SigmaAbstractTableModel<Cliente>{
                 throw new IndexOutOfBoundsException(
                 "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
         }
+    }
+
+    @Override
+    public Cliente search(int key) {
+        for (Cliente cliente : getList()){
+            if (cliente.getClienteId() == key)
+                return cliente;
+        }
+        return null;
+    }
+
+    @Override
+    public int search(Cliente object) {
+        int DIDNOT_FIND_ROW=-1;
+        int counter=0;
+        for (Cliente cliente : getList()){
+            if (cliente.equals(object))
+                return counter;
+            counter++;
+        }
+        return DIDNOT_FIND_ROW;
     }
 }

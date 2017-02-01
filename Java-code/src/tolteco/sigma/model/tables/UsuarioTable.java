@@ -79,4 +79,25 @@ public class UsuarioTable extends SigmaAbstractTableModel<Usuario>{
                 "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
         }
     }
+    
+    @Override
+    public Usuario search(int key) {
+        for (Usuario user : getList()){
+            if (user.getUserId()== key)
+                return user;
+        }
+        return null;
+    }
+
+    @Override
+    public int search(Usuario object) {
+        int DIDNOT_FIND_ROW=-1;
+        int counter=0;
+        for (Usuario user : getList()){
+            if (user.equals(object))
+                return counter;
+            counter++;
+        }
+        return DIDNOT_FIND_ROW;
+    }
 }

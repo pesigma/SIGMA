@@ -99,17 +99,8 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         return entidades.size();
     }
 
-    /// MÉTODOS ABAIXO PRECISAM SER IMPLEMENTADOS POR CADA TIPO DE TABELA
-    /*
-    @Override
-    public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
+    public abstract T search(int key);
+    public abstract int search(T object);
     
     /**
      * Método para adicionar Listeners à
