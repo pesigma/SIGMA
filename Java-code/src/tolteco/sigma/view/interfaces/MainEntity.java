@@ -7,6 +7,7 @@ package tolteco.sigma.view.interfaces;
 
 import tolteco.sigma.controller.GenericController;
 import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 
 /**
  *
@@ -14,7 +15,9 @@ import tolteco.sigma.model.dao.DatabaseException;
  * @param <T>
  */
 public interface MainEntity<T extends GenericController> {
-    public void displayException(Exception ex);
-    public void displayDatabaseException(DatabaseException ex);
-    
+    void displayException(Exception ex);
+    void displayDatabaseException(DatabaseException ex);
+ 
+    GenericController getController();
+    SigmaAbstractTableModel getModel();
 }

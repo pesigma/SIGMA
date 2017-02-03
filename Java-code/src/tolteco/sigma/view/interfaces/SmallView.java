@@ -7,11 +7,8 @@ package tolteco.sigma.view.interfaces;
 
 /**
  *
- * @author Juliano
- * @param <T> Tipo do objeto a ser
- *            manipulado pela respectiva
- *            view.
+ * @author JFPS
  */
-public interface Listar<T> extends SmallView<T> {
+public interface SmallView<T> {
     
 }

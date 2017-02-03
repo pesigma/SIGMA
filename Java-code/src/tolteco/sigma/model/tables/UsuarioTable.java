@@ -5,7 +5,6 @@
  */
 package tolteco.sigma.model.tables;
 
-import static java.sql.JDBCType.ROWID;
 import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.model.entidades.Usuario;
 

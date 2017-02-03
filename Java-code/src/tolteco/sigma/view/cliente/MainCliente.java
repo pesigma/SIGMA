@@ -6,6 +6,8 @@
 package tolteco.sigma.view.cliente;
 
 import tolteco.sigma.controller.ClienteController;
+import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.tables.ClienteTable;
 import tolteco.sigma.view.interfaces.MainEntity;
 
 /**
@@ -19,7 +21,7 @@ import tolteco.sigma.view.interfaces.MainEntity;
 public class MainCliente extends javax.swing.JPanel implements MainEntity<ClienteController>{
     private OperacaoCliente ultimoPanelAdicionado = null;
     private final ClienteController controller;
-    
+    private ClienteTable model;
     
     /**
      * Creates new form MainCliente
@@ -29,8 +31,9 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
         controller = new ClienteController(null, null);
     }
 
-    public MainCliente(ClienteController controller) {
+    public MainCliente(ClienteController controller, ClienteTable model) {
         this.controller = controller;
+        this.model = model;
         initComponents();
     }
     
@@ -173,7 +176,7 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
 
     private void ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListActionPerformed
         if (ultimoPanelAdicionado != OperacaoCliente.Listar){ //Singleton - Sort of
-            ListarCliente add = new ListarCliente();
+            ListarCliente add = new ListarCliente(this);
             Panel.setViewportView( add );
         }
 
@@ -189,4 +192,24 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
     private javax.swing.JScrollPane Panel;
     private javax.swing.JButton Search;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public ClienteTable getModel(){
+        return model;
+    }
+    
+    @Override
+    public ClienteController getController(){
+        return controller;
+    }
+
+    @Override
+    public void displayException(Exception ex) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayDatabaseException(DatabaseException ex) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
