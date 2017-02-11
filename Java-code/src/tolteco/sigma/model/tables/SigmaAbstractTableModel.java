@@ -53,6 +53,7 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
     
     public void setRow(T object, int row){
         entidades.add(row, object);
+        fireChangeProperty(new ChangePropertyEvent(object));
     }
     
     public void setRow(T object) throws DatabaseException{
@@ -72,18 +73,23 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         }
         
         entidades.set(10, object);
+        fireChangeProperty(new ChangePropertyEvent(object));
     }
     
     public void addRow(T object){
         entidades.add(object);
+        fireInsertion(new InsertionEvent(object));
     }
     
     public void removeRow(T object){
         entidades.remove(object);
+        fireDeletion(new DeletionEvent(object));
     }
     
     public void removeRow(int row){
+        T object = entidades.get(row);
         entidades.remove(row);
+        fireDeletion(new DeletionEvent(object));
     }
     
     /**

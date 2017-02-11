@@ -9,6 +9,7 @@ import java.util.Date;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.entidades.FinancaTipo;
 import tolteco.sigma.model.entidades.Situacao;
+import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 
 /**
  *
@@ -79,12 +80,24 @@ public class FinancaTable extends SigmaAbstractTableModel<Financa>{
         Financa financa = getRow(rowIndex);
         
         switch(columnIndex){
-            case DATA:     financa.setData((Date) aValue);
-            case OBS:      financa.setDesc((String) aValue);
-            case SITUACAO: financa.setSituacao((Situacao) aValue);
-            case TIPO:     financa.setTipo((FinancaTipo) aValue);
-            case VALOR:    financa.setValor((double) aValue);
-            case ROWID:    financa.setRowid((int) aValue);
+            case DATA:     
+                financa.setData((Date) aValue);
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case OBS:      
+                financa.setDesc((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case SITUACAO: 
+                financa.setSituacao((Situacao) aValue);
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case TIPO:     
+                financa.setTipo((FinancaTipo) aValue);
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case VALOR:    
+                financa.setValor((double) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case ROWID:    
+                financa.setRowid((int) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
             default:
                 throw new IndexOutOfBoundsException(
                 "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");

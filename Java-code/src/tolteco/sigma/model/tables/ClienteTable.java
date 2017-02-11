@@ -6,6 +6,7 @@
 package tolteco.sigma.model.tables;
 
 import tolteco.sigma.model.entidades.Cliente;
+import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 
 /**
  *
@@ -84,18 +85,34 @@ public class ClienteTable extends SigmaAbstractTableModel<Cliente>{
         Cliente cliente = getRow(rowIndex);
         
         switch(columnIndex){
-            case NOME:       cliente.setNome((String) aValue);
-            case SOBRENOME:  cliente.setSobrenome((String) aValue);
-            case OBS:        cliente.setObs((String) aValue);
-            case ENDERECO:   cliente.setEnd((String) aValue);
-            case TELEFONE:   cliente.setTel((String) aValue);
-            case CPF:        cliente.setCpf((String) aValue);
-            case CLIENTE_ID: cliente.setClienteId((int) aValue);
-            case USER_ID:    cliente.setUserId((int) aValue);
+            case NOME:       
+                cliente.setNome((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case SOBRENOME:  
+                cliente.setSobrenome((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case OBS:        
+                cliente.setObs((String) aValue);  
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case ENDERECO:  
+                cliente.setEnd((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case TELEFONE:  
+                cliente.setTel((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case CPF:        
+                cliente.setCpf((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case CLIENTE_ID: 
+                cliente.setClienteId((int) aValue);
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case USER_ID:    
+                cliente.setUserId((int) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
             default:
                 throw new IndexOutOfBoundsException(
                 "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
-        }
+        }      
     }
 
     @Override

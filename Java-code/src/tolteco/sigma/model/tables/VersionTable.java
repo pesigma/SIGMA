@@ -7,6 +7,7 @@ package tolteco.sigma.model.tables;
 
 import java.util.Date;
 import tolteco.sigma.model.entidades.Version;
+import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 
 /**
  * Tabela de versão.
@@ -81,13 +82,27 @@ public class VersionTable extends SigmaAbstractTableModel<Version>{
         Version version = getRow(rowIndex);
         
         switch(columnIndex){
-            case MAJOR_VER:   version.setMajorVersion((int) aValue);
-            case MAJOR_NAME:  version.setMajorName((String) aValue);
-            case MAJOR_DATE:  version.setMajorDate((Date) aValue);
-            case MAJOR_NOTES: version.setMajorNotes((String) aValue);
-            case MINOR_VER:   version.setMinorVersion((int) aValue);
-            case MINOR_DATE:  version.setMinorDate((Date) aValue);
-            case MINOR_NOTES: version.setMinorNotes((String) aValue);
+            case MAJOR_VER:   
+                version.setMajorVersion((int) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case MAJOR_NAME:  
+                version.setMajorName((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case MAJOR_DATE:  
+                version.setMajorDate((Date) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case MAJOR_NOTES: 
+                version.setMajorNotes((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case MINOR_VER:   
+                version.setMinorVersion((int) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case MINOR_DATE:  
+                version.setMinorDate((Date) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case MINOR_NOTES: 
+                version.setMinorNotes((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
 
             default:
                 throw new IndexOutOfBoundsException(

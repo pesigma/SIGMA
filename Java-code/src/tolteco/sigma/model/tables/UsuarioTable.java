@@ -7,6 +7,7 @@ package tolteco.sigma.model.tables;
 
 import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.model.entidades.Usuario;
+import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 
 /**
  *
@@ -69,10 +70,18 @@ public class UsuarioTable extends SigmaAbstractTableModel<Usuario>{
         Usuario usuario = getRow(rowIndex);
         
         switch(columnIndex){
-            case USER_ID:      usuario.setUserId((int) aValue);
-            case USER_NAME:    usuario.setUserName((String) aValue);
-            case ACCESS_LEVEL: usuario.setAccessLevel((Access) aValue);
-            case PASS:         usuario.setPass((char[]) aValue);
+            case USER_ID:      
+                usuario.setUserId((int) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case USER_NAME:    
+                usuario.setUserName((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case ACCESS_LEVEL: 
+                usuario.setAccessLevel((Access) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case PASS:         
+                usuario.setPass((char[]) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
             default:
                 throw new IndexOutOfBoundsException(
                 "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");

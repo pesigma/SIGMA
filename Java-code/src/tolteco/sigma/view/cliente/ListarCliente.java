@@ -106,7 +106,6 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
     public Cliente getInstance() {
         int row = tabela.getSelectedRow();
         Cliente cliente = null;
-        ClienteTable model = null;
         if (row>=0){
             //cliente = (ClienteTable) tabela.getModel().
             cliente = MAIN.getModel().getRow(row);

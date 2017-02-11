@@ -137,10 +137,13 @@ public class Cliente implements Comparable<Cliente>{
      */
     @Override
     public int compareTo(Cliente o) {
-        String str=null;
-        if (o instanceof String) str = (String) o;
-        else throw new ClassCastException ("Objeto a ser comparado não é uma String!");
-        return this.compareTo(str);
+        Cliente cli=null;
+        if (o instanceof Cliente) cli = (Cliente) o;
+        else throw new ClassCastException ("Objeto a ser comparado não é um Cliente!");
+        
+             if (this.clienteId > cli.clienteId)  return 1;
+        else if (this.clienteId == cli.clienteId) return 0;
+        else                                      return -1;
     }
     
     public static Comparator<String> nomeComparator (){

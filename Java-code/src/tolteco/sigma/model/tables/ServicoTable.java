@@ -7,6 +7,7 @@ package tolteco.sigma.model.tables;
 
 import tolteco.sigma.model.entidades.Servico;
 import tolteco.sigma.model.entidades.Situacao;
+import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 
 /**
  *
@@ -81,13 +82,27 @@ public class ServicoTable extends SigmaAbstractTableModel<Servico>{
         Servico servico = getRow(rowIndex);
         
         switch(columnIndex){
-            case PLACA:      servico.setPlaca((String) aValue);
-            case MODELO:     servico.setModelo((String) aValue);
-            case OBS:        servico.setObs((String) aValue);
-            case KM:         servico.setKm((int) aValue);
-            case CLIENTE_ID: servico.setIdcliente((int) aValue);
-            case SITUACAO:   servico.setSituacao((Situacao) aValue);
-            case ROWID:      servico.setRowid((int) aValue);
+            case PLACA:      
+                servico.setPlaca((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case MODELO:     
+                servico.setModelo((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case OBS:        
+                servico.setObs((String) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case KM:         
+                servico.setKm((int) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case CLIENTE_ID: 
+                servico.setIdcliente((int) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
+            case SITUACAO:   
+                servico.setSituacao((Situacao) aValue);
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break; 
+            case ROWID:      
+                servico.setRowid((int) aValue); 
+                fireChangeProperty(new ChangePropertyEvent(aValue)); break;
             default:
                 throw new IndexOutOfBoundsException(
                 "Exceeded Max Column Count: " + columnIndex +  " out of " + COLUMN_COUNT + ".");
