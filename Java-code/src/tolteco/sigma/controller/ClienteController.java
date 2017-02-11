@@ -138,4 +138,8 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
         return clienteDAO.select(nome);
     }
 
+    public Cliente searchByCPF(String cpf) throws DatabaseException{
+        return null;
+    }
+    
 }

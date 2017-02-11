@@ -167,7 +167,7 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         if (ultimoPanelAdicionado != OperacaoCliente.Buscar){ //Singleton - Sort of
-            BuscarCliente add = new BuscarCliente();
+            BuscarCliente add = new BuscarCliente(this);
             Panel.setViewportView( add );
         }
 

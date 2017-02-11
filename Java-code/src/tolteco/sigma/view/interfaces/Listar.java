@@ -12,6 +12,6 @@ package tolteco.sigma.view.interfaces;
  *            manipulado pela respectiva
  *            view.
  */
-public interface Listar<T> extends SmallView<T> {
+public interface Listar<T> extends Returnable<T> {
     
 }

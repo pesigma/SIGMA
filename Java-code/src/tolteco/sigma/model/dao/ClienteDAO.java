@@ -16,4 +16,5 @@ import tolteco.sigma.model.entidades.Cliente;
 public interface ClienteDAO extends GenericDAO<Cliente> {
     
     //List<Cliente> selectAllClientes() throws DatabaseException;
+    Cliente searchByCPF(String cpf) throws DatabaseException;
 }

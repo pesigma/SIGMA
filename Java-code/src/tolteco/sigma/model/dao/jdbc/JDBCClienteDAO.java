@@ -261,6 +261,11 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
         
         return lista;
     }
+
+    @Override
+    public Cliente searchByCPF(String cpf) throws DatabaseException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
 

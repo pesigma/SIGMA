@@ -6,6 +6,7 @@
 package tolteco.sigma.view.cliente;
 
 import tolteco.sigma.model.entidades.Cliente;
+import tolteco.sigma.model.tables.ClienteTable;
 import tolteco.sigma.view.interfaces.Listar;
 
 /**
@@ -16,7 +17,7 @@ import tolteco.sigma.view.interfaces.Listar;
  * @author Juliano Felipe
  */
 public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>{
-    private final MainCliente main;
+    private final MainCliente MAIN;
     
     /**
      * Creates new form ListarCliente
@@ -25,7 +26,7 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
     public ListarCliente(MainCliente main) {
         initComponents();
         
-        this.main = main;
+        this.MAIN = main;
         //Setar informações na tabela
         tabela.setModel(main.getModel());
     }
@@ -100,4 +101,18 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
     private javax.swing.JButton saveButton;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public Cliente getInstance() {
+        int row = tabela.getSelectedRow();
+        Cliente cliente = null;
+        ClienteTable model = null;
+        if (row>=0){
+            //cliente = (ClienteTable) tabela.getModel().
+            cliente = MAIN.getModel().getRow(row);
+        } else {
+            throw new UnsupportedOperationException("COOLOCA BALÃO AQUI");
+        }
+        return cliente;
+    }
 }
