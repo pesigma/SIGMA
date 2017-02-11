@@ -11,7 +11,14 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
+import tolteco.sigma.controller.ClienteController;
+import tolteco.sigma.controller.FinancaController;
+import tolteco.sigma.controller.ServicoController;
+import tolteco.sigma.controller.UsuarioController;
+import tolteco.sigma.controller.VersionController;
+import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.utils.DefaultConfigs;
+import tolteco.sigma.utils.Main;
 import tolteco.sigma.view.cliente.MainCliente;
 import tolteco.sigma.view.financas.MainFinanca;
 
@@ -20,12 +27,20 @@ import tolteco.sigma.view.financas.MainFinanca;
  * @author Juliano
  */
 public class MainFrame extends javax.swing.JFrame {
-    private static final int accessLevel = 0; //Usado para testes - Nivel de acesso
+    //private static final int ACCESS_LEVEL = 0; //Usado para testes - Nivel de acesso
     
     /**
      * Creates new form MainFrame
+     * @param cliente
+     * @param financa
+     * @param servico
+     * @param usuario
+     * @param version
      */
-    public MainFrame() {
+    public MainFrame(ClienteController cliente, 
+           FinancaController financa, ServicoController servico, 
+           UsuarioController usuario, VersionController version) {
+        
         initComponents();
         
         //new Font(DefaultConfigs.SYSTEMFONT, Font.BOLD|Font.ITALIC, 16)
@@ -35,18 +50,30 @@ public class MainFrame extends javax.swing.JFrame {
         PainelGuias.add(panel);
         PainelGuias.setTitleAt(0, "Principal");
         
-        JPanel panel1 = new MainCliente();
+        JPanel panel1 = new MainCliente(this, cliente);
         PainelGuias.add(panel1);
         PainelGuias.setTitleAt(1, "Clientes");
         
-        JPanel panel2 = new MainFinanca();
+        /*JPanel panel2 = new MainFinanca(this, financa);
         PainelGuias.add(panel2);
         PainelGuias.setTitleAt(2, "Finanças");
         
-        if (accessLevel == 0){
+        JPanel panel3 = new MainServico(this, servico);
+        PainelGuias.add(panel2);
+        PainelGuias.setTitleAt(2, "Serviços");      */
+        
+        if (Sistema.getUser().getAccessLevel() == Access.ROOT){
             JMenu jmenu = new JMenu("Configurações");
             BarraDeMenu.add(Box.createHorizontalGlue());
             BarraDeMenu.add(jmenu);
+            /*
+            JPanel panel4 = new MainUsuario(this, usuario);
+            PainelGuias.add(panel2);
+            PainelGuias.setTitleAt(2, "Usuários");
+        
+            JPanel panel5 = new MainVersion(this, version);
+            PainelGuias.add(panel2);
+            PainelGuias.setTitleAt(2, "Versões");*/
         }
         
         JButton logOut = new JButton("Logout");
@@ -154,7 +181,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                Main.assembleMain().setVisible(true);
             }
         });
     }

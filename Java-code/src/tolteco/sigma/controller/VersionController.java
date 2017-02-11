@@ -18,13 +18,15 @@ import tolteco.sigma.model.tables.VersionTable;
  *
  * @author Juliano Felipe
  */ 
-public class VersaoController extends GenericController<Version, VersionTable>{
+public class VersionController extends GenericController<Version, VersionTable>{
 
     private final VersionDAO versionDAO;
-
-    public VersaoController(DAOFactory dao, SigmaAbstractTableModel model) {
-        super(dao, model);
+    private final VersionTable model;
+    
+    public VersionController(DAOFactory dao, VersionTable model) {
+        super(dao);
         versionDAO = dao.getVersionDAO();
+        this.model = model;
     }
     
     @Override
@@ -138,5 +140,10 @@ public class VersaoController extends GenericController<Version, VersionTable>{
     
     public Version fetchLatestVersion(){
         return versionDAO.fetchLatestVersion();
+    }
+
+    @Override
+    public VersionTable getModel() {
+        return model;
     }
 }

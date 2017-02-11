@@ -11,19 +11,19 @@ import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.tables.ClienteTable;
-import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 
 /**
  *
  * @author Juliano Felipe
  */
 public class ClienteController extends GenericController<Cliente, ClienteTable>{
-    
     private final ClienteDAO clienteDAO;
-
-    public ClienteController(DAOFactory dao, SigmaAbstractTableModel model) {
-        super(dao, model);
+    private final ClienteTable model;
+    
+    public ClienteController(DAOFactory dao, ClienteTable model) {
+        super(dao);
         clienteDAO = dao.getClienteDAO();
+        this.model = model;
     }
     
     @Override
@@ -141,5 +141,12 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
     public Cliente searchByCPF(String cpf) throws DatabaseException{
         return null;
     }
+
+    @Override
+    public ClienteTable getModel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     
 }

@@ -9,9 +9,7 @@ import java.util.List;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.UsuarioDAO;
-import tolteco.sigma.model.entidades.Servico;
 import tolteco.sigma.model.entidades.Usuario;
-import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 import tolteco.sigma.model.tables.UsuarioTable;
 
 /**
@@ -19,12 +17,13 @@ import tolteco.sigma.model.tables.UsuarioTable;
  * @author Juliano Felipe
  */
 public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
-
+    private final UsuarioTable model;
     private final UsuarioDAO usuarioDAO;
 
-    public UsuarioController(DAOFactory dao, SigmaAbstractTableModel model) {
-        super(dao, model);
+    public UsuarioController(DAOFactory dao, UsuarioTable model) {
+        super(dao);
         usuarioDAO = dao.getUsuarioDAO();
+        this.model = model;
     }
     
     @Override
@@ -126,6 +125,11 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
     @Override
     public List<Usuario> select(String nome) throws DatabaseException {
         return usuarioDAO.select(nome);
+    }
+    
+    @Override
+    public UsuarioTable getModel() {
+        return model;
     }
     
 }

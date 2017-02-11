@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.cliente;
+package tolteco.sigma.view.interfaces;
 
 import java.awt.Component;
 
@@ -11,15 +11,16 @@ import java.awt.Component;
  *
  * @author Juliano
  */
-public enum OperacaoCliente {
+public enum Operacao {
     Adicionar(0),
     Modificar(1),
-    Buscar(2),
-    Listar(3),
-    Remover(4);
+    Buscar   (2),
+    Listar   (3),
+    Remover  (4),
+    Nenhum   (5);
     
     private final int valor;
-    private OperacaoCliente(int valor) {
+    private Operacao(int valor) {
         this.valor = valor;
     }
 
@@ -29,43 +30,37 @@ public enum OperacaoCliente {
     
     /**
      * Dado um inteiro, retorna a
-     * {@link tolteco.sigma.view.cliente.OperacaoCliente}
+     * {@link tolteco.sigma.view.interfaces.Operacao}
      * relacionada.
      * @param codigo do tipo inteiro.
-     * @return OperacaoCliente correspondente.
+     * @return Operacao correspondente.
      * @throws IllegalArgumentException Caso seja fora do limite.
      */
-    public static OperacaoCliente porCodigo (int codigo){
-        for (OperacaoCliente op : OperacaoCliente.values())
+    public static Operacao porCodigo (int codigo){
+        for (Operacao op : Operacao.values())
             if (codigo == op.valor) return op;
         throw new IllegalArgumentException ("Código inválido. Limite excedido.");
     }
     
     /**
-     * Dado um componente das views de clientes, retorna o código
+     * Dado um componente das views, retorna o código
      * referente à ela. Joga {@link } 
      * @param componente para se obter o código.
-     * @return {@link tolteco.sigma.view.cliente.OperacaoCliente}
+     * @return {@link tolteco.sigma.view.interfaces.Operacao}
      *         correspondente.
      * @throws IllegalArgumentException Caso qualquer outro tipo
      *                                  de componente seja passado.
      */
-    public static OperacaoCliente porInstancia (Component componente){
-             if (componente instanceof AdicionarCliente) return Adicionar;
-        else if (componente instanceof ModificarCliente) return Modificar;
-        else if (componente instanceof BuscarCliente)    return Buscar;
-        else if (componente instanceof ListarCliente)    return Listar; 
-        else if (componente instanceof RemoverCliente)   return Remover;
+    public static Operacao porInstancia (Component componente){
+             if (componente instanceof Adicionar) return Adicionar;
+        else if (componente instanceof Modificar) return Modificar;
+        else if (componente instanceof Buscar)    return Buscar;
+        else if (componente instanceof Listar)    return Listar; 
+        else if (componente instanceof Remover)   return Remover;
         else throw new IllegalArgumentException("Componente inválido.");
     }
     
-    /**
-     * Método usado para retornar uma instância de um componente
-     * usado nas views do cliente, dado a OperacaoCliente.
-     * @param tipo OperacaoCliente identificando a operação.
-     * @return Instância do componente identificado pela enum.
-     */
-    public static Component operacaoPorTipo (OperacaoCliente tipo){
+    /*public static Component operacaoPorTipo (Operacao tipo){
              if (tipo == Adicionar)   return new AdicionarCliente();
         else if (tipo == Modificar)   return new ModificarCliente();
         else if (tipo == Buscar)      return new BuscarCliente();
@@ -75,5 +70,5 @@ public enum OperacaoCliente {
             throw new IllegalArgumentException("Alguém esqueceu de adicionar"
                          + " a operação nessa função :D -> " + methodName);
         } //Check de sanidade para não esquecer de adicionar nada
-    }
+    }*/
 }

@@ -27,11 +27,11 @@ import tolteco.sigma.utils.eventsAndListeners.SigmaListener;
 public abstract class GenericController<T, Model extends SigmaAbstractTableModel> implements SigmaListener{
         
     protected DAOFactory dao = null;
-    protected SigmaAbstractTableModel model = null;
+    //protected SigmaAbstractTableModel model = null;
     
-    protected GenericController(DAOFactory dao, SigmaAbstractTableModel model) {
+    protected GenericController(DAOFactory dao/*, SigmaAbstractTableModel model*/) {
         this.dao = dao;
-        this.model = model;
+        //this.model = model;
     }
     
     public abstract boolean insert(T t) throws DatabaseException;
@@ -46,6 +46,8 @@ public abstract class GenericController<T, Model extends SigmaAbstractTableModel
     
     public abstract List<T> select(String nome) throws DatabaseException; //Buscar
 
+    public abstract SigmaAbstractTableModel<T> getModel();
+    
     @Override
     public boolean changePropertyEventHappened(ChangePropertyEvent event) {
         boolean result = false;

@@ -30,7 +30,7 @@ public enum OperacaoFinanca {
     
     /**
      * Dado um inteiro, retorna a
-     * {@link tolteco.sigma.view.cliente.OperacaoCliente}
+     * {@link tolteco.sigma.view.interfaces.OperacaoCliente}
      * relacionada.
      * @param codigo do tipo inteiro.
      * @return OperacaoFinanca correspondente.
@@ -46,7 +46,7 @@ public enum OperacaoFinanca {
      * Dado um componente das views de clientes, retorna o código
      * referente à ela. Joga {@link } 
      * @param componente para se obter o código.
-     * @return {@link tolteco.sigma.view.cliente.OperacaoCliente}
+     * @return {@link tolteco.sigma.view.interfaces.OperacaoCliente}
      *         correspondente.
      * @throws IllegalArgumentException Caso qualquer outro tipo
      *                                  de componente seja passado.

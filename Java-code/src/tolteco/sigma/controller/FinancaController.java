@@ -9,22 +9,21 @@ import java.util.List;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.FinancaDAO;
-import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.tables.FinancaTable;
-import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 
 /**
  *
  * @author Juliano Felipe
  */
 public class FinancaController extends GenericController<Financa, FinancaTable>{
-
     private final FinancaDAO financaDAO;
+    private final FinancaTable model;
 
-    public FinancaController(DAOFactory dao, SigmaAbstractTableModel model) {
-        super(dao, model);
+    public FinancaController(DAOFactory dao, FinancaTable model) {
+        super(dao);
         financaDAO = dao.getFinancaDAO();
+        this.model = model;
     }
 
     @Override
@@ -126,6 +125,11 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
     @Override
     public List<Financa> select(String nome) throws DatabaseException {
         return financaDAO.select(nome);
+    }
+    
+    @Override
+    public FinancaTable getModel() {
+        return model;
     }
     
 }

@@ -5,9 +5,11 @@
  */
 package tolteco.sigma.view.cliente;
 
+import tolteco.sigma.view.interfaces.Operacao;
 import tolteco.sigma.controller.ClienteController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.tables.ClienteTable;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.MainEntity;
 
 /**
@@ -19,25 +21,17 @@ import tolteco.sigma.view.interfaces.MainEntity;
  * @author Juliano Felipe
  */
 public class MainCliente extends javax.swing.JPanel implements MainEntity<ClienteController>{
-    private OperacaoCliente ultimoPanelAdicionado = null;
+    private Operacao ultimoPanelAdicionado = null;
     private final ClienteController controller;
-    private ClienteTable model;
+    private final ClienteTable model;
+    private final MainFrame main;
     
-    /**
-     * Creates new form MainCliente
-     */
-    public MainCliente() {
+    public MainCliente(MainFrame main, ClienteController controller) {
         initComponents();
-        controller = new ClienteController(null, null);
-    }
-
-    public MainCliente(ClienteController controller, ClienteTable model) {
         this.controller = controller;
-        this.model = model;
-        initComponents();
+        this.main = main;
+        model = controller.getModel();
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -137,50 +131,50 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
-        if (ultimoPanelAdicionado != OperacaoCliente.Adicionar){ //Singleton - Sort of
+        if (ultimoPanelAdicionado != Operacao.Adicionar){ //Singleton - Sort of
             AdicionarCliente add = new AdicionarCliente();
             Panel.setViewportView( add );
         } else {
             Panel.setVisible(true);
         }
         
-        ultimoPanelAdicionado = OperacaoCliente.Adicionar;
+        ultimoPanelAdicionado = Operacao.Adicionar;
     }//GEN-LAST:event_AddActionPerformed
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        if (ultimoPanelAdicionado != OperacaoCliente.Modificar){ //Singleton - Sort of
+        if (ultimoPanelAdicionado != Operacao.Modificar){ //Singleton - Sort of
             ModificarCliente modif = new ModificarCliente();
             Panel.setViewportView( modif );
         }
         
-        ultimoPanelAdicionado = OperacaoCliente.Modificar;
+        ultimoPanelAdicionado = Operacao.Modificar;
     }//GEN-LAST:event_EditActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        if (ultimoPanelAdicionado != OperacaoCliente.Remover){ //Singleton - Sort of
+        if (ultimoPanelAdicionado != Operacao.Remover){ //Singleton - Sort of
             RemoverCliente add = new RemoverCliente();
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = OperacaoCliente.Remover;
+        ultimoPanelAdicionado = Operacao.Remover;
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        if (ultimoPanelAdicionado != OperacaoCliente.Buscar){ //Singleton - Sort of
+        if (ultimoPanelAdicionado != Operacao.Buscar){ //Singleton - Sort of
             BuscarCliente add = new BuscarCliente(this);
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = OperacaoCliente.Buscar;
+        ultimoPanelAdicionado = Operacao.Buscar;
     }//GEN-LAST:event_SearchActionPerformed
 
     private void ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListActionPerformed
-        if (ultimoPanelAdicionado != OperacaoCliente.Listar){ //Singleton - Sort of
+        if (ultimoPanelAdicionado != Operacao.Listar){ //Singleton - Sort of
             ListarCliente add = new ListarCliente(this);
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = OperacaoCliente.Listar;
+        ultimoPanelAdicionado = Operacao.Listar;
     }//GEN-LAST:event_ListActionPerformed
 
 

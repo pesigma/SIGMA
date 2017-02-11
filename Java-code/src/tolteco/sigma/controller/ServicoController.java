@@ -19,12 +19,13 @@ import tolteco.sigma.model.tables.SigmaAbstractTableModel;
  * @author Juliano Felipe
  */
 public class ServicoController extends GenericController<Servico, ServicoTable>{
-
     private final ServicoDAO servicoDAO;
+    private final ServicoTable model;
 
-    public ServicoController(DAOFactory dao, SigmaAbstractTableModel model) {
-        super(dao, model);
+    public ServicoController(DAOFactory dao, ServicoTable model) {
+        super(dao);
         servicoDAO = dao.getServicoDAO();
+        this.model = model;
     }
     
     @Override
@@ -127,5 +128,9 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
     public List<Servico> select(String nome) throws DatabaseException {
         return servicoDAO.select(nome);
     }
-    
+
+    @Override
+    public ServicoTable getModel() {
+        return model;
+    }
 }

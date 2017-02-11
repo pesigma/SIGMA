@@ -5,6 +5,7 @@
  */
 package tolteco.sigma.view;
 
+import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.model.entidades.Usuario;
 
 /**
@@ -13,8 +14,9 @@ import tolteco.sigma.model.entidades.Usuario;
  */
 public class Sistema {
     private static Sistema system;
-    private static Usuario user=null;
-
+    //private static Usuario user=null;
+    private static Usuario user = new Usuario(0, "Teste", Access.ROOT, new char[]{123}); //Para testes
+    
     private Sistema(Usuario user) {
         Sistema.user = user;
     }
@@ -23,13 +25,21 @@ public class Sistema {
         if (user != null) system = new Sistema(user);
     }
     
+    private static void startUp(){
+        
+    }
+    
     public static void logout(){
         user = null;
         Sistema.shutdown();
     }
     
-    public static int getUserId(){
+    public static int getUserID(){
         return user.getUserId();
+    }
+
+    public static Usuario getUser() {
+        return user;
     }
     
     private static void shutdown(){
