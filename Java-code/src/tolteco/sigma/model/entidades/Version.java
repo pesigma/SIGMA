@@ -16,16 +16,15 @@ public class Version implements Comparable<Version> {
 
     private static final int MAXTRAILING = 3;
 
-    private int majorVersion;
+    private int majorVersion; //ID OF "MAJOR" Table
     private String majorName;
     private Date majorDate;
     private String majorNotes;
-    private int minorVersion;
+    private int minorVersion; //ID OF "MINOR" Table
     private Date minorDate;
     private String minorNotes;
 
-    private int rowid;
-
+    //<editor-fold defaultstate="collapsed" desc="Construtores">
     public Version(int majorVersion, String majorName, Date majorDate, String majorNotes, int minorVersion, Date minorDate, String minorNotes) {
         this.majorVersion = majorVersion;
         this.majorName = majorName;
@@ -35,22 +34,13 @@ public class Version implements Comparable<Version> {
         this.minorDate = minorDate;
         this.minorNotes = minorNotes;
     }
-
-    public Version(int rowid) {
-        this.rowid = rowid;
+    
+    public Version(int rowid, int minorId) {
+        this.majorVersion = rowid;
+        this.minorVersion = minorId;
     }
-
-    public Version(int rowid, int majorVersion, String majorName, Date majorDate, String majorNotes, int minorVersion, Date minorDate, String minorNotes) {
-        this.majorVersion = majorVersion;
-        this.majorName = majorName;
-        this.majorDate = majorDate;
-        this.majorNotes = majorNotes;
-        this.minorVersion = minorVersion;
-        this.minorDate = minorDate;
-        this.minorNotes = minorNotes;
-
-        this.rowid = rowid;
-    }
+    
+//</editor-fold>
 
     @Override
     public String toString() {
@@ -131,14 +121,6 @@ public class Version implements Comparable<Version> {
 
     public void setMinorNotes(String minorNotes) {
         this.minorNotes = minorNotes;
-    }
-
-    public int getRowid() {
-        return rowid;
-    }
-
-    public void setRowid(int rowid) {
-        this.rowid = rowid;
     }
 //</editor-fold>
 
