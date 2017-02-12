@@ -151,12 +151,17 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
     }//GEN-LAST:event_EditActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        if (ultimoPanelAdicionado != Operacao.Remover){ //Singleton - Sort of
+        /*if (ultimoPanelAdicionado != Operacao.Remover){ //Singleton - Sort of
             RemoverCliente add = new RemoverCliente();
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = Operacao.Remover;
+        ultimoPanelAdicionado = Operacao.Remover;*/
+        
+        /*
+        Ideia: Ao clicar em "Excluir", mostra-se a tela de busca e um balão informando
+        que deve-se clicar duas vezes para excluir um cliente.
+        */
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed

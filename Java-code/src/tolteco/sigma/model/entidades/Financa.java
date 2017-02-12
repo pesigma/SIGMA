@@ -5,6 +5,8 @@
  */
 package tolteco.sigma.model.entidades;
 import Controles.ErrorPane;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
@@ -22,7 +24,8 @@ public class Financa implements Comparable<Financa> {
     FinancaTipo tipo;
     double valor;
     int rowid;
-
+    int userId;
+    
     // <editor-fold defaultstate="collapsed" desc="Construtores">
     
     public Financa(FinancaTipo tipo, Date data, double valor, String obs, Situacao sit) {
@@ -40,6 +43,16 @@ public class Financa implements Comparable<Financa> {
         this.valor = valor;
         this.obs = obs;
         this.situacao = sit;
+    }
+    
+    public Financa(int rowid, FinancaTipo tipo, Date data, double valor, String obs, Situacao sit, int userId) {
+        this.rowid = rowid;
+        this.tipo = tipo;
+        this.data = data;
+        this.valor = valor;
+        this.obs = obs;
+        this.situacao = sit;
+        this.userId = userId;
     }
 
     public Financa(int rowid) {
@@ -105,6 +118,41 @@ public class Financa implements Comparable<Financa> {
     // </editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Parsing">
+    
+    public static final DateFormat DATE_FORMAT_ISO8601 = 
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    /**
+     * Transforma uma String no formato:
+     * "yyyy-MM-dd'T'HH:mm:ss".
+     * Onde o T deve aparecer literalmente
+     * dentro da String, neste formato, para
+     * delimitar o início do tempo (Horas, minutos
+     * segundos).
+     * 
+     * Formatador explícito: {@link #DATE_FORMAT_ISO8601}.
+     * 
+     * @param ISO8601 Data no formato especificado.
+     * @return Objeto de data.
+     * @throws java.text.ParseException Caso não esteja no padrão.
+     */
+    public static Date sigmaDateFormat(String ISO8601) throws ParseException{
+        return DATE_FORMAT_ISO8601.parse(ISO8601);
+    }
+    
+    /**
+     * Método oposto do {@link #sigmaDateFormat(java.lang.String)},
+     * isto é, transforma uma Data numa String no formato
+     * específicado lá.
+     * 
+     * Formatador explícito: {@link #DATE_FORMAT_ISO8601}.
+     * 
+     * @param data para converter.
+     * @return String no formato: "yyyy-MM-dd'T'HH:mm:ss".
+     */
+    public static String sigmaDateFormat(Date data){
+
+        return DATE_FORMAT_ISO8601.format(data);
+    }
     
     /** 20/02/2016
      * Método para transformar tipo "java.util.Date" para

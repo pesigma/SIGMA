@@ -1,5 +1,7 @@
 package tolteco.sigma.utils;
 import Telas.*;
+import java.text.ParseException;
+import java.util.Date;
 import tolteco.sigma.controller.ClienteController;
 import tolteco.sigma.controller.FinancaController;
 import tolteco.sigma.controller.ServicoController;
@@ -7,6 +9,7 @@ import tolteco.sigma.controller.UsuarioController;
 import tolteco.sigma.controller.VersionController;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.jdbc.JDBCDAOFactory;
+import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.tables.ClienteTable;
 import tolteco.sigma.model.tables.FinancaTable;
 import tolteco.sigma.model.tables.ServicoTable;
@@ -61,11 +64,12 @@ public class Main {
     }
 //</editor-fold>
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         //MAIN = assembleMain();
         
+        System.out.println(Financa.sigmaDateFormat("2017-02-12T13:46:20"));
         
-        new TelaPrincipal().setVisible(true);
+        //new TelaPrincipal().setVisible(true);
         //new Login().setVisible(true);
     }
 }

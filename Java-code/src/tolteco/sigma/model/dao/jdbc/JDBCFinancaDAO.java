@@ -1,17 +1,22 @@
 package tolteco.sigma.model.dao.jdbc;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.FinancaDAO;
 import tolteco.sigma.model.entidades.Financa;
+import tolteco.sigma.model.entidades.FinancaTipo;
+import tolteco.sigma.model.entidades.Situacao;
 
 /**
  *
  * @author Juliano_Felipe
  */
-public class JDBCFinancaDAO extends JDBCAbstractDAO implements FinancaDAO {
+public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaDAO {
 
     @Override
     public boolean insert(Financa t) throws DatabaseException {
@@ -74,6 +79,23 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO implements FinancaDAO {
             //Falta o resto... esperando codigo
         }
         return null;
+    }
+
+    @Override
+    protected Financa getInstance(ResultSet rs) throws DatabaseException{
+        try {
+            return new Financa(
+                    rs.getInt("financaId"),
+                    FinancaTipo.porCodigo(rs.getInt("Tipo")),
+                    Financa.sigmaDateFormat(rs.getString("Data_ISO8601")),
+                    rs.getDouble("Valor"),
+                    rs.getString("Observacoes"),
+                    Situacao.porCodigo(rs.getInt("Situacao")),
+                    rs.getInt("userId"));
+        } catch (SQLException | ParseException ex) {
+            //Logger.getLogger(JDBCClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex);
+        }
     }
 
 }

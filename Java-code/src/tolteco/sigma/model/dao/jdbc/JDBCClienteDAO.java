@@ -10,7 +10,6 @@ import java.util.List;
 import tolteco.sigma.model.dao.ClienteDAO;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,16 +20,19 @@ import java.util.ArrayList;
  */
 public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
 
+    public JDBCClienteDAO() {
+        super();
+    }
+    
     @Override
     public boolean insert(Cliente t) throws DatabaseException {
-        Connection conn = ConnectionFactory.getConnection();
-        String query = "INSERT INTO cliente " + 
+        String query = "INSERT INTO Cliente " + 
                 "(userId,Primeiro_Nome,Ultimo_Nome,CPF,Telefone,Endereco,Observacoes) " + 
                 "VALUES (?,?,?,?,?,?,?)";
         PreparedStatement pst = null;
              
         try {
-            pst = conn.prepareStatement(query);
+            pst = connection.prepareStatement(query);
             pst.setInt(1, t.getUserId());
             pst.setString(2, t.getNome());
             pst.setString(3, t.getSobrenome());
@@ -40,7 +42,7 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
             pst.setString(7, t.getObs());
             pst.execute();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -57,15 +59,14 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
 
     @Override
     public boolean remove(Cliente t) throws DatabaseException {
-        Connection conn = ConnectionFactory.getConnection();
         String query = "DELETE FROM Cliente WHERE clienteId="+t.getClienteId();
         PreparedStatement pst = null;
              
         try {
-            pst = conn.prepareStatement(query);            
+            pst = connection.prepareStatement(query);            
             pst.execute();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -82,7 +83,6 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
 
     @Override
     public boolean update(Cliente t) throws DatabaseException {
-        Connection conn = ConnectionFactory.getConnection();
         String query = "UPDATE Cliente " + 
                 "SET userId=?, Primeiro_Nome=?, Ultimo_Nome=?, CPF=?, " + 
                 "Telefone=?, Endereco=?, Observacoes=? " + 
@@ -90,7 +90,7 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
         PreparedStatement pst = null;
              
         try {
-            pst = conn.prepareStatement(query);
+            pst = connection.prepareStatement(query);
             pst.setInt(1, t.getUserId());
             pst.setString(2, t.getNome());
             pst.setString(3, t.getSobrenome());
@@ -118,36 +118,16 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
     public List<Cliente> selectAll() throws DatabaseException {       
         List<Cliente> lista = new ArrayList<>();
         
-        Connection conn = ConnectionFactory.getConnection();
         String query = "SELECT clienteId, * FROM Cliente";
         PreparedStatement pst = null;
         ResultSet rs=null;
         
         try {
-            pst = conn.prepareStatement(query);
+            pst = connection.prepareStatement(query);
             rs = pst.executeQuery();
-            
-            int userId, clienteId;                  //Atributos temporarios para 
-            String Primeiro_Nome, Ultimo_Nome, CPF,//um cliente,
-                   Telefone, Endereco, Observacoes;//para add na lista
-            Cliente cliente;
-            
+
             while (rs.next()){
-                userId = rs.getInt("userId");
-                clienteId = rs.getInt("clienteId");
-                Primeiro_Nome = rs.getString("Primeiro_Nome");
-                Ultimo_Nome = rs.getString("Ulitmo_Nome");
-                CPF = rs.getString("CPF");
-                Telefone = rs.getString("Telefone");
-                Endereco = rs.getString("Endereco");
-                Observacoes = rs.getString("Observacoes");
-                
-                cliente = new Cliente(Primeiro_Nome, Ultimo_Nome,
-                                     Observacoes, Endereco, Telefone,
-                                     CPF, userId);
-                cliente.setClienteId(clienteId);
-                
-                lista.add(cliente);
+                lista.add(getInstance(rs));
             }
             rs.close();
             
@@ -170,27 +150,16 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
     public Cliente search(int primaryKey) throws DatabaseException {
         Cliente cliente;
         
-        Connection conn = ConnectionFactory.getConnection();
         String query = "SELECT clienteId, * FROM Cliente WHERE clienteId=?";
         PreparedStatement pst = null;
         ResultSet rs;
         
         try {
-            pst = conn.prepareStatement(query);
+            pst = connection.prepareStatement(query);
             pst.setInt(1, primaryKey);
             rs = pst.executeQuery();
             
-            cliente = new Cliente(
-                rs.getString("Primeiro_Nome"),
-                rs.getString("Ulitmo_Nome"),
-                rs.getString("Observacoes"),
-                rs.getString("Endereco"),
-                rs.getString("Telefone"),
-                rs.getString("CPF"),
-                rs.getInt("userId")
-            );
-
-            cliente.setClienteId( rs.getInt("clienteId") );
+            cliente = getInstance(rs);
             
             rs.close();
             
@@ -213,37 +182,17 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
     public List<Cliente> select(String nome) throws DatabaseException {
         List<Cliente> lista = new ArrayList<>();
         
-        Connection conn = ConnectionFactory.getConnection();
         String query = "SELECT clienteId, * FROM Cliente WHERE nome=?";
         PreparedStatement pst = null;
         ResultSet rs;
         
         try {
-            pst = conn.prepareStatement(query);
+            pst = connection.prepareStatement(query);
             pst.setString(1, nome);
             rs = pst.executeQuery();
             
-            int userId, clienteId;                  //Atributos temporarios para 
-            String Primeiro_Nome, Ultimo_Nome, CPF,//um cliente,
-                   Telefone, Endereco, Observacoes;//para add na lista
-            Cliente cliente;
-            
-            while (rs.next()){
-                userId = rs.getInt("userId");
-                clienteId = rs.getInt("clienteId");
-                Primeiro_Nome = rs.getString("Primeiro_Nome");
-                Ultimo_Nome = rs.getString("Ulitmo_Nome");
-                CPF = rs.getString("CPF");
-                Telefone = rs.getString("Telefone");
-                Endereco = rs.getString("Endereco");
-                Observacoes = rs.getString("Observacoes");
-                
-                cliente = new Cliente(Primeiro_Nome, Ultimo_Nome,
-                                     Observacoes, Endereco, Telefone,
-                                     CPF, userId);
-                cliente.setClienteId(clienteId);
-                
-                lista.add(cliente);
+            while (rs.next()){   
+                lista.add(getInstance(rs));
             }
             rs.close();
             
@@ -265,6 +214,30 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
     @Override
     public Cliente searchByCPF(String cpf) throws DatabaseException{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
+     *
+     * @param rs
+     * @return
+     * @throws tolteco.sigma.model.dao.DatabaseException
+     */
+    @Override
+    protected Cliente getInstance(ResultSet rs) throws DatabaseException{
+        try {
+            return new Cliente(
+                    rs.getInt("clienteId"),
+                    rs.getString("Primeiro_Nome"),
+                    rs.getString("Ulitmo_Nome"),
+                    rs.getString("Observacoes"),
+                    rs.getString("Endereco"),
+                    rs.getString("Telefone"),
+                    rs.getString("CPF"),
+                    rs.getInt("userId"));
+        } catch (SQLException ex) {
+            //Logger.getLogger(JDBCClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex);
+        }
     }
     
 }

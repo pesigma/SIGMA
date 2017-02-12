@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCVersionDAO.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCServicoDAO.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCUsuarioDAO.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCFinancaDAO.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/cliente/MainCliente.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCClienteDAO.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/cliente/AdicionarCliente.java</file>
+        </group>
     </open-files>
 </project-private>

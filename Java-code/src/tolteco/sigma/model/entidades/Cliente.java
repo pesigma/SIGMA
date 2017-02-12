@@ -43,6 +43,17 @@ public class Cliente implements Comparable<Cliente>{
         this.userId = userId;
     }
     
+    public Cliente(int rowId, String nome, String sobrenome, String obs, String end, String tel, String cpf, int userId) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.obs = obs;
+        this.end = end;
+        this.tel = tel;
+        this.cpf = cpf;
+        this.userId = userId;
+        this.clienteId = rowId;
+    }
+    
     public Cliente (int rowid){
         this.clienteId = rowid;
     }

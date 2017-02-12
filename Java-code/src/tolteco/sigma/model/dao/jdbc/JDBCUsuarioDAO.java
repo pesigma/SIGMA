@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,9 +6,17 @@
  */
 package tolteco.sigma.model.dao.jdbc;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.UsuarioDAO;
+import tolteco.sigma.model.entidades.Access;
+import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.entidades.Usuario;
 
 /**
@@ -18,39 +27,196 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
 
     @Override
     public boolean insert(Usuario t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query = "INSERT INTO Users " + 
+                "(accessLevel,userName,userPass) " + 
+                "VALUES (?,?,?)";
+        PreparedStatement pst = null;
+             
+        try {
+            pst = connection.prepareStatement(query);
+            pst.setInt(1, t.getAccessLevel().getValue());
+            pst.setString(2, t.getUserName());
+            pst.setString(3, Arrays.toString(t.getPass()));
+            pst.execute();
+
+        } catch (SQLException e) {
+            //String error = e.getClass().getName() + ": " + e.getMessage();
+            throw new DatabaseException(e);
+        }  finally {
+            if (pst != null) 
+                try {
+                    pst.close();
+                } catch (SQLException ex) {
+                    throw new DatabaseException(ex);
+                }
+        }
+        
+        return true;
     }
 
     @Override
     public boolean remove(Usuario t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query = "DELETE FROM Users WHERE userId=" + Integer.toString(t.getUserId());
+        PreparedStatement pst = null;
+             
+        try {
+            pst = connection.prepareStatement(query);            
+            pst.execute();
+
+        } catch (SQLException e) {
+            //String error = e.getClass().getName() + ": " + e.getMessage();
+            throw new DatabaseException(e);
+        }  finally {
+            if (pst != null) 
+                try {
+                    pst.close();
+                } catch (SQLException ex) {
+                    throw new DatabaseException(ex);
+                }
+        }
+        
+        return true;
     }
 
     @Override
     public boolean update(Usuario t) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query = "UPDATE Users " + 
+                "SET userId=?, accessLevel=?, " +
+                "userName=?, userPass=? " +  
+                "WHERE userId=" + Integer.toString(t.getUserId());
+        PreparedStatement pst = null;
+             
+        try {
+            pst = connection.prepareStatement(query);
+            pst.setInt   (1, t.getUserId());
+            pst.setInt   (2, t.getAccessLevel().getValue());
+            pst.setString(3, t.getUserName());
+            pst.setString(3, Arrays.toString(t.getPass()));
+            pst.execute();
+        } catch (Exception e) {
+            //String error = e.getClass().getName() + ": " + e.getMessage();
+            throw new DatabaseException(e);
+        }  finally {
+            if (pst != null) 
+                try {
+                    pst.close();
+                } catch (SQLException ex) {
+                    throw new DatabaseException(ex);
+                }
+        }
+        
+        return true;
     }
 
     @Override
     public List<Usuario> selectAll() throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Usuario> lista = new ArrayList<>();
+        
+        String query = "SELECT userId, * FROM Users";
+        PreparedStatement pst = null;
+        ResultSet rs=null;
+        
+        try {
+            pst = connection.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            while (rs.next()){
+                lista.add(getInstance(rs));
+            }
+            rs.close();
+            
+        } catch (Exception e) {
+            //String error = e.getClass().getName() + ": " + e.getMessage();
+            throw new DatabaseException(e);
+        }  finally {
+            if (pst != null) 
+                try {
+                    pst.close();
+                } catch (SQLException ex) {
+                    throw new DatabaseException(ex);
+                }
+        }
+        
+        return lista;
     }
 
     @Override
     public Usuario search(int primaryKey) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuario usuario;
+        
+        String query = "SELECT userId, * FROM Users WHERE userId=?";
+        PreparedStatement pst = null;
+        ResultSet rs;
+        
+        try {
+            pst = connection.prepareStatement(query);
+            pst.setInt(1, primaryKey);
+            rs = pst.executeQuery();
+            
+            usuario = getInstance(rs);
+            
+            rs.close();
+            
+        } catch (Exception e) {
+            //String error = e.getClass().getName() + ": " + e.getMessage();
+            throw new DatabaseException(e);
+        }  finally {
+            if (pst != null) 
+                try {
+                    pst.close();
+                } catch (SQLException ex) {
+                    throw new DatabaseException(ex);
+                }
+        }
+        
+        return usuario;
     }
 
     @Override
     public List<Usuario> select(String nome) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Usuario> lista = new ArrayList<>();
+        
+        String query = "SELECT userId, * FROM Users WHERE userName=?";
+        PreparedStatement pst = null;
+        ResultSet rs;
+        
+        try { //Há um while mas deverá executar somente uma vez
+              //já que o userName deve ser único.
+            pst = connection.prepareStatement(query);
+            pst.setString(1, nome);
+            rs = pst.executeQuery();
+            
+            while (rs.next()){   
+                lista.add(getInstance(rs));
+            }
+            rs.close();
+            
+        } catch (Exception e) {
+            //String error = e.getClass().getName() + ": " + e.getMessage();
+            throw new DatabaseException(e);
+        }  finally {
+            if (pst != null) 
+                try {
+                    pst.close();
+                } catch (SQLException ex) {
+                    throw new DatabaseException(ex);
+                }
+        }
+        
+        return lista;
     }
     
-    /**
-     * Retorna uma instância de um usuário.
-     * @return usuário instânciado.
-     */
-    private Usuario getInstance(){
-        return null;
+    @Override
+    protected Usuario getInstance(ResultSet rs) throws DatabaseException{
+        try {
+            return new Usuario(
+                    rs.getInt("userId"),
+                    rs.getString("userName"),
+                    Access.porCodigo(rs.getInt("accessLevel")),
+                    rs.getString("userPass").toCharArray());
+        } catch (SQLException ex) {
+            //Logger.getLogger(JDBCClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex);
+        }
     }   
 }

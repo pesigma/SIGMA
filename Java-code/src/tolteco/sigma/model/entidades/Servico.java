@@ -17,20 +17,32 @@ public class Servico implements Comparable<Servico>{
     String placa, 
            modelo,
            obs;
-    int km, 
-        idc;
+    double km;
+    int   idCliente;
     Situacao situacao;
     int rowid;
+    int userId;
 
     // <editor-fold defaultstate="collapsed" desc="Construtores">
     
     public Servico(int idc, String placa, String modelo, int km, Situacao sit, String obs) {
-        this.idc = idc;
+        this.idCliente = idc;
         this.placa = placa;
         this.modelo = modelo;
         this.km = km;
         this.situacao = sit;
         this.obs = obs;
+    }
+    
+    public Servico(int rowId, int idCliente, String placa, String modelo, double km, Situacao sit, String obs, int userId) {
+        this.idCliente = idCliente;
+        this.placa = placa;
+        this.modelo = modelo;
+        this.km = km;
+        this.situacao = sit;
+        this.obs = obs;
+        this.rowid = rowId;
+        this.userId = userId;
     }
 
     public Servico(int rowid) {
@@ -42,11 +54,11 @@ public class Servico implements Comparable<Servico>{
     // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
     
     public int getIdcliente() {
-        return idc;
+        return idCliente;
     }
     
     public void setIdcliente(int idc) {
-        this.idc = idc;
+        this.idCliente = idc;
     }
     
     public String getPlaca() {
@@ -65,7 +77,7 @@ public class Servico implements Comparable<Servico>{
         this.modelo = modelo;
     }
 
-    public int getKm() {
+    public double getKm() {
         return km;
     }
 
@@ -107,7 +119,7 @@ public class Servico implements Comparable<Servico>{
     public String toString() {       
         return "Servico{" + "Placa: " + placa + 
                ", Modelo: " + modelo + ", Obs.: " + obs + 
-               ", Km: " + km + ", IDC: " + idc + 
+               ", Km: " + km + ", IDC: " + idCliente + 
                ", Situação: " + situacao.getDescricao() + 
                ", Rowid: " + rowid + '}';
     }
