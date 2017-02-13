@@ -11,6 +11,7 @@ import tolteco.sigma.model.dao.FinancaDAO;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.entidades.FinancaTipo;
 import tolteco.sigma.model.entidades.Situacao;
+import tolteco.sigma.utils.SDate;
 
 /**
  *
@@ -87,7 +88,7 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaD
             return new Financa(
                     rs.getInt("financaId"),
                     FinancaTipo.porCodigo(rs.getInt("Tipo")),
-                    Financa.sigmaDateFormat(rs.getString("Data_ISO8601")),
+                    SDate.sigmaDateFormat(rs.getString("Data_ISO8601")),
                     rs.getDouble("Valor"),
                     rs.getString("Observacoes"),
                     Situacao.porCodigo(rs.getInt("Situacao")),

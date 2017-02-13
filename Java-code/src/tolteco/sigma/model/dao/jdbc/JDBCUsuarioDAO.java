@@ -6,7 +6,6 @@
  */
 package tolteco.sigma.model.dao.jdbc;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +15,6 @@ import java.util.List;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.UsuarioDAO;
 import tolteco.sigma.model.entidades.Access;
-import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.entidades.Usuario;
 
 /**

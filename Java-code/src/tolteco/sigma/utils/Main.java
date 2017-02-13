@@ -67,7 +67,7 @@ public class Main {
     public static void main(String[] args) throws ParseException {
         //MAIN = assembleMain();
         
-        System.out.println(Financa.sigmaDateFormat("2017-02-12T13:46:20"));
+        System.out.println(SDate.sigmaDateFormat("2017-02-12T13:46:20"));
         
         //new TelaPrincipal().setVisible(true);
         //new Login().setVisible(true);
