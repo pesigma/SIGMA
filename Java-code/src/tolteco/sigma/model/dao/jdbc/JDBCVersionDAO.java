@@ -12,6 +12,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.VersionDAO;
 import tolteco.sigma.model.entidades.Version;
@@ -150,20 +152,28 @@ public class JDBCVersionDAO extends JDBCAbstractDAO<Version> implements VersionD
         PreparedStatement pst = null;
         ResultSet rs=null;
         
+        Major localMajor;
+        
         try {
             pst = connection.prepareStatement(query);
             rs = pst.executeQuery();
 
-            int majorId=-1;
             while (rs.next()){
+                localMajor = new Major(
+                        rs.getInt   ("MajorVer"),
+                        rs.getString("MajorName"),
+                        SDate.sigmaDateFormat(rs.getString("MajorDate")),
+                        rs.getString("MajorNotes")
+                );
+                
                 lista.add(
-                    versionBuilder(getMajor(majorId), 
-                             getLatestMinor(majorId)) 
+                    versionBuilder(localMajor, 
+                        getLatestMinor(localMajor.getMajorVer())) 
                 );
             }
             rs.close();
             
-        } catch (SQLException | DatabaseException e) {
+        } catch (SQLException | DatabaseException | ParseException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -185,28 +195,34 @@ public class JDBCVersionDAO extends JDBCAbstractDAO<Version> implements VersionD
 
     @Override
     public List<Version> select(String nome) throws DatabaseException {
-        throw new UnsupportedOperationException("Não implementada");
-        /*List<Version> lista = new ArrayList<>();
+        List<Version> lista = new ArrayList<>();
         
-        String query = "SELECT MajorVer, * FROM MajorVersion, MinorVersion WHERE" +
-                 " (MajorVersion.MajorName LIKE '%" + nome + "%') " +
-                 "AND  MinorVersion.MinorVer=?";
+        String query = "SELECT MajorVer, * FROM MajorVersion WHERE " +
+                 "(MajorVersion.MajorName LIKE '%" + nome + "%')";
         PreparedStatement pst = null;
         ResultSet rs;
         
-        Minor last = getLatestMinor();
-        
+        Major localMajor;
+   
         try {
             pst = connection.prepareStatement(query);
-            pst.setInt(1, last.getMinorVer());
             rs = pst.executeQuery();
             
-            while (rs.next()){   
-                lista.add(getInstance(rs));
+            while (rs.next()){
+                localMajor = new Major(
+                        rs.getInt   ("MajorVer"),
+                        rs.getString("MajorName"),
+                        SDate.sigmaDateFormat(rs.getString("MajorDate")),
+                        rs.getString("MajorNotes")
+                );
+                
+                lista.add(
+                    versionBuilder(localMajor, getLatestMinor(localMajor.getMajorVer()))
+                );
             }
             rs.close();
             
-        } catch (SQLException | DatabaseException e) {
+        } catch (SQLException | DatabaseException | ParseException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -218,7 +234,7 @@ public class JDBCVersionDAO extends JDBCAbstractDAO<Version> implements VersionD
                 }
         }
         
-        return lista;*/
+        return lista;
     }
 
     @Override
