@@ -17,9 +17,10 @@ import tolteco.sigma.model.entidades.Version;
  * @author Juliano Felipe da Silva
  */
 public interface VersionDAO extends GenericDAO<Version>{
-    void createMajorRelease(String name, String notes);
+    int createMajorRelease(String name, Date date, String notes) throws DatabaseException;
     
-    void createMinorRelease(Date date, String notes);
+    int createMinorRelease(int majorVer, Date date, String notes) throws DatabaseException;
     
-    Version fetchLatestVersion();
+    Version fetchLatestVersion() throws DatabaseException;
+    
 }

@@ -19,36 +19,64 @@ import java.util.Date;
  * @author JFPS
  */
 public class SDate {
-    public static final DateFormat DATE_FORMAT_ISO8601   = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-    public static final DateFormat DATE_FORMAT_JCALENDAR = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    public static final DateFormat DATE_FORMAT_SIGMA  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final DateFormat DATE_FORMAT_NOTIME = new SimpleDateFormat("yyyy-MM-dd");
+    //public static final DateFormat DATE_FORMAT_JCALENDAR = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    
+    
+    
     /**
-     * Transforma uma String no formato: "yyyy-MM-dd'T'HH:mm:ss". Onde o T deve
-     * aparecer literalmente dentro da String, neste formato, para delimitar o
-     * início do tempo (Horas, minutos segundos).
+     * Transforma uma String no formato: "yyyy-MM-dd HH:mm:ss".
      *
-     * Formatador explícito: {@link #DATE_FORMAT_ISO8601}.
+     * Formatador explícito: {@link #DATE_FORMAT_SIGMA}.
      *
-     * @param ISO8601 Data no formato especificado.
+     * @param dataString Data no formato especificado.
      * @return Objeto de data.
      * @throws java.text.ParseException Caso não esteja no padrão.
      */
-    public static Date sigmaDateFormat(String ISO8601) throws ParseException {
-        return SDate.DATE_FORMAT_ISO8601.parse(ISO8601);
+    public static Date sigmaDateFormat(String dataString) throws ParseException {
+        return SDate.DATE_FORMAT_SIGMA.parse(dataString);
     }
 
     /**
      * Método oposto do {@link #sigmaDateFormat(java.lang.String)}, isto é,
      * transforma uma Data numa String no formato específicado lá.
      *
-     * Formatador explícito: {@link #DATE_FORMAT_ISO8601}.
+     * Formatador explícito: {@link #DATE_FORMAT_SIGMA}.
      *
      * @param data para converter.
-     * @return String no formato: "yyyy-MM-dd'T'HH:mm:ss".
+     * @return String no formato: "yyyy-MM-dd HH:mm:ss".
      */
     public static String sigmaDateFormat(Date data) {
-        return SDate.DATE_FORMAT_ISO8601.format(data);
+        return SDate.DATE_FORMAT_SIGMA.format(data);
     }
 
+    /**
+     * Transforma uma String no formato: "yyyy-MM-dd". 
+     *
+     * Formatador explícito: {@link #DATE_FORMAT_NOTIME}.
+     *
+     * @param dataString Data no formato especificado.
+     * @return Objeto de data.
+     * @throws java.text.ParseException Caso não esteja no padrão.
+     */
+    public static Date sigmaSmallDateFormat(String dataString) throws ParseException {
+        return SDate.DATE_FORMAT_NOTIME.parse(dataString);
+    }
+
+    /**
+     * Método oposto do {@link #sigmaDateSmallFormat(java.lang.String)}, isto é,
+     * transforma uma Data numa String no formato específicado lá.
+     *
+     * Formatador explícito: {@link #DATE_FORMAT_NOTIME}.
+     *
+     * @param data para converter.
+     * @return String no formato: "yyyy-MM-dd".
+     */
+    public static String sigmaSmallDateFormat(Date data) {
+        return SDate.DATE_FORMAT_NOTIME.format(data);
+    }
+    
     /**
      * 20/02/2016 Método para traduzir data (Dia, Mês). jDayChooser retorna
      * dados em inglês, estes são armazenados no banco. No momento de "parsing",
@@ -61,6 +89,7 @@ public class SDate {
      *
      * @return String com dia e mês traduzidos.
      */
+    @Deprecated
     public static String TranslateString(String data) {
         String StringData = data;
         String[] split = StringData.split(" ", 3); //split by spaces
@@ -132,13 +161,14 @@ public class SDate {
      *
      * @throws Exception de string fora do formato esperado para conversão.
      */
+    @Deprecated
     public static Date StringToDate(String data) throws Exception {
         String[] split = data.split(" ", 6); //split by spaces
         String day = split[2];
         String month = split[1];
         String year = split[5];
         data = day + month + year;
-        Date date = DATE_FORMAT_JCALENDAR.parse(data);
+        Date date = DATE_FORMAT_SIGMA.parse(data);
         return date;
     }
 
@@ -178,5 +208,13 @@ public class SDate {
             case "Dec": month = "12"; break;
         }
         return day + "/" + month + "/" + year;
+    }
+    
+    public static Date addActualTime(final Date fromJChooser){
+        Date horaAtual = new Date();
+        fromJChooser.setHours(horaAtual.getHours());
+        fromJChooser.setMinutes(horaAtual.getMinutes());
+        fromJChooser.setSeconds(horaAtual.getSeconds());
+        return fromJChooser;
     }
 }

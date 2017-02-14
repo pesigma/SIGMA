@@ -4,12 +4,9 @@
  * and open the template in the editor.
  */
 package tolteco.sigma.model.entidades;
-import Controles.ErrorPane;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import tolteco.sigma.utils.SDate;
 
 /**
  * Entidade financa, possui métodos e valores para o objeto finança
@@ -66,6 +63,10 @@ public class Financa implements Comparable<Financa> {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    
+    public String getDateToDatabase(){
+        return SDate.sigmaDateFormat(this.data);
+    }
     
     public int getRowid() {
         return rowid;

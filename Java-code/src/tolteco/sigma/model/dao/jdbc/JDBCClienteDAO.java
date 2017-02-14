@@ -99,7 +99,7 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
             pst.setString(6, t.getEnd());
             pst.setString(7, t.getObs());
             pst.execute();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -131,7 +131,7 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
             }
             rs.close();
             
-        } catch (Exception e) {
+        } catch (SQLException | DatabaseException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -163,7 +163,7 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
             
             rs.close();
             
-        } catch (Exception e) {
+        } catch (SQLException | DatabaseException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -182,13 +182,13 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
     public List<Cliente> select(String nome) throws DatabaseException {
         List<Cliente> lista = new ArrayList<>();
         
-        String query = "SELECT clienteId, * FROM Cliente WHERE nome=?";
+        String query = "SELECT clienteId, * FROM Cliente WHERE"
+                + " (nome LIKE '%" + nome + "%')";
         PreparedStatement pst = null;
         ResultSet rs;
         
         try {
             pst = connection.prepareStatement(query);
-            pst.setString(1, nome);
             rs = pst.executeQuery();
             
             while (rs.next()){   
@@ -196,7 +196,7 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
             }
             rs.close();
             
-        } catch (Exception e) {
+        } catch (SQLException | DatabaseException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -213,7 +213,31 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
 
     @Override
     public Cliente searchByCPF(String cpf) throws DatabaseException{
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cliente cliente = null;
+        String query = "SELECT clienteId, * FROM Cliente WHERE CPF=?";
+        PreparedStatement pst = null;
+        ResultSet rs;
+        
+        try {
+            pst = connection.prepareStatement(query);
+            pst.setString(1, cpf);
+            rs = pst.executeQuery();
+            cliente = getInstance(rs);
+            rs.close();
+            
+        } catch (SQLException | DatabaseException e) {
+            //String error = e.getClass().getName() + ": " + e.getMessage();
+            throw new DatabaseException(e);
+        }  finally {
+            if (pst != null) 
+                try {
+                    pst.close();
+                } catch (SQLException ex) {
+                    throw new DatabaseException(ex);
+                }
+        }
+        
+        return cliente;
     }
     
     /**

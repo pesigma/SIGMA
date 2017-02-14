@@ -12,5 +12,5 @@ import tolteco.sigma.model.entidades.Servico;
  * @author Juliano_Felipe
  */
 public interface ServicoDAO extends GenericDAO<Servico>{
-    
+    Servico searchByPlaca(String placa) throws DatabaseException;
 }
