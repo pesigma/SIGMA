@@ -178,13 +178,13 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaD
     public List<Financa> select(String nome) throws DatabaseException {
         List<Financa> lista = new ArrayList<>();
         
-        String query = "SELECT financaId, * FROM Financa WHERE nome=?";
+        String query = "SELECT financaId, * FROM Financa WHERE" +
+                 " (Observacoes LIKE '%" + nome + "%')";
         PreparedStatement pst = null;
         ResultSet rs;
         
         try {
             pst = connection.prepareStatement(query);
-            pst.setString(1, nome);
             rs = pst.executeQuery();
             
             while (rs.next()){   

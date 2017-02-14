@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/entidades/Financa.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCVersionDAO.java</file>
             <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCFinancaDAO.java</file>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/utils/NewJFrame.java</file>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/utils/SDate.java</file>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/financas/AdicionarFinanca.java</file>
         </group>
     </open-files>
 </project-private>
