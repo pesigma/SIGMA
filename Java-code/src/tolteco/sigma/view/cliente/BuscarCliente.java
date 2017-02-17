@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.java.balloontip.BalloonTip;
+import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.tables.ClienteTable;
@@ -59,18 +61,17 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         enderecoCombo = new javax.swing.JComboBox<>();
         enderecoNum = new javax.swing.JSpinner();
         telefoneField = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
+        Buscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        Delete = new javax.swing.JButton();
+        Edit = new javax.swing.JButton();
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(tabela);
@@ -121,12 +122,20 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
             }
         });
 
-        cpfField.setText("101.663.879-59");
+        try {
+            cpfField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         enderecoCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alameda", "Avenida", "Estrada", "Rodovia", "Rua", "Travessa" }));
         enderecoCombo.setSelectedIndex(4);
 
-        telefoneField.setText("jFormattedTextField2");
+        try {
+            telefoneField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
@@ -151,10 +160,10 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                             .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addComponent(enderecoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(enderecoNum, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(telefoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(telefoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(enderecoNum, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(searchPanelLayout.createSequentialGroup()
@@ -197,14 +206,28 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BuscarActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("*Marque uma ou mais caixas para pesquisar com os respectivos filtros.");
+        jLabel1.setText("*Marque as caixas para pesquisar com os filtros.");
+
+        Delete.setText("Excluir");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteActionPerformed(evt);
+            }
+        });
+
+        Edit.setText("Editar");
+        Edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -216,9 +239,13 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                     .addComponent(jScrollPane1)
                     .addComponent(searchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Edit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(Delete)
+                        .addGap(41, 41, 41)
+                        .addComponent(Buscar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -230,7 +257,10 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Delete)
+                        .addComponent(Edit))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -238,7 +268,18 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
 
     private boolean changed=false;
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        if (isIDcliente.isSelected() == 
+            isCPF.isSelected() == 
+            isEndereco.isSelected() == 
+            isTelefone.isSelected() == 
+            isIDusuario.isSelected() == 
+            isNome.isSelected() == false){
+            
+            BalloonTip tooltipBalloon = new BalloonTip(searchPanel, "Selecione pelo menos um filtro.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        }
+        
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
 
         boolean flag; 
@@ -301,7 +342,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         }
 
         changed=false;
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BuscarActionPerformed
 
     // <editor-fold defaultstate="collapsed" desc="Event changed...">
     private void isNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isNomeActionPerformed
@@ -328,6 +369,27 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         changed = true;
     }//GEN-LAST:event_isCPFActionPerformed
     //</editor-fold>
+    
+    private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
+        int row = tabela.getSelectedRow();
+        if (row>=0){
+            
+        } else {
+            BalloonTip tooltipBalloon = new BalloonTip(Edit, "Selecione uma linha para poder editar.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        }
+    }//GEN-LAST:event_EditActionPerformed
+
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        int row = tabela.getSelectedRow();
+        if (row>=0){
+            
+        } else {
+            BalloonTip tooltipBalloon = new BalloonTip(Delete, "Selecione uma linha para poder excluir.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        }
+    }//GEN-LAST:event_DeleteActionPerformed
+    
     
     public static final String EMPTY=null;
     public static final boolean NOT_SELECTED=false;
@@ -381,6 +443,9 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
     private class ResultsTableModel extends ClienteTable{}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Buscar;
+    private javax.swing.JButton Delete;
+    private javax.swing.JButton Edit;
     private javax.swing.JSpinner clientIDnum;
     private javax.swing.JFormattedTextField cpfField;
     private javax.swing.JComboBox<String> enderecoCombo;
@@ -392,7 +457,6 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
     private javax.swing.JCheckBox isIDusuario;
     private javax.swing.JCheckBox isNome;
     private javax.swing.JCheckBox isTelefone;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nomeField;

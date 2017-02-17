@@ -11,7 +11,6 @@ import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.VersionDAO;
 import tolteco.sigma.model.entidades.Version;
-import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 import tolteco.sigma.model.tables.VersionTable;
 
 /**
@@ -39,7 +38,7 @@ public class VersionController extends GenericController<Version, VersionTable>{
             
             for (Version versao: versoes){
                 if (versao.equals(t)){
-                    key = versao.getRowid();
+                    key = versao.getMajorVersion();
                     t = versao;
                 }
             }
@@ -66,10 +65,10 @@ public class VersionController extends GenericController<Version, VersionTable>{
         boolean rem = versionDAO.remove(t);
         
         if (rem){
-            Version version = versionDAO.search(t.getRowid());
+            Version version = versionDAO.search(t.getMajorVersion());
             int key = -1;
             if (version.equals(t)){
-                key = version.getRowid();
+                key = version.getMajorVersion();
             }
             
             if (key==-1){ 
@@ -93,10 +92,10 @@ public class VersionController extends GenericController<Version, VersionTable>{
         boolean rem = versionDAO.update(t);
         
         if (rem){
-            Version version = versionDAO.search(t.getRowid());
+            Version version = versionDAO.search(t.getMajorVersion());
             int key = -1;
             if (version.equals(t)){
-                key = version.getRowid();
+                key = version.getMajorVersion();
             }
             
             if (key==-1){ 
@@ -130,15 +129,15 @@ public class VersionController extends GenericController<Version, VersionTable>{
         return versionDAO.select(nome);
     }
     
-    public void createMajorRelease(String name, String notes){
-        versionDAO.createMajorRelease(name, notes);
+    public void createMajorRelease(String name, Date date, String notes) throws DatabaseException{
+        versionDAO.createMajorRelease(name, date, notes);
     }
     
-    public void createMinorRelease(Date date, String notes){
-        versionDAO.createMinorRelease(date, notes);
+    public void createMinorRelease(int majorKey, Date date, String notes) throws DatabaseException{
+        versionDAO.createMinorRelease(majorKey, date, notes);
     }
     
-    public Version fetchLatestVersion(){
+    public Version fetchLatestVersion() throws DatabaseException{
         return versionDAO.fetchLatestVersion();
     }
 

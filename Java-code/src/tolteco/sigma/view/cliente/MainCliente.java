@@ -5,6 +5,8 @@
  */
 package tolteco.sigma.view.cliente;
 
+import net.java.balloontip.BalloonTip;
+import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.view.interfaces.Operacao;
 import tolteco.sigma.controller.ClienteController;
 import tolteco.sigma.model.dao.DatabaseException;
@@ -142,26 +144,25 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
     }//GEN-LAST:event_AddActionPerformed
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        if (ultimoPanelAdicionado != Operacao.Modificar){ //Singleton - Sort of
+        if (ultimoPanelAdicionado != Operacao.Modificar && ultimoPanelAdicionado != Operacao.Buscar){ //Singleton - Sort of
             ModificarCliente modif = new ModificarCliente();
             Panel.setViewportView( modif );
+            BalloonTip tooltipBalloon = new BalloonTip(Edit, "Busque um Cliente para modificar");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
         }
         
         ultimoPanelAdicionado = Operacao.Modificar;
     }//GEN-LAST:event_EditActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        /*if (ultimoPanelAdicionado != Operacao.Remover){ //Singleton - Sort of
-            RemoverCliente add = new RemoverCliente();
+        if (ultimoPanelAdicionado != Operacao.Remover && ultimoPanelAdicionado != Operacao.Buscar){ //Singleton - Sort of
+            BuscarCliente add = new BuscarCliente(this);
             Panel.setViewportView( add );
+            BalloonTip tooltipBalloon = new BalloonTip(Delete, "Busque um Cliente para excluir");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
         }
-
-        ultimoPanelAdicionado = Operacao.Remover;*/
         
-        /*
-        Ideia: Ao clicar em "Excluir", mostra-se a tela de busca e um balão informando
-        que deve-se clicar duas vezes para excluir um cliente.
-        */
+        ultimoPanelAdicionado = Operacao.Remover;
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed

@@ -113,7 +113,7 @@ public class VersionTable extends SigmaAbstractTableModel<Version>{
     @Override
     public Version search(int key) {
         for (Version version : getList()){
-            if (version.getRowid()== key)
+            if (version.getMajorVersion()== key)
                 return version;
         }
         return null;

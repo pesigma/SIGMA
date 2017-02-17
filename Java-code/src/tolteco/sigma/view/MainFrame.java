@@ -7,6 +7,7 @@ package tolteco.sigma.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -18,9 +19,7 @@ import tolteco.sigma.controller.UsuarioController;
 import tolteco.sigma.controller.VersionController;
 import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.utils.DefaultConfigs;
-import tolteco.sigma.utils.Main;
 import tolteco.sigma.view.cliente.MainCliente;
-import tolteco.sigma.view.financas.MainFinanca;
 
 /**
  *
@@ -28,6 +27,38 @@ import tolteco.sigma.view.financas.MainFinanca;
  */
 public class MainFrame extends javax.swing.JFrame {
     //private static final int ACCESS_LEVEL = 0; //Usado para testes - Nivel de acesso
+    
+    private JButton defineLogOutButton(){
+        JButton logOut = new JButton("Logout");
+        
+        logOut.setIcon(
+            new javax.swing.ImageIcon(
+                getClass().getResource("/tolteco/sigma/view/images/User/LogOut.png")));
+        
+        logOut.addActionListener((ActionEvent e) -> {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        });
+        
+        logOut.setPreferredSize( new Dimension (100,26));
+        
+        return logOut;
+    }
+    
+    private JButton defineExitButton(){
+        JButton exit = new JButton("Sair");
+        
+        exit.setIcon(
+            new javax.swing.ImageIcon(
+                getClass().getResource("/tolteco/sigma/view/images/User/SystemOut.png")));
+        
+        exit.addActionListener((ActionEvent e) -> {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        });
+        
+        exit.setPreferredSize( new Dimension (90,26));
+        
+        return exit;
+    }
     
     /**
      * Creates new form MainFrame
@@ -76,19 +107,11 @@ public class MainFrame extends javax.swing.JFrame {
             PainelGuias.setTitleAt(2, "Versões");*/
         }
         
-        JButton logOut = new JButton("Logout");
-        logOut.setIcon(
-            new javax.swing.ImageIcon(
-                getClass().getResource("/tolteco/sigma/view/images/User/LogOut.png")));
-        logOut.setPreferredSize( new Dimension (100,26));
-        BarraDeMenu.add(logOut);
         
-        JButton exit = new JButton("Sair");
-        exit.setIcon(
-            new javax.swing.ImageIcon(
-                getClass().getResource("/tolteco/sigma/view/images/User/SystemOut.png")));
-        exit.setPreferredSize( new Dimension (90,26));
-        BarraDeMenu.add(exit);
+        BarraDeMenu.add(defineLogOutButton());
+        
+        
+        BarraDeMenu.add(defineExitButton());
         //BalloonTip bal = new BalloonTip(panel, "Tooltip msg");
     }
 
@@ -181,7 +204,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Main.assembleMain().setVisible(true);
+                Sistema.assembleMain().setVisible(true);
             }
         });
     }

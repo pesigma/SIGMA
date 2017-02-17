@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCVersionDAO.java</file>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCFinancaDAO.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/utils/Main.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/controller/VersionController.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/MainFrame.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/Sistema.java</file>
         </group>
     </open-files>
 </project-private>
