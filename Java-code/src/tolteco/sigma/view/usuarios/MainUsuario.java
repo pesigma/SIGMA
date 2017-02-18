@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.version;
+package tolteco.sigma.view.usuarios;
 
-import tolteco.sigma.controller.VersionController;
+import tolteco.sigma.controller.UsuarioController;
+import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.entidades.Usuario;
+import tolteco.sigma.model.tables.UsuarioTable;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.MainEntity;
+import tolteco.sigma.view.interfaces.Operacao;
 
 /**
  * Tela principal para operação com clientes.
@@ -16,14 +21,18 @@ import tolteco.sigma.view.interfaces.MainEntity;
  * {@link tolteco.sigma.view.cliente.OperacaoCliente}.
  * @author Juliano Felipe
  */
-public class MainVersao extends javax.swing.JPanel implements MainEntity<VersionController>{
-    private OperacaoVersao ultimoPanelAdicionado = null;
+public class MainUsuario extends javax.swing.JPanel implements MainEntity<UsuarioController, Usuario>{
+    private Operacao ultimoPanelAdicionado = null;
 
-    /**
-     * Creates new form MainCliente
-     */
-    public MainVersao() {
+    private final UsuarioController controller;
+    private final UsuarioTable model;
+    private final MainFrame main;
+    
+    public MainUsuario(MainFrame main, UsuarioController controller) {
         initComponents();
+        this.controller = controller;
+        this.main = main;
+        model = controller.getModel();
     }
 
     /**
@@ -124,48 +133,48 @@ public class MainVersao extends javax.swing.JPanel implements MainEntity<Version
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
-        if (ultimoPanelAdicionado != OperacaoVersao.Adicionar){ //Singleton - Sort of
-            AdicionarVersao add = new AdicionarVersao();
+        if (ultimoPanelAdicionado != Operacao.Adicionar){ //Singleton - Sort of
+            AdicionarUsuario add = new AdicionarUsuario(this);
             Panel.setViewportView( add );
         }
         
-        ultimoPanelAdicionado = OperacaoVersao.Adicionar;
+        ultimoPanelAdicionado = Operacao.Adicionar;
     }//GEN-LAST:event_AddActionPerformed
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        if (ultimoPanelAdicionado != OperacaoVersao.Modificar){ //Singleton - Sort of
-            ModificarVersao modif = new ModificarVersao();
+        if (ultimoPanelAdicionado != Operacao.Modificar){ //Singleton - Sort of
+            ModificarUsuario modif = new ModificarUsuario();
             Panel.setViewportView( modif );
         }
         
-        ultimoPanelAdicionado = OperacaoVersao.Modificar;
+        ultimoPanelAdicionado = Operacao.Modificar;
     }//GEN-LAST:event_EditActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        if (ultimoPanelAdicionado != OperacaoVersao.Remover){ //Singleton - Sort of
-            RemoverVersao add = new RemoverVersao();
+        /*if (ultimoPanelAdicionado != Operacao.Remover){ //Singleton - Sort of
+            RemoverUsuario add = new RemoverUsuario();
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = OperacaoVersao.Remover;
+        ultimoPanelAdicionado = Operacao.Remover;*/
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        if (ultimoPanelAdicionado != OperacaoVersao.Buscar){ //Singleton - Sort of
-            BuscarVersao add = new BuscarVersao();
+        if (ultimoPanelAdicionado != Operacao.Buscar){ //Singleton - Sort of
+            BuscarUsuario add = new BuscarUsuario();
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = OperacaoVersao.Buscar;
+        ultimoPanelAdicionado = Operacao.Buscar;
     }//GEN-LAST:event_SearchActionPerformed
 
     private void ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListActionPerformed
-        if (ultimoPanelAdicionado != OperacaoVersao.Listar){ //Singleton - Sort of
-            ListarVersao add = new ListarVersao();
+        if (ultimoPanelAdicionado != Operacao.Listar){ //Singleton - Sort of
+            ListarUsuario add = new ListarUsuario();
             Panel.setViewportView( add );
         }
 
-        ultimoPanelAdicionado = OperacaoVersao.Listar;
+        ultimoPanelAdicionado = Operacao.Listar;
     }//GEN-LAST:event_ListActionPerformed
 
 
@@ -177,4 +186,29 @@ public class MainVersao extends javax.swing.JPanel implements MainEntity<Version
     private javax.swing.JScrollPane Panel;
     private javax.swing.JButton Search;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void displayException(Exception ex) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayDatabaseException(DatabaseException ex) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UsuarioController getController() {
+        return controller;
+    }
+
+    @Override
+    public UsuarioTable getModel() {
+        return model;
+    }
+
+    @Override
+    public void pressEdit(Usuario toFill) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

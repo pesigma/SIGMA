@@ -6,7 +6,6 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Objects;
-import java.util.Observable;
 
 /**
  * Classe totalmente segura

@@ -6,10 +6,12 @@
 package tolteco.sigma.view.financas;
 
 import java.util.Date;
-import tolteco.sigma.model.entidades.Cliente;
+import java.util.logging.Level;
+import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.entidades.FinancaTipo;
 import tolteco.sigma.model.entidades.Situacao;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Adicionar;
 
 /**
@@ -17,12 +19,14 @@ import tolteco.sigma.view.interfaces.Adicionar;
  * @author Juliano Felipe
  */
 public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Financa>{
-
+    private final MainFinanca MAIN;
     /**
      * Creates new form Cliente
+     * @param main
      */
-    public AdicionarFinanca() {
+    public AdicionarFinanca(MainFinanca main) {
         initComponents();
+        MAIN = main;
     }
 
     /**
@@ -47,8 +51,8 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
         ObsPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         ObsPane = new javax.swing.JTextPane();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        save = new javax.swing.JButton();
+        clean = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         ValorPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor"));
@@ -145,20 +149,20 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
         );
 
-        jButton2.setText("Salvar");
-        jButton2.setMaximumSize(new java.awt.Dimension(75, 23));
-        jButton2.setMinimumSize(new java.awt.Dimension(75, 23));
-        jButton2.setPreferredSize(new java.awt.Dimension(75, 23));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        save.setText("Salvar");
+        save.setMaximumSize(new java.awt.Dimension(75, 23));
+        save.setMinimumSize(new java.awt.Dimension(75, 23));
+        save.setPreferredSize(new java.awt.Dimension(75, 23));
+        save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                saveActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        clean.setText("Limpar Campos");
+        clean.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cleanActionPerformed(evt);
             }
         });
 
@@ -172,9 +176,9 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 467, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(clean)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(ObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -185,7 +189,7 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
                             .addComponent(TipoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(DataPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -200,30 +204,31 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(DataPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(SituacaoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(SituacaoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(81, 81, 81)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clean))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void cleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanActionPerformed
+       cleanAllFields();
+    }//GEN-LAST:event_cleanActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        DecidirTipoSituacao decisao = new DecidirTipoSituacao();
-        FinancaTipo tipo = decisao.decidirTipo();
-        Situacao situacao = decisao.decidirSituacao();
-        
-        System.out.println("TIPO: " + tipo.getDescricao());
-        System.out.println("SIT : " + situacao.getDescricao());
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        Financa finn = getInstance();
+        try {
+            MAIN.getController().insert(finn);
+        } catch (DatabaseException ex) {
+            MainFrame.LOG.log(Level.SEVERE, null, ex);
+            MAIN.displayDatabaseException(ex);
+        }
+    }//GEN-LAST:event_saveActionPerformed
 
     /**
      * Classe interna para decisão de
@@ -261,10 +266,10 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
     private javax.swing.JPanel TipoPanel;
     private javax.swing.JFormattedTextField ValorField;
     private javax.swing.JPanel ValorPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton clean;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton save;
     // End of variables declaration//GEN-END:variables
     private static final String EMPTY="";
     

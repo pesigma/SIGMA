@@ -5,6 +5,7 @@
  */
 package tolteco.sigma.model.tables;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.table.AbstractTableModel;
@@ -81,6 +82,10 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         final int LASTROW = entidades.size()-1;
         fireTableRowsInserted(LASTROW, LASTROW);
         fireInsertion(new InsertionEvent(object));
+    }
+    
+    public void addAll(Collection<T> lista){
+        entidades.addAll(lista);
     }
     
     public void removeRow(T object){

@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.cliente;
+package tolteco.sigma.view.usuarios;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
-import tolteco.sigma.model.entidades.Cliente;
+import tolteco.sigma.model.entidades.Usuario;
 import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Listar;
 
@@ -22,14 +21,14 @@ import tolteco.sigma.view.interfaces.Listar;
  * (número de clientes mostrados?)
  * @author Juliano Felipe
  */
-public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>{
-    private final MainCliente MAIN;
+public class ListarUsuario extends javax.swing.JPanel implements Listar<Usuario>{
+    private final MainUsuario MAIN;
     
     /**
      * Creates new form ListarCliente
      * @param main
      */
-    public ListarCliente(MainCliente main) {
+    public ListarUsuario(MainUsuario main) {
         initComponents();
         
         this.MAIN = main;
@@ -112,8 +111,8 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         int row = tabela.getSelectedRow();
         if (row>=0){
-            Cliente cli = getInstance();
-            MAIN.pressEdit(cli);
+            Usuario finn = getInstance();
+            MAIN.pressEdit(finn);
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");
             ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
@@ -125,15 +124,15 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
         if (row>=0){
             Object[] choices = {"Sim", "Não"};
             Object defaultChoice = choices[0];
-            int dialogRet = JOptionPane.showOptionDialog(this, "Deseja realmente excluir o cliente?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 
+            int dialogRet = JOptionPane.showOptionDialog(this, "Deseja realmente excluir o Usuário?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 
             JOptionPane.QUESTION_MESSAGE, null, choices, defaultChoice);
             if(dialogRet == 1) { //==0 para sim
                 return;
             } 
             
-            Cliente cli = getInstance();
+            Usuario usuario = getInstance();
             try {
-                MAIN.getController().remove(cli);
+                MAIN.getController().remove(usuario);
             } catch (DatabaseException ex) {
                 MainFrame.LOG.log(Level.SEVERE, null, ex);
                 MAIN.displayDatabaseException(ex);
@@ -154,17 +153,17 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public Cliente getInstance() {
+    public Usuario getInstance() {
         int row = tabela.getSelectedRow();
-        Cliente cliente = null;
+        Usuario usuario = null;
         if (row>=0){
             //cliente = (ClienteTable) tabela.getModel().
-            cliente = MAIN.getModel().getRow(row);
+            usuario = MAIN.getModel().getRow(row);
         } else {
             //Nunca deverá entrar aqui.
             BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");
             ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
         }
-        return cliente;
+        return usuario;
     }
 }

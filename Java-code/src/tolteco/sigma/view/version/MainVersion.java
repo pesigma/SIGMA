@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.financas;
+package tolteco.sigma.view.version;
 
+import tolteco.sigma.view.financas.*;
 import tolteco.sigma.controller.FinancaController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Financa;
@@ -21,14 +22,14 @@ import tolteco.sigma.view.interfaces.Operacao;
  * {@link tolteco.sigma.view.cliente.OperacaoCliente}.
  * @author Juliano Felipe
  */
-public class MainFinanca extends javax.swing.JPanel implements MainEntity<FinancaController, Financa>{
+public class MainVersion extends javax.swing.JPanel implements MainEntity<FinancaController, Financa>{
     private Operacao ultimoPanelAdicionado = null;
 
     private final FinancaController controller;
     private final FinancaTable model;
     private final MainFrame main;
     
-    public MainFinanca(MainFrame main, FinancaController controller) {
+    public MainVersion(MainFrame main, FinancaController controller) {
         initComponents();
         this.controller = controller;
         this.main = main;
