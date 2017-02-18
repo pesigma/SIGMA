@@ -7,9 +7,10 @@ package tolteco.sigma.view.version;
 
 import java.util.logging.Level;
 import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.entidades.Major;
+import tolteco.sigma.model.entidades.Minor;
 import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.view.MainFrame;
-import tolteco.sigma.view.Sistema;
 import tolteco.sigma.view.interfaces.Adicionar;
 
 /**
@@ -37,136 +38,166 @@ public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Ve
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        NomePanel = new javax.swing.JPanel();
-        NomeField = new javax.swing.JTextField();
+        MajorNamePanel = new javax.swing.JPanel();
+        MajorNome = new javax.swing.JTextField();
         TelPanel = new javax.swing.JPanel();
-        TelFField = new javax.swing.JFormattedTextField();
+        MinorDate = new com.toedter.calendar.JDateChooser();
         CPFPanel = new javax.swing.JPanel();
-        CPFfField = new javax.swing.JFormattedTextField();
-        EndPanel = new javax.swing.JPanel();
-        EndBox = new javax.swing.JComboBox();
-        EndField = new javax.swing.JTextField();
-        ObsPanel = new javax.swing.JPanel();
+        MajorVer = new javax.swing.JSpinner();
+        lastMajor = new javax.swing.JButton();
+        MajorDatePanel = new javax.swing.JPanel();
+        MajorDate = new com.toedter.calendar.JDateChooser();
+        MajorObsPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        ObsPane = new javax.swing.JTextPane();
-        Salvar = new javax.swing.JButton();
+        MajorNotes = new javax.swing.JTextPane();
+        saveMajor = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        cleanMajor = new javax.swing.JButton();
+        ObsPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        MinorNotes = new javax.swing.JTextPane();
+        cleanMinor = new javax.swing.JButton();
+        saveMinor = new javax.swing.JButton();
 
-        NomePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
+        MajorNamePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Major Nome"));
 
-        javax.swing.GroupLayout NomePanelLayout = new javax.swing.GroupLayout(NomePanel);
-        NomePanel.setLayout(NomePanelLayout);
-        NomePanelLayout.setHorizontalGroup(
-            NomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NomeField)
+        javax.swing.GroupLayout MajorNamePanelLayout = new javax.swing.GroupLayout(MajorNamePanel);
+        MajorNamePanel.setLayout(MajorNamePanelLayout);
+        MajorNamePanelLayout.setHorizontalGroup(
+            MajorNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(MajorNome)
         );
-        NomePanelLayout.setVerticalGroup(
-            NomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NomePanelLayout.createSequentialGroup()
+        MajorNamePanelLayout.setVerticalGroup(
+            MajorNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MajorNamePanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(NomeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(MajorNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        TelPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Telefone"));
-
-        try {
-            TelFField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        TelFField.setText("");
-        TelFField.setToolTipText("");
+        TelPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Minor Date"));
 
         javax.swing.GroupLayout TelPanelLayout = new javax.swing.GroupLayout(TelPanel);
         TelPanel.setLayout(TelPanelLayout);
         TelPanelLayout.setHorizontalGroup(
             TelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TelFField, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+            .addComponent(MinorDate, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
         );
         TelPanelLayout.setVerticalGroup(
             TelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TelFField, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(TelPanelLayout.createSequentialGroup()
+                .addComponent(MinorDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 3, Short.MAX_VALUE))
         );
 
-        CPFPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF"));
+        CPFPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Minor - Linked Major"));
 
-        try {
-            CPFfField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        lastMajor.setText("Last");
+        lastMajor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastMajorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout CPFPanelLayout = new javax.swing.GroupLayout(CPFPanel);
         CPFPanel.setLayout(CPFPanelLayout);
         CPFPanelLayout.setHorizontalGroup(
             CPFPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(CPFfField)
+            .addGroup(CPFPanelLayout.createSequentialGroup()
+                .addComponent(MajorVer, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lastMajor)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         CPFPanelLayout.setVerticalGroup(
             CPFPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CPFPanelLayout.createSequentialGroup()
-                .addComponent(CPFfField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(CPFPanelLayout.createSequentialGroup()
+                .addGroup(CPFPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(MajorVer)
+                    .addComponent(lastMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        EndPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
+        MajorDatePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Major Date"));
 
-        EndBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Alameda", "Avenida", "Estrada", "Rodovia", "Rua", "Travessa" }));
-        EndBox.setSelectedIndex(4);
-        EndBox.setToolTipText("Selecione o tipo do logradouro");
-
-        EndField.setToolTipText("");
-
-        javax.swing.GroupLayout EndPanelLayout = new javax.swing.GroupLayout(EndPanel);
-        EndPanel.setLayout(EndPanelLayout);
-        EndPanelLayout.setHorizontalGroup(
-            EndPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(EndPanelLayout.createSequentialGroup()
-                .addComponent(EndBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EndField, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
+        javax.swing.GroupLayout MajorDatePanelLayout = new javax.swing.GroupLayout(MajorDatePanel);
+        MajorDatePanel.setLayout(MajorDatePanelLayout);
+        MajorDatePanelLayout.setHorizontalGroup(
+            MajorDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(MajorDate, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
         );
-        EndPanelLayout.setVerticalGroup(
-            EndPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(EndPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(EndBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(EndField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        MajorDatePanelLayout.setVerticalGroup(
+            MajorDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MajorDatePanelLayout.createSequentialGroup()
+                .addComponent(MajorDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 3, Short.MAX_VALUE))
         );
 
-        ObsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
+        MajorObsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Major Notes"));
 
-        ObsPane.setToolTipText("Qualquer observação adicional sobre o cliente");
-        jScrollPane2.setViewportView(ObsPane);
+        MajorNotes.setToolTipText("Qualquer observação adicional sobre o cliente");
+        jScrollPane2.setViewportView(MajorNotes);
 
-        javax.swing.GroupLayout ObsPanelLayout = new javax.swing.GroupLayout(ObsPanel);
-        ObsPanel.setLayout(ObsPanelLayout);
-        ObsPanelLayout.setHorizontalGroup(
-            ObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout MajorObsPanelLayout = new javax.swing.GroupLayout(MajorObsPanel);
+        MajorObsPanel.setLayout(MajorObsPanelLayout);
+        MajorObsPanelLayout.setHorizontalGroup(
+            MajorObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2)
         );
-        ObsPanelLayout.setVerticalGroup(
-            ObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+        MajorObsPanelLayout.setVerticalGroup(
+            MajorObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
         );
 
-        Salvar.setText("Salvar");
-        Salvar.setMaximumSize(new java.awt.Dimension(75, 23));
-        Salvar.setMinimumSize(new java.awt.Dimension(75, 23));
-        Salvar.setPreferredSize(new java.awt.Dimension(75, 23));
-        Salvar.addActionListener(new java.awt.event.ActionListener() {
+        saveMajor.setText("Salvar Major");
+        saveMajor.setMaximumSize(new java.awt.Dimension(75, 23));
+        saveMajor.setMinimumSize(new java.awt.Dimension(75, 23));
+        saveMajor.setPreferredSize(new java.awt.Dimension(75, 23));
+        saveMajor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SalvarActionPerformed(evt);
+                saveMajorActionPerformed(evt);
             }
         });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/General/Internal/Add.png"))); // NOI18N
 
-        jButton1.setText("Limpar Campos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        cleanMajor.setText("Limpar Major");
+        cleanMajor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cleanMajorActionPerformed(evt);
+            }
+        });
+
+        ObsPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Minor Notes"));
+
+        MinorNotes.setToolTipText("Qualquer observação adicional sobre o cliente");
+        jScrollPane3.setViewportView(MinorNotes);
+
+        javax.swing.GroupLayout ObsPanel1Layout = new javax.swing.GroupLayout(ObsPanel1);
+        ObsPanel1.setLayout(ObsPanel1Layout);
+        ObsPanel1Layout.setHorizontalGroup(
+            ObsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3)
+        );
+        ObsPanel1Layout.setVerticalGroup(
+            ObsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+        );
+
+        cleanMinor.setText("Limpar Minor");
+        cleanMinor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cleanMinorActionPerformed(evt);
+            }
+        });
+
+        saveMinor.setText("Salvar Minor");
+        saveMinor.setMaximumSize(new java.awt.Dimension(75, 23));
+        saveMinor.setMinimumSize(new java.awt.Dimension(75, 23));
+        saveMinor.setPreferredSize(new java.awt.Dimension(75, 23));
+        saveMinor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveMinorActionPerformed(evt);
             }
         });
 
@@ -176,22 +207,28 @@ public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Ve
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(EndPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(NomePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CPFPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cleanMajor)
+                        .addGap(118, 118, 118)
+                        .addComponent(saveMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(MajorNamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(MajorDatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(MajorObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CPFPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ObsPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cleanMinor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(saveMinor, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -201,88 +238,133 @@ public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Ve
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NomePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(MajorNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(CPFPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(EndPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MajorDatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(TelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(MajorObsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ObsPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(saveMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cleanMajor)
+                    .addComponent(saveMinor, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cleanMinor))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarActionPerformed
+    private void saveMajorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMajorActionPerformed
         try {
-            MAIN.getController().insert(getInstance());
+            MAIN.getController().createMajorRelease(getMajor());
         } catch (DatabaseException ex) {
             MainFrame.LOG.log(Level.SEVERE, null, ex);
             MAIN.displayDatabaseException(ex);
         }
-    }//GEN-LAST:event_SalvarActionPerformed
+    }//GEN-LAST:event_saveMajorActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        cleanAllFields();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void cleanMajorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanMajorActionPerformed
+        cleanMajor();
+    }//GEN-LAST:event_cleanMajorActionPerformed
+
+    private void cleanMinorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanMinorActionPerformed
+        cleanMinor();
+    }//GEN-LAST:event_cleanMinorActionPerformed
+
+    private void saveMinorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMinorActionPerformed
+       asfçlaskdfjçlsdkaf
+               sdaf
+               sdaf
+                       asdf
+                       asfd
+                               
+    }//GEN-LAST:event_saveMinorActionPerformed
+
+    private void lastMajorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastMajorActionPerformed
+        MajorVer.setValue((int) MAIN.getController().);
+    }//GEN-LAST:event_lastMajorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CPFPanel;
-    private javax.swing.JFormattedTextField CPFfField;
-    private javax.swing.JComboBox EndBox;
-    private javax.swing.JTextField EndField;
-    private javax.swing.JPanel EndPanel;
-    private javax.swing.JTextField NomeField;
-    private javax.swing.JPanel NomePanel;
-    private javax.swing.JTextPane ObsPane;
-    private javax.swing.JPanel ObsPanel;
-    private javax.swing.JButton Salvar;
-    private javax.swing.JFormattedTextField TelFField;
+    private com.toedter.calendar.JDateChooser MajorDate;
+    private javax.swing.JPanel MajorDatePanel;
+    private javax.swing.JPanel MajorNamePanel;
+    private javax.swing.JTextField MajorNome;
+    private javax.swing.JTextPane MajorNotes;
+    private javax.swing.JPanel MajorObsPanel;
+    private javax.swing.JSpinner MajorVer;
+    private com.toedter.calendar.JDateChooser MinorDate;
+    private javax.swing.JTextPane MinorNotes;
+    private javax.swing.JPanel ObsPanel1;
     private javax.swing.JPanel TelPanel;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton cleanMajor;
+    private javax.swing.JButton cleanMinor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton lastMajor;
+    private javax.swing.JButton saveMajor;
+    private javax.swing.JButton saveMinor;
     // End of variables declaration//GEN-END:variables
 
     private static final String EMPTY="";
     
+    public void cleanMajor(){
+        MajorNome.setText(EMPTY);
+        MajorDate.setDate(null);
+        MajorNotes.setText(EMPTY);
+    }
+    
+    public void cleanMinor(){
+        MajorVer.setValue(0);
+        MinorDate.setDate(null);
+        MinorNotes.setText(EMPTY);
+    }
+    
     @Override
     public void cleanAllFields() {
-        NomeField.setText(EMPTY);
-        CPFfField.setText(EMPTY);
-        TelFField.setText(EMPTY);
-        ObsPane.setText(EMPTY);
-        
-        EndBox.setSelectedItem("Rua");
-        EndField.setText(EMPTY);
+        cleanMajor();
+        cleanMinor();
     }
 
     @Override
     public void fillAllFields(Version object) {
-        NomeField.setText(object.getNome() + object.getSobrenome());
-        CPFfField.setText(object.getCpf());
-        TelFField.setText(object.getTel());
-        ObsPane.setText(object.getObs());
+        MajorNome.setText(object.getMajorName());
+        MajorDate.setDate(object.getMajorDate());
+        MajorNotes.setText(object.getMajorNotes());
         
-        String end = object.getEnd();
-        EndBox.setSelectedItem(end.substring(0,end.indexOf(' ')));
-        EndField.setText(end.substring(end.indexOf(' ')+1));
+        MajorVer.setValue(object.getMajorVersion());
+        MinorDate.setDate(object.getMinorDate());
+        MinorNotes.setText(object.getMinorNotes());
     }
 
     @Override
     public Version getInstance() {
-        String nome = NomeField.getText();
-        String cpf = CPFfField.getText();
-        String tel = TelFField.getText();
-        String obs = ObsPane.getText();
-        String end = (String) EndBox.getSelectedItem() + EndField.getText();
-        
-        return new Version(nome.substring(0,end.indexOf(' ')), nome.substring(end.indexOf(' ')+1), obs, end, tel, cpf, Sistema.getUserID());
+        return new Version((int)MajorVer.getValue(), 
+                MajorNome.getText(), 
+                MajorDate.getDate(), 
+                MajorNotes.getText(), 
+                -1, 
+                MinorDate.getDate(), 
+                MinorNotes.getText());
+    }
+    
+    public Major getMajor(){
+        return new Major(-1, 
+                MajorNome.getText(), 
+                MajorDate.getDate(), 
+                MajorNotes.getText());
+    }
+    
+    public Minor getMinor(){
+        return new Minor((int) MajorVer.getValue(), -1, 
+                MinorDate.getDate(), 
+                MinorNotes.getText());
     }
 }

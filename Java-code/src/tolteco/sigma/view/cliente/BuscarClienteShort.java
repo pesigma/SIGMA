@@ -3,16 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.version;
+package tolteco.sigma.view.cliente;
 
+import java.awt.Point;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.utils.ToolTipUtils;
+import tolteco.sigma.controller.ClienteController;
 import tolteco.sigma.model.dao.DatabaseException;
-import tolteco.sigma.model.entidades.Version;
-import tolteco.sigma.model.tables.VersionTable;
+import tolteco.sigma.model.entidades.Cliente;
+import tolteco.sigma.model.tables.ClienteTable;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -21,17 +26,22 @@ import tolteco.sigma.view.interfaces.Buscar;
  * atributos (nome, id, etc).
  * @author Juliano Felipe
  */
-public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>{
-    private final MainVersion MAIN;
+public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cliente>{
     private final ResultsTableModel modeloTabela = new ResultsTableModel();
+    private final ClienteController controller;
+    
+    private final JPanel painelAnterior;
     
     /**
-     * Creates new form BuscarVersion
-     * @param main
+     * Creates new form BuscarCliente
+     * @param controller
+     * @param painelAnterior
      */
-    public BuscarVersion(MainVersion main) {
+    public BuscarClienteShort(ClienteController controller, JPanel painelAnterior) {
         initComponents();
-        MAIN = main;
+        this.setModal(true); //Deve ser modal para que o programa "espere a seleção na lista".
+        this.controller = controller;
+        this.painelAnterior = painelAnterior;
     }
 
     /**
@@ -62,9 +72,9 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         telefoneField = new javax.swing.JFormattedTextField();
         Buscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        Delete = new javax.swing.JButton();
-        Edit = new javax.swing.JButton();
+        select = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        cancel = new javax.swing.JButton();
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,6 +84,11 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
 
             }
         ));
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabelaMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabela);
 
         searchPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -168,7 +183,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addComponent(isCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addComponent(isIDusuario)
@@ -215,17 +230,10 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
 
         jLabel1.setText("*Marque as caixas para pesquisar com os filtros.");
 
-        Delete.setText("Excluir");
-        Delete.addActionListener(new java.awt.event.ActionListener() {
+        select.setText("Atribuir ao Serviço");
+        select.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteActionPerformed(evt);
-            }
-        });
-
-        Edit.setText("Editar");
-        Edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditActionPerformed(evt);
+                selectActionPerformed(evt);
             }
         });
 
@@ -233,6 +241,13 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        cancel.setText("Cancelar");
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
             }
         });
 
@@ -247,13 +262,13 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
                     .addComponent(searchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                         .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(Edit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Delete)
-                        .addGap(41, 41, 41)
+                        .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(select)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Buscar)))
                 .addContainerGap())
         );
@@ -268,9 +283,9 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Delete)
-                        .addComponent(Edit)
-                        .addComponent(jButton1))
+                        .addComponent(select)
+                        .addComponent(jButton1)
+                        .addComponent(cancel))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -295,39 +310,39 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
         
-        List<Version> data=null;
-        Version temp;
+        List<Cliente> data=null;
+        Cliente temp;
         //Identificadores únicos, não precisa procurar com outros
         if (isIDcliente.isSelected()){
             try {
-                temp = MAIN.getController().search((int)clientIDnum.getValue());
+                temp = controller.search((int)clientIDnum.getValue());
                 if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
+                else throw new IllegalArgumentException("ID Não encontrado");
                 
                 return;
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BuscarClienteShort.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (isCPF.isSelected()){
             try {
-                temp = MAIN.getController().searchByCPF(cpfField.getText());
+                temp = controller.searchByCPF(cpfField.getText());
                 if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
+                else throw new IllegalArgumentException("CPF Não encontrado.");
                 return;
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BuscarClienteShort.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             try {
-                data = MAIN.getController().selectAll();
+                data = controller.selectAll();
                 if (data == null)
-                    throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
+                    throw new IllegalStateException("Nenhum dado encontrado.");
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.log(Level.SEVERE, null, ex);
             }
         }
         
-        for (Version cliente : data){
+        for (Cliente cliente : data){
             flag=true; times=0; //Tem que ser true em todas as verifs. para ser add
             if (isNome.isSelected()){
                 flag = cliente.getNome().contains(nomeField.getText()) || cliente.getSobrenome().contains(nomeField.getText());
@@ -380,29 +395,41 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     }//GEN-LAST:event_isCPFActionPerformed
     //</editor-fold>
     
-    private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        int row = tabela.getSelectedRow();
-        if (row>=0){
-            
-        } else {
-            BalloonTip tooltipBalloon = new BalloonTip(Edit, "Selecione uma linha para poder editar.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
-        }
-    }//GEN-LAST:event_EditActionPerformed
-
-    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        int row = tabela.getSelectedRow();
-        if (row>=0){
-            
-        } else {
-            BalloonTip tooltipBalloon = new BalloonTip(Delete, "Selecione uma linha para poder excluir.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
-        }
-    }//GEN-LAST:event_DeleteActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         cleanAllFields();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
+        int row = tabela.getSelectedRow();
+        if (row>=0){
+
+        } else {
+            BalloonTip tooltipBalloon = new BalloonTip(select, "Selecione uma linha para poder excluir.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        }
+    }//GEN-LAST:event_selectActionPerformed
+
+    private void tabelaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMousePressed
+        tabela =(JTable) evt.getSource();
+        Point p = evt.getPoint();
+        int row = tabela.rowAtPoint(p); //Posição da row.
+        if (evt.getClickCount() == 2) {
+            clienteSelecionado = modeloTabela.getRow(row);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_tabelaMousePressed
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+        this.setVisible(false);
+        painelAnterior.setEnabled(true);
+        painelAnterior.requestFocus();
+    }//GEN-LAST:event_cancelActionPerformed
+    
+    private Cliente clienteSelecionado=null;
+
+    public Cliente getClienteSelecionado() {
+        return clienteSelecionado;
+    }
     
     
     public static final String EMPTY=null;
@@ -428,7 +455,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     }
 
     @Override
-    public void fillAllFields(Version object) {
+    public void fillAllFields(Cliente object) {
         /*String combo = object.getEnd().substring(0,object.getEnd().indexOf(' '));
         String rest  = object.getEnd().substring(object.getEnd().indexOf(' ')+1);
         
@@ -438,16 +465,16 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         enderecoNum.setValue(rest.substring(rest.lastIndexOf(' ')));
         telefoneField.setText(object.getTel());
         cpfField.setText(object.getCpf());
-        clientIDnum.setValue(object.getVersionId());
+        clientIDnum.setValue(object.getClienteId());
         userIDnum.setValue(object.getUserId());*/
         
         modeloTabela.addRow(object);
     }
 
     @Override
-    public Version getInstance() {
+    public Cliente getInstance() {
         int row = tabela.getSelectedRow();
-        Version cliente = null;
+        Cliente cliente = null;
         if (row>=0){
             cliente = modeloTabela.getRow(row);
         } else {
@@ -458,12 +485,11 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         return cliente;
     }
 
-    private class ResultsTableModel extends VersionTable{}
+    private class ResultsTableModel extends ClienteTable{}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;
-    private javax.swing.JButton Delete;
-    private javax.swing.JButton Edit;
+    private javax.swing.JButton cancel;
     private javax.swing.JSpinner clientIDnum;
     private javax.swing.JFormattedTextField cpfField;
     private javax.swing.JComboBox<String> enderecoCombo;
@@ -480,8 +506,15 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nomeField;
     private javax.swing.JPanel searchPanel;
+    private javax.swing.JButton select;
     private javax.swing.JTable tabela;
     private javax.swing.JFormattedTextField telefoneField;
     private javax.swing.JSpinner userIDnum;
     // End of variables declaration//GEN-END:variables
+
+    private void logExcAndDisplayError(String message, DatabaseException ex){
+        MainFrame.LOG.log(Level.SEVERE, null, ex);
+        
+        
+    }
 }

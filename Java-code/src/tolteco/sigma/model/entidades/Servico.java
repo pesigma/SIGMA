@@ -6,8 +6,6 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Comparator;
-import java.util.Objects;
-import java.util.Observable;
 
 /**
  * Entidade Servico, possui métodos e valores para o objeto serviço
@@ -26,7 +24,7 @@ public class Servico implements Comparable<Servico>{
 
     // <editor-fold defaultstate="collapsed" desc="Construtores">
     
-    public Servico(int idc, String placa, String modelo, int km, Situacao sit, String obs) {
+    public Servico(int idc, String placa, String modelo, double km, Situacao sit, String obs) {
         this.idCliente = idc;
         this.placa = placa;
         this.modelo = modelo;
@@ -49,11 +47,18 @@ public class Servico implements Comparable<Servico>{
     public Servico(int rowid) {
         this.rowid = rowid;
     }
+    
+    public int getUserId() {
+        return userId;
+    }
 
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    
+    public void setUserId(int userId) {    
+        this.userId = userId;
+    }
+
     public int getIdcliente() {
         return idCliente;
     }

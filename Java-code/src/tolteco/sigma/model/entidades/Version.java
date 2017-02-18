@@ -186,4 +186,23 @@ public class Version implements Comparable<Version> {
     public static Double asDouble(Version v) {
         return Double.parseDouble(v.majorVersion + "." + v.minorVersion);
     }
+    
+     /**
+     * Acopla um objeto {@link tolteco.sigma.model.entidades.Major} e um de 
+     * {@link tolteco.sigma.model.entidades.Minor} para ter ambas as
+     * informações unidas na classe {@link tolteco.sigma.model.entidades.Version}.
+     * @param major
+     * @param minor
+     * @return 
+     */
+    public static Version versionBuilder(Major major, Minor minor){
+        return new Version(major.getMajorVer(),
+                           major.getMajorName(), 
+                           major.getMajorDate(), 
+                           major.getMajorNotes(), 
+                
+                           minor.getMinorVer(), 
+                           minor.getMinorDate(), 
+                           minor.getMinorNotes());
+    }
 }

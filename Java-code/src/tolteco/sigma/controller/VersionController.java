@@ -10,6 +10,8 @@ import java.util.List;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.VersionDAO;
+import tolteco.sigma.model.entidades.Major;
+import tolteco.sigma.model.entidades.Minor;
 import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.model.tables.VersionTable;
 
@@ -113,11 +115,19 @@ public class VersionController extends GenericController<Version, VersionTable>{
     }
     
     public void createMajorRelease(String name, Date date, String notes) throws DatabaseException{
-        versionDAO.createMajorRelease(name, date, notes);
+        int majorId = versionDAO.createMajorRelease(name, date, notes);
+    }
+    
+    public void createMajorRelease(Major major) throws DatabaseException{
+        versionDAO.createMajorRelease(major.getMajorName(), major.getMajorDate(), major.getMajorNotes());
     }
     
     public void createMinorRelease(int majorKey, Date date, String notes) throws DatabaseException{
         versionDAO.createMinorRelease(majorKey, date, notes);
+    }
+    
+    public void createMinorRelease(Minor minor) throws DatabaseException{
+        versionDAO.createMinorRelease(minor.getMajorVer(), minor.getMinorDate(), minor.getMinorNotes());
     }
     
     public Version fetchLatestVersion() throws DatabaseException{

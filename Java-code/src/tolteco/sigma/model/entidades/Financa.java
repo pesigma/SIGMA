@@ -116,6 +116,10 @@ public class Financa implements Comparable<Financa> {
     public void setValor(double valor) {
         this.valor = valor;
     }
+
+    public int getUserId() {
+        return userId;
+    }
     
     //</editor-fold>
     

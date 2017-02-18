@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.VersionDAO;
+import tolteco.sigma.model.entidades.Major;
+import tolteco.sigma.model.entidades.Minor;
 import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.utils.SDate;
 
