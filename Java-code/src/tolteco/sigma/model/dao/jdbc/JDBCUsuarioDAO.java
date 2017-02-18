@@ -24,7 +24,7 @@ import tolteco.sigma.model.entidades.Usuario;
 public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
 
     @Override
-    public boolean insert(Usuario t) throws DatabaseException {
+    public int insert(Usuario t) throws DatabaseException {
         String query = "INSERT INTO Users " + 
                 "(accessLevel,userName,userPass) " + 
                 "VALUES (?,?,?)";
@@ -49,7 +49,7 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
                 }
         }
         
-        return true;
+        return getNextId()-1;
     }
 
     @Override
@@ -217,4 +217,20 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
             throw new DatabaseException(ex);
         }
     }   
+
+    @Override
+    public int getNextId() throws DatabaseException {
+        String query = "SELECT userId FROM Users ORDER BY userId";
+        int lastId = -2;
+        try (PreparedStatement pst = connection.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+            lastId = -1;
+            while (rs.next()){
+                lastId = rs.getInt("userId");
+            }          
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
+        
+        return lastId+1;
+    }
 }

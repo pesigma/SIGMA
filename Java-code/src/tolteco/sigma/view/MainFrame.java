@@ -8,8 +8,10 @@ package tolteco.sigma.view;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import tolteco.sigma.controller.ClienteController;
@@ -19,6 +21,8 @@ import tolteco.sigma.controller.UsuarioController;
 import tolteco.sigma.controller.VersionController;
 import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.utils.DefaultConfigs;
+import tolteco.sigma.utils.logging.BufferedPaneOutputStream;
+import tolteco.sigma.utils.logging.PaneHandler;
 import tolteco.sigma.view.cliente.MainCliente;
 
 /**
@@ -26,7 +30,15 @@ import tolteco.sigma.view.cliente.MainCliente;
  * @author Juliano
  */
 public class MainFrame extends javax.swing.JFrame {
+
     //private static final int ACCESS_LEVEL = 0; //Usado para testes - Nivel de acesso
+    public static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
+    
+    private static void initLogger(MainView mainChild){
+        mainChild.console.setEditable(false);
+        BufferedPaneOutputStream oStream = new BufferedPaneOutputStream(mainChild.console);
+        LOG.addHandler(new PaneHandler(oStream));
+    }
     
     private JButton defineLogOutButton(){
         JButton logOut = new JButton("Logout");
@@ -76,10 +88,11 @@ public class MainFrame extends javax.swing.JFrame {
         
         //new Font(DefaultConfigs.SYSTEMFONT, Font.BOLD|Font.ITALIC, 16)
         PainelGuias.setFont( new Font(DefaultConfigs.SYSTEMFONT, Font.PLAIN, 16) );
-                
-        JPanel panel = new MainView();
-        PainelGuias.add(panel);
+            
+        MainView mainChild = new MainView(this);
+        PainelGuias.add(mainChild);
         PainelGuias.setTitleAt(0, "Principal");
+        MainFrame.initLogger(mainChild);
         
         JPanel panel1 = new MainCliente(this, cliente);
         PainelGuias.add(panel1);
@@ -207,6 +220,10 @@ public class MainFrame extends javax.swing.JFrame {
                 Sistema.assembleMain().setVisible(true);
             }
         });
+    }
+    
+    public JComponent getExceptionTab(){
+        return PainelGuias;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

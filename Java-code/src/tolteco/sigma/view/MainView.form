@@ -76,6 +76,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="log&#xa;log&#xa;&#xa;log&#xa;log&#xa;&#xa;log&#xa;log&#xa;&#xa;log&#xa;log"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="16"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

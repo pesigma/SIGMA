@@ -22,10 +22,14 @@ import tolteco.sigma.utils.eventsAndListeners.SigmaListener;
  * Controlador genérico do sistema.
  * @author Juliano Felipe
  * @param <T> Entidade para controle.
- * @param <Model>
+ * @param <Model> Modelo de tabela do Sigma do
+ *                respectivo tipo de entidade.
  */
-public abstract class GenericController<T, Model extends SigmaAbstractTableModel> implements SigmaListener{
-        
+public abstract class GenericController<T, Model extends SigmaAbstractTableModel<T>> implements SigmaListener{
+    /**
+     * Factory para a obtenção dos
+     * DAOs para os respectivos tipos de entidades.
+     */
     protected DAOFactory dao = null;
     //protected SigmaAbstractTableModel model = null;
     
@@ -34,18 +38,70 @@ public abstract class GenericController<T, Model extends SigmaAbstractTableModel
         //this.model = model;
     }
     
-    public abstract boolean insert(T t) throws DatabaseException;
+    /**
+     * Método para inserção no banco. Retorna o 
+     * id em sucesso ou -1 em falha.
+     * @param t objeto a ser inserido.
+     * @return -1 em erro ou o id inserido.
+     * @throws DatabaseException em erro.
+     */
+    public abstract int insert(T t) throws DatabaseException;
     
+    /**
+     * Método para remoção do banco. Utiliza apenas
+     * o id.
+     * 
+     * @param t objeto a ser inserido.
+     * @return false em erro ou true em sucesso.
+     * @throws DatabaseException em erro.
+     */
     public abstract boolean remove(T t) throws DatabaseException;
     
+    /**
+     * Método para atualização no banco. Atualiza todos
+     * os dados para não ser necessária a verificação
+     * de qual(is) foi(am) alterado(s).
+     * 
+     * @param t objeto a ser inserido.
+     * @return false em erro ou true em sucesso.
+     * @throws DatabaseException em erro.
+     */
     public abstract boolean update(T t) throws DatabaseException;
     
+    /**
+     * Seleção de todos os objetos do banco de dados.
+     * 
+     * @return Lista com todos os objetos do banco.
+     * @throws DatabaseException em erro. 
+     */
     public abstract List<T> selectAll() throws DatabaseException;
     
+    /**
+     * Procura do objeto que possui a chave
+     * primária passada.
+     * 
+     * @param primaryKey identificadora do objeto.
+     * @return objeto com a chave ou null em falha.
+     * @throws DatabaseException em erro. 
+     */
     public abstract T search(int primaryKey) throws DatabaseException;
     
+    /**
+     * Procura todos os objetos em que seu atributo principal
+     * String (e.g.: Nome do Cliente, Modelo do serviço)
+     * possua como substring a String passada.
+     * 
+     * @param nome String de procura.
+     * @return Lista com os objetos encontrados.
+     * @throws DatabaseException em erro. 
+     */
     public abstract List<T> select(String nome) throws DatabaseException; //Buscar
 
+    /**
+     * Retorna o modelo de tabela referente a cada
+     * tipo de entidade. 
+     * @return Modelo de tabela.
+     */
     public abstract SigmaAbstractTableModel<T> getModel();
     
     @Override
@@ -72,13 +128,13 @@ public abstract class GenericController<T, Model extends SigmaAbstractTableModel
 
     @Override
     public boolean insertionEventHappened(InsertionEvent event) {
-        boolean result = false;
+        int result = -1;
         try {
             result = insert((T)event.getSource());
         } catch (DatabaseException ex) {
             Logger.getLogger(GenericController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return result;
+        return result != -1;
     }
 
     @Override

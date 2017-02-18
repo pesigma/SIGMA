@@ -12,8 +12,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.VersionDAO;
 import tolteco.sigma.model.entidades.Version;
@@ -96,10 +94,14 @@ public class JDBCVersionDAO extends JDBCAbstractDAO<Version> implements VersionD
     }
 
     @Override
-    public boolean insert(Version t) throws DatabaseException {
+    public int insert(Version t) throws DatabaseException {
         createMajorRelease(t.getMajorName(), t.getMajorDate(), t.getMajorNotes());
         createMinorRelease(t.getMajorVersion(), t.getMinorDate(), t.getMinorNotes());
-        return true;
+        try {
+            return getNextMajorId();
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
     }
 
     @Override
@@ -385,6 +387,20 @@ public class JDBCVersionDAO extends JDBCAbstractDAO<Version> implements VersionD
         }
         
         return minor;
+    }
+
+    /**
+     * Retorna o próximo Id de uma "Major" Version.
+     * @return próximo id disponível
+     * @throws DatabaseException em erro.
+     */
+    @Override
+    public int getNextId() throws DatabaseException {
+        try {
+            return getNextMajorId();
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
     }
     
 }

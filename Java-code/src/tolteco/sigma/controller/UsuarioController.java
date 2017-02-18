@@ -27,10 +27,10 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
     }
     
     @Override
-    public boolean insert(Usuario t) throws DatabaseException {
-        boolean ins = usuarioDAO.insert(t);
+    public int insert(Usuario t) throws DatabaseException {
+        int ins = usuarioDAO.insert(t);
         
-        if (ins){
+        if (ins != -1){
             List<Usuario> usuarios = usuarioDAO.select(t.getUserName());
             int key = -1;
             
@@ -55,7 +55,7 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
                 + " falhou.");
         }
         
-        return false;
+        return ins;
     }
 
     @Override

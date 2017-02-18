@@ -13,9 +13,7 @@ import java.util.List;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.ServicoDAO;
 import tolteco.sigma.model.entidades.Servico;
-import tolteco.sigma.model.entidades.Servico;
 import tolteco.sigma.model.entidades.Situacao;
-import tolteco.sigma.utils.SDate;
 import tolteco.sigma.view.Sistema;
 
 /**
@@ -25,7 +23,7 @@ import tolteco.sigma.view.Sistema;
 public class JDBCServicoDAO extends JDBCAbstractDAO<Servico> implements ServicoDAO{
 
     @Override
-    public boolean insert(Servico t) throws DatabaseException {
+    public int insert(Servico t) throws DatabaseException {
         String query = "INSERT INTO Servico " + 
                 "(userId,clienteId,Placa,Quilometragem,Modelo,Situacao,Observacoes) " + 
                 "VALUES (?,?,?,?,?,?,?)";
@@ -54,7 +52,7 @@ public class JDBCServicoDAO extends JDBCAbstractDAO<Servico> implements ServicoD
                 }
         }
         
-        return true;
+        return getNextId()-1;
     }
 
     @Override
@@ -258,6 +256,22 @@ public class JDBCServicoDAO extends JDBCAbstractDAO<Servico> implements ServicoD
             //Logger.getLogger(JDBCClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex);
         }
+    }
+
+    @Override
+    public int getNextId() throws DatabaseException {
+        String query = "SELECT servicoId FROM Servico ORDER BY servicoId";
+        int lastId = -2;
+        try (PreparedStatement pst = connection.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+            lastId = -1;
+            while (rs.next()){
+                lastId = rs.getInt("servicoId");
+            }          
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
+        
+        return lastId+1;
     }
     
 }

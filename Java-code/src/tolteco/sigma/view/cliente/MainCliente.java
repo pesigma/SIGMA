@@ -5,11 +5,14 @@
  */
 package tolteco.sigma.view.cliente;
 
+import java.awt.Component;
+import java.awt.event.ActionEvent;
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.view.interfaces.Operacao;
 import tolteco.sigma.controller.ClienteController;
 import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.tables.ClienteTable;
 import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.MainEntity;
@@ -22,7 +25,7 @@ import tolteco.sigma.view.interfaces.MainEntity;
  * {@link tolteco.sigma.view.cliente.OperacaoCliente}.
  * @author Juliano Felipe
  */
-public class MainCliente extends javax.swing.JPanel implements MainEntity<ClienteController>{
+public class MainCliente extends javax.swing.JPanel implements MainEntity<ClienteController,Cliente>{
     private Operacao ultimoPanelAdicionado = null;
     private final ClienteController controller;
     private final ClienteTable model;
@@ -134,7 +137,7 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         if (ultimoPanelAdicionado != Operacao.Adicionar){ //Singleton - Sort of
-            AdicionarCliente add = new AdicionarCliente();
+            AdicionarCliente add = new AdicionarCliente(this);
             Panel.setViewportView( add );
         } else {
             Panel.setVisible(true);
@@ -145,7 +148,7 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
         if (ultimoPanelAdicionado != Operacao.Modificar && ultimoPanelAdicionado != Operacao.Buscar){ //Singleton - Sort of
-            ModificarCliente modif = new ModificarCliente();
+            ModificarCliente modif = new ModificarCliente(this);
             Panel.setViewportView( modif );
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Busque um Cliente para modificar");
             ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
@@ -185,7 +188,7 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Add;
+    protected javax.swing.JButton Add;
     private javax.swing.JButton Delete;
     private javax.swing.JButton Edit;
     private javax.swing.JButton List;
@@ -205,11 +208,27 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
 
     @Override
     public void displayException(Exception ex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção jogada.");
+        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
     }
 
     @Override
     public void displayDatabaseException(DatabaseException ex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção do Banco de dados jogada.");
+        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+    }
+
+    @Override
+    public void pressEdit(Cliente toFill) {
+        EditActionPerformed( new ActionEvent(toFill, -1, "ToEdit"));
+        Component[] components = Panel.getComponents();
+        
+        for(Component comp : components){
+            if (comp instanceof ModificarCliente){
+                ModificarCliente modif = (ModificarCliente) comp;
+                modif.fillAllFields(toFill);
+                return;
+            }
+        }
     }
 }

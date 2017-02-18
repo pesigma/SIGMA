@@ -27,10 +27,10 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
     }
 
     @Override
-    public boolean insert(Financa t) throws DatabaseException {
-        boolean ins = financaDAO.insert(t);
+    public int insert(Financa t) throws DatabaseException {
+        int ins = financaDAO.insert(t);
         
-        if (ins){
+        if (ins != -1){
             List<Financa> financas = financaDAO.select(t.getData());
             int key = -1;
             
@@ -55,7 +55,7 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
                 + " falhou.");
         }
         
-        return false;
+        return ins;
     }
 
     @Override

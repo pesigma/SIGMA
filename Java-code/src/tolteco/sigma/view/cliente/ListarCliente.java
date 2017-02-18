@@ -5,8 +5,14 @@
  */
 package tolteco.sigma.view.cliente;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import net.java.balloontip.BalloonTip;
+import net.java.balloontip.utils.ToolTipUtils;
+import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
-import tolteco.sigma.model.tables.ClienteTable;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Listar;
 
 /**
@@ -43,7 +49,7 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         deleteButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
+        edit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
@@ -57,8 +63,18 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
         jScrollPane1.setViewportView(tabela);
 
         deleteButton.setText("Excluir");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
-        saveButton.setText("Salvar");
+        edit.setText("Editar");
+        edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("* Para editar, dê um duplo clique em uma das células");
 
@@ -72,8 +88,8 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
-                        .addComponent(saveButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
+                        .addComponent(edit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteButton)))
                 .addContainerGap())
@@ -87,18 +103,53 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(deleteButton)
-                        .addComponent(saveButton))
+                        .addComponent(edit))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+        int row = tabela.getSelectedRow();
+        if (row>=0){
+            Cliente cli = getInstance();
+            MAIN.pressEdit(cli);
+        } else {
+            BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        }
+    }//GEN-LAST:event_editActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        int row = tabela.getSelectedRow();
+        if (row>=0){
+            Object[] choices = {"Sim", "Não"};
+            Object defaultChoice = choices[0];
+            int dialogRet = JOptionPane.showOptionDialog(this, "Deseja realmente excluir o cliente?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 
+            JOptionPane.QUESTION_MESSAGE, null, choices, defaultChoice);
+            if(dialogRet == 1) { //==0 para sim
+                return;
+            } 
+            
+            Cliente cli = getInstance();
+            try {
+                MAIN.getController().remove(cli);
+            } catch (DatabaseException ex) {
+                MainFrame.LOG.log(Level.SEVERE, null, ex);
+                MAIN.displayDatabaseException(ex);
+            }
+        } else {
+            BalloonTip tooltipBalloon = new BalloonTip(deleteButton, "Selecione uma linha para poder excluir.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
+    private javax.swing.JButton edit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton saveButton;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 
@@ -110,7 +161,9 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
             //cliente = (ClienteTable) tabela.getModel().
             cliente = MAIN.getModel().getRow(row);
         } else {
-            throw new UnsupportedOperationException("COOLOCA BALÃO AQUI");
+            //Nunca deverá entrar aqui.
+            BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
         }
         return cliente;
     }

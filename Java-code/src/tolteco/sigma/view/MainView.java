@@ -10,12 +10,13 @@ package tolteco.sigma.view;
  * @author Juliano Felipe
  */
 public class MainView extends javax.swing.JPanel {
-
+    private final MainFrame MAIN;
     /**
      * Creates new form NewJPanel
      */
-    public MainView() {
+    public MainView(MainFrame main) {
         initComponents();
+        MAIN = main;
     }
 
     /**
@@ -29,7 +30,6 @@ public class MainView extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        console = new javax.swing.JTextPane();
         FinancasPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -109,7 +109,7 @@ public class MainView extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FinancasPanel;
-    private javax.swing.JTextPane console;
+    final javax.swing.JTextPane console = new javax.swing.JTextPane();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

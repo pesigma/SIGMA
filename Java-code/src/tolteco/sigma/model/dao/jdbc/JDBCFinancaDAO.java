@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +22,7 @@ import tolteco.sigma.view.Sistema;
 public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaDAO {
 
     @Override
-    public boolean insert(Financa t) throws DatabaseException {
+    public int insert(Financa t) throws DatabaseException {
         String query = "INSERT INTO Financa " + 
                 "(userId,Tipo,Data,Valor,Situacao,Observacoes) " + 
                 "VALUES (?,?,?,?,?,?)";
@@ -51,7 +50,7 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaD
                 }
         }
         
-        return true;
+        return getNextId()-1;
     }
 
     @Override
@@ -284,6 +283,22 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaD
             //Logger.getLogger(JDBCFinancaDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex);
         }
+    }
+
+    @Override
+    public int getNextId() throws DatabaseException {
+        String query = "SELECT financaId FROM Financa ORDER BY financaId";
+        int lastId = -2;
+        try (PreparedStatement pst = connection.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+            lastId = -1;
+            while (rs.next()){
+                lastId = rs.getInt("financaId");
+            }          
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
+        
+        return lastId+1;
     }
 
 }

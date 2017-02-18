@@ -9,10 +9,8 @@ import java.util.List;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.ServicoDAO;
-import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.entidades.Servico;
 import tolteco.sigma.model.tables.ServicoTable;
-import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 
 /**
  *
@@ -29,10 +27,10 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
     }
     
     @Override
-    public boolean insert(Servico t) throws DatabaseException {
-        boolean ins = servicoDAO.insert(t);
+    public int insert(Servico t) throws DatabaseException {
+        int ins = servicoDAO.insert(t);
         
-        if (ins){
+        if (ins != -1){
             List<Servico> servicos = servicoDAO.select(t.getPlaca());
             int key = -1;
             
@@ -57,7 +55,7 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
                 + " falhou.");
         }
         
-        return false;
+        return -1;
     }
 
     @Override

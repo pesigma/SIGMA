@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface GenericDAO<T> {
     
-    boolean insert(T t) throws DatabaseException;
+    int insert(T t) throws DatabaseException;
     
     boolean remove(T t) throws DatabaseException;
     
@@ -26,4 +26,6 @@ public interface GenericDAO<T> {
     T search(int primaryKey) throws DatabaseException;
     
     List<T> select(String nome) throws DatabaseException; //Buscar
+    
+    int getNextId() throws DatabaseException;
 }

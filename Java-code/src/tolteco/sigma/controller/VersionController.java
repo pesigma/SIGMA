@@ -29,10 +29,10 @@ public class VersionController extends GenericController<Version, VersionTable>{
     }
     
     @Override
-    public boolean insert(Version t) throws DatabaseException {
-        boolean ins = versionDAO.insert(t);
+    public int insert(Version t) throws DatabaseException {
+        int ins = versionDAO.insert(t);
         
-        if (ins){
+        if (ins != -1){
             List<Version> versoes = versionDAO.select(t.getMajorName());
             int key = -1;
             
@@ -57,7 +57,7 @@ public class VersionController extends GenericController<Version, VersionTable>{
                 + " falhou.");
         }
         
-        return false;
+        return ins;
     }
 
     @Override

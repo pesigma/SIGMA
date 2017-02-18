@@ -13,11 +13,14 @@ import tolteco.sigma.model.tables.SigmaAbstractTableModel;
  *
  * @author Juliano Felipe
  * @param <T>
+ * @param <X>
  */
-public interface MainEntity<T extends GenericController> {
+public interface MainEntity<T extends GenericController,X> {
     void displayException(Exception ex);
     void displayDatabaseException(DatabaseException ex);
  
     GenericController getController();
     SigmaAbstractTableModel getModel();
+    
+    void pressEdit(X toFill);
 }

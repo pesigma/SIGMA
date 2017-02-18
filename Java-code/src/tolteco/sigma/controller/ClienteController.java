@@ -27,10 +27,10 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
     }
     
     @Override
-    public boolean insert(Cliente t) throws DatabaseException {
-        boolean ins = clienteDAO.insert(t);
+    public int insert(Cliente t) throws DatabaseException {
+        int ins = clienteDAO.insert(t);
         
-        if (ins){
+        if (ins != -1){
             List<Cliente> clientes = clienteDAO.select(t.getNome());
             int key = -1;
             
@@ -63,7 +63,7 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
                 + " falhou.");
         }
         
-        return false;
+        return ins;
     }
 
     @Override
