@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tolteco.sigma.view.cliente;
+package tolteco.sigma.view.version;
 
 import java.util.List;
 import java.util.TreeSet;
@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
-import tolteco.sigma.model.entidades.Cliente;
-import tolteco.sigma.model.tables.ClienteTable;
+import tolteco.sigma.model.entidades.Version;
+import tolteco.sigma.model.tables.VersionTable;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -22,15 +22,15 @@ import tolteco.sigma.view.interfaces.Buscar;
  * atributos (nome, id, etc).
  * @author Juliano Felipe
  */
-public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>{
-    private final MainCliente MAIN;
+public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>{
+    private final MainVersion MAIN;
     private final ResultsTableModel modeloTabela = new ResultsTableModel();
     
     /**
-     * Creates new form BuscarCliente
+     * Creates new form BuscarVersion
      * @param main
      */
-    public BuscarCliente(MainCliente main) {
+    public BuscarVersion(MainVersion main) {
         initComponents();
         MAIN = main;
     }
@@ -296,8 +296,8 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
         
-        List<Cliente> data=null;
-        Cliente temp;
+        List<Version> data=null;
+        Version temp;
         //Identificadores únicos, não precisa procurar com outros
         if (isIDcliente.isSelected()){
             try {
@@ -307,7 +307,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 
                 return;
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (isCPF.isSelected()){
             try {
@@ -316,7 +316,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
                 return;
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             try {
@@ -324,11 +324,11 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 if (data == null)
                     throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
-        for (Cliente cliente : data){
+        for (Version cliente : data){
             flag=true; times=0; //Tem que ser true em todas as verifs. para ser add
             if (isNome.isSelected()){
                 flag = cliente.getNome().contains(nomeField.getText()) || cliente.getSobrenome().contains(nomeField.getText());
@@ -429,7 +429,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
     }
 
     @Override
-    public void fillAllFields(Cliente object) {
+    public void fillAllFields(Version object) {
         /*String combo = object.getEnd().substring(0,object.getEnd().indexOf(' '));
         String rest  = object.getEnd().substring(object.getEnd().indexOf(' ')+1);
         
@@ -439,16 +439,16 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         enderecoNum.setValue(rest.substring(rest.lastIndexOf(' ')));
         telefoneField.setText(object.getTel());
         cpfField.setText(object.getCpf());
-        clientIDnum.setValue(object.getClienteId());
+        clientIDnum.setValue(object.getVersionId());
         userIDnum.setValue(object.getUserId());*/
         
         modeloTabela.addRow(object);
     }
 
     @Override
-    public Cliente getInstance() {
+    public Version getInstance() {
         int row = tabela.getSelectedRow();
-        Cliente cliente = null;
+        Version cliente = null;
         if (row>=0){
             cliente = modeloTabela.getRow(row);
         } else {
@@ -459,7 +459,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         return cliente;
     }
 
-    private class ResultsTableModel extends ClienteTable{}
+    private class ResultsTableModel extends VersionTable{}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;

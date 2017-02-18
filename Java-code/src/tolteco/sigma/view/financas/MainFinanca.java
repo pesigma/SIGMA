@@ -5,11 +5,17 @@
  */
 package tolteco.sigma.view.financas;
 
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import net.java.balloontip.BalloonTip;
+import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.controller.FinancaController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.tables.FinancaTable;
 import tolteco.sigma.view.MainFrame;
+import tolteco.sigma.view.cliente.BuscarCliente;
+import tolteco.sigma.view.cliente.ModificarCliente;
 import tolteco.sigma.view.interfaces.MainEntity;
 import tolteco.sigma.view.interfaces.Operacao;
 
@@ -142,35 +148,44 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
     }//GEN-LAST:event_AddActionPerformed
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        if (ultimoPanelAdicionado != Operacao.Modificar){ //Singleton - Sort of
-            ModificarFinanca modif = new ModificarFinanca();
+        if (ultimoPanelAdicionado != Operacao.Buscar &&
+            ultimoPanelAdicionado != Operacao.Modificar &&
+            ultimoPanelAdicionado != Operacao.Remover    ){
+            BuscarFinanca modif = new BuscarFinanca(this);
             Panel.setViewportView( modif );
+            BalloonTip tooltipBalloon = new BalloonTip(Edit, "Busque uma Finança para modificar");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
         }
         
         ultimoPanelAdicionado = Operacao.Modificar;
     }//GEN-LAST:event_EditActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        /*if (ultimoPanelAdicionado != Operacao.Remover){ //Singleton - Sort of
-            RemoverFinanca add = new RemoverFinanca();
+        if (ultimoPanelAdicionado != Operacao.Buscar &&
+            ultimoPanelAdicionado != Operacao.Modificar &&
+            ultimoPanelAdicionado != Operacao.Remover    ){
+            BuscarFinanca add = new BuscarFinanca(this);
             Panel.setViewportView( add );
+            BalloonTip tooltipBalloon = new BalloonTip(Delete, "Busque uma Finança para excluir");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
         }
 
-        ultimoPanelAdicionado = Operacao.Remover;*/
+        ultimoPanelAdicionado = Operacao.Remover;
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        if (ultimoPanelAdicionado != Operacao.Buscar){ //Singleton - Sort of
-            BuscarFinanca add = new BuscarFinanca();
+        if (ultimoPanelAdicionado != Operacao.Buscar &&
+            ultimoPanelAdicionado != Operacao.Modificar &&
+            ultimoPanelAdicionado != Operacao.Remover    ){ //Singleton - Sort of
+            BuscarFinanca add = new BuscarFinanca(this);
             Panel.setViewportView( add );
         }
-
         ultimoPanelAdicionado = Operacao.Buscar;
     }//GEN-LAST:event_SearchActionPerformed
 
     private void ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListActionPerformed
         if (ultimoPanelAdicionado != Operacao.Listar){ //Singleton - Sort of
-            ListarFinanca add = new ListarFinanca();
+            ListarFinanca add = new ListarFinanca(this);
             Panel.setViewportView( add );
         }
 
@@ -189,12 +204,14 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
 
     @Override
     public void displayException(Exception ex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção jogada.");
+        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
     }
 
     @Override
     public void displayDatabaseException(DatabaseException ex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção do Banco de dados jogada.");
+        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
     }
 
     @Override
@@ -209,6 +226,15 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
 
     @Override
     public void pressEdit(Financa toFill) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EditActionPerformed( new ActionEvent(toFill, -1, "ToEdit"));
+        Component[] components = Panel.getComponents();
+        
+        for(Component comp : components){
+            if (comp instanceof ModificarFinanca){
+                ModificarFinanca modif = (ModificarFinanca) comp;
+                modif.fillAllFields(toFill);
+                return;
+            }
+        }
     }
 }

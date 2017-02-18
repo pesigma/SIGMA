@@ -139,16 +139,16 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
         if (ultimoPanelAdicionado != Operacao.Adicionar){ //Singleton - Sort of
             AdicionarCliente add = new AdicionarCliente(this);
             Panel.setViewportView( add );
-        } else {
-            Panel.setVisible(true);
         }
         
         ultimoPanelAdicionado = Operacao.Adicionar;
     }//GEN-LAST:event_AddActionPerformed
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        if (ultimoPanelAdicionado != Operacao.Modificar && ultimoPanelAdicionado != Operacao.Buscar){ //Singleton - Sort of
-            ModificarCliente modif = new ModificarCliente(this);
+        if (ultimoPanelAdicionado != Operacao.Buscar &&
+            ultimoPanelAdicionado != Operacao.Modificar &&
+            ultimoPanelAdicionado != Operacao.Remover    ){
+            BuscarCliente modif = new BuscarCliente(this);
             Panel.setViewportView( modif );
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Busque um Cliente para modificar");
             ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
@@ -158,7 +158,9 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
     }//GEN-LAST:event_EditActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        if (ultimoPanelAdicionado != Operacao.Remover && ultimoPanelAdicionado != Operacao.Buscar){ //Singleton - Sort of
+        if (ultimoPanelAdicionado != Operacao.Buscar &&
+            ultimoPanelAdicionado != Operacao.Modificar &&
+            ultimoPanelAdicionado != Operacao.Remover    ){
             BuscarCliente add = new BuscarCliente(this);
             Panel.setViewportView( add );
             BalloonTip tooltipBalloon = new BalloonTip(Delete, "Busque um Cliente para excluir");
@@ -169,7 +171,9 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        if (ultimoPanelAdicionado != Operacao.Buscar){ //Singleton - Sort of
+        if (ultimoPanelAdicionado != Operacao.Buscar &&
+            ultimoPanelAdicionado != Operacao.Modificar &&
+            ultimoPanelAdicionado != Operacao.Remover    ){ //Singleton - Sort of
             BuscarCliente add = new BuscarCliente(this);
             Panel.setViewportView( add );
         }

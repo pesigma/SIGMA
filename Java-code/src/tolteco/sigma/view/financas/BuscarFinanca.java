@@ -453,7 +453,9 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
         if (row>=0){
             cliente = modeloTabela.getRow(row);
         } else {
-            throw new UnsupportedOperationException("COOLOCA BALÃO AQUI");
+            //Nunca deverá entrar aqui (Tem verificação "elsewhere").
+            BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
         }
         return cliente;
     }

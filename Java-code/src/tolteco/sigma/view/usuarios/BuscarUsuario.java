@@ -200,9 +200,6 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
         }
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
-
-        boolean flag; 
-        short times; //Se um for falso, nao verifica os outros
         
         List<Usuario> data=null;
         try {
@@ -286,7 +283,9 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
         if (row>=0){
             cliente = modeloTabela.getRow(row);
         } else {
-            throw new UnsupportedOperationException("COOLOCA BALÃO AQUI");
+            //Nunca deverá entrar aqui (Tem verificação "elsewhere").
+            BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
         }
         return cliente;
     }
