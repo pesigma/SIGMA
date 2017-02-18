@@ -5,8 +5,6 @@
  */
 package tolteco.sigma.model.dao;
 import tolteco.sigma.model.entidades.Usuario;
-//import br.unioeste.sgev.model.pessoas.Palestrante;
-//import br.unioeste.sgev.model.pessoas.Pessoa;
 
 /**
  *

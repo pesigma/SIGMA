@@ -6,6 +6,7 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Contém informações sobre uma release (Data, major, minor, etc).
@@ -66,6 +67,37 @@ public class Version implements Comparable<Version> {
                 + " (" + majorName + ')';
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.majorVersion;
+        hash = 71 * hash + this.minorVersion;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Version other = (Version) obj;
+        if (this.majorVersion != other.majorVersion) {
+            return false;
+        }
+        if (this.minorVersion != other.minorVersion) {
+            return false;
+        }
+        return true;
+    }
+
+        
+    
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public int getMajorVersion() {
         return majorVersion;

@@ -30,25 +30,8 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
     public int insert(Financa t) throws DatabaseException {
         int ins = financaDAO.insert(t);
         
-        if (ins != -1){
-            List<Financa> financas = financaDAO.select(t.getData());
-            int key = -1;
-            
-            for (Financa financa : financas){
-                if (financa.equals(t)){
-                    key = financa.getRowid();
-                    t = financa;
-                }
-            }
-            
-            if (key==-1){ 
-                throw new DatabaseException(
-                "Falha na inserção de finança. Obtenção de código de inserção"
-                + " falhou.");
-            } else{
-                model.addRow(t);
-            }
-            
+        if (ins != -1){      
+            model.addRow(t);      
         } else {
             throw new DatabaseException(
                 "Falha na inserção de finança. Persistência no banco de dados"

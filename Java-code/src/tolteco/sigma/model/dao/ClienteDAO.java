@@ -4,10 +4,7 @@
  * and open the template in the editor.
  */
 package tolteco.sigma.model.dao;
-import java.util.List;
 import tolteco.sigma.model.entidades.Cliente;
-//import br.unioeste.sgev.model.pessoas.Palestrante;
-//import br.unioeste.sgev.model.pessoas.Pessoa;
 
 /**
  *
@@ -15,6 +12,12 @@ import tolteco.sigma.model.entidades.Cliente;
  */
 public interface ClienteDAO extends GenericDAO<Cliente> {
     
-    //List<Cliente> selectAllClientes() throws DatabaseException;
+    /**
+     * Pesquisa por cpf.
+     * 
+     * @param cpf do cliente.
+     * @return Cliente com o cpf passado.
+     * @throws DatabaseException em erro.
+     */
     Cliente searchByCPF(String cpf) throws DatabaseException;
 }

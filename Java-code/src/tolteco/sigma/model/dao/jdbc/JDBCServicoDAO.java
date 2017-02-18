@@ -210,8 +210,8 @@ public class JDBCServicoDAO extends JDBCAbstractDAO<Servico> implements ServicoD
     }
 
     @Override
-    public Servico searchByPlaca(String placa) throws DatabaseException {
-        Servico servico = null;
+    public List<Servico> searchByPlaca(String placa) throws DatabaseException {
+        List<Servico> lista = new ArrayList();
         
         String query = "SELECT servicoId, * FROM Servico WHERE placa=?";
         PreparedStatement pst = null;
@@ -222,7 +222,9 @@ public class JDBCServicoDAO extends JDBCAbstractDAO<Servico> implements ServicoD
             pst.setString(1, placa);
             rs = pst.executeQuery();
               
-            servico = getInstance(rs);
+            while (rs.next()){   
+                lista.add(getInstance(rs));
+            }
             rs.close();
             
         } catch (SQLException | DatabaseException e) {
@@ -237,7 +239,7 @@ public class JDBCServicoDAO extends JDBCAbstractDAO<Servico> implements ServicoD
                 }
         }
         
-        return servico;
+        return lista;
     }
     
     @Override

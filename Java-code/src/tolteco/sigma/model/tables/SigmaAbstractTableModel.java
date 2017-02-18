@@ -78,6 +78,8 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
     
     public void addRow(T object){
         entidades.add(object);
+        final int LASTROW = entidades.size()-1;
+        fireTableRowsInserted(LASTROW, LASTROW);
         fireInsertion(new InsertionEvent(object));
     }
     

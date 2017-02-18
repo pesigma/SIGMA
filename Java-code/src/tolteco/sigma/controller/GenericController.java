@@ -51,7 +51,7 @@ public abstract class GenericController<T, Model extends SigmaAbstractTableModel
      * Método para remoção do banco. Utiliza apenas
      * o id.
      * 
-     * @param t objeto a ser inserido.
+     * @param t objeto a ser removido.
      * @return false em erro ou true em sucesso.
      * @throws DatabaseException em erro.
      */

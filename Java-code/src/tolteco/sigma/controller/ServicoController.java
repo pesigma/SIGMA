@@ -30,32 +30,15 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
     public int insert(Servico t) throws DatabaseException {
         int ins = servicoDAO.insert(t);
         
-        if (ins != -1){
-            List<Servico> servicos = servicoDAO.select(t.getPlaca());
-            int key = -1;
-            
-            for (Servico servico : servicos){
-                if (servico.equals(t)){
-                    key = servico.getRowid();
-                    t = servico;
-                }
-            }
-            
-            if (key==-1){ 
-                throw new DatabaseException(
-                "Falha na inserção de serviço. Obtenção de código de inserção"
-                + " falhou.");
-            } else{
-                model.addRow(t);
-            }
-            
+        if (ins != -1){      
+            model.addRow(t);      
         } else {
             throw new DatabaseException(
                 "Falha na inserção de serviço. Persistência no banco de dados"
                 + " falhou.");
         }
         
-        return -1;
+        return ins;
     }
 
     @Override

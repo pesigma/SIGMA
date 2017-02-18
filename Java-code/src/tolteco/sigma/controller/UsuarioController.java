@@ -30,25 +30,8 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
     public int insert(Usuario t) throws DatabaseException {
         int ins = usuarioDAO.insert(t);
         
-        if (ins != -1){
-            List<Usuario> usuarios = usuarioDAO.select(t.getUserName());
-            int key = -1;
-            
-            for (Usuario usuario : usuarios){
-                if (usuario.equals(t)){
-                    key = usuario.getUserId();
-                    t = usuario;
-                }
-            }
-            
-            if (key==-1){ 
-                throw new DatabaseException(
-                "Falha na inserção de usuario. Obtenção de código de inserção"
-                + " falhou.");
-            } else{
-                model.addRow(t);
-            }
-            
+        if (ins != -1){      
+            model.addRow(t);      
         } else {
             throw new DatabaseException(
                 "Falha na inserção de usuario. Persistência no banco de dados"

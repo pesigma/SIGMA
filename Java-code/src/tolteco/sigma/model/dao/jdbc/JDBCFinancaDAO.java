@@ -245,7 +245,7 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaD
      *
      * @param tipo
      * @return
-     * @throws DatabaseException
+     * @throws DatabaseException em erro.
      */
     @Override
     public List<Financa> toReport(int tipo) throws DatabaseException {

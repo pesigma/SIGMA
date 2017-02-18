@@ -30,33 +30,8 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
     public int insert(Cliente t) throws DatabaseException {
         int ins = clienteDAO.insert(t);
         
-        if (ins != -1){
-            List<Cliente> clientes = clienteDAO.select(t.getNome());
-            int key = -1;
-            
-            for (Cliente client : clientes){
-                if (client.equals(t)){
-                    key = client.getClienteId();
-                    t = client;
-                }
-                /*
-                Essa atribuição maluca é para poder obter o
-                id do cliente.
-                Não fará muito sentido sem adaptar o "equals"
-                para funcionar com ou sem id
-                
-                Esse parada vai 
-                */
-            }
-            
-            if (key==-1){ 
-                throw new DatabaseException(
-                "Falha na inserção de cliente. Obtenção de código de inserção"
-                + " falhou.");
-            } else{
-                model.addRow(t);
-            }
-            
+        if (ins != -1){       
+            model.addRow(t);      
         } else {
             throw new DatabaseException(
                 "Falha na inserção de cliente. Persistência no banco de dados"

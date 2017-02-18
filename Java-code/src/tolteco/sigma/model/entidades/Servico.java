@@ -6,6 +6,7 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Observable;
 
 /**
@@ -123,6 +124,35 @@ public class Servico implements Comparable<Servico>{
                ", Situação: " + situacao.getDescricao() + 
                ", Rowid: " + rowid + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + this.rowid;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Servico other = (Servico) obj;
+        if (this.rowid != other.rowid) {
+            return false;
+        }
+        if (this.userId != other.userId) {
+            return false;
+        }
+        return true;
+    }
+   
 
     //<editor-fold defaultstate="collapsed" desc="Comparators">
     

@@ -5,6 +5,7 @@
  */
 package tolteco.sigma.model.dao;
 
+import java.util.List;
 import tolteco.sigma.model.entidades.Servico;
 
 /**
@@ -12,5 +13,13 @@ import tolteco.sigma.model.entidades.Servico;
  * @author Juliano_Felipe
  */
 public interface ServicoDAO extends GenericDAO<Servico>{
-    Servico searchByPlaca(String placa) throws DatabaseException;
+    /**
+     * Procura de serviço por placa. Retorna uma lista de
+     * serviços associados aquela placa.
+     * 
+     * @param placa a ser pesquisada.
+     * @return lista de serviços encontrados
+     * @throws DatabaseException em erro. 
+     */
+    List<Servico> searchByPlaca(String placa) throws DatabaseException;
 }

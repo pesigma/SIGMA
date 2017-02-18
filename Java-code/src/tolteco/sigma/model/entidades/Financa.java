@@ -6,6 +6,7 @@
 package tolteco.sigma.model.entidades;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Objects;
 import tolteco.sigma.utils.SDate;
 
 /**
@@ -125,7 +126,36 @@ public class Financa implements Comparable<Financa> {
                ", Tipo: " + tipo.getDescricao() + ", Valor: " + valor + 
                ", Rowid: " + rowid + '}';
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 47 * hash + this.rowid;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Financa other = (Financa) obj;
+        if (this.rowid != other.rowid) {
+            return false;
+        }
+        if (this.userId != other.userId) {
+            return false;
+        }
+        return true;
+    }
+
+     
     //<editor-fold defaultstate="collapsed" desc="Comparators">
     
     /**

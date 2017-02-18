@@ -31,7 +31,7 @@ public class EscritaRelatorio {
      * Escreve o Latex
      * @param tipo : tipo de relatorio solicitado
      * @return : true se tudo ocorreu bem
-     * @throws DatabaseException 
+     * @throws DatabaseException em erro. 
      */
     private boolean writeReport(int tipo) throws DatabaseException {
         String t;

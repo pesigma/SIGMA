@@ -6,7 +6,10 @@
 package tolteco.sigma.model.dao;
 
 /**
- *
+ * Exception para normalizar o tratamento
+ * dentro do Sistema (Facilitando a propagação
+ * até a view).
+ * 
  * @author Juliano Felipe da Silva
  */
 public class DatabaseException extends Exception{

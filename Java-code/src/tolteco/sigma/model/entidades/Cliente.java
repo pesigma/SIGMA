@@ -6,6 +6,7 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * Entidade cliente, possui métodos e valores para o objeto cliente
@@ -132,6 +133,38 @@ public class Cliente implements Comparable<Cliente>{
     public String toString() {
         return "Cliente{" + "Nome: " + nome + ", Sobrenome: " + sobrenome + ", Obs.: " + obs + ", Endereço: " + end + ", Telefone: " + tel + ", CPF: " + cpf + ", Rowid: " + clienteId + '}' + "\n";
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 13 * hash + Objects.hashCode(this.cpf);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cliente other = (Cliente) obj;
+        if (this.clienteId != other.clienteId) {
+            return false;
+        }
+        if (this.userId != other.userId) {
+            return false;
+        }
+        return Objects.equals(this.cpf, other.cpf);
+    }
+
+    
+    
+    
     
     //<editor-fold defaultstate="collapsed" desc="Comparators">
     

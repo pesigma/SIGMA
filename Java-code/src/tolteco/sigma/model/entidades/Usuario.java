@@ -5,6 +5,7 @@
  */
 package tolteco.sigma.model.entidades;
 
+import java.util.Objects;
 import java.util.Observable;
 
 /**
@@ -61,6 +62,37 @@ public class Usuario implements Comparable<Usuario> {
                 return false;
         }
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + this.userId;
+        hash = 37 * hash + Objects.hashCode(this.userName);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (this.userId != other.userId) {
+            return false;
+        }
+        if (!Objects.equals(this.userName, other.userName)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public void setUserId(int userId) {

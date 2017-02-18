@@ -17,9 +17,52 @@ import tolteco.sigma.model.entidades.Version;
  * @author Juliano Felipe da Silva
  */
 public interface VersionDAO extends GenericDAO<Version>{
+    /**
+     * Cria uma Release "Major".
+     * 
+     * @param name da Versão Maior.
+     * @param date Data de release da versão.
+     * @param notes Notas associadas.
+     * @return Id da versão inserida, ou -1 em falha.
+     * @throws DatabaseException em erro.  em erro.
+     */
     int createMajorRelease(String name, Date date, String notes) throws DatabaseException;
     
+    /**
+     * Cria uma release "Maior". Chama o método 
+     * {@link #createMajorRelease(java.lang.String, java.util.Date, java.lang.String)},
+     * propagando os parâmetros adequadamente.
+     * 
+     * @param major versão major a ser criada.
+     * @return ID da versão major inserida, ou -1 em falha.
+     * @throws DatabaseException em erro.
+     */
+    default int createMajorRelease(Major major) throws DatabaseException{
+        return createMajorRelease(major.getMajorName(), major.getMajorDate(), major.getMajorNotes());
+    }
+    
+    /**
+     * Cria uma release "Menor".
+     * 
+     * @param majorVer ID de versão maior associado.
+     * @param date Data de release da versão.
+     * @param notes Notas associadas.
+     * @return ID da versão menor inserida, ou -1 em falha.
+     * @throws DatabaseException em erro.
+     */
     int createMinorRelease(int majorVer, Date date, String notes) throws DatabaseException;
+    
+    /**
+     * Cria uma release "Menor". Chama o método {@link #createMinorRelease(int, java.util.Date, java.lang.String)},
+     * propagando os parâmetros adequadamente.
+     * 
+     * @param minor versão menor a ser criada.
+     * @return ID da versão menor inserida, ou -1 em falha.
+     * @throws DatabaseException em erro.
+     */
+    default int createMinorRelease(Minor minor) throws DatabaseException{
+        return createMinorRelease(minor.getMajorVer(), minor.getMinorDate(), minor.getMinorNotes());
+    }
     
     /**
      * Retorna a última versão cadastrada.

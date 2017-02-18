@@ -32,25 +32,8 @@ public class VersionController extends GenericController<Version, VersionTable>{
     public int insert(Version t) throws DatabaseException {
         int ins = versionDAO.insert(t);
         
-        if (ins != -1){
-            List<Version> versoes = versionDAO.select(t.getMajorName());
-            int key = -1;
-            
-            for (Version versao: versoes){
-                if (versao.equals(t)){
-                    key = versao.getMajorVersion();
-                    t = versao;
-                }
-            }
-            
-            if (key==-1){ 
-                throw new DatabaseException(
-                "Falha na inserção de versão. Obtenção de código de inserção"
-                + " falhou.");
-            } else{
-                model.addRow(t);
-            }
-            
+        if (ins != -1){      
+            model.addRow(t);      
         } else {
             throw new DatabaseException(
                 "Falha na inserção de versão. Persistência no banco de dados"
