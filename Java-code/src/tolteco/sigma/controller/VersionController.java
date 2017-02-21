@@ -7,6 +7,7 @@ package tolteco.sigma.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.VersionDAO;
@@ -14,6 +15,7 @@ import tolteco.sigma.model.entidades.Major;
 import tolteco.sigma.model.entidades.Minor;
 import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.model.tables.VersionTable;
+import tolteco.sigma.view.MainFrame;
 
 /**
  *
@@ -24,7 +26,12 @@ public class VersionController extends GenericController<Version, VersionTable>{
     private final VersionDAO versionDAO;
     private final VersionTable model;
     
-    public VersionController(DAOFactory dao, VersionTable model) {
+    @Override
+    protected final void initTable() throws DatabaseException {
+        model.addAll(versionDAO.selectAll());
+    }
+    
+    public VersionController(DAOFactory dao, VersionTable model){
         super(dao);
         versionDAO = dao.getVersionDAO();
         this.model = model;
@@ -32,6 +39,7 @@ public class VersionController extends GenericController<Version, VersionTable>{
     
     @Override
     public int insert(Version t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         int ins = versionDAO.insert(t);
         
         if (ins != -1){      
@@ -47,6 +55,7 @@ public class VersionController extends GenericController<Version, VersionTable>{
 
     @Override
     public boolean remove(Version t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean rem = versionDAO.remove(t);
         
         if (rem){
@@ -74,6 +83,7 @@ public class VersionController extends GenericController<Version, VersionTable>{
 
     @Override
     public boolean update(Version t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean rem = versionDAO.update(t);
         
         if (rem){
@@ -114,28 +124,71 @@ public class VersionController extends GenericController<Version, VersionTable>{
         return versionDAO.select(nome);
     }
     
-    public void createMajorRelease(String name, Date date, String notes) throws DatabaseException{
-        int majorId = versionDAO.createMajorRelease(name, date, notes);
-    }
-    
-    public void createMajorRelease(Major major) throws DatabaseException{
-        versionDAO.createMajorRelease(major.getMajorName(), major.getMajorDate(), major.getMajorNotes());
+    public void createRelease(Version version) throws DatabaseException{
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
+        int id = versionDAO.createMajorRelease(version.getMajorName(), version.getMajorDate(), version.getMajorNotes());
+        createMinorRelease(id, version.getMinorDate(), version.getMinorNotes());
+        model.addRow(version);
     }
     
     public void createMinorRelease(int majorKey, Date date, String notes) throws DatabaseException{
-        versionDAO.createMinorRelease(majorKey, date, notes);
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
+        int minorId = versionDAO.createMinorRelease(majorKey, date, notes);
+        Major major = versionDAO.getMajor(majorKey);
+        Version ver = Version.versionBuilder(major, new Minor(majorKey, minorId, date, notes));
+        int row = model.search(ver);
+        
+        model.setValueAt(date, row, VersionTable.MINOR_DATE);
+        model.setValueAt(notes, row, VersionTable.MINOR_NOTES);
     }
     
     public void createMinorRelease(Minor minor) throws DatabaseException{
-        versionDAO.createMinorRelease(minor.getMajorVer(), minor.getMinorDate(), minor.getMinorNotes());
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
+        this.createMinorRelease(minor.getMajorVer(), minor.getMinorDate(), minor.getMinorNotes());
     }
     
     public Version fetchLatestVersion() throws DatabaseException{
         return versionDAO.fetchLatestVersion();
     }
 
+    public Major getLatestMajor() throws DatabaseException{
+        return versionDAO.getLatestMajor();
+    }
+    
+    public Minor getLatestMinor() throws DatabaseException{
+        return versionDAO.getLatestMinor();
+    }
+    
+    public Major getMajor(int key) throws DatabaseException{
+        return versionDAO.getMajor(key);
+    }
+    
+    public Minor getLatestMinor(int key) throws DatabaseException{
+        return versionDAO.getLatestMinor(key);
+    }
+    
+    public boolean createAutoMinorRelease(Date date, String notes) throws DatabaseException{
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
+        int minorId = versionDAO.createAutoMinorRelease(date, notes);
+        Major major = versionDAO.getLatestMajor();
+        Version ver = Version.versionBuilder(major, new Minor(major.getMajorVer(), minorId, date, notes));
+        int row = model.search(ver);
+        
+        model.setValueAt(date, row, VersionTable.MINOR_DATE);
+        model.setValueAt(notes, row, VersionTable.MINOR_NOTES);
+        return true;
+    }
+    
     @Override
     public VersionTable getModel() {
+        if (!isTableInitialized){
+            try {
+                initTable();
+            } catch (DatabaseException ex) {
+                MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela.");
+            } 
+            isTableInitialized=true;
+        }
         return model;
     }
 }

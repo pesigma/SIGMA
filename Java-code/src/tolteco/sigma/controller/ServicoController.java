@@ -6,11 +6,13 @@
 package tolteco.sigma.controller;
 
 import java.util.List;
+import java.util.logging.Level;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.ServicoDAO;
 import tolteco.sigma.model.entidades.Servico;
 import tolteco.sigma.model.tables.ServicoTable;
+import tolteco.sigma.view.MainFrame;
 
 /**
  *
@@ -20,7 +22,12 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
     private final ServicoDAO servicoDAO;
     private final ServicoTable model;
 
-    public ServicoController(DAOFactory dao, ServicoTable model) {
+    @Override
+    protected final void initTable() throws DatabaseException {
+        model.addAll(servicoDAO.selectAll());
+    }
+    
+    public ServicoController(DAOFactory dao, ServicoTable model){
         super(dao);
         servicoDAO = dao.getServicoDAO();
         this.model = model;
@@ -28,6 +35,7 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
     
     @Override
     public int insert(Servico t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         int ins = servicoDAO.insert(t);
         
         if (ins != -1){      
@@ -43,6 +51,7 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
 
     @Override
     public boolean remove(Servico t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean rem = servicoDAO.remove(t);
         
         if (rem){
@@ -70,6 +79,7 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
 
     @Override
     public boolean update(Servico t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean upd = servicoDAO.update(t);
         
         if (upd){
@@ -112,6 +122,18 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
 
     @Override
     public ServicoTable getModel() {
+        if (!isTableInitialized){
+            try {
+                initTable();
+            } catch (DatabaseException ex) {
+                MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela.");
+            } 
+            isTableInitialized=true;
+        }
         return model;
+    }
+    
+    public List<Servico> searchByPlaca(String placa) throws DatabaseException{
+        return servicoDAO.searchByPlaca(placa);
     }
 }

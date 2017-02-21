@@ -6,11 +6,13 @@
 package tolteco.sigma.controller;
 
 import java.util.List;
+import java.util.logging.Level;
 import tolteco.sigma.model.dao.ClienteDAO;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.tables.ClienteTable;
+import tolteco.sigma.view.MainFrame;
 
 /**
  *
@@ -20,7 +22,12 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
     private final ClienteDAO clienteDAO;
     private final ClienteTable model;
     
-    public ClienteController(DAOFactory dao, ClienteTable model) {
+    @Override
+    protected final void initTable() throws DatabaseException {
+        model.addAll(clienteDAO.selectAll());
+    }
+    
+    public ClienteController(DAOFactory dao, ClienteTable model){
         super(dao);
         clienteDAO = dao.getClienteDAO();
         this.model = model;
@@ -28,6 +35,7 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
     
     @Override
     public int insert(Cliente t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         int ins = clienteDAO.insert(t);
         
         if (ins != -1){       
@@ -43,6 +51,7 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
 
     @Override
     public boolean remove(Cliente t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean rem = clienteDAO.remove(t);
         
         if (rem){
@@ -71,6 +80,7 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
 
     @Override
     public boolean update(Cliente t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean upd = clienteDAO.update(t);
         
         if (upd){
@@ -114,12 +124,20 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
     }
 
     public Cliente searchByCPF(String cpf) throws DatabaseException{
-        return null;
+        return clienteDAO.searchByCPF(cpf);
     }
 
     @Override
     public ClienteTable getModel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!isTableInitialized){
+            try {
+                initTable();
+            } catch (DatabaseException ex) {
+                MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela.");
+            } 
+            isTableInitialized=true;
+        }
+        return model;
     }
 
     

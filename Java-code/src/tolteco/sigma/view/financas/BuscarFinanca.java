@@ -5,16 +5,16 @@
  */
 package tolteco.sigma.view.financas;
 
-import tolteco.sigma.view.cliente.*;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
-import tolteco.sigma.model.entidades.Cliente;
-import tolteco.sigma.model.tables.ClienteTable;
+import tolteco.sigma.model.entidades.Financa;
+import tolteco.sigma.model.entidades.FinancaTipo;
+import tolteco.sigma.model.entidades.Situacao;
+import tolteco.sigma.model.tables.FinancaTable;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -23,7 +23,7 @@ import tolteco.sigma.view.interfaces.Buscar;
  * atributos (nome, id, etc).
  * @author Juliano Felipe
  */
-public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>{
+public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>{
     private final MainFinanca MAIN;
     private final ResultsTableModel modeloTabela = new ResultsTableModel();
     
@@ -45,23 +45,21 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         searchPanel = new javax.swing.JPanel();
-        isNome = new javax.swing.JCheckBox();
-        nomeField = new javax.swing.JTextField();
-        isEndereco = new javax.swing.JCheckBox();
-        enderecoField = new javax.swing.JTextField();
-        isIDcliente = new javax.swing.JCheckBox();
+        isTipo = new javax.swing.JCheckBox();
+        isData = new javax.swing.JCheckBox();
+        isIDFinanca = new javax.swing.JCheckBox();
         isIDusuario = new javax.swing.JCheckBox();
-        clientIDnum = new javax.swing.JSpinner();
-        userIDnum = new javax.swing.JSpinner();
-        isCPF = new javax.swing.JCheckBox();
-        isTelefone = new javax.swing.JCheckBox();
-        cpfField = new javax.swing.JFormattedTextField();
-        enderecoCombo = new javax.swing.JComboBox<>();
-        enderecoNum = new javax.swing.JSpinner();
-        telefoneField = new javax.swing.JFormattedTextField();
+        idFinanca = new javax.swing.JSpinner();
+        idUser = new javax.swing.JSpinner();
+        isSituacao = new javax.swing.JCheckBox();
+        receitaR = new javax.swing.JRadioButton();
+        despesaR = new javax.swing.JRadioButton();
+        pagoRadio = new javax.swing.JRadioButton();
+        dataChooser = new com.toedter.calendar.JDateChooser();
         Buscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         Delete = new javax.swing.JButton();
@@ -80,26 +78,24 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
 
         searchPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        isNome.setText("Nome");
-        isNome.addActionListener(new java.awt.event.ActionListener() {
+        isTipo.setText("Tipo");
+        isTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isNomeActionPerformed(evt);
+                isTipoActionPerformed(evt);
             }
         });
 
-        isEndereco.setText("Endereço");
-        isEndereco.addActionListener(new java.awt.event.ActionListener() {
+        isData.setText("Data");
+        isData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isEnderecoActionPerformed(evt);
+                isDataActionPerformed(evt);
             }
         });
 
-        enderecoField.setText("Engenheiro Luis Gomes Cardim Sangirardi");
-
-        isIDcliente.setText("ID Cliente");
-        isIDcliente.addActionListener(new java.awt.event.ActionListener() {
+        isIDFinanca.setText("ID Finança");
+        isIDFinanca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isIDclienteActionPerformed(evt);
+                isIDFinancaActionPerformed(evt);
             }
         });
 
@@ -110,34 +106,21 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
             }
         });
 
-        isCPF.setText("CPF");
-        isCPF.addActionListener(new java.awt.event.ActionListener() {
+        isSituacao.setText("Situação");
+        isSituacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isCPFActionPerformed(evt);
+                isSituacaoActionPerformed(evt);
             }
         });
 
-        isTelefone.setText("Telefone");
-        isTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isTelefoneActionPerformed(evt);
-            }
-        });
+        buttonGroup1.add(receitaR);
+        receitaR.setSelected(true);
+        receitaR.setText("Receita");
 
-        try {
-            cpfField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        buttonGroup1.add(despesaR);
+        despesaR.setText("Despesa");
 
-        enderecoCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alameda", "Avenida", "Estrada", "Rodovia", "Rua", "Travessa" }));
-        enderecoCombo.setSelectedIndex(4);
-
-        try {
-            telefoneField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        pagoRadio.setText("Paga");
 
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
@@ -146,66 +129,57 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
             .addGroup(searchPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(isEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(isNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(isTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(4, 4, 4)
+                    .addComponent(isData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(isTipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(searchPanelLayout.createSequentialGroup()
+                        .addComponent(receitaR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(despesaR))
+                    .addComponent(dataChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addComponent(nomeField)
+                        .addGap(69, 69, 69)
+                        .addComponent(isSituacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(isIDcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(clientIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(enderecoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(telefoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(enderecoNum, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(isCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                                .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(isIDusuario)
-                                .addGap(1, 1, 1)
-                                .addComponent(userIDnum)))))
+                        .addComponent(pagoRadio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(isIDFinanca, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
+                        .addGap(276, 276, 276)
+                        .addComponent(isIDusuario)))
+                .addGap(1, 1, 1)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(idFinanca)
+                    .addComponent(idUser, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
                 .addContainerGap())
         );
         searchPanelLayout.setVerticalGroup(
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(searchPanelLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nomeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(isIDcliente)
-                            .addComponent(clientIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(isTipo)
+                            .addComponent(receitaR)
+                            .addComponent(despesaR)
+                            .addComponent(isSituacao)
+                            .addComponent(pagoRadio))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dataChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(searchPanelLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(isIDFinanca)
+                            .addComponent(idFinanca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isEndereco)
-                            .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(enderecoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(isData)
                             .addComponent(isIDusuario)
-                            .addComponent(userIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(enderecoNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(isNome))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(isTelefone)
-                        .addComponent(telefoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(isCPF)
-                        .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                            .addComponent(idUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Buscar.setText("Buscar");
@@ -265,7 +239,7 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
                 .addContainerGap()
                 .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -281,12 +255,11 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
     private boolean changed=false;
     
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        if (isIDcliente.isSelected() == 
-            isCPF.isSelected() == 
-            isEndereco.isSelected() == 
-            isTelefone.isSelected() == 
+        if (isIDFinanca.isSelected() == 
+            isSituacao.isSelected() == 
+            isData.isSelected() == 
             isIDusuario.isSelected() == 
-            isNome.isSelected() == false){ //Nenhum filtro selecionado
+            isTipo.isSelected() == false){ //Nenhum filtro selecionado
             
             BalloonTip tooltipBalloon = new BalloonTip(searchPanel, "Selecione pelo menos um filtro.");
             ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
@@ -297,12 +270,12 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
         
-        List<Cliente> data=null;
-        Cliente temp;
+        List<Financa> data=null;
+        Financa temp;
         //Identificadores únicos, não precisa procurar com outros
-        if (isIDcliente.isSelected()){
+        if (isIDFinanca.isSelected()){
             try {
-                temp = MAIN.getController().search((int)clientIDnum.getValue());
+                temp = MAIN.getController().search((int)idFinanca.getValue());
                 if (temp != null) modeloTabela.addRow(temp);
                 else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
                 
@@ -310,12 +283,11 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
             } catch (DatabaseException ex) {
                 Logger.getLogger(BuscarFinanca.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (isCPF.isSelected()){
+        } else if (isData.isSelected()){
             try {
-                temp = MAIN.getController().searchByCPF(cpfField.getText());
-                if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
-                return;
+                data = MAIN.getController().select(dataChooser.getDate());
+                if (data == null)
+                    throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
             } catch (DatabaseException ex) {
                 Logger.getLogger(BuscarFinanca.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -329,57 +301,54 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
             }
         }
         
-        for (Cliente cliente : data){
+        for (Financa financa : data){
             flag=true; times=0; //Tem que ser true em todas as verifs. para ser add
-            if (isNome.isSelected()){
-                flag = cliente.getNome().contains(nomeField.getText()) || cliente.getSobrenome().contains(nomeField.getText());
+            if (isTipo.isSelected()){
+                FinancaTipo toCompare;
+                if (despesaR.isSelected()) toCompare = FinancaTipo.DESPESA;
+                else                       toCompare = FinancaTipo.RECEITA;
+                flag = financa.getTipo() == toCompare;
                 times++;
             }
-            endIF: if (isEndereco.isSelected()){
-                if (flag==false && times!=0) break endIF;
-                flag = cliente.getEnd().equalsIgnoreCase((String)enderecoCombo.getSelectedItem() + " " + enderecoField.getText());
-                times++;
-            }
-            telIF: if (isTelefone.isSelected()){
+            telIF: if (isSituacao.isSelected()){
                 if (flag==false && times!=0) break telIF;
-                flag = cliente.getTel().equals((String)telefoneField.getText());
+                Situacao toCompareSit;
+                if (pagoRadio.isSelected()) toCompareSit = Situacao.FINACAPAGA;
+                else                        toCompareSit = Situacao.PENDENTE;
+                flag = financa.getSituacao() == toCompareSit;
                 times++;
             }
             idUserIF: if (isIDusuario.isSelected()){
                 if (flag==false && times!=0) break idUserIF;
-                flag = cliente.getUserId() == ((int) userIDnum.getValue());
+                flag = financa.getUserId() == ((int) idUser.getValue());
                 times++;
             }
-            if (flag==true && times!=0) modeloTabela.addRow(cliente);
+            if (flag==true && times!=0) modeloTabela.addRow(financa);
         }
 
         changed=false;
     }//GEN-LAST:event_BuscarActionPerformed
 
     // <editor-fold defaultstate="collapsed" desc="Event changed...">
-    private void isNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isNomeActionPerformed
+    private void isTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isTipoActionPerformed
         changed = true;
-    }//GEN-LAST:event_isNomeActionPerformed
+    }//GEN-LAST:event_isTipoActionPerformed
 
-    private void isEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isEnderecoActionPerformed
+    private void isDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isDataActionPerformed
         changed = true;
-    }//GEN-LAST:event_isEnderecoActionPerformed
+    }//GEN-LAST:event_isDataActionPerformed
 
-    private void isTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isTelefoneActionPerformed
+    private void isIDFinancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isIDFinancaActionPerformed
         changed = true;
-    }//GEN-LAST:event_isTelefoneActionPerformed
-
-    private void isIDclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isIDclienteActionPerformed
-        changed = true;
-    }//GEN-LAST:event_isIDclienteActionPerformed
+    }//GEN-LAST:event_isIDFinancaActionPerformed
 
     private void isIDusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isIDusuarioActionPerformed
         changed = true;
     }//GEN-LAST:event_isIDusuarioActionPerformed
 
-    private void isCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isCPFActionPerformed
+    private void isSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isSituacaoActionPerformed
         changed = true;
-    }//GEN-LAST:event_isCPFActionPerformed
+    }//GEN-LAST:event_isSituacaoActionPerformed
     //</editor-fold>
     
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
@@ -412,44 +381,29 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
     
     @Override
     public void cleanAllFields() {      
-        nomeField.setText(EMPTY);
-        enderecoCombo.setSelectedItem("Rua");
-        enderecoField.setText(EMPTY);
-        enderecoNum.setValue(0);
-        telefoneField.setText(EMPTY);
-        cpfField.setText(EMPTY);
-        clientIDnum.setValue(0);
-        userIDnum.setValue(0);
+        receitaR.setSelected(true);
+        despesaR.setSelected(NOT_SELECTED);
+        dataChooser.setDate(null);
+        pagoRadio.setSelected(NOT_SELECTED);
+        idFinanca.setValue(0);
+        idUser.setValue(0);
         
-        isNome.setSelected(NOT_SELECTED);
-        isEndereco.setSelected(NOT_SELECTED);
-        isTelefone.setSelected(NOT_SELECTED);
-        isCPF.setSelected(NOT_SELECTED);
-        isIDcliente.setSelected(NOT_SELECTED);
+        isTipo.setSelected(NOT_SELECTED);
+        isData.setSelected(NOT_SELECTED);
+        isSituacao.setSelected(NOT_SELECTED);
+        isIDFinanca.setSelected(NOT_SELECTED);
         isIDusuario.setSelected(NOT_SELECTED);
     }
 
     @Override
-    public void fillAllFields(Cliente object) {
-        /*String combo = object.getEnd().substring(0,object.getEnd().indexOf(' '));
-        String rest  = object.getEnd().substring(object.getEnd().indexOf(' ')+1);
-        
-        nomeField.setText(object.getNome() + object.getSobrenome());
-        enderecoCombo.setSelectedItem(combo);
-        enderecoField.setText(rest.substring(0,rest.lastIndexOf(' ')));
-        enderecoNum.setValue(rest.substring(rest.lastIndexOf(' ')));
-        telefoneField.setText(object.getTel());
-        cpfField.setText(object.getCpf());
-        clientIDnum.setValue(object.getClienteId());
-        userIDnum.setValue(object.getUserId());*/
-        
+    public void fillAllFields(Financa object) {
         modeloTabela.addRow(object);
     }
 
     @Override
-    public Cliente getInstance() {
+    public Financa getInstance() {
         int row = tabela.getSelectedRow();
-        Cliente cliente = null;
+        Financa cliente = null;
         if (row>=0){
             cliente = modeloTabela.getRow(row);
         } else {
@@ -460,30 +414,28 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Cliente>
         return cliente;
     }
 
-    private class ResultsTableModel extends ClienteTable{}
+    private class ResultsTableModel extends FinancaTable{}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;
     private javax.swing.JButton Delete;
     private javax.swing.JButton Edit;
-    private javax.swing.JSpinner clientIDnum;
-    private javax.swing.JFormattedTextField cpfField;
-    private javax.swing.JComboBox<String> enderecoCombo;
-    private javax.swing.JTextField enderecoField;
-    private javax.swing.JSpinner enderecoNum;
-    private javax.swing.JCheckBox isCPF;
-    private javax.swing.JCheckBox isEndereco;
-    private javax.swing.JCheckBox isIDcliente;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private com.toedter.calendar.JDateChooser dataChooser;
+    private javax.swing.JRadioButton despesaR;
+    private javax.swing.JSpinner idFinanca;
+    private javax.swing.JSpinner idUser;
+    private javax.swing.JCheckBox isData;
+    private javax.swing.JCheckBox isIDFinanca;
     private javax.swing.JCheckBox isIDusuario;
-    private javax.swing.JCheckBox isNome;
-    private javax.swing.JCheckBox isTelefone;
+    private javax.swing.JCheckBox isSituacao;
+    private javax.swing.JCheckBox isTipo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nomeField;
+    private javax.swing.JRadioButton pagoRadio;
+    private javax.swing.JRadioButton receitaR;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JTable tabela;
-    private javax.swing.JFormattedTextField telefoneField;
-    private javax.swing.JSpinner userIDnum;
     // End of variables declaration//GEN-END:variables
 }

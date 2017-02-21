@@ -12,6 +12,7 @@ import net.java.balloontip.BalloonTip;
 import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Servico;
+import tolteco.sigma.model.entidades.Situacao;
 import tolteco.sigma.model.tables.ServicoTable;
 import tolteco.sigma.view.interfaces.Buscar;
 
@@ -46,20 +47,18 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         searchPanel = new javax.swing.JPanel();
-        isNome = new javax.swing.JCheckBox();
-        nomeField = new javax.swing.JTextField();
-        isEndereco = new javax.swing.JCheckBox();
-        enderecoField = new javax.swing.JTextField();
-        isIDcliente = new javax.swing.JCheckBox();
+        isModelo = new javax.swing.JCheckBox();
+        modeloField = new javax.swing.JTextField();
+        isIDServico = new javax.swing.JCheckBox();
         isIDusuario = new javax.swing.JCheckBox();
-        clientIDnum = new javax.swing.JSpinner();
-        userIDnum = new javax.swing.JSpinner();
-        isCPF = new javax.swing.JCheckBox();
-        isTelefone = new javax.swing.JCheckBox();
-        cpfField = new javax.swing.JFormattedTextField();
-        enderecoCombo = new javax.swing.JComboBox<>();
-        enderecoNum = new javax.swing.JSpinner();
-        telefoneField = new javax.swing.JFormattedTextField();
+        idServico = new javax.swing.JSpinner();
+        idUsuario = new javax.swing.JSpinner();
+        isSituacao = new javax.swing.JCheckBox();
+        isPlaca = new javax.swing.JCheckBox();
+        placaField = new javax.swing.JFormattedTextField();
+        isIdCliente = new javax.swing.JCheckBox();
+        idClient = new javax.swing.JSpinner();
+        PagoCheck = new javax.swing.JRadioButton();
         Buscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         Delete = new javax.swing.JButton();
@@ -78,26 +77,17 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
 
         searchPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        isNome.setText("Nome");
-        isNome.addActionListener(new java.awt.event.ActionListener() {
+        isModelo.setText("Modelo");
+        isModelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isNomeActionPerformed(evt);
+                isModeloActionPerformed(evt);
             }
         });
 
-        isEndereco.setText("Endereço");
-        isEndereco.addActionListener(new java.awt.event.ActionListener() {
+        isIDServico.setText("ID Serviço");
+        isIDServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isEnderecoActionPerformed(evt);
-            }
-        });
-
-        enderecoField.setText("Engenheiro Luis Gomes Cardim Sangirardi");
-
-        isIDcliente.setText("ID Cliente");
-        isIDcliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isIDclienteActionPerformed(evt);
+                isIDServicoActionPerformed(evt);
             }
         });
 
@@ -108,34 +98,29 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
             }
         });
 
-        isCPF.setText("CPF");
-        isCPF.addActionListener(new java.awt.event.ActionListener() {
+        isSituacao.setText("Situação");
+        isSituacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isCPFActionPerformed(evt);
+                isSituacaoActionPerformed(evt);
             }
         });
 
-        isTelefone.setText("Telefone");
-        isTelefone.addActionListener(new java.awt.event.ActionListener() {
+        isPlaca.setText("Placa");
+        isPlaca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isTelefoneActionPerformed(evt);
+                isPlacaActionPerformed(evt);
             }
         });
 
         try {
-            cpfField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            placaField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
-        enderecoCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alameda", "Avenida", "Estrada", "Rodovia", "Rua", "Travessa" }));
-        enderecoCombo.setSelectedIndex(4);
+        isIdCliente.setText("ID Cliente");
 
-        try {
-            telefoneField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        PagoCheck.setText("Pago");
 
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
@@ -143,37 +128,31 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(isEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(isNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(isTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(4, 4, 4)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(isModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(isSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addComponent(nomeField)
+                        .addComponent(modeloField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(isIDcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(isIDServico, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(clientIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(idServico, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(enderecoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(telefoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(PagoCheck)
+                        .addGap(52, 52, 52)
+                        .addComponent(isPlaca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(enderecoNum, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(isCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                                .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(isIDusuario)
-                                .addGap(1, 1, 1)
-                                .addComponent(userIDnum)))))
+                        .addComponent(placaField, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(isIdCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(idClient, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(isIDusuario)
+                        .addGap(1, 1, 1)
+                        .addComponent(idUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         searchPanelLayout.setVerticalGroup(
@@ -183,27 +162,27 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(searchPanelLayout.createSequentialGroup()
                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nomeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(isIDcliente)
-                            .addComponent(clientIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(modeloField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(isIDServico)
+                            .addComponent(idServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(isIDusuario)
+                                .addComponent(idUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(isIdCliente)
+                                .addComponent(idClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(isPlaca)
+                                .addComponent(placaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(searchPanelLayout.createSequentialGroup()
+                        .addComponent(isModelo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isEndereco)
-                            .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(enderecoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(isIDusuario)
-                            .addComponent(userIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(enderecoNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(isNome))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(isTelefone)
-                        .addComponent(telefoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(isCPF)
-                        .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                            .addComponent(isSituacao)
+                            .addComponent(PagoCheck))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Buscar.setText("Buscar");
@@ -263,7 +242,7 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
                 .addContainerGap()
                 .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -279,12 +258,12 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
     private boolean changed=false;
     
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        if (isIDcliente.isSelected() == 
-            isCPF.isSelected() == 
-            isEndereco.isSelected() == 
-            isTelefone.isSelected() == 
+        if (isIDServico.isSelected() == 
+            isPlaca.isSelected() == 
+            isIdCliente.isSelected() == 
+            isSituacao.isSelected() == 
             isIDusuario.isSelected() == 
-            isNome.isSelected() == false){ //Nenhum filtro selecionado
+            isModelo.isSelected() == false){ //Nenhum filtro selecionado
             
             BalloonTip tooltipBalloon = new BalloonTip(searchPanel, "Selecione pelo menos um filtro.");
             ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
@@ -298,9 +277,9 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
         List<Servico> data=null;
         Servico temp;
         //Identificadores únicos, não precisa procurar com outros
-        if (isIDcliente.isSelected()){
+        if (isIDServico.isSelected()){
             try {
-                temp = MAIN.getController().search((int)clientIDnum.getValue());
+                temp = MAIN.getController().search((int)idServico.getValue());
                 if (temp != null) modeloTabela.addRow(temp);
                 else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
                 
@@ -308,12 +287,11 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
             } catch (DatabaseException ex) {
                 Logger.getLogger(BuscarServico.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (isCPF.isSelected()){
+        } else if (isPlaca.isSelected()){
             try {
-                temp = MAIN.getController().searchByCPF(cpfField.getText());
-                if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
-                return;
+                data = MAIN.getController().searchByPlaca(placaField.getText());
+                if (data == null)
+                    throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
             } catch (DatabaseException ex) {
                 Logger.getLogger(BuscarServico.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -327,57 +305,53 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
             }
         }
         
-        for (Servico cliente : data){
+        for (Servico servico : data){
             flag=true; times=0; //Tem que ser true em todas as verifs. para ser add
-            if (isNome.isSelected()){
-                flag = cliente.getNome().contains(nomeField.getText()) || cliente.getSobrenome().contains(nomeField.getText());
+            if (isModelo.isSelected()){
+                flag = servico.getModelo().contains(modeloField.getText());
                 times++;
             }
-            endIF: if (isEndereco.isSelected()){
-                if (flag==false && times!=0) break endIF;
-                flag = cliente.getEnd().equalsIgnoreCase((String)enderecoCombo.getSelectedItem() + " " + enderecoField.getText());
+            sitIF: if (isSituacao.isSelected()){
+                if (flag==false && times!=0) break sitIF;
+                flag = servico.getSituacao() == getSitFromRadio();
                 times++;
             }
-            telIF: if (isTelefone.isSelected()){
-                if (flag==false && times!=0) break telIF;
-                flag = cliente.getTel().equals((String)telefoneField.getText());
+            cliIF: if (isIdCliente.isSelected()){
+                if (flag==false && times!=0) break cliIF;
+                flag = servico.getIdcliente() == (int) idClient.getValue();
                 times++;
             }
             idUserIF: if (isIDusuario.isSelected()){
                 if (flag==false && times!=0) break idUserIF;
-                flag = cliente.getUserId() == ((int) userIDnum.getValue());
+                flag = servico.getUserId() == ((int) idUsuario.getValue());
                 times++;
             }
-            if (flag==true && times!=0) modeloTabela.addRow(cliente);
+            if (flag==true && times!=0) modeloTabela.addRow(servico);
         }
 
         changed=false;
     }//GEN-LAST:event_BuscarActionPerformed
 
     // <editor-fold defaultstate="collapsed" desc="Event changed...">
-    private void isNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isNomeActionPerformed
+    private void isModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isModeloActionPerformed
         changed = true;
-    }//GEN-LAST:event_isNomeActionPerformed
+    }//GEN-LAST:event_isModeloActionPerformed
 
-    private void isEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isEnderecoActionPerformed
+    private void isSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isSituacaoActionPerformed
         changed = true;
-    }//GEN-LAST:event_isEnderecoActionPerformed
+    }//GEN-LAST:event_isSituacaoActionPerformed
 
-    private void isTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isTelefoneActionPerformed
+    private void isIDServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isIDServicoActionPerformed
         changed = true;
-    }//GEN-LAST:event_isTelefoneActionPerformed
-
-    private void isIDclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isIDclienteActionPerformed
-        changed = true;
-    }//GEN-LAST:event_isIDclienteActionPerformed
+    }//GEN-LAST:event_isIDServicoActionPerformed
 
     private void isIDusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isIDusuarioActionPerformed
         changed = true;
     }//GEN-LAST:event_isIDusuarioActionPerformed
 
-    private void isCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isCPFActionPerformed
+    private void isPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isPlacaActionPerformed
         changed = true;
-    }//GEN-LAST:event_isCPFActionPerformed
+    }//GEN-LAST:event_isPlacaActionPerformed
     //</editor-fold>
     
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
@@ -404,43 +378,35 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
         cleanAllFields();
     }//GEN-LAST:event_jButton1ActionPerformed
     
+    private Situacao getSitFromRadio(){
+        if (PagoCheck.isSelected())
+            return Situacao.SERVICOPAGO;
+        else
+            return Situacao.PENDENTE;
+    }
     
     public static final String EMPTY=null;
     public static final boolean NOT_SELECTED=false;
     
     @Override
     public void cleanAllFields() {      
-        nomeField.setText(EMPTY);
-        enderecoCombo.setSelectedItem("Rua");
-        enderecoField.setText(EMPTY);
-        enderecoNum.setValue(0);
-        telefoneField.setText(EMPTY);
-        cpfField.setText(EMPTY);
-        clientIDnum.setValue(0);
-        userIDnum.setValue(0);
+        modeloField.setText(EMPTY);
+        PagoCheck.setSelected(NOT_SELECTED);
+        placaField.setText(EMPTY);
+        idServico.setValue(0);
+        idUsuario.setValue(0);
+        idClient.setValue(0);
         
-        isNome.setSelected(NOT_SELECTED);
-        isEndereco.setSelected(NOT_SELECTED);
-        isTelefone.setSelected(NOT_SELECTED);
-        isCPF.setSelected(NOT_SELECTED);
-        isIDcliente.setSelected(NOT_SELECTED);
+        isModelo.setSelected(NOT_SELECTED);
+        isIdCliente.setSelected(NOT_SELECTED);
+        isSituacao.setSelected(NOT_SELECTED);
+        isPlaca.setSelected(NOT_SELECTED);
+        isIDServico.setSelected(NOT_SELECTED);
         isIDusuario.setSelected(NOT_SELECTED);
     }
 
     @Override
     public void fillAllFields(Servico object) {
-        /*String combo = object.getEnd().substring(0,object.getEnd().indexOf(' '));
-        String rest  = object.getEnd().substring(object.getEnd().indexOf(' ')+1);
-        
-        nomeField.setText(object.getNome() + object.getSobrenome());
-        enderecoCombo.setSelectedItem(combo);
-        enderecoField.setText(rest.substring(0,rest.lastIndexOf(' ')));
-        enderecoNum.setValue(rest.substring(rest.lastIndexOf(' ')));
-        telefoneField.setText(object.getTel());
-        cpfField.setText(object.getCpf());
-        clientIDnum.setValue(object.getServicoId());
-        userIDnum.setValue(object.getUserId());*/
-        
         modeloTabela.addRow(object);
     }
 
@@ -464,24 +430,22 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
     private javax.swing.JButton Buscar;
     private javax.swing.JButton Delete;
     private javax.swing.JButton Edit;
-    private javax.swing.JSpinner clientIDnum;
-    private javax.swing.JFormattedTextField cpfField;
-    private javax.swing.JComboBox<String> enderecoCombo;
-    private javax.swing.JTextField enderecoField;
-    private javax.swing.JSpinner enderecoNum;
-    private javax.swing.JCheckBox isCPF;
-    private javax.swing.JCheckBox isEndereco;
-    private javax.swing.JCheckBox isIDcliente;
+    private javax.swing.JRadioButton PagoCheck;
+    private javax.swing.JSpinner idClient;
+    private javax.swing.JSpinner idServico;
+    private javax.swing.JSpinner idUsuario;
+    private javax.swing.JCheckBox isIDServico;
     private javax.swing.JCheckBox isIDusuario;
-    private javax.swing.JCheckBox isNome;
-    private javax.swing.JCheckBox isTelefone;
+    private javax.swing.JCheckBox isIdCliente;
+    private javax.swing.JCheckBox isModelo;
+    private javax.swing.JCheckBox isPlaca;
+    private javax.swing.JCheckBox isSituacao;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nomeField;
+    private javax.swing.JTextField modeloField;
+    private javax.swing.JFormattedTextField placaField;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JTable tabela;
-    private javax.swing.JFormattedTextField telefoneField;
-    private javax.swing.JSpinner userIDnum;
     // End of variables declaration//GEN-END:variables
 }

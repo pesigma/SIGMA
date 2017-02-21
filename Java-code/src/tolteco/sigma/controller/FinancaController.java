@@ -5,12 +5,15 @@
  */
 package tolteco.sigma.controller;
 
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.FinancaDAO;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.tables.FinancaTable;
+import tolteco.sigma.view.MainFrame;
 
 /**
  *
@@ -20,7 +23,12 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
     private final FinancaDAO financaDAO;
     private final FinancaTable model;
 
-    public FinancaController(DAOFactory dao, FinancaTable model) {
+    @Override
+    protected final void initTable() throws DatabaseException {
+        model.addAll(financaDAO.selectAll());
+    }
+    
+    public FinancaController(DAOFactory dao, FinancaTable model){
         super(dao);
         financaDAO = dao.getFinancaDAO();
         this.model = model;
@@ -28,6 +36,7 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
 
     @Override
     public int insert(Financa t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         int ins = financaDAO.insert(t);
         
         if (ins != -1){      
@@ -43,6 +52,7 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
 
     @Override
     public boolean remove(Financa t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean rem = financaDAO.remove(t);
         
         if (rem){
@@ -70,6 +80,7 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
 
     @Override
     public boolean update(Financa t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean upd = financaDAO.update(t);
         
         if (upd){
@@ -112,7 +123,18 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
     
     @Override
     public FinancaTable getModel() {
+        if (!isTableInitialized){
+            try {
+                initTable();
+            } catch (DatabaseException ex) {
+                MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela.");
+            } 
+            isTableInitialized=true;
+        }
         return model;
     }
-    
+
+    public List<Financa> select(Date date) throws DatabaseException{
+        return financaDAO.select(date);
+    }
 }

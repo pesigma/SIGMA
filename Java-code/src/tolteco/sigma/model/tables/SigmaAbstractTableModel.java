@@ -5,6 +5,7 @@
  */
 package tolteco.sigma.model.tables;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -35,7 +36,7 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
     /**
      * Lista de entidades pertencentes à tabela.
      */
-    private List<T> entidades;
+    private List<T> entidades = new ArrayList<>();
     
     protected final List<T> getList(){
         return entidades;

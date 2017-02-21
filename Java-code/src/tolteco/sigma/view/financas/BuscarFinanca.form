@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
+  </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -43,7 +47,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="searchPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="297" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="328" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -91,44 +95,36 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="isEndereco" max="32767" attributes="0"/>
-                      <Component id="isNome" max="32767" attributes="0"/>
-                      <Component id="isTelefone" max="32767" attributes="0"/>
+                      <Component id="isData" max="32767" attributes="0"/>
+                      <Component id="isTipo" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="nomeField" max="32767" attributes="0"/>
+                          <Component id="receitaR" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="isIDcliente" min="-2" pref="86" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Component id="clientIDnum" min="-2" pref="83" max="-2" attributes="0"/>
+                          <Component id="despesaR" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="dataChooser" min="-2" pref="157" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="enderecoCombo" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="enderecoField" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="telefoneField" min="-2" pref="107" max="-2" attributes="0"/>
-                          </Group>
+                          <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                          <Component id="isSituacao" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="enderecoNum" min="-2" pref="65" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="isCPF" min="-2" pref="53" max="-2" attributes="0"/>
-                                  <EmptySpace pref="11" max="32767" attributes="0"/>
-                                  <Component id="cpfField" min="-2" pref="106" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="isIDusuario" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                  <Component id="userIDnum" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="pagoRadio" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="isIDFinanca" min="-2" pref="86" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="276" max="-2" attributes="0"/>
+                          <Component id="isIDusuario" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="idFinanca" max="32767" attributes="0"/>
+                      <Component id="idUser" pref="88" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -137,72 +133,61 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="nomeField" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="isIDcliente" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="clientIDnum" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="isTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="receitaR" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="despesaR" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="isSituacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="pagoRadio" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="dataChooser" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="isIDFinanca" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="idFinanca" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="isEndereco" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="enderecoField" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="enderecoCombo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="isData" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="isIDusuario" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="userIDnum" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="enderecoNum" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="idUser" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="isNome" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="isTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="telefoneField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="isCPF" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cpfField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JCheckBox" name="isNome">
+        <Component class="javax.swing.JCheckBox" name="isTipo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nome"/>
+            <Property name="text" type="java.lang.String" value="Tipo"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isNomeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isTipoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="nomeField">
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="isEndereco">
+        <Component class="javax.swing.JCheckBox" name="isData">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Endere&#xe7;o"/>
+            <Property name="text" type="java.lang.String" value="Data"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isEnderecoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isDataActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="enderecoField">
+        <Component class="javax.swing.JCheckBox" name="isIDFinanca">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Engenheiro Luis Gomes Cardim Sangirardi"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="isIDcliente">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="ID Cliente"/>
+            <Property name="text" type="java.lang.String" value="ID Finan&#xe7;a"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isIDclienteActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isIDFinancaActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="isIDusuario">
@@ -213,59 +198,41 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isIDusuarioActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JSpinner" name="clientIDnum">
+        <Component class="javax.swing.JSpinner" name="idFinanca">
         </Component>
-        <Component class="javax.swing.JSpinner" name="userIDnum">
+        <Component class="javax.swing.JSpinner" name="idUser">
         </Component>
-        <Component class="javax.swing.JCheckBox" name="isCPF">
+        <Component class="javax.swing.JCheckBox" name="isSituacao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CPF"/>
+            <Property name="text" type="java.lang.String" value="Situa&#xe7;&#xe3;o"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isCPFActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isSituacaoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="isTelefone">
+        <Component class="javax.swing.JRadioButton" name="receitaR">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Telefone"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isTelefoneActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="cpfField">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-              <Format format="###.###.###-##" subtype="-1" type="5"/>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroup1"/>
             </Property>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" value="Receita"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="enderecoCombo">
+        <Component class="javax.swing.JRadioButton" name="despesaR">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
-                <StringItem index="0" value="Alameda"/>
-                <StringItem index="1" value="Avenida"/>
-                <StringItem index="2" value="Estrada"/>
-                <StringItem index="3" value="Rodovia"/>
-                <StringItem index="4" value="Rua"/>
-                <StringItem index="5" value="Travessa"/>
-              </StringArray>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroup1"/>
             </Property>
-            <Property name="selectedIndex" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="Despesa"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
         </Component>
-        <Component class="javax.swing.JSpinner" name="enderecoNum">
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="telefoneField">
+        <Component class="javax.swing.JRadioButton" name="pagoRadio">
           <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-              <Format format="(##) #####-####" subtype="-1" type="5"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="Paga"/>
           </Properties>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="dataChooser">
         </Component>
       </SubComponents>
     </Container>

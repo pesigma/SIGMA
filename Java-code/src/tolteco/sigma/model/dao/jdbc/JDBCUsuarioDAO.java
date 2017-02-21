@@ -91,7 +91,7 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
             pst.setString(3, t.getUserName());
             pst.setString(3, Arrays.toString(t.getPass()));
             pst.execute();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -117,13 +117,12 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
         try {
             pst = connection.prepareStatement(query);
             rs = pst.executeQuery();
-
             while (rs.next()){
                 lista.add(getInstance(rs));
             }
             rs.close();
             
-        } catch (Exception e) {
+        } catch (SQLException | DatabaseException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -155,7 +154,7 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
             
             rs.close();
             
-        } catch (Exception e) {
+        } catch (SQLException | DatabaseException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {
@@ -189,7 +188,7 @@ public class JDBCUsuarioDAO extends JDBCAbstractDAO implements UsuarioDAO{
             }
             rs.close();
             
-        } catch (Exception e) {
+        } catch (SQLException | DatabaseException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);
         }  finally {

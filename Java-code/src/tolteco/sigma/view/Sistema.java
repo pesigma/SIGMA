@@ -5,6 +5,7 @@
  */
 package tolteco.sigma.view;
 
+import java.util.logging.Level;
 import tolteco.sigma.controller.ClienteController;
 import tolteco.sigma.controller.FinancaController;
 import tolteco.sigma.controller.ServicoController;
@@ -19,7 +20,6 @@ import tolteco.sigma.model.tables.FinancaTable;
 import tolteco.sigma.model.tables.ServicoTable;
 import tolteco.sigma.model.tables.UsuarioTable;
 import tolteco.sigma.model.tables.VersionTable;
-import tolteco.sigma.utils.Main;
 
 /**
  *
@@ -27,7 +27,7 @@ import tolteco.sigma.utils.Main;
  */
 public class Sistema {
     private static Sistema system;
-    private static Usuario user = new Usuario(0, "Teste", Access.ROOT, new char[]{123}); //Para testes
+    private static Usuario user; //= new Usuario(0, "Teste", Access.ROOT, new char[]{123}); //Para testes
     private static MainFrame MAIN;
     private static final DAOFactory DAO = new JDBCDAOFactory();
 
@@ -65,6 +65,8 @@ public class Sistema {
     
     private Sistema(Usuario user) {
         Sistema.user = user;
+        MAIN = assembleMain();
+        MAIN.setVisible(true);
     }
     
     public static int getUserID(){
@@ -80,7 +82,15 @@ public class Sistema {
     */
     
     public static void login(Usuario user){
-        if (user != null) system = new Sistema(user);
+        if (Sistema.user != null) 
+            throw new IllegalStateException("Usuário: " + Sistema.user.getUserName() + " logado.");
+        
+        if (user != null){
+            system = new Sistema(user);
+            MainFrame.LOG.log(Level.INFO, "Usu\u00e1rio: {0} logou.", user.getUserName());
+        }else {
+            MainFrame.LOG.log(Level.WARNING, "Tentativa de Log no sistema com usuário nulo");
+        }
     }
     
     private static void startUp(){

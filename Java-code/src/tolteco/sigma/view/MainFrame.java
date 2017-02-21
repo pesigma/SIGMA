@@ -24,6 +24,9 @@ import tolteco.sigma.utils.DefaultConfigs;
 import tolteco.sigma.utils.logging.BufferedPaneOutputStream;
 import tolteco.sigma.utils.logging.PaneHandler;
 import tolteco.sigma.view.cliente.MainCliente;
+import tolteco.sigma.view.financas.MainFinanca;
+import tolteco.sigma.view.servicos.MainServico;
+import tolteco.sigma.view.usuarios.MainUsuario;
 
 /**
  *
@@ -98,26 +101,26 @@ public class MainFrame extends javax.swing.JFrame {
         PainelGuias.add(panel1);
         PainelGuias.setTitleAt(1, "Clientes");
         
-        /*JPanel panel2 = new MainFinanca(this, financa);
+        JPanel panel2 = new MainFinanca(this, financa);
         PainelGuias.add(panel2);
         PainelGuias.setTitleAt(2, "Finanças");
         
         JPanel panel3 = new MainServico(this, servico);
-        PainelGuias.add(panel2);
-        PainelGuias.setTitleAt(2, "Serviços");      */
+        PainelGuias.add(panel3);
+        PainelGuias.setTitleAt(3, "Serviços");
         
         if (Sistema.getUser().getAccessLevel() == Access.ROOT){
             JMenu jmenu = new JMenu("Configurações");
             BarraDeMenu.add(Box.createHorizontalGlue());
             BarraDeMenu.add(jmenu);
-            /*
+            
             JPanel panel4 = new MainUsuario(this, usuario);
-            PainelGuias.add(panel2);
-            PainelGuias.setTitleAt(2, "Usuários");
-        
+            PainelGuias.add(panel4);
+            PainelGuias.setTitleAt(4, "Usuários");
+        /*
             JPanel panel5 = new MainVersion(this, version);
-            PainelGuias.add(panel2);
-            PainelGuias.setTitleAt(2, "Versões");*/
+            PainelGuias.add(panel5);
+            PainelGuias.setTitleAt(5, "Versões");*/
         }
         
         

@@ -141,13 +141,14 @@ public interface VersionDAO extends GenericDAO<Version>{
      * 
      * @param date reference ao lançamento da release menor.
      * @param notes associadas à release menor.
-     * @return True em sucesso; falso em falha.
+     * @return ID do último Minor
      * @throws DatabaseException em erro.
      */
-    default boolean createAutoMinorRelease(Date date, String notes) throws DatabaseException{
+    default int createAutoMinorRelease(Date date, String notes) throws DatabaseException{
         int latestMajor = getLatestMajor().getMajorVer();
         int retId = createMinorRelease(latestMajor, date, notes);
         
-        return retId >= 0; //Verdadeiro se ID é maior ou igual a zero (Sucesso).
+        return retId;
+        //return retId >= 0; //Verdadeiro se ID é maior ou igual a zero (Sucesso).
     }
 }

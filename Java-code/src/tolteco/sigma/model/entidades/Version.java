@@ -205,4 +205,10 @@ public class Version implements Comparable<Version> {
                            minor.getMinorDate(), 
                            minor.getMinorNotes());
     }
+    
+    public void setMinor(Minor minor){
+        this.minorDate = minor.getMinorDate();
+        this.minorNotes = minor.getMinorNotes();
+        this.minorVersion = minor.getMinorVer();
+    }
 }

@@ -14,14 +14,14 @@ import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
  * @author Juliano
  */
 public class VersionTable extends SigmaAbstractTableModel<Version>{
-    private static final int COLUMN_COUNT = 7;
-    private static final int MAJOR_VER    = 0;
-    private static final int MAJOR_NAME   = 1;
-    private static final int MAJOR_DATE   = 2;
-    private static final int MAJOR_NOTES  = 3;
-    private static final int MINOR_VER    = 4;
-    private static final int MINOR_DATE   = 5;
-    private static final int MINOR_NOTES  = 6;
+    public static final int COLUMN_COUNT = 7;
+    public static final int MAJOR_VER    = 0;
+    public static final int MAJOR_NAME   = 1;
+    public static final int MAJOR_DATE   = 2;
+    public static final int MAJOR_NOTES  = 3;
+    public static final int MINOR_VER    = 4;
+    public static final int MINOR_DATE   = 5;
+    public static final int MINOR_NOTES  = 6;
     
     @Override
     public int getColumnCount() {
@@ -121,7 +121,7 @@ public class VersionTable extends SigmaAbstractTableModel<Version>{
 
     @Override
     public int search(Version object) {
-        int DIDNOT_FIND_ROW=-1;
+        final int DIDNOT_FIND_ROW=-1;
         int counter=0;
         for (Version version : getList()){
             if (version.equals(object))

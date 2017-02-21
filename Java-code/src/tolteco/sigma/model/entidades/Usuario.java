@@ -27,9 +27,9 @@ public class Usuario implements Comparable<Usuario> {
         this.accessLevel = accessLevel;
         this.pass = pass;
         
-        for (int i=0; i<pass.length; i++){
+        /*for (int i=0; i<pass.length; i++){
             pass[0] = '\0';
-        }
+        }*/ //What is this
     }
 
     /**

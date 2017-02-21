@@ -6,11 +6,14 @@
 package tolteco.sigma.controller;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.UsuarioDAO;
 import tolteco.sigma.model.entidades.Usuario;
 import tolteco.sigma.model.tables.UsuarioTable;
+import tolteco.sigma.view.MainFrame;
 
 /**
  *
@@ -20,14 +23,23 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
     private final UsuarioTable model;
     private final UsuarioDAO usuarioDAO;
 
-    public UsuarioController(DAOFactory dao, UsuarioTable model) {
+    @Override
+    protected final void initTable() throws DatabaseException {
+        if (model == null) System.out.println("ÇLAJÇLKSJDFÇLKSDKFLJ");
+         model.addAll(usuarioDAO.selectAll());
+    }
+    
+    public UsuarioController(DAOFactory dao, UsuarioTable model){
         super(dao);
         usuarioDAO = dao.getUsuarioDAO();
         this.model = model;
+        
+        //initTable();
     }
     
     @Override
     public int insert(Usuario t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         int ins = usuarioDAO.insert(t);
         
         if (ins != -1){      
@@ -43,6 +55,7 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
 
     @Override
     public boolean remove(Usuario t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean rem = usuarioDAO.remove(t);
         
         if (rem){
@@ -70,6 +83,7 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
 
     @Override
     public boolean update(Usuario t) throws DatabaseException {
+        if (!isTableInitialized) initTable(); isTableInitialized=true;
         boolean upd = usuarioDAO.update(t);
         
         if (upd){
@@ -112,7 +126,16 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
     
     @Override
     public UsuarioTable getModel() {
+        if (!isTableInitialized){
+            try {
+                initTable();
+            } catch (DatabaseException ex) {
+                MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela.");
+            } 
+            isTableInitialized=true;
+        }
+        
         return model;
     }
-    
+
 }

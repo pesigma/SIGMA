@@ -33,9 +33,12 @@ public abstract class GenericController<T, Model extends SigmaAbstractTableModel
     protected DAOFactory dao = null;
     //protected SigmaAbstractTableModel model = null;
     
-    protected GenericController(DAOFactory dao/*, SigmaAbstractTableModel model*/) {
+    protected boolean isTableInitialized=false;
+    
+    protected abstract void initTable() throws DatabaseException;
+    
+    protected GenericController(DAOFactory dao/*, SigmaAbstractTableModel model*/){
         this.dao = dao;
-        //this.model = model;
     }
     
     /**

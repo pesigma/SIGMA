@@ -82,13 +82,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="SigmaIcoLabel" min="-2" pref="108" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="SigmaIcoLabel" pref="108" max="32767" attributes="0"/>
                       <Component id="SigmaLabel" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="SenhaPanel" alignment="0" max="32767" attributes="0"/>
                       <Component id="UsuárioPanel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -157,10 +157,7 @@
               <Properties>
                 <Property name="editable" type="boolean" value="true"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="Administrador"/>
-                    <StringItem index="1" value="Funcionario"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -246,11 +243,11 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="VersaoLabel" min="-2" pref="126" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="VersaoLabel" min="-2" pref="114" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" pref="2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Version" max="32767" attributes="0"/>
+                  <Component id="versionNumberLabel" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -261,7 +258,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="VersaoLabel" alignment="1" pref="25" max="32767" attributes="0"/>
                       <Component id="jSeparator2" alignment="1" max="32767" attributes="0"/>
-                      <Component id="Version" max="32767" attributes="0"/>
+                      <Component id="versionNumberLabel" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -293,7 +290,7 @@
             <Property name="text" type="java.lang.String" value="VERS&#xc3;O"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Version">
+        <Component class="javax.swing.JLabel" name="versionNumberLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Cambria" size="15" style="0"/>
