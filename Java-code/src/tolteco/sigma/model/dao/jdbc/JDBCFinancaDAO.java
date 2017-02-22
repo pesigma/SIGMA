@@ -143,7 +143,7 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaD
 
     @Override
     public Financa search(int primaryKey) throws DatabaseException {
-        Financa cliente;
+        Financa financa=null;
         
         String query = "SELECT financaId, * FROM Financa WHERE financaId=?";
         PreparedStatement pst = null;
@@ -154,7 +154,8 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaD
             pst.setInt(1, primaryKey);
             rs = pst.executeQuery();
             
-            cliente = getInstance(rs);
+            if (rs.next())
+                financa = getInstance(rs);
             
             rs.close();
             
@@ -170,7 +171,7 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaD
                 }
         }
         
-        return cliente;
+        return financa;
     }
 
     @Override

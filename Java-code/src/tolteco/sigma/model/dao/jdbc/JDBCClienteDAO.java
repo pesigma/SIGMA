@@ -148,7 +148,7 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
 
     @Override
     public Cliente search(int primaryKey) throws DatabaseException {
-        Cliente cliente;
+        Cliente cliente=null;
         
         String query = "SELECT clienteId, * FROM Cliente WHERE clienteId=?";
         PreparedStatement pst = null;
@@ -159,7 +159,8 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
             pst.setInt(1, primaryKey);
             rs = pst.executeQuery();
             
-            cliente = getInstance(rs);
+            if (rs.next())
+                cliente = getInstance(rs);
             
             rs.close();
             
@@ -222,7 +223,8 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
             pst = connection.prepareStatement(query);
             pst.setString(1, cpf);
             rs = pst.executeQuery();
-            cliente = getInstance(rs);
+            if (rs.next())
+                cliente = getInstance(rs);
             rs.close();
             
         } catch (SQLException | DatabaseException e) {
