@@ -5,8 +5,6 @@
  */
 package tolteco.sigma.view.usuarios;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.controller.UsuarioController;
 import tolteco.sigma.model.dao.DatabaseException;
@@ -227,5 +225,6 @@ public class MainUsuario extends javax.swing.JPanel implements MainEntity<Usuari
         ModificarUsuario modif = new ModificarUsuario(this);
         Panel.setViewportView( modif ); 
         modif.fillAllFields(toFill);
+        ultimoPanelAdicionado = Operacao.Modificar;
     }
 }

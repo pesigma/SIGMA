@@ -5,8 +5,6 @@
  */
 package tolteco.sigma.view.version;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.controller.VersionController;
 import tolteco.sigma.model.dao.DatabaseException;
@@ -227,5 +225,6 @@ public class MainVersion extends javax.swing.JPanel implements MainEntity<Versio
         ModificarVersion modif = new ModificarVersion(this);
         Panel.setViewportView( modif ); 
         modif.fillAllFields(toFill);
+        ultimoPanelAdicionado = Operacao.Modificar;
     }
 }

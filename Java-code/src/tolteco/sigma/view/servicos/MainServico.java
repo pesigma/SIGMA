@@ -224,5 +224,6 @@ public class MainServico extends javax.swing.JPanel implements MainEntity<Servic
         ModificarServico modif = new ModificarServico(this);
         Panel.setViewportView( modif ); 
         modif.fillAllFields(toFill);
+        ultimoPanelAdicionado = Operacao.Modificar;
     }
 }

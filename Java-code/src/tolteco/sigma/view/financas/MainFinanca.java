@@ -5,17 +5,12 @@
  */
 package tolteco.sigma.view.financas;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.controller.FinancaController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.tables.FinancaTable;
 import tolteco.sigma.view.MainFrame;
-import tolteco.sigma.view.cliente.BuscarCliente;
-import tolteco.sigma.view.cliente.ModificarCliente;
 import tolteco.sigma.view.interfaces.MainEntity;
 import tolteco.sigma.view.interfaces.Operacao;
 
@@ -229,5 +224,6 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
         ModificarFinanca modif = new ModificarFinanca(this);
         Panel.setViewportView( modif ); 
         modif.fillAllFields(toFill);
+        ultimoPanelAdicionado = Operacao.Modificar;
     }
 }

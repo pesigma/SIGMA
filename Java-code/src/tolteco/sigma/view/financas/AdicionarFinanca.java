@@ -40,7 +40,7 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
 
         Tipo = new javax.swing.ButtonGroup();
         ValorPanel = new javax.swing.JPanel();
-        ValorField = new javax.swing.JFormattedTextField();
+        ValorField = new javax.swing.JTextField();
         SituacaoPanel = new javax.swing.JPanel();
         PagoCheck = new javax.swing.JCheckBox();
         TipoPanel = new javax.swing.JPanel();
@@ -57,17 +57,15 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
 
         ValorPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor"));
 
-        ValorField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
-
         javax.swing.GroupLayout ValorPanelLayout = new javax.swing.GroupLayout(ValorPanel);
         ValorPanel.setLayout(ValorPanelLayout);
         ValorPanelLayout.setHorizontalGroup(
             ValorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ValorField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(ValorField)
         );
         ValorPanelLayout.setVerticalGroup(
             ValorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ValorField, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(ValorField)
         );
 
         SituacaoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Situação"));
@@ -80,7 +78,7 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
             SituacaoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SituacaoPanelLayout.createSequentialGroup()
                 .addComponent(PagoCheck)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 43, Short.MAX_VALUE))
         );
         SituacaoPanelLayout.setVerticalGroup(
             SituacaoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,11 +140,11 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
         ObsPanel.setLayout(ObsPanelLayout);
         ObsPanelLayout.setHorizontalGroup(
             ObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
         );
         ObsPanelLayout.setVerticalGroup(
             ObsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
         );
 
         save.setText("Salvar");
@@ -265,7 +263,7 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
     private javax.swing.JPanel SituacaoPanel;
     private javax.swing.ButtonGroup Tipo;
     private javax.swing.JPanel TipoPanel;
-    private javax.swing.JFormattedTextField ValorField;
+    private javax.swing.JTextField ValorField;
     private javax.swing.JPanel ValorPanel;
     private javax.swing.JButton clean;
     private javax.swing.JLabel jLabel1;
@@ -296,7 +294,8 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
 
     @Override
     public Financa getInstance() {
-        double valor = new Double(ValorField.getText());
+        double valor = Double.valueOf(ValorField.getText().replace(",", "."));
+        //double valor = new Double(ValorField.getText());
         Date data = DataChooser.getDate();
         String obs = ObsPane.getText();
         
