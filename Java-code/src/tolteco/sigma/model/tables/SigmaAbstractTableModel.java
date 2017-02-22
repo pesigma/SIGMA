@@ -25,7 +25,7 @@ import tolteco.sigma.view.Sistema;
  * @author Juliano
  * @param <T>
  */
-public abstract class SigmaAbstractTableModel<T extends PrimaryKeyComparable> extends AbstractTableModel implements SigmaTableModel<T> {
+public abstract class SigmaAbstractTableModel<T extends PrimaryKeyComparable> extends AbstractTableModel{
     /**
      * Lista de listeners "ouvindo" alterações
      * na determinada tabela.
@@ -39,7 +39,7 @@ public abstract class SigmaAbstractTableModel<T extends PrimaryKeyComparable> ex
     /**
      * Lista de entidades pertencentes à tabela.
      */
-    private List<T> entidades = new ArrayList<>();
+    protected List<T> entidades = new ArrayList<>();
     
     protected final List<T> getList(){
         return entidades;

@@ -5,12 +5,17 @@
  */
 package tolteco.sigma.view.servicos;
 
+import java.util.Collection;
 import java.util.List;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Servico;
+import tolteco.sigma.model.entidades.Servico;
 import tolteco.sigma.model.entidades.Situacao;
 import tolteco.sigma.model.tables.ServicoTable;
+import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
+import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;
+import tolteco.sigma.utils.eventsAndListeners.InsertionEvent;
 import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Buscar;
 
@@ -433,6 +438,69 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
     private class ResultsTableModel extends ServicoTable{
         private void removeAll(){
             super.getList().clear();
+        }
+        @Override
+        public void setRow(Servico object, int row){
+            entidades.add(row, object);
+            fireTableRowsDeleted(row, row);
+            fireChangeProperty(new ChangePropertyEvent(object));
+        }
+
+        @Override
+        public void setRow(Servico object) throws DatabaseException{
+            int indexToUpdate = -1;
+            int counter=0;
+            for(Servico entidade : entidades){
+                if (entidade.getRowId() == object.getRowId()){
+                    indexToUpdate = counter;
+                    break;
+                }
+                counter++;
+            }
+
+            if (indexToUpdate == -1){
+                throw new DatabaseException("Objeto inexistente na tabela de "
+                      + object.getClass() + ". Impossível atualizar.");
+            }
+
+            entidades.set(indexToUpdate, object);
+            fireChangeProperty(new ChangePropertyEvent(object));
+            fireTableRowsDeleted(indexToUpdate, indexToUpdate);
+        }
+
+        @Override
+        public void addRow(Servico object){
+            entidades.add(object);
+            final int LASTROW = entidades.size()-1;
+            fireTableRowsInserted(LASTROW, LASTROW);
+            fireInsertion(new InsertionEvent(object));
+        }
+
+        @Override
+        public void addAll(Collection<Servico> lista){
+            entidades.addAll(lista);
+            fireTableDataChanged();
+        }
+
+        @Override
+        public void removeRow(Servico object){
+            int indexToUpdate = -1;
+            int counter=0;
+            for(Servico entidade : entidades){
+                if (entidade.equals(object)){
+                    indexToUpdate = counter;
+                    break;
+                }
+                counter++;
+            }
+        }
+
+        @Override
+        public void removeRow(int row){
+            Servico object = entidades.get(row);
+            entidades.remove(row);
+            fireDeletion(new DeletionEvent(object));
+            fireTableRowsDeleted(row, row);
         }
     }
     

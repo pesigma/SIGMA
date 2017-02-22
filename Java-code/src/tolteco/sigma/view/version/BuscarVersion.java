@@ -5,13 +5,18 @@
  */
 package tolteco.sigma.view.version;
 
+import java.util.Collection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Version;
+import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.model.tables.VersionTable;
 import tolteco.sigma.utils.SDate;
+import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
+import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;
+import tolteco.sigma.utils.eventsAndListeners.InsertionEvent;
 import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Buscar;
 
@@ -364,6 +369,70 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     private class ResultsTableModel extends VersionTable{
         private void removeAll(){
             super.getList().clear();
+        }
+        
+        @Override
+        public void setRow(Version object, int row){
+            entidades.add(row, object);
+            fireTableRowsDeleted(row, row);
+            fireChangeProperty(new ChangePropertyEvent(object));
+        }
+
+        @Override
+        public void setRow(Version object) throws DatabaseException{
+            int indexToUpdate = -1;
+            int counter=0;
+            for(Version entidade : entidades){
+                if (entidade.getRowId() == object.getRowId()){
+                    indexToUpdate = counter;
+                    break;
+                }
+                counter++;
+            }
+
+            if (indexToUpdate == -1){
+                throw new DatabaseException("Objeto inexistente na tabela de "
+                      + object.getClass() + ". Impossível atualizar.");
+            }
+
+            entidades.set(indexToUpdate, object);
+            fireChangeProperty(new ChangePropertyEvent(object));
+            fireTableRowsDeleted(indexToUpdate, indexToUpdate);
+        }
+
+        @Override
+        public void addRow(Version object){
+            entidades.add(object);
+            final int LASTROW = entidades.size()-1;
+            fireTableRowsInserted(LASTROW, LASTROW);
+            fireInsertion(new InsertionEvent(object));
+        }
+
+        @Override
+        public void addAll(Collection<Version> lista){
+            entidades.addAll(lista);
+            fireTableDataChanged();
+        }
+
+        @Override
+        public void removeRow(Version object){
+            int indexToUpdate = -1;
+            int counter=0;
+            for(Version entidade : entidades){
+                if (entidade.equals(object)){
+                    indexToUpdate = counter;
+                    break;
+                }
+                counter++;
+            }
+        }
+
+        @Override
+        public void removeRow(int row){
+            Version object = entidades.get(row);
+            entidades.remove(row);
+            fireDeletion(new DeletionEvent(object));
+            fireTableRowsDeleted(row, row);
         }
     }
     
