@@ -122,7 +122,7 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
             try {
                 initTable();
             } catch (DatabaseException ex) {
-                MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela.");
+                MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela." + ex.getCause().getMessage());
             } 
             isTableInitialized=true;
         }

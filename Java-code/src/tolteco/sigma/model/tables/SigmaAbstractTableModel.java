@@ -16,6 +16,8 @@ import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;
 import tolteco.sigma.utils.eventsAndListeners.InsertionEvent;
 import tolteco.sigma.utils.eventsAndListeners.SigmaEvent;
 import tolteco.sigma.utils.eventsAndListeners.SigmaListener;
+import tolteco.sigma.view.MainFrame;
+import tolteco.sigma.view.Sistema;
 
 /**
  *
@@ -57,6 +59,8 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         entidades.add(row, object);
         fireTableRowsDeleted(row, row);
         fireChangeProperty(new ChangePropertyEvent(object));
+        MainFrame.LOG.info("Objeto alterado. Classe:" + object.getClass() +
+                ". Linha: " + row + " Usuário: " + Sistema.getUser().getUserName());
     }
     
     public void setRow(T object) throws DatabaseException{
@@ -78,6 +82,9 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         entidades.set(indexToUpdate, object);
         fireChangeProperty(new ChangePropertyEvent(object));
         fireTableRowsDeleted(indexToUpdate, indexToUpdate);
+        MainFrame.LOG.info("Objeto alterado. Classe:" + object.getClass() +
+                ". Linha: " + indexToUpdate + " Usuário: " + 
+                Sistema.getUser().getUserName());
     }
     
     public void addRow(T object){
@@ -85,11 +92,17 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         final int LASTROW = entidades.size()-1;
         fireTableRowsInserted(LASTROW, LASTROW);
         fireInsertion(new InsertionEvent(object));
+        MainFrame.LOG.info("Objeto adicionado. Classe:" + object.getClass() +
+                ". Linha: " + LASTROW + " Usuário: " + 
+                Sistema.getUser().getUserName());
     }
     
     public void addAll(Collection<T> lista){
         entidades.addAll(lista);
         fireTableDataChanged();
+        MainFrame.LOG.info("Coleção adicionada. Classe:" + lista.getClass() +
+                ". Usuário: " + 
+                Sistema.getUser().getUserName());
     }
     
     public void removeRow(T object){
@@ -106,6 +119,9 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         entidades.remove(object);
         fireDeletion(new DeletionEvent(object));
         fireTableRowsDeleted(indexToUpdate, indexToUpdate);
+        MainFrame.LOG.info("Objeto removido. Classe:" + object.getClass() +
+                ". Linha: " + indexToUpdate + " Usuário: " + 
+                Sistema.getUser().getUserName());
     }
     
     public void removeRow(int row){
@@ -113,6 +129,9 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         entidades.remove(row);
         fireDeletion(new DeletionEvent(object));
         fireTableRowsDeleted(row, row);
+        MainFrame.LOG.info("Objeto removido. Classe:" + object.getClass() +
+                ". Linha: " + row + " Usuário: " + 
+                Sistema.getUser().getUserName());
     }
     
     /**

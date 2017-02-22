@@ -3,11 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/servicos/MainServico.java</file>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/financas/MainFinanca.java</file>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/cliente/MainCliente.java</file>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/usuarios/MainUsuario.java</file>
-            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/version/MainVersion.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/tables/VersionTable.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/servicos/AdicionarServico.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/cliente/BuscarCliente.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/controller/VersionController.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/controller/ServicoController.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/dao/jdbc/JDBCServicoDAO.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/model/entidades/Minor.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/version/BuscarVersion.java</file>
+            <file>file:/C:/Users/JFPS/Documents/GitHub/SIGMA/Java-code/src/tolteco/sigma/view/version/AdicionarVersion.java</file>
         </group>
     </open-files>
 </project-private>

@@ -37,7 +37,7 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
     public int insert(Servico t) throws DatabaseException {
         if (!isTableInitialized) initTable(); isTableInitialized=true;
         int ins = servicoDAO.insert(t);
-        
+        t.setRowid(ins);
         if (ins != -1){      
             model.addRow(t);      
         } else {
@@ -121,6 +121,7 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
             try {
                 initTable();
             } catch (DatabaseException ex) {
+                //ex.printStackTrace();
                 MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela.");
             } 
             isTableInitialized=true;

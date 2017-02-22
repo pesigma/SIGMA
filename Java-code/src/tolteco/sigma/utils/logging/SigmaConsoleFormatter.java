@@ -6,7 +6,6 @@
 package tolteco.sigma.utils.logging;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Formatter;
@@ -55,7 +54,7 @@ public class SigmaConsoleFormatter extends Formatter{
         
         String ret = formatter.format(date) + " - " + record.getSourceClassName() +
                " " + record.getSourceMethodName() + 
-              "\n" + record.getLevel() + ": " + record.getMessage();
+              "\n" + record.getLevel() + ": " + record.getMessage() + "\n";
         
         return ret;
     }

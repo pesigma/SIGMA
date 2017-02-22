@@ -246,7 +246,7 @@ public class JDBCServicoDAO extends JDBCAbstractDAO<Servico> implements ServicoD
     protected Servico getInstance(ResultSet rs) throws DatabaseException{
         try {
             return new Servico(
-                    rs.getInt("sevicoId"),
+                    rs.getInt("servicoId"),
                     rs.getInt("clienteId"),
                     rs.getString("Placa"),
                     rs.getString("Modelo"),
