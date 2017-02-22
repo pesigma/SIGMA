@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.entidades.FinancaTipo;
@@ -25,7 +24,7 @@ import tolteco.sigma.view.interfaces.Buscar;
  */
 public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>{
     private final MainFinanca MAIN;
-    private final ResultsTableModel modeloTabela = new ResultsTableModel();
+    private ResultsTableModel modeloTabela = new ResultsTableModel();
     
     /**
      * Creates new form BuscarFinanca
@@ -66,14 +65,7 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
         Edit = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        tabela.setModel(modeloTabela);
         jScrollPane1.setViewportView(tabela);
 
         searchPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -261,12 +253,15 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
             isIDusuario.isSelected() == false &&
             isTipo.isSelected() == false){ //Nenhum filtro selecionado
             
-            BalloonTip tooltipBalloon = new BalloonTip(searchPanel, "Selecione pelo menos um filtro.");
+            BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Selecione pelo menos um filtro.");
             tooltipBalloon.setVisible(true);
+            return;
         }
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
 
+        modeloTabela = new ResultsTableModel();
+        
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
         

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.model.entidades.Usuario;
@@ -24,7 +23,7 @@ import tolteco.sigma.view.interfaces.Buscar;
  */
 public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>{
     private final MainUsuario MAIN;
-    private final ResultsTableModel modeloTabela = new ResultsTableModel();
+    private ResultsTableModel modeloTabela = new ResultsTableModel();
     
     /**
      * Creates new form BuscarUsuario
@@ -57,14 +56,7 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
         Edit = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        tabela.setModel(modeloTabela);
         jScrollPane1.setViewportView(tabela);
 
         searchPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -195,11 +187,14 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
     
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         if (isNome.isSelected() == isAccess.isSelected() == false){ //Nenhum filtro selecionado
-            BalloonTip tooltipBalloon = new BalloonTip(searchPanel, "Selecione pelo menos um filtro.");
+            BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Selecione pelo menos um filtro.");
             tooltipBalloon.setVisible(true);
+            return;
         }
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
+        
+        modeloTabela = new ResultsTableModel();
         
         List<Usuario> data=null;
         try {

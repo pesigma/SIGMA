@@ -75,11 +75,10 @@ public class ModificarCliente extends javax.swing.JPanel implements Adicionar<Cl
         TelPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Telefone"));
 
         try {
-            TelFField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+            TelFField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        TelFField.setText("");
         TelFField.setToolTipText("");
 
         javax.swing.GroupLayout TelPanelLayout = new javax.swing.GroupLayout(TelPanel);

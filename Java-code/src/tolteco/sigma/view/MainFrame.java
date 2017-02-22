@@ -70,7 +70,7 @@ public class MainFrame extends javax.swing.JFrame {
             this.dispose();
         });
         
-        logOut.setPreferredSize( new Dimension (100,26));
+        logOut.setPreferredSize( new Dimension (120,26));
         
         return logOut;
     }

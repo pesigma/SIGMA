@@ -6,11 +6,9 @@
 package tolteco.sigma.view.cliente;
 
 import java.util.List;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.tables.ClienteTable;
@@ -24,7 +22,7 @@ import tolteco.sigma.view.interfaces.Buscar;
  */
 public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>{
     private final MainCliente MAIN;
-    private final ResultsTableModel modeloTabela = new ResultsTableModel();
+    private ResultsTableModel modeloTabela = new ResultsTableModel();
     
     /**
      * Creates new form BuscarCliente
@@ -33,6 +31,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
     public BuscarCliente(MainCliente main) {
         initComponents();
         MAIN = main;
+        modeloTabela.addTableModelListener(tabela);
     }
 
     /**
@@ -66,14 +65,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         Edit = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        tabela.setModel(modeloTabela);
         jScrollPane1.setViewportView(tabela);
 
         searchPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -285,10 +277,13 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
             
             BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Selecione pelo menos um filtro.");
             tooltipBalloon.setVisible(true);
+            return;
         }
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
 
+        modeloTabela = new ResultsTableModel();
+        
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
         
@@ -311,7 +306,10 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         } else if (isCPF.isSelected()){
             try {
                 temp = MAIN.getController().searchByCPF(cpfField.getText());
-                if (temp != null) modeloTabela.addRow(temp);
+                if (temp != null){
+                    modeloTabela.addRow(temp);
+                    modeloTabela.fireTableDataChanged();
+                }
                 else{
                     BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
                     tooltipBalloon.setVisible(true);
@@ -333,6 +331,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         }
         
         for (Cliente cliente : data){
+            System.out.println(cliente);
             flag=true; times=0; //Tem que ser true em todas as verifs. para ser add
             if (isNome.isSelected()){
                 flag = cliente.getNome().contains(nomeField.getText()) || cliente.getSobrenome().contains(nomeField.getText());
@@ -353,8 +352,11 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 flag = cliente.getUserId() == ((int) userIDnum.getValue());
                 times++;
             }
+            System.out.println(flag + " - " + times);
             if (flag==true && times!=0) modeloTabela.addRow(cliente);
         }
+        modeloTabela.fireTableDataChanged();
+        tabela.repaint();
 
         changed=false;
     }//GEN-LAST:event_BuscarActionPerformed
