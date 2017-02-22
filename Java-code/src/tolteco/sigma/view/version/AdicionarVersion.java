@@ -361,14 +361,14 @@ public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Ve
     }
     
     public Major getMajor(){
-        return new Major(-1, 
+        return new Major((int) MajorVer.getValue(), 
                 MajorNome.getText(), 
                 MajorDate.getDate(), 
                 MajorNotes.getText());
     }
     
     public Minor getMinor(){
-        return new Minor((int) MajorVer.getValue(), -1, 
+        return new Minor((int) MajorVer.getValue(), 0, 
                 MinorDate.getDate(), 
                 MinorNotes.getText());
     }

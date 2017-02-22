@@ -131,7 +131,14 @@ public class VersionController extends GenericController<Version, VersionTable>{
         int minorId = versionDAO.createMinorRelease(majorKey, date, notes);
         Major major = versionDAO.getMajor(majorKey);
         Version ver = Version.versionBuilder(major, new Minor(majorKey, minorId, date, notes));
-        int row = model.search(ver);
+        int row = -1;
+        
+        for (int i=0; i<model.getRowCount(); i++){
+            if (model.getRow(i).getMajorVersion() == major.getMajorVer()){
+                row = i;
+                break;
+            }
+        }
         
         model.setValueAt(date, row, VersionTable.MINOR_DATE);
         model.setValueAt(notes, row, VersionTable.MINOR_NOTES);

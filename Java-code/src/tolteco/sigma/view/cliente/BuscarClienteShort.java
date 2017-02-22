@@ -75,14 +75,7 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
         jButton1 = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
 
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        tabela.setModel(modeloTabela);
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tabelaMousePressed(evt);
@@ -376,6 +369,8 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
             }
             if (flag==true && times!=0) modeloTabela.addRow(cliente);
         }
+        modeloTabela.fireTableDataChanged();
+        tabela.repaint();
 
         changed=false;
     }//GEN-LAST:event_BuscarActionPerformed
@@ -414,6 +409,8 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
         int row = tabela.getSelectedRow();
         if (row>=0){
             clienteSelecionado = modeloTabela.getRow(row);
+            this.setVisible(false);
+            this.dispose();
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(select, "Selecione uma linha para poder excluir.");
             tooltipBalloon.setVisible(true);
