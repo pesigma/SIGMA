@@ -96,8 +96,8 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="nomeField" max="32767" attributes="0"/>
-                      <Component id="MinorDate" max="32767" attributes="0"/>
+                      <Component id="majorName" max="32767" attributes="0"/>
+                      <Component id="MajorDate" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -106,8 +106,8 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="clientIDnum" pref="83" max="32767" attributes="0"/>
-                      <Component id="userIDnum" max="32767" attributes="0"/>
+                      <Component id="majorVer" pref="83" max="32767" attributes="0"/>
+                      <Component id="minorVer" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="264" max="32767" attributes="0"/>
               </Group>
@@ -118,19 +118,19 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="nomeField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="clientIDnum" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="majorName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="majorVer" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="isMajorNome" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="isMajorVer" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="userIDnum" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="minorVer" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="isMajorDate" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="isMinorVer" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="MinorDate" min="-2" max="-2" attributes="0"/>
+                      <Component id="MajorDate" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -138,11 +138,11 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="nomeField">
+        <Component class="javax.swing.JTextField" name="majorName">
         </Component>
-        <Component class="javax.swing.JSpinner" name="clientIDnum">
+        <Component class="javax.swing.JSpinner" name="majorVer">
         </Component>
-        <Component class="javax.swing.JSpinner" name="userIDnum">
+        <Component class="javax.swing.JSpinner" name="minorVer">
         </Component>
         <Component class="javax.swing.JCheckBox" name="isMajorDate">
           <Properties>
@@ -160,7 +160,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isMajorNomeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="MinorDate">
+        <Component class="com.toedter.calendar.JDateChooser" name="MajorDate">
         </Component>
         <Component class="javax.swing.JCheckBox" name="isMajorVer">
           <Properties>

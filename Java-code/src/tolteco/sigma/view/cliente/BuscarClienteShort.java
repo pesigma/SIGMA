@@ -302,7 +302,7 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
             isNome.isSelected() == false){ //Nenhum filtro selecionado
             
             BalloonTip tooltipBalloon = new BalloonTip(searchPanel, "Selecione pelo menos um filtro.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
@@ -405,7 +405,7 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
 
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(select, "Selecione uma linha para poder excluir.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
     }//GEN-LAST:event_selectActionPerformed
 
@@ -480,7 +480,7 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
         } else {
             //Nunca deverá entrar aqui (Tem verificação "elsewhere").
             BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         return cliente;
     }

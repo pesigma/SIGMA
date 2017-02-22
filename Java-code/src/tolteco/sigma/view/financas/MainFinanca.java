@@ -154,7 +154,7 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
             BuscarFinanca modif = new BuscarFinanca(this);
             Panel.setViewportView( modif );
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Busque uma Finança para modificar");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         
         ultimoPanelAdicionado = Operacao.Modificar;
@@ -167,7 +167,7 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
             BuscarFinanca add = new BuscarFinanca(this);
             Panel.setViewportView( add );
             BalloonTip tooltipBalloon = new BalloonTip(Delete, "Busque uma Finança para excluir");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
 
         ultimoPanelAdicionado = Operacao.Remover;
@@ -205,13 +205,13 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
     @Override
     public void displayException(Exception ex) {
         BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção jogada.");
-        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        tooltipBalloon.setVisible(true);
     }
 
     @Override
     public void displayDatabaseException(DatabaseException ex) {
         BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção do Banco de dados jogada.");
-        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        tooltipBalloon.setVisible(true);
     }
 
     @Override

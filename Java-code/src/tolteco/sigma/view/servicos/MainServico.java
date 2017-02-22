@@ -152,7 +152,7 @@ public class MainServico extends javax.swing.JPanel implements MainEntity<Servic
             BuscarServico modif = new BuscarServico(this);
             Panel.setViewportView( modif );
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Busque um Servico para modificar");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         
         ultimoPanelAdicionado = Operacao.Modificar;
@@ -165,7 +165,7 @@ public class MainServico extends javax.swing.JPanel implements MainEntity<Servic
             BuscarServico add = new BuscarServico(this);
             Panel.setViewportView( add );
             BalloonTip tooltipBalloon = new BalloonTip(Delete, "Busque um Servico para excluir");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         ultimoPanelAdicionado = Operacao.Remover;
     }//GEN-LAST:event_DeleteActionPerformed
@@ -203,13 +203,13 @@ public class MainServico extends javax.swing.JPanel implements MainEntity<Servic
     @Override
     public void displayException(Exception ex) {
         BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção jogada.");
-        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        tooltipBalloon.setVisible(true);
     }
 
     @Override
     public void displayDatabaseException(DatabaseException ex) {
         BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção do Banco de dados jogada.");
-        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        tooltipBalloon.setVisible(true);
     }
 
     @Override

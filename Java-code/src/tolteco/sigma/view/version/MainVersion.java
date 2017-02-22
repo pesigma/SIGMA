@@ -153,7 +153,7 @@ public class MainVersion extends javax.swing.JPanel implements MainEntity<Versio
             BuscarCliente modif = new BuscarCliente(this);
             Panel.setViewportView( modif );
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Busque uma Versão para modificar");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         
         ultimoPanelAdicionado = Operacao.Modificar;
@@ -166,7 +166,7 @@ public class MainVersion extends javax.swing.JPanel implements MainEntity<Versio
             BuscarVersion add = new BuscarVersion(this);
             Panel.setViewportView( add );
             BalloonTip tooltipBalloon = new BalloonTip(Delete, "Busque uma Versão para excluir");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         
         ultimoPanelAdicionado = Operacao.Remover;
@@ -205,13 +205,13 @@ public class MainVersion extends javax.swing.JPanel implements MainEntity<Versio
     @Override
     public void displayException(Exception ex) {
         BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção jogada.");
-        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        tooltipBalloon.setVisible(true);
     }
 
     @Override
     public void displayDatabaseException(DatabaseException ex) {
         BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção do Banco de dados jogada.");
-        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        tooltipBalloon.setVisible(true);
     }
 
     @Override

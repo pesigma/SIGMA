@@ -276,15 +276,14 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
     private boolean changed=false;
     
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        if (isIDcliente.isSelected() == 
-            isCPF.isSelected() == 
-            isEndereco.isSelected() == 
-            isTelefone.isSelected() == 
-            isIDusuario.isSelected() == 
+        if (isIDcliente.isSelected() == false &&
+            isCPF.isSelected() == false &&
+            isEndereco.isSelected() == false &&
+            isTelefone.isSelected() == false &&
+            isIDusuario.isSelected() == false &&
             isNome.isSelected() == false){ //Nenhum filtro selecionado
             
             BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Selecione pelo menos um filtro.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 0, 3000); //balloon, delayToShowUp, TimeVisible
             tooltipBalloon.setVisible(true);
         }
         
@@ -300,7 +299,10 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
             try {
                 temp = MAIN.getController().search((int)clientIDnum.getValue());
                 if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
+                else{
+                    BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
+                    tooltipBalloon.setVisible(true);
+                }
                 
                 return;
             } catch (DatabaseException ex) {
@@ -310,7 +312,10 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
             try {
                 temp = MAIN.getController().searchByCPF(cpfField.getText());
                 if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
+                else{
+                    BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
+                    tooltipBalloon.setVisible(true);
+                }
                 return;
             } catch (DatabaseException ex) {
                 Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -318,8 +323,10 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         } else {
             try {
                 data = MAIN.getController().selectAll();
-                if (data == null)
-                    throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
+                if (data == null){
+                    BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
+                    tooltipBalloon.setVisible(true);
+                }
             } catch (DatabaseException ex) {
                 Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -384,7 +391,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
             
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Selecione uma linha para poder editar.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
     }//GEN-LAST:event_EditActionPerformed
 
@@ -394,7 +401,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
             
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(Delete, "Selecione uma linha para poder excluir.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
     }//GEN-LAST:event_DeleteActionPerformed
 
@@ -450,7 +457,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         } else {
             //Nunca deverá entrar aqui (Tem verificação "elsewhere").
             BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         return cliente;
     }

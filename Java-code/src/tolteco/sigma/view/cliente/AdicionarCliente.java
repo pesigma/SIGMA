@@ -291,7 +291,7 @@ public class AdicionarCliente extends javax.swing.JPanel implements Adicionar<Cl
         String cpf = CPFfField.getText();
         String tel = TelFField.getText();
         String obs = ObsPane.getText();
-        String end = (String) EndBox.getSelectedItem() + EndField.getText();
+        String end = (String) EndBox.getSelectedItem() + " " + EndField.getText();
         
         return new Cliente(priNome, segundoNome, obs, end, tel, cpf, Sistema.getUserID());
     }

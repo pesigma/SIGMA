@@ -13,6 +13,7 @@ import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.model.tables.VersionTable;
+import tolteco.sigma.utils.SDate;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -46,12 +47,12 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         searchPanel = new javax.swing.JPanel();
-        nomeField = new javax.swing.JTextField();
-        clientIDnum = new javax.swing.JSpinner();
-        userIDnum = new javax.swing.JSpinner();
+        majorName = new javax.swing.JTextField();
+        majorVer = new javax.swing.JSpinner();
+        minorVer = new javax.swing.JSpinner();
         isMajorDate = new javax.swing.JCheckBox();
         isMajorNome = new javax.swing.JCheckBox();
-        MinorDate = new com.toedter.calendar.JDateChooser();
+        MajorDate = new com.toedter.calendar.JDateChooser();
         isMajorVer = new javax.swing.JCheckBox();
         isMinorVer = new javax.swing.JCheckBox();
         Buscar = new javax.swing.JButton();
@@ -111,16 +112,16 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
                     .addComponent(isMajorNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(nomeField)
-                    .addComponent(MinorDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(majorName)
+                    .addComponent(MajorDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(isMinorVer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(isMajorVer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(clientIDnum, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                    .addComponent(userIDnum))
+                    .addComponent(majorVer, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                    .addComponent(minorVer))
                 .addContainerGap(264, Short.MAX_VALUE))
         );
         searchPanelLayout.setVerticalGroup(
@@ -128,17 +129,17 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
             .addGroup(searchPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clientIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(majorName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(majorVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(isMajorNome)
                     .addComponent(isMajorVer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(userIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(minorVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(isMajorDate)
                         .addComponent(isMinorVer))
-                    .addComponent(MinorDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(MajorDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -215,13 +216,13 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     private boolean changed=false;
     
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        if (isMinorVer.isSelected() == 
-            isMajorDate.isSelected() == 
-            isMajorVer.isSelected() == 
+        if (isMinorVer.isSelected() == false &&
+            isMajorDate.isSelected() == false &&
+            isMajorVer.isSelected() == false &&
             isMajorNome.isSelected() == false){ //Nenhum filtro selecionado
             
-            BalloonTip tooltipBalloon = new BalloonTip(searchPanel, "Selecione pelo menos um filtro.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 0, 3000); //balloon, delayToShowUp, TimeVisible
+            BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Selecione pelo menos um filtro.");
+            tooltipBalloon.setVisible(true);
         }
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
@@ -232,57 +233,52 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         List<Version> data=null;
         Version temp;
         //Identificadores únicos, não precisa procurar com outros
-        if (isMinorVer.isSelected()){
+        if (isMajorVer.isSelected()){
             try {
-                temp = MAIN.getController().search((int)clientIDnum.getValue());
+                temp = Version.versionBuilder(
+                        MAIN.getController().getMajor((int) majorVer.getValue()),
+                        MAIN.getController().getLatestMinor((int) majorVer.getValue()));
                 if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
+                else{
+                    BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
+                    tooltipBalloon.setVisible(true);
+                }
                 
                 return;
             } catch (DatabaseException ex) {
                 Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (isCPF.isSelected()){
-            try {
-                temp = MAIN.getController().searchByCPF(cpfField.getText());
-                if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
-                return;
-            } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
+        }  else {
             try {
                 data = MAIN.getController().selectAll();
-                if (data == null)
-                    throw new IllegalStateException("ARRUMA ISSO AQUI. COLOCA UM TOOLTIP BALOON!");
+                if (data == null){
+                    BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
+                    tooltipBalloon.setVisible(true);
+                }
             } catch (DatabaseException ex) {
                 Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
-        for (Version cliente : data){
+        for (Version version : data){
             flag=true; times=0; //Tem que ser true em todas as verifs. para ser add
             if (isMajorNome.isSelected()){
-                flag = cliente.getNome().contains(nomeField.getText()) || cliente.getSobrenome().contains(nomeField.getText());
+                flag = version.getMajorName().contains(majorName.getText());
                 times++;
             }
-            endIF: if (isEndereco.isSelected()){
+            endIF: if (isMajorDate.isSelected()){
                 if (flag==false && times!=0) break endIF;
-                flag = cliente.getEnd().equalsIgnoreCase((String)enderecoCombo.getSelectedItem() + " " + enderecoField.getText());
+                flag = SDate.DATE_FORMAT_NOTIME.format( version.getMajorDate() ).equals(
+                       SDate.DATE_FORMAT_NOTIME.format( MajorDate.getDate() )
+                );
                 times++;
             }
-            telIF: if (isMajorDate.isSelected()){
-                if (flag==false && times!=0) break telIF;
-                flag = cliente.getTel().equals((String)telefoneField.getText());
-                times++;
-            }
-            idUserIF: if (isMajorVer.isSelected()){
+            idUserIF: if (isMinorVer.isSelected()){
                 if (flag==false && times!=0) break idUserIF;
-                flag = cliente.getUserId() == ((int) userIDnum.getValue());
+                flag = version.getMinorVersion() == ((int) minorVer.getValue());
                 times++;
             }
-            if (flag==true && times!=0) modeloTabela.addRow(cliente);
+            if (flag==true && times!=0) modeloTabela.addRow(version);
         }
 
         changed=false;
@@ -312,7 +308,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
             
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Selecione uma linha para poder editar.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
     }//GEN-LAST:event_EditActionPerformed
 
@@ -322,7 +318,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
             
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(Delete, "Selecione uma linha para poder excluir.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
     }//GEN-LAST:event_DeleteActionPerformed
 
@@ -336,37 +332,19 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     
     @Override
     public void cleanAllFields() {      
-        nomeField.setText(EMPTY);
-        enderecoCombo.setSelectedItem("Rua");
-        enderecoField.setText(EMPTY);
-        enderecoNum.setValue(0);
-        telefoneField.setText(EMPTY);
-        cpfField.setText(EMPTY);
-        clientIDnum.setValue(0);
-        userIDnum.setValue(0);
+        majorName.setText(EMPTY);
+        MajorDate.setDate(null);
+        majorVer.setValue(0);
+        minorVer.setValue(0);
         
         isMajorNome.setSelected(NOT_SELECTED);
-        isEndereco.setSelected(NOT_SELECTED);
         isMajorDate.setSelected(NOT_SELECTED);
-        isCPF.setSelected(NOT_SELECTED);
         isMinorVer.setSelected(NOT_SELECTED);
         isMajorVer.setSelected(NOT_SELECTED);
     }
 
     @Override
     public void fillAllFields(Version object) {
-        /*String combo = object.getEnd().substring(0,object.getEnd().indexOf(' '));
-        String rest  = object.getEnd().substring(object.getEnd().indexOf(' ')+1);
-        
-        nomeField.setText(object.getNome() + object.getSobrenome());
-        enderecoCombo.setSelectedItem(combo);
-        enderecoField.setText(rest.substring(0,rest.lastIndexOf(' ')));
-        enderecoNum.setValue(rest.substring(rest.lastIndexOf(' ')));
-        telefoneField.setText(object.getTel());
-        cpfField.setText(object.getCpf());
-        clientIDnum.setValue(object.getVersionId());
-        userIDnum.setValue(object.getUserId());*/
-        
         modeloTabela.addRow(object);
     }
 
@@ -379,7 +357,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         } else {
             //Nunca deverá entrar aqui (Tem verificação "elsewhere").
             BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         return cliente;
     }
@@ -390,8 +368,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     private javax.swing.JButton Buscar;
     private javax.swing.JButton Delete;
     private javax.swing.JButton Edit;
-    private com.toedter.calendar.JDateChooser MinorDate;
-    private javax.swing.JSpinner clientIDnum;
+    private com.toedter.calendar.JDateChooser MajorDate;
     private javax.swing.JCheckBox isMajorDate;
     private javax.swing.JCheckBox isMajorNome;
     private javax.swing.JCheckBox isMajorVer;
@@ -399,9 +376,10 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nomeField;
+    private javax.swing.JTextField majorName;
+    private javax.swing.JSpinner majorVer;
+    private javax.swing.JSpinner minorVer;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JTable tabela;
-    private javax.swing.JSpinner userIDnum;
     // End of variables declaration//GEN-END:variables
 }

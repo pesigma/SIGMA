@@ -115,7 +115,7 @@ public class ListarFinanca extends javax.swing.JPanel implements Listar<Financa>
             MAIN.pressEdit(finn);
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
     }//GEN-LAST:event_editActionPerformed
 
@@ -139,7 +139,7 @@ public class ListarFinanca extends javax.swing.JPanel implements Listar<Financa>
             }
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(deleteButton, "Selecione uma linha para poder excluir.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -162,7 +162,7 @@ public class ListarFinanca extends javax.swing.JPanel implements Listar<Financa>
         } else {
             //Nunca deverá entrar aqui.
             BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         return finn;
     }

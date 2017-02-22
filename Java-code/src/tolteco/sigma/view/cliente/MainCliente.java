@@ -151,7 +151,7 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
             BuscarCliente modif = new BuscarCliente(this);
             Panel.setViewportView( modif );
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Busque um Cliente para modificar");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         
         ultimoPanelAdicionado = Operacao.Modificar;
@@ -164,7 +164,7 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
             BuscarCliente add = new BuscarCliente(this);
             Panel.setViewportView( add );
             BalloonTip tooltipBalloon = new BalloonTip(Delete, "Busque um Cliente para excluir");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         
         ultimoPanelAdicionado = Operacao.Remover;
@@ -213,13 +213,13 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
     @Override
     public void displayException(Exception ex) {
         BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção jogada.");
-        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        tooltipBalloon.setVisible(true);
     }
 
     @Override
     public void displayDatabaseException(DatabaseException ex) {
         BalloonTip tooltipBalloon = new BalloonTip(main.getExceptionTab(), "Exceção do Banco de dados jogada.");
-        ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+        tooltipBalloon.setVisible(true);
     }
 
     @Override
