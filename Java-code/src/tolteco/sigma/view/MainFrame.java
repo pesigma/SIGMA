@@ -25,6 +25,7 @@ import tolteco.sigma.controller.FinancaController;
 import tolteco.sigma.controller.ServicoController;
 import tolteco.sigma.controller.UsuarioController;
 import tolteco.sigma.controller.VersionController;
+import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.utils.DefaultConfigs;
 import tolteco.sigma.utils.SDate;
@@ -34,6 +35,7 @@ import tolteco.sigma.view.cliente.MainCliente;
 import tolteco.sigma.view.financas.MainFinanca;
 import tolteco.sigma.view.servicos.MainServico;
 import tolteco.sigma.view.usuarios.MainUsuario;
+import tolteco.sigma.view.version.MainVersion;
 
 /**
  *
@@ -59,7 +61,13 @@ public class MainFrame extends javax.swing.JFrame {
                 getClass().getResource("/tolteco/sigma/view/images/User/LogOut.png")));
         
         logOut.addActionListener((ActionEvent e) -> {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            try {
+                Sistema.logout();
+            } catch (DatabaseException ex) {
+                MainFrame.LOG.severe("Falha ao tentar deslogar seguramente do sistema.");
+            }
+            this.setVisible(false);
+            this.dispose();
         });
         
         logOut.setPreferredSize( new Dimension (100,26));
@@ -75,7 +83,9 @@ public class MainFrame extends javax.swing.JFrame {
                 getClass().getResource("/tolteco/sigma/view/images/User/SystemOut.png")));
         
         exit.addActionListener((ActionEvent e) -> {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            Sistema.shutdown();
+            this.setVisible(false);
+            this.dispose();
         });
         
         exit.setPreferredSize( new Dimension (90,26));
@@ -125,10 +135,10 @@ public class MainFrame extends javax.swing.JFrame {
             JPanel panel4 = new MainUsuario(this, usuario);
             PainelGuias.add(panel4);
             PainelGuias.setTitleAt(4, "Usuários");
-        /*
+        
             JPanel panel5 = new MainVersion(this, version);
             PainelGuias.add(panel5);
-            PainelGuias.setTitleAt(5, "Versões");*/
+            PainelGuias.setTitleAt(5, "Versões");
         }
         
         

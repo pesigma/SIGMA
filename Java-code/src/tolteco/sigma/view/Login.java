@@ -299,7 +299,7 @@ public class Login extends javax.swing.JFrame {
         });
         
         /*ENTER THE SYSTEM HERE*/
-        Sistema.login(whoWillUse);
+        Sistema.login(whoWillUse, controller);
         this.dispose();
     }
 }

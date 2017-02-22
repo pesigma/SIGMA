@@ -12,9 +12,10 @@ import tolteco.sigma.controller.ServicoController;
 import tolteco.sigma.controller.UsuarioController;
 import tolteco.sigma.controller.VersionController;
 import tolteco.sigma.model.dao.DAOFactory;
+import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.jdbc.JDBCDAOFactory;
-import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.model.entidades.Usuario;
+import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.model.tables.ClienteTable;
 import tolteco.sigma.model.tables.FinancaTable;
 import tolteco.sigma.model.tables.ServicoTable;
@@ -30,7 +31,8 @@ public class Sistema {
     private static Usuario user; //= new Usuario(0, "Teste", Access.ROOT, new char[]{123}); //Para testes
     private static MainFrame MAIN;
     private static final DAOFactory DAO = new JDBCDAOFactory();
-
+    private static UsuarioController controller;
+    
     //<editor-fold defaultstate="collapsed" desc="MainFrame Initializer">
     public static MainFrame assembleMain() {
         return new MainFrame(initSubCliente(), initSubFinanca(), initSubServico(), initSubUsuario(), initSubVersion());
@@ -81,31 +83,28 @@ public class Sistema {
     SYSTEM OPERATIONS
     */
     
-    public static void login(Usuario user){
+    public static void login(Usuario user, UsuarioController controller){
         if (Sistema.user != null) 
             throw new IllegalStateException("Usuário: " + Sistema.user.getUserName() + " logado.");
         
         if (user != null){
             system = new Sistema(user);
+            Sistema.controller = controller;
             MainFrame.LOG.log(Level.INFO, "Usu\u00e1rio: " + user.getUserName() + " logou.");
         }else {
             MainFrame.LOG.log(Level.WARNING, "Tentativa de Log no sistema com usuário nulo");
         }
     }
     
-    private static void startUp(){
-        
-    }
-    
-    public static void logout(){
+    public static void logout() throws DatabaseException{
+        MainFrame.LOG.info("Usuário: " + Sistema.user.getUserName() + " saindo do sistema.");
         user = null;
-        Sistema.shutdown();
+        
+        Version latestVersion = DAO.getVersionDAO().fetchLatestVersion();
+        new Login(controller, latestVersion).setVisible(true);
     }
     
-    private static void shutdown(){     
-        throw new UnsupportedOperationException("Não implementado");
-        /*
-        Realizar flush de logs.
-        */
+    public static void shutdown(){     
+        MainFrame.LOG.info("Usuário: " + Sistema.user.getUserName() + " finalizando o sistema.");
     }
 }
