@@ -133,7 +133,7 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
             try {
                 initTable();
             } catch (DatabaseException ex) {
-                MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela.");
+                MainFrame.LOG.log(Level.SEVERE, "Falha ao inicializar tabela." + ex.getMessage());
             } 
             isTableInitialized=true;
         }

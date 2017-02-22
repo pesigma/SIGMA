@@ -252,7 +252,7 @@ public class JDBCClienteDAO extends JDBCAbstractDAO implements ClienteDAO{
             return new Cliente(
                     rs.getInt("clienteId"),
                     rs.getString("Primeiro_Nome"),
-                    rs.getString("Ulitmo_Nome"),
+                    rs.getString("Ultimo_Nome"),
                     rs.getString("Observacoes"),
                     rs.getString("Endereco"),
                     rs.getString("Telefone"),

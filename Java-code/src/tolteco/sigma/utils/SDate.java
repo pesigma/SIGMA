@@ -21,6 +21,7 @@ import java.util.Date;
 public class SDate {
     public static final DateFormat DATE_FORMAT_SIGMA  = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     public static final DateFormat DATE_FORMAT_NOTIME = new SimpleDateFormat("yyyy/MM/dd");
+    public static final DateFormat DATE_LOG_FILE      = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
     //public static final DateFormat DATE_FORMAT_JCALENDAR = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     

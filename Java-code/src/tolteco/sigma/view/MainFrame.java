@@ -8,6 +8,12 @@ package tolteco.sigma.view;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -21,6 +27,7 @@ import tolteco.sigma.controller.UsuarioController;
 import tolteco.sigma.controller.VersionController;
 import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.utils.DefaultConfigs;
+import tolteco.sigma.utils.SDate;
 import tolteco.sigma.utils.logging.BufferedPaneOutputStream;
 import tolteco.sigma.utils.logging.PaneHandler;
 import tolteco.sigma.view.cliente.MainCliente;
@@ -36,6 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     //private static final int ACCESS_LEVEL = 0; //Usado para testes - Nivel de acesso
     public static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
+    private final MainView child;
     
     private static void initLogger(MainView mainChild){
         mainChild.console.setEditable(false);
@@ -92,10 +100,10 @@ public class MainFrame extends javax.swing.JFrame {
         //new Font(DefaultConfigs.SYSTEMFONT, Font.BOLD|Font.ITALIC, 16)
         PainelGuias.setFont( new Font(DefaultConfigs.SYSTEMFONT, Font.PLAIN, 16) );
             
-        MainView mainChild = new MainView(this);
-        PainelGuias.add(mainChild);
+        child = new MainView(this);
+        PainelGuias.add(child);
         PainelGuias.setTitleAt(0, "Principal");
-        MainFrame.initLogger(mainChild);
+        MainFrame.initLogger(child);
         
         JPanel panel1 = new MainCliente(this, cliente);
         PainelGuias.add(panel1);
@@ -145,10 +153,13 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SIGMA");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                MainFrame.this.windowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -172,9 +183,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(PainelGuias, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(PainelGuias, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
         );
 
         pack();
@@ -184,6 +193,20 @@ public class MainFrame extends javax.swing.JFrame {
         ViewUtils.centerFrame(this);
         ViewUtils.setSIGMAIcon(this);
     }//GEN-LAST:event_formWindowOpened
+
+    private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
+        String consoleData = child.console.getText();
+        
+        final File FILE = new File("log\\" +  SDate.DATE_LOG_FILE.format(new Date()) + ".LOG");
+        BufferedWriter bw;
+        try {
+            bw = new BufferedWriter( new FileWriter(FILE));
+            bw.write(consoleData);
+            bw.close();
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_windowClosed
 
     /**
      * Método principal para a criação de um frame.

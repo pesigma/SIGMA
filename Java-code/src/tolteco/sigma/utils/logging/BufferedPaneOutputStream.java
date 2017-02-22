@@ -142,7 +142,6 @@ public class BufferedPaneOutputStream extends OutputStream {
         doc = pane.getStyledDocument();
         encoding = Charset;
         
-        
         if (attribs == null){
             SimpleAttributeSet standard = new SimpleAttributeSet();
             StyleConstants.setForeground(standard, Color.BLACK);

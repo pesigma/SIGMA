@@ -106,16 +106,14 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Component id="telefoneField" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="enderecoCombo" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="enderecoField" min="-2" max="-2" attributes="0"/>
+                                  <Component id="enderecoField" min="-2" pref="323" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="telefoneField" min="-2" pref="107" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="enderecoNum" min="-2" pref="65" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="isCPF" min="-2" pref="53" max="-2" attributes="0"/>
@@ -152,7 +150,6 @@
                               <Component id="enderecoCombo" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="isIDusuario" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="userIDnum" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="enderecoNum" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="isNome" min="-2" max="-2" attributes="0"/>
@@ -257,8 +254,6 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JSpinner" name="enderecoNum">
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="telefoneField">
           <Properties>

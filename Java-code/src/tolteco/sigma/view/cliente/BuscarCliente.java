@@ -59,7 +59,6 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         isTelefone = new javax.swing.JCheckBox();
         cpfField = new javax.swing.JFormattedTextField();
         enderecoCombo = new javax.swing.JComboBox<>();
-        enderecoNum = new javax.swing.JSpinner();
         telefoneField = new javax.swing.JFormattedTextField();
         Buscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -158,14 +157,12 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                         .addComponent(clientIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(searchPanelLayout.createSequentialGroup()
                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(telefoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addComponent(enderecoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(telefoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(enderecoNum, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addComponent(isCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,8 +190,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                             .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(enderecoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(isIDusuario)
-                            .addComponent(userIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(enderecoNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(userIDnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(isNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,8 +283,9 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
             isIDusuario.isSelected() == 
             isNome.isSelected() == false){ //Nenhum filtro selecionado
             
-            BalloonTip tooltipBalloon = new BalloonTip(searchPanel, "Selecione pelo menos um filtro.");
-            ToolTipUtils.balloonToToolTip(tooltipBalloon, 500, 3000); //balloon, delayToShowUp, TimeVisible
+            BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Selecione pelo menos um filtro.");
+            ToolTipUtils.balloonToToolTip(tooltipBalloon, 0, 3000); //balloon, delayToShowUp, TimeVisible
+            tooltipBalloon.setVisible(true);
         }
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
@@ -414,7 +411,6 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         nomeField.setText(EMPTY);
         enderecoCombo.setSelectedItem("Rua");
         enderecoField.setText(EMPTY);
-        enderecoNum.setValue(0);
         telefoneField.setText(EMPTY);
         cpfField.setText(EMPTY);
         clientIDnum.setValue(0);
@@ -469,7 +465,6 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
     private javax.swing.JFormattedTextField cpfField;
     private javax.swing.JComboBox<String> enderecoCombo;
     private javax.swing.JTextField enderecoField;
-    private javax.swing.JSpinner enderecoNum;
     private javax.swing.JCheckBox isCPF;
     private javax.swing.JCheckBox isEndereco;
     private javax.swing.JCheckBox isIDcliente;

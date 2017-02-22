@@ -36,7 +36,7 @@ public class MainView extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Console"));
 
-        console.setText("log\nlog\n\nlog\nlog\n\nlog\nlog\n\nlog\nlog");
+        console.setToolTipText("");
         jScrollPane1.setViewportView(console);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

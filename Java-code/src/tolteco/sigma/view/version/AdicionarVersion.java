@@ -6,6 +6,7 @@
 package tolteco.sigma.view.version;
 
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Major;
 import tolteco.sigma.model.entidades.Minor;
@@ -148,7 +149,7 @@ public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Ve
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
         );
 
-        saveMajor.setText("Salvar Major");
+        saveMajor.setText("Salvar ambas");
         saveMajor.setMaximumSize(new java.awt.Dimension(75, 23));
         saveMajor.setMinimumSize(new java.awt.Dimension(75, 23));
         saveMajor.setPreferredSize(new java.awt.Dimension(75, 23));
@@ -210,8 +211,8 @@ public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Ve
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cleanMajor)
-                        .addGap(118, 118, 118)
-                        .addComponent(saveMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(111, 111, 111)
+                        .addComponent(saveMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(MajorNamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(MajorDatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -261,7 +262,7 @@ public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Ve
 
     private void saveMajorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMajorActionPerformed
         try {
-            MAIN.getController().createMajorRelease(getMajor());
+            MAIN.getController().createRelease(Version.versionBuilder(getMajor(), getMinor()));
         } catch (DatabaseException ex) {
             MainFrame.LOG.log(Level.SEVERE, null, ex);
             MAIN.displayDatabaseException(ex);
@@ -277,16 +278,21 @@ public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Ve
     }//GEN-LAST:event_cleanMinorActionPerformed
 
     private void saveMinorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMinorActionPerformed
-       asfçlaskdfjçlsdkaf
-               sdaf
-               sdaf
-                       asdf
-                       asfd
-                               
+        try {
+            MAIN.getController().createMinorRelease(getMinor());
+        } catch (DatabaseException ex) {
+            MainFrame.LOG.log(Level.SEVERE, null, ex);
+            MAIN.displayDatabaseException(ex);
+        }               
     }//GEN-LAST:event_saveMinorActionPerformed
 
     private void lastMajorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastMajorActionPerformed
-        MajorVer.setValue((int) MAIN.getController().);
+        try {
+            MajorVer.setValue((int) MAIN.getController().getLatestMajor().getMajorVer());
+        } catch (DatabaseException ex) {
+            MainFrame.LOG.log(Level.SEVERE, null, ex);
+            MAIN.displayDatabaseException(ex);
+        }
     }//GEN-LAST:event_lastMajorActionPerformed
 
 

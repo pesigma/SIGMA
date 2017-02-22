@@ -21,8 +21,8 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="cleanMajor" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
-                      <Component id="saveMajor" min="-2" pref="107" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
+                      <Component id="saveMajor" min="-2" pref="114" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="MajorNamePanel" max="32767" attributes="0"/>
@@ -259,7 +259,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="saveMajor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Salvar Major"/>
+        <Property name="text" type="java.lang.String" value="Salvar ambas"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[75, 23]"/>
         </Property>

@@ -87,7 +87,7 @@ public class Sistema {
         
         if (user != null){
             system = new Sistema(user);
-            MainFrame.LOG.log(Level.INFO, "Usu\u00e1rio: {0} logou.", user.getUserName());
+            MainFrame.LOG.log(Level.INFO, "Usu\u00e1rio: " + user.getUserName() + " logou.");
         }else {
             MainFrame.LOG.log(Level.WARNING, "Tentativa de Log no sistema com usuário nulo");
         }
@@ -102,7 +102,7 @@ public class Sistema {
         Sistema.shutdown();
     }
     
-    private static void shutdown(){
+    private static void shutdown(){     
         throw new UnsupportedOperationException("Não implementado");
         /*
         Realizar flush de logs.

@@ -66,14 +66,14 @@ public class ClienteTable extends SigmaAbstractTableModel<Cliente>{
     @Override
     public String getColumnName(int column) {
         switch(column){
-            case NOME:       return "Placa";
-            case SOBRENOME:  return "Modelo";
+            case NOME:       return "Nome";
+            case SOBRENOME:  return "Sobrenome";
             case OBS:        return "Observações";
-            case ENDERECO:   return "Quilometragem";
-            case TELEFONE:   return "ID Cliente";
-            case CPF:        return "Situação";
-            case CLIENTE_ID: return "ID Serviço";
-            case USER_ID:    return "ID Serviço";
+            case ENDERECO:   return "Endereço";
+            case TELEFONE:   return "Telefone";
+            case CPF:        return "CPF";
+            case CLIENTE_ID: return "ID Cliente";
+            case USER_ID:    return "ID Usuário";
             default:
                 throw new IndexOutOfBoundsException(
                 "Exceeded Max Column Count: " + column +  " out of " + COLUMN_COUNT + ".");
