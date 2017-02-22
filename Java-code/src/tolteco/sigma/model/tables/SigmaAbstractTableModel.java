@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.table.AbstractTableModel;
 import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.entidades.PrimaryKeyComparable;
 import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;
 import tolteco.sigma.utils.eventsAndListeners.InsertionEvent;
@@ -24,7 +25,7 @@ import tolteco.sigma.view.Sistema;
  * @author Juliano
  * @param <T>
  */
-public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel implements SigmaTableModel<T> {
+public abstract class SigmaAbstractTableModel<T extends PrimaryKeyComparable> extends AbstractTableModel implements SigmaTableModel<T> {
     /**
      * Lista de listeners "ouvindo" alterações
      * na determinada tabela.
@@ -55,6 +56,14 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         return entidades.get(row);
     }
     
+    public T getRowById(int id){
+        for (T entidade : entidades){
+            if (entidade.getRowId() == id)
+                return entidade;
+        }
+        return null;
+    }
+    
     public void setRow(T object, int row){
         entidades.add(row, object);
         fireTableRowsDeleted(row, row);
@@ -67,7 +76,7 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
         int indexToUpdate = -1;
         int counter=0;
         for(T entidade : entidades){
-            if (entidade.equals(object)){
+            if (entidade.getRowId() == object.getRowId()){
                 indexToUpdate = counter;
                 break;
             }

@@ -32,6 +32,8 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     public BuscarVersion(MainVersion main) {
         initComponents();
         MAIN = main;
+        tabela.setModel(modeloTabela);
+        tabela.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -347,15 +349,16 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     @Override
     public Version getInstance() {
         int row = tabela.getSelectedRow();
-        Version cliente = null;
+        Version version = null;
         if (row>=0){
-            cliente = modeloTabela.getRow(row);
+            int versionId = (int) tabela.getValueAt(row, VersionTable.MAJOR_VER);
+            version = MAIN.getModel().getRowById(versionId);
         } else {
             //Nunca deverá entrar aqui (Tem verificação "elsewhere").
             BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");
             tooltipBalloon.setVisible(true);
         }
-        return cliente;
+        return version;
     }
 
     private class ResultsTableModel extends VersionTable{

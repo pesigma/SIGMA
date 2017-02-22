@@ -6,14 +6,13 @@
 package tolteco.sigma.model.entidades;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Contém informações sobre uma release (Data, major, minor, etc).
  *
  * @author Juliano Felipe
  */
-public class Version implements Comparable<Version> {
+public class Version implements Comparable<Version>, PrimaryKeyComparable {
 
     private static final int MAXTRAILING = 3;
 
@@ -210,5 +209,10 @@ public class Version implements Comparable<Version> {
         this.minorDate = minor.getMinorDate();
         this.minorNotes = minor.getMinorNotes();
         this.minorVersion = minor.getMinorVer();
+    }
+
+    @Override
+    public int getRowId() {
+        return majorVersion;
     }
 }

@@ -13,15 +13,15 @@ import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
  * @author Juliano
  */
 public class ClienteTable extends SigmaAbstractTableModel<Cliente>{
-    private static final int COLUMN_COUNT = 8;
-    private static final int NOME         = 0;
-    private static final int SOBRENOME    = 1;
-    private static final int OBS          = 2;
-    private static final int ENDERECO     = 3;
-    private static final int TELEFONE     = 4;
-    private static final int CPF          = 5;
-    private static final int CLIENTE_ID   = 6;
-    private static final int USER_ID      = 7;
+    public static final int COLUMN_COUNT = 8;
+    public static final int NOME         = 0;
+    public static final int SOBRENOME    = 1;
+    public static final int OBS          = 2;
+    public static final int ENDERECO     = 3;
+    public static final int TELEFONE     = 4;
+    public static final int CPF          = 5;
+    public static final int CLIENTE_ID   = 6;
+    public static final int USER_ID      = 7;
     
     @Override
     public int getColumnCount() {

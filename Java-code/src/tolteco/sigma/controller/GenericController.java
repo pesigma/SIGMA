@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.entidades.PrimaryKeyComparable;
 import tolteco.sigma.model.tables.SigmaAbstractTableModel;
 import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;
@@ -25,7 +26,7 @@ import tolteco.sigma.utils.eventsAndListeners.SigmaListener;
  * @param <Model> Modelo de tabela do Sigma do
  *                respectivo tipo de entidade.
  */
-public abstract class GenericController<T, Model extends SigmaAbstractTableModel<T>> implements SigmaListener{
+public abstract class GenericController<T extends PrimaryKeyComparable, Model extends SigmaAbstractTableModel<T>> implements SigmaListener{
     /**
      * Factory para a obtenção dos
      * DAOs para os respectivos tipos de entidades.

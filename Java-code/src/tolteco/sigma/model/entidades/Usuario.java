@@ -5,6 +5,7 @@
  */
 package tolteco.sigma.model.entidades;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Objects;
  * de "segurança".
  * @author Juliano_Felipe
  */
-public class Usuario implements Comparable<Usuario> {
+public class Usuario implements Comparable<Usuario>,PrimaryKeyComparable {
     private int userId;
     private String userName;
     private Access accessLevel;
@@ -138,6 +139,19 @@ public class Usuario implements Comparable<Usuario> {
 
     @Override
     public int compareTo(Usuario o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return o.getUserName().compareTo(o.getUserName());
+    }
+
+    public static Comparator<Access> accessComparator (){
+        return (Access o1, Access o2) -> o1.compareTo(o2);
+    }
+    
+    public static Comparator<Integer> userIdComparator (){
+        return (Integer o1, Integer o2) -> o1.compareTo(o2);
+    }
+    
+    @Override
+    public int getRowId() {
+        return userId;
     }
 }

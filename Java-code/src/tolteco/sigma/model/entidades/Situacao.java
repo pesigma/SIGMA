@@ -7,7 +7,7 @@ package tolteco.sigma.model.entidades;
 public enum Situacao {
     PENDENTE(0, "Pendente"), //Pendente é 0,
     SERVICOPAGO(1, "Quitado"), //ZERO tem mais "prioridade".
-    FINACAPAGA(1, "Quitada");
+    FINACAPAGA(2, "Quitada");
     
     private final int value;
     private final String descricao;

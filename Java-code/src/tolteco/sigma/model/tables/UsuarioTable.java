@@ -15,11 +15,11 @@ import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
  * @author Juliano
  */
 public class UsuarioTable extends SigmaAbstractTableModel<Usuario>{
-    private static final int COLUMN_COUNT = 4;
-    private static final int USER_ID      = 0;
-    private static final int USER_NAME    = 1;
-    private static final int ACCESS_LEVEL = 2;
-    private static final int PASS         = 3;
+    public static final int COLUMN_COUNT = 4;
+    public static final int USER_ID      = 0;
+    public static final int USER_NAME    = 1;
+    public static final int ACCESS_LEVEL = 2;
+    public static final int PASS         = 3;
     
     @Override
     public int getColumnCount() {

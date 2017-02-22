@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author JFPS
  */
-public class Minor{
+public class Minor implements PrimaryKeyComparable{
         int majorVer, minorVer;
         Date minorDate;
         String minorNotes;
@@ -43,4 +43,9 @@ public class Minor{
         public String getMinorNotes() {
             return minorNotes;
         }
+
+    @Override
+    public int getRowId() {
+        return minorVer;
     }
+}

@@ -8,9 +8,9 @@ package tolteco.sigma.view.financas;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Financa;
+import tolteco.sigma.model.tables.FinancaTable;
 import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Listar;
 
@@ -34,6 +34,7 @@ public class ListarFinanca extends javax.swing.JPanel implements Listar<Financa>
         this.MAIN = main;
         //Setar informações na tabela
         tabela.setModel(main.getModel());
+        tabela.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -157,8 +158,8 @@ public class ListarFinanca extends javax.swing.JPanel implements Listar<Financa>
         int row = tabela.getSelectedRow();
         Financa finn = null;
         if (row>=0){
-            //cliente = (ClienteTable) tabela.getModel().
-            finn = MAIN.getModel().getRow(row);
+            int finnId = (int) tabela.getValueAt(row, FinancaTable.ROWID);
+            finn = MAIN.getModel().getRowById(finnId);
         } else {
             //Nunca deverá entrar aqui.
             BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");

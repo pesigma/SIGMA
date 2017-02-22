@@ -11,7 +11,7 @@ import java.util.Comparator;
  * Entidade Servico, possui métodos e valores para o objeto serviço
  * @author Maycon
  */
-public class Servico implements Comparable<Servico>{
+public class Servico implements Comparable<Servico>,PrimaryKeyComparable{
     //Atributos
     String placa, 
            modelo,
@@ -215,4 +215,9 @@ public class Servico implements Comparable<Servico>{
     }
     
 //</editor-fold>
+
+    @Override
+    public int getRowId() {
+        return rowid;
+    }
 }

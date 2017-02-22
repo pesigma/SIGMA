@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
+import tolteco.sigma.model.tables.ClienteTable;
 import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Listar;
 
@@ -33,6 +34,7 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
         this.MAIN = main;
         //Setar informações na tabela
         tabela.setModel(main.getModel());
+        tabela.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -156,8 +158,8 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
         int row = tabela.getSelectedRow();
         Cliente cliente = null;
         if (row>=0){
-            //cliente = (ClienteTable) tabela.getModel().
-            cliente = MAIN.getModel().getRow(row);
+            int clienteId = (int) tabela.getValueAt(row, ClienteTable.CLIENTE_ID);
+            cliente = MAIN.getModel().getRowById(clienteId);
         } else {
             //Nunca deverá entrar aqui.
             BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");

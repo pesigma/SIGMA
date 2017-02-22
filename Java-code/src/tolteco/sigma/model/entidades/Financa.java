@@ -6,14 +6,13 @@
 package tolteco.sigma.model.entidades;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Objects;
 import tolteco.sigma.utils.SDate;
 
 /**
  * Entidade financa, possui métodos e valores para o objeto finança
  * @author Maycon
  */
-public class Financa implements Comparable<Financa> {
+public class Financa implements Comparable<Financa>,PrimaryKeyComparable {
     
     //Atributos
     Date data;
@@ -202,4 +201,9 @@ public class Financa implements Comparable<Financa> {
     //vem ordenado por RowId
     
     //</editor-fold>
+
+    @Override
+    public int getRowId() {
+        return rowid;
+    }
 }

@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author JFPS
  */
-public class Major{
+public class Major implements PrimaryKeyComparable{
         int majorVer;
         Date majorDate;
         String majorName,
@@ -41,4 +41,9 @@ public class Major{
         public String getMajorName() {
             return majorName;
         }
+
+    @Override
+    public int getRowId() {
+        return majorVer;
     }
+}

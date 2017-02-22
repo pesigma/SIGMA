@@ -12,7 +12,7 @@ import java.util.Objects;
  * Entidade cliente, possui métodos e valores para o objeto cliente
  * @author Maycon
  */
-public class Cliente implements Comparable<Cliente>{
+public class Cliente implements Comparable<Cliente>,PrimaryKeyComparable{
     //Atributos
     private String nome,
                 sobrenome,
@@ -219,4 +219,9 @@ public class Cliente implements Comparable<Cliente>{
     }
     
     //</editor-fold>
+
+    @Override
+    public int getRowId() {
+        return clienteId;
+    }
 }

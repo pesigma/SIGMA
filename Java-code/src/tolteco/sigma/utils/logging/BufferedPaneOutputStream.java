@@ -53,7 +53,7 @@ public class BufferedPaneOutputStream extends OutputStream {
      * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#WARNING}
      * {@link tolteco.sigma.utils.logging.BufferedPaneOutputStream#SEVERE}
      */
-    private AttributeSet[] attributes = new AttributeSet[4];
+    private AttributeSet[] attributes = new AttributeSet[5];
     /**
      * Constante que localiza posição dos
      * atributos usados normalmente pela
@@ -78,6 +78,9 @@ public class BufferedPaneOutputStream extends OutputStream {
      * erros pela stream.
      */
     public final int SEVERE=3;
+    
+    public final int FINE=4;
+    
     /**
      * Variável que indica qual deve ser o atributo
      * usado para imprimir dentre (em ordem ascendente de prioridade):
@@ -100,7 +103,7 @@ public class BufferedPaneOutputStream extends OutputStream {
      * @param pane Para ser destino da Stream.
      */
     public BufferedPaneOutputStream(JTextPane pane) {
-        this(pane, "UTF-8", null, null, null, null);
+        this(pane, "UTF-8", null, null, null, null,null);
         /*
         É deselegante passar null e fazer a verificação no outro
         construtor, mas não consigo pensar em como criar um attributeset
@@ -119,7 +122,7 @@ public class BufferedPaneOutputStream extends OutputStream {
      *                  sobrecarregado de OutputStream.
      */
     public BufferedPaneOutputStream(JTextPane pane, String encoding, AttributeSet normal) {
-        this(pane, encoding, normal, null, null, null);
+        this(pane, encoding, normal, null, null, null,null);
     }
     
     /**
@@ -135,8 +138,10 @@ public class BufferedPaneOutputStream extends OutputStream {
      *                Se nulo, fundo branco e fonte laranja.
      * @param err     Attributos para saida erros.
      *                Se nulo, fundo branco e fonte vermelha.
+     * @param fine    Attributos para saída "fine".
+     *                Se nulo, fundo branco e fonte verde.
      */
-    public BufferedPaneOutputStream(JTextPane pane, String Charset, AttributeSet attribs, AttributeSet info, AttributeSet warn, AttributeSet err){
+    public BufferedPaneOutputStream(JTextPane pane, String Charset, AttributeSet attribs, AttributeSet info, AttributeSet warn, AttributeSet err, AttributeSet fine){
         super();
         this.pane = pane;
         doc = pane.getStyledDocument();
@@ -169,6 +174,14 @@ public class BufferedPaneOutputStream extends OutputStream {
             StyleConstants.setBackground(standard, Color.WHITE);
             StyleConstants.setBold(standard, false);
             attributes[SEVERE] = standard;
+        }
+        
+        if (fine == null){
+            SimpleAttributeSet standard = new SimpleAttributeSet();
+            StyleConstants.setForeground(standard, Color.GREEN);
+            StyleConstants.setBackground(standard, Color.WHITE);
+            StyleConstants.setBold(standard, false);
+            attributes[FINE] = standard;
         }
         
         flushSwitch=NORMAL;

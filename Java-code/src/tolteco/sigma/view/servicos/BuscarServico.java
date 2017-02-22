@@ -31,6 +31,8 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
     public BuscarServico(MainServico main) {
         initComponents();
         MAIN = main;
+        tabela.setModel(modeloTabela);
+        tabela.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -416,15 +418,16 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
     @Override
     public Servico getInstance() {
         int row = tabela.getSelectedRow();
-        Servico cliente = null;
+        Servico servico = null;
         if (row>=0){
-            cliente = modeloTabela.getRow(row);
+            int servicoId = (int) tabela.getValueAt(row, ServicoTable.ROWID);
+            servico = MAIN.getModel().getRowById(servicoId);
         } else {
             //Nunca deverá entrar aqui (Tem verificação "elsewhere").
             BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");
             tooltipBalloon.setVisible(true);
         }
-        return cliente;
+        return servico;
     }
 
     private class ResultsTableModel extends ServicoTable{

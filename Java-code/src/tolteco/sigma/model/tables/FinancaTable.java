@@ -16,13 +16,13 @@ import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
  * @author Juliano
  */
 public class FinancaTable extends SigmaAbstractTableModel<Financa>{
-    private static final int COLUMN_COUNT = 6;
-    private static final int DATA         = 0;
-    private static final int OBS          = 1;
-    private static final int SITUACAO     = 2;
-    private static final int TIPO         = 3;
-    private static final int VALOR        = 4;
-    private static final int ROWID        = 5;
+    public static final int COLUMN_COUNT = 6;
+    public static final int DATA         = 0;
+    public static final int OBS          = 1;
+    public static final int SITUACAO     = 2;
+    public static final int TIPO         = 3;
+    public static final int VALOR        = 4;
+    public static final int ROWID        = 5;
     
     @Override
     public int getColumnCount() {

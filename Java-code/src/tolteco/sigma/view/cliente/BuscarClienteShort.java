@@ -38,6 +38,7 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
      */
     public BuscarClienteShort(ClienteController controller, JPanel painelAnterior) {
         initComponents();
+        tabela.setModel(modeloTabela);
         this.setModal(true); //Deve ser modal para que o programa "espere a seleção na lista".
         this.controller = controller;
         this.painelAnterior = painelAnterior;

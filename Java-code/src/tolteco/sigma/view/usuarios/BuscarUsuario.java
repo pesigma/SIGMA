@@ -31,6 +31,8 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
     public BuscarUsuario(MainUsuario main) {
         initComponents();
         MAIN = main;
+        tabela.setModel(modeloTabela);
+        tabela.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -275,15 +277,16 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
     @Override
     public Usuario getInstance() {
         int row = tabela.getSelectedRow();
-        Usuario cliente = null;
+        Usuario usuario = null;
         if (row>=0){
-            cliente = modeloTabela.getRow(row);
+            int usuarioId = (int) tabela.getValueAt(row, UsuarioTable.USER_ID);
+            usuario = MAIN.getModel().getRowById(usuarioId);
         } else {
             //Nunca deverá entrar aqui (Tem verificação "elsewhere").
             BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");
             tooltipBalloon.setVisible(true);
         }
-        return cliente;
+        return usuario;
     }
 
     private class ResultsTableModel extends UsuarioTable{

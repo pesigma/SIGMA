@@ -30,7 +30,9 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
     public BuscarCliente(MainCliente main) {
         initComponents();
         MAIN = main;
-        modeloTabela.addTableModelListener(tabela);
+        //modeloTabela.addTableModelListener(tabela);
+        tabela.setModel(modeloTabela);
+        tabela.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -450,7 +452,8 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         int row = tabela.getSelectedRow();
         Cliente cliente = null;
         if (row>=0){
-            cliente = modeloTabela.getRow(row);
+            int clienteId = (int) tabela.getValueAt(row, ClienteTable.CLIENTE_ID);
+            cliente = MAIN.getModel().getRowById(clienteId);
         } else {
             //Nunca deverá entrar aqui (Tem verificação "elsewhere").
             BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");

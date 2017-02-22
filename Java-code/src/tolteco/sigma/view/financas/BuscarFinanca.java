@@ -32,6 +32,8 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
     public BuscarFinanca(MainFinanca main) {
         initComponents();
         MAIN = main;
+        tabela.setModel(modeloTabela);
+        tabela.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -406,15 +408,16 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
     @Override
     public Financa getInstance() {
         int row = tabela.getSelectedRow();
-        Financa cliente = null;
+        Financa financa = null;
         if (row>=0){
-            cliente = modeloTabela.getRow(row);
+            int finnId = (int) tabela.getValueAt(row, FinancaTable.ROWID);
+            financa = MAIN.getModel().getRowById(finnId);
         } else {
             //Nunca deverá entrar aqui (Tem verificação "elsewhere").
             BalloonTip tooltipBalloon = new BalloonTip(tabela, "Selecione uma linha para poder concluir a operação.");
             tooltipBalloon.setVisible(true);
         }
-        return cliente;
+        return financa;
     }
 
     private class ResultsTableModel extends FinancaTable{

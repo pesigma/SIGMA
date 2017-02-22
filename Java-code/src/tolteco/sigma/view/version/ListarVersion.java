@@ -5,14 +5,10 @@
  */
 package tolteco.sigma.view.version;
 
-import tolteco.sigma.view.financas.*;
-import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
-import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Version;
-import tolteco.sigma.view.MainFrame;
+import tolteco.sigma.model.tables.VersionTable;
 import tolteco.sigma.view.interfaces.Listar;
 
 /**
@@ -35,6 +31,7 @@ public class ListarVersion extends javax.swing.JPanel implements Listar<Version>
         this.MAIN = main;
         //Setar informações na tabela
         tabela.setModel(main.getModel());
+        tabela.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -160,8 +157,8 @@ public class ListarVersion extends javax.swing.JPanel implements Listar<Version>
         int row = tabela.getSelectedRow();
         Version version = null;
         if (row>=0){
-            //cliente = (ClienteTable) tabela.getModel().
-            version = MAIN.getModel().getRow(row);
+            int versionId = (int) tabela.getValueAt(row, VersionTable.MAJOR_VER);
+            version = MAIN.getModel().getRowById(versionId);
         } else {
             //Nunca deverá entrar aqui.
             BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");
