@@ -27,6 +27,7 @@ import tolteco.sigma.controller.UsuarioController;
 import tolteco.sigma.controller.VersionController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Access;
+import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.utils.DefaultConfigs;
 import tolteco.sigma.utils.SDate;
 import tolteco.sigma.utils.logging.BufferedPaneOutputStream;
@@ -47,6 +48,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
     private final MainView child;
     private final ClienteController clienteController;
+    private Version ver;
     
     public ClienteController getClienteController(){
         return clienteController;
@@ -145,7 +147,11 @@ public class MainFrame extends javax.swing.JFrame {
             PainelGuias.add(panel5);
             PainelGuias.setTitleAt(5, "Versões");
         }
-        
+        try {
+            ver = version.fetchLatestVersion();
+        } catch (DatabaseException ex) {
+            LOG.severe(ex.getLocalizedMessage());
+        }
         
         BarraDeMenu.add(defineLogOutButton());
         
@@ -166,7 +172,7 @@ public class MainFrame extends javax.swing.JFrame {
         PainelGuias = new javax.swing.JTabbedPane();
         BarraDeMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SIGMA");
@@ -182,11 +188,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         PainelGuias.setMinimumSize(new java.awt.Dimension(887, 580));
 
-        jMenu1.setText("File");
-        BarraDeMenu.add(jMenu1);
+        jMenu1.setText("Help");
 
-        jMenu2.setText("Edit");
-        BarraDeMenu.add(jMenu2);
+        jMenuItem1.setText("About");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        BarraDeMenu.add(jMenu1);
 
         setJMenuBar(BarraDeMenu);
 
@@ -222,6 +234,12 @@ public class MainFrame extends javax.swing.JFrame {
             LOG.log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_windowClosed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        About ab = new About(this, ver, ver.getMinorDate());
+        ab.setVisible(true);
+        this.setEnabled(false);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * Método principal para a criação de um frame.
@@ -271,6 +289,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar BarraDeMenu;
     private javax.swing.JTabbedPane PainelGuias;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }
