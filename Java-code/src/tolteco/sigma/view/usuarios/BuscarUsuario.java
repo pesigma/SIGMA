@@ -6,13 +6,12 @@
 package tolteco.sigma.view.usuarios;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.model.entidades.Usuario;
 import tolteco.sigma.model.tables.UsuarioTable;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -23,7 +22,7 @@ import tolteco.sigma.view.interfaces.Buscar;
  */
 public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>{
     private final MainUsuario MAIN;
-    private ResultsTableModel modeloTabela = new ResultsTableModel();
+    private final ResultsTableModel modeloTabela = new ResultsTableModel();
     
     /**
      * Creates new form BuscarUsuario
@@ -186,7 +185,8 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
     private boolean changed=false;
     
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        if (isNome.isSelected() == isAccess.isSelected() == false){ //Nenhum filtro selecionado
+        if (isNome.isSelected() == false &&
+            isAccess.isSelected() == false){ //Nenhum filtro selecionado
             BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Selecione pelo menos um filtro.");
             tooltipBalloon.setVisible(true);
             return;
@@ -194,7 +194,7 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
         
-        modeloTabela = new ResultsTableModel();
+        modeloTabela.removeAll();
         
         List<Usuario> data=null;
         try {
@@ -206,7 +206,7 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
             } else 
                 data=MAIN.getController().selectAll();
         } catch (DatabaseException ex) {
-            Logger.getLogger(BuscarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            MainFrame.LOG.severe(ex.getLocalizedMessage());
         }
         
         Access toLookFor = Access.porCodigo(accessBox.getSelectedIndex());
@@ -215,8 +215,9 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
                 modeloTabela.addRow(user);
             }
         }
+        modeloTabela.fireTableDataChanged();
 
-        changed=false;
+        changed=true;
     }//GEN-LAST:event_BuscarActionPerformed
 
     // <editor-fold defaultstate="collapsed" desc="Event changed...">
@@ -285,7 +286,11 @@ public class BuscarUsuario extends javax.swing.JPanel implements Buscar<Usuario>
         return cliente;
     }
 
-    private class ResultsTableModel extends UsuarioTable{}
+    private class ResultsTableModel extends UsuarioTable{
+        private void removeAll(){
+                super.getList().clear();
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;

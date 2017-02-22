@@ -6,14 +6,13 @@
 package tolteco.sigma.view.version;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.model.tables.VersionTable;
 import tolteco.sigma.utils.SDate;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -24,7 +23,7 @@ import tolteco.sigma.view.interfaces.Buscar;
  */
 public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>{
     private final MainVersion MAIN;
-    private ResultsTableModel modeloTabela = new ResultsTableModel();
+    private final ResultsTableModel modeloTabela = new ResultsTableModel();
     
     /**
      * Creates new form BuscarVersion
@@ -221,7 +220,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
 
-        modeloTabela = new ResultsTableModel();
+        modeloTabela.removeAll();
         
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
@@ -242,7 +241,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
                 
                 return;
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         }  else {
             try {
@@ -250,9 +249,10 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
                 if (data == null){
                     BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
                     tooltipBalloon.setVisible(true);
+                    return;
                 }
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarVersion.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         }
         
@@ -277,7 +277,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
             if (flag==true && times!=0) modeloTabela.addRow(version);
         }
 
-        changed=false;
+        changed=true;
     }//GEN-LAST:event_BuscarActionPerformed
 
     // <editor-fold defaultstate="collapsed" desc="Event changed...">
@@ -358,7 +358,11 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
         return cliente;
     }
 
-    private class ResultsTableModel extends VersionTable{}
+    private class ResultsTableModel extends VersionTable{
+        private void removeAll(){
+            super.getList().clear();
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;

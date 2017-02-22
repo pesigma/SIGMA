@@ -46,6 +46,11 @@ public class MainFrame extends javax.swing.JFrame {
     //private static final int ACCESS_LEVEL = 0; //Usado para testes - Nivel de acesso
     public static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
     private final MainView child;
+    private final ClienteController clienteController;
+    
+    public ClienteController getClienteController(){
+        return clienteController;
+    }
     
     private static void initLogger(MainView mainChild){
         mainChild.console.setEditable(false);
@@ -106,7 +111,7 @@ public class MainFrame extends javax.swing.JFrame {
            UsuarioController usuario, VersionController version) {
         
         initComponents();
-        
+        clienteController = cliente;
         //new Font(DefaultConfigs.SYSTEMFONT, Font.BOLD|Font.ITALIC, 16)
         PainelGuias.setFont( new Font(DefaultConfigs.SYSTEMFONT, Font.PLAIN, 16) );
             

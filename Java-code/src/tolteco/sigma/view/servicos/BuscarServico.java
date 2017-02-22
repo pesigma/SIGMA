@@ -6,13 +6,12 @@
 package tolteco.sigma.view.servicos;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Servico;
 import tolteco.sigma.model.entidades.Situacao;
 import tolteco.sigma.model.tables.ServicoTable;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -23,7 +22,7 @@ import tolteco.sigma.view.interfaces.Buscar;
  */
 public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>{
     private final MainServico MAIN;
-    private ResultsTableModel modeloTabela = new ResultsTableModel();
+    private final ResultsTableModel modeloTabela = new ResultsTableModel();
     
     /**
      * Creates new form BuscarServico
@@ -264,7 +263,7 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
 
-        modeloTabela = new ResultsTableModel();
+        modeloTabela.removeAll();
         
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
@@ -283,7 +282,7 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
                 
                 return;
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarServico.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         } else if (isPlaca.isSelected()){
             try {
@@ -291,9 +290,10 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
                 if (data == null){
                     BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
                     tooltipBalloon.setVisible(true);
+                    return;
                 }
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarServico.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         } else {
             try {
@@ -301,9 +301,10 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
                 if (data == null){
                     BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
                     tooltipBalloon.setVisible(true);
+                    return;
                 }
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarServico.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         }
         
@@ -426,7 +427,11 @@ public class BuscarServico extends javax.swing.JPanel implements Buscar<Servico>
         return cliente;
     }
 
-    private class ResultsTableModel extends ServicoTable{}
+    private class ResultsTableModel extends ServicoTable{
+        private void removeAll(){
+            super.getList().clear();
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;

@@ -175,6 +175,8 @@ public class ModificarFinanca extends javax.swing.JPanel implements Adicionar<Fi
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("ID Finança"));
 
+        idFinn.setEnabled(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -189,6 +191,8 @@ public class ModificarFinanca extends javax.swing.JPanel implements Adicionar<Fi
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("ID Usuário"));
+
+        idUser.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

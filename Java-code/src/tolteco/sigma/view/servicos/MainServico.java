@@ -226,4 +226,8 @@ public class MainServico extends javax.swing.JPanel implements MainEntity<Servic
         modif.fillAllFields(toFill);
         ultimoPanelAdicionado = Operacao.Modificar;
     }
+    
+    MainFrame getMainFrame(){ //default
+        return main;
+    }
 }

@@ -7,10 +7,12 @@ package tolteco.sigma.view.servicos;
 
 import java.util.logging.Level;
 import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.entidades.Servico;
 import tolteco.sigma.model.entidades.Situacao;
 import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.Sistema;
+import tolteco.sigma.view.cliente.BuscarClienteShort;
 import tolteco.sigma.view.interfaces.Adicionar;
 
 /**
@@ -74,6 +76,11 @@ public class AdicionarServico extends javax.swing.JPanel implements Adicionar<Se
         TelPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("ID Cliente"));
 
         jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout TelPanelLayout = new javax.swing.GroupLayout(TelPanel);
         TelPanel.setLayout(TelPanelLayout);
@@ -247,6 +254,16 @@ public class AdicionarServico extends javax.swing.JPanel implements Adicionar<Se
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         cleanAllFields();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setEnabled(false);
+        BuscarClienteShort busca = new BuscarClienteShort(MAIN.getMainFrame().getClienteController(), this);
+        busca.setVisible(true);
+        
+        Cliente cli = busca.getClienteSelecionado();
+        busca.parafechar.dispose();
+        idCliente.setValue(cli.getClienteId());
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

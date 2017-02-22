@@ -6,12 +6,11 @@
 package tolteco.sigma.view.cliente;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
 import tolteco.sigma.model.tables.ClienteTable;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -22,7 +21,7 @@ import tolteco.sigma.view.interfaces.Buscar;
  */
 public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>{
     private final MainCliente MAIN;
-    private ResultsTableModel modeloTabela = new ResultsTableModel();
+    private final ResultsTableModel modeloTabela = new ResultsTableModel();
     
     /**
      * Creates new form BuscarCliente
@@ -43,6 +42,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         searchPanel = new javax.swing.JPanel();
@@ -60,10 +60,11 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         enderecoCombo = new javax.swing.JComboBox<>();
         telefoneField = new javax.swing.JFormattedTextField();
         Buscar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         Delete = new javax.swing.JButton();
         Edit = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+
+        jLabel1.setText("*Marque as caixas para pesquisar com os filtros.");
 
         tabela.setModel(modeloTabela);
         jScrollPane1.setViewportView(tabela);
@@ -202,8 +203,6 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
             }
         });
 
-        jLabel1.setText("*Marque as caixas para pesquisar com os filtros.");
-
         Delete.setText("Excluir");
         Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,8 +234,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                     .addComponent(jScrollPane1)
                     .addComponent(searchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(Edit)
@@ -254,13 +252,11 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Delete)
-                        .addComponent(Edit)
-                        .addComponent(jButton1))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Buscar)
+                    .addComponent(Delete)
+                    .addComponent(Edit)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -282,7 +278,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
 
-        modeloTabela = new ResultsTableModel();
+        modeloTabela.removeAll();
         
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
@@ -301,7 +297,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 
                 return;
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         } else if (isCPF.isSelected()){
             try {
@@ -316,7 +312,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 }
                 return;
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         } else {
             try {
@@ -324,14 +320,14 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 if (data == null){
                     BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
                     tooltipBalloon.setVisible(true);
+                    return;
                 }
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         }
         
         for (Cliente cliente : data){
-            System.out.println(cliente);
             flag=true; times=0; //Tem que ser true em todas as verifs. para ser add
             if (isNome.isSelected()){
                 flag = cliente.getNome().contains(nomeField.getText()) || cliente.getSobrenome().contains(nomeField.getText());
@@ -352,7 +348,6 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
                 flag = cliente.getUserId() == ((int) userIDnum.getValue());
                 times++;
             }
-            System.out.println(flag + " - " + times);
             if (flag==true && times!=0) modeloTabela.addRow(cliente);
         }
         modeloTabela.fireTableDataChanged();
@@ -464,7 +459,11 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         return cliente;
     }
 
-    private class ResultsTableModel extends ClienteTable{}
+    private class ResultsTableModel extends ClienteTable{
+        private void removeAll(){
+            super.getList().clear();
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;

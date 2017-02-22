@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.controller.ClienteController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
@@ -29,7 +28,7 @@ import tolteco.sigma.view.interfaces.Buscar;
 public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cliente>{
     private final ResultsTableModel modeloTabela = new ResultsTableModel();
     private final ClienteController controller;
-    
+    public final BuscarClienteShort parafechar = this;
     private final JPanel painelAnterior;
     
     /**
@@ -251,8 +250,8 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -294,19 +293,22 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
     private boolean changed=false;
     
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        if (isIDcliente.isSelected() == 
-            isCPF.isSelected() == 
-            isEndereco.isSelected() == 
-            isTelefone.isSelected() == 
-            isIDusuario.isSelected() == 
+        if (isIDcliente.isSelected() == false &&
+            isCPF.isSelected() == false &&
+            isEndereco.isSelected() == false &&
+            isTelefone.isSelected() == false &&
+            isIDusuario.isSelected() == false &&
             isNome.isSelected() == false){ //Nenhum filtro selecionado
             
-            BalloonTip tooltipBalloon = new BalloonTip(searchPanel, "Selecione pelo menos um filtro.");
+            BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Selecione pelo menos um filtro.");
             tooltipBalloon.setVisible(true);
+            return;
         }
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
 
+        modeloTabela.removeAll();
+        
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
         
@@ -317,7 +319,10 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
             try {
                 temp = controller.search((int)clientIDnum.getValue());
                 if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalArgumentException("ID Não encontrado");
+                else{
+                    BalloonTip tooltipBalloon = new BalloonTip(Buscar, "ID não encontrado.");
+                    tooltipBalloon.setVisible(true);
+                }
                 
                 return;
             } catch (DatabaseException ex) {
@@ -327,7 +332,10 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
             try {
                 temp = controller.searchByCPF(cpfField.getText());
                 if (temp != null) modeloTabela.addRow(temp);
-                else throw new IllegalArgumentException("CPF Não encontrado.");
+                else{
+                    BalloonTip tooltipBalloon = new BalloonTip(Buscar, "CPF Não encontrado.");
+                    tooltipBalloon.setVisible(true);
+                }
                 return;
             } catch (DatabaseException ex) {
                 Logger.getLogger(BuscarClienteShort.class.getName()).log(Level.SEVERE, null, ex);
@@ -335,8 +343,11 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
         } else {
             try {
                 data = controller.selectAll();
-                if (data == null)
-                    throw new IllegalStateException("Nenhum dado encontrado.");
+                if (data == null){
+                    BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
+                    tooltipBalloon.setVisible(true);
+                    return;
+                }
             } catch (DatabaseException ex) {
                 MainFrame.LOG.log(Level.SEVERE, null, ex);
             }
@@ -402,7 +413,7 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
         int row = tabela.getSelectedRow();
         if (row>=0){
-
+            clienteSelecionado = modeloTabela.getRow(row);
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(select, "Selecione uma linha para poder excluir.");
             tooltipBalloon.setVisible(true);
@@ -485,7 +496,11 @@ public class BuscarClienteShort extends javax.swing.JDialog implements Buscar<Cl
         return cliente;
     }
 
-    private class ResultsTableModel extends ClienteTable{}
+    private class ResultsTableModel extends ClienteTable{
+        private void removeAll(){
+            super.getList().clear();
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;

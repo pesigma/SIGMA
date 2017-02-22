@@ -6,14 +6,13 @@
 package tolteco.sigma.view.financas;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.entidades.FinancaTipo;
 import tolteco.sigma.model.entidades.Situacao;
 import tolteco.sigma.model.tables.FinancaTable;
+import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -24,7 +23,7 @@ import tolteco.sigma.view.interfaces.Buscar;
  */
 public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>{
     private final MainFinanca MAIN;
-    private ResultsTableModel modeloTabela = new ResultsTableModel();
+    private final ResultsTableModel modeloTabela = new ResultsTableModel();
     
     /**
      * Creates new form BuscarFinanca
@@ -260,7 +259,7 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
         
         if (!changed) return; //Se não mudou os estados dos campos, não há por que procuarar...
 
-        modeloTabela = new ResultsTableModel();
+        modeloTabela.removeAll();
         
         boolean flag; 
         short times; //Se um for falso, nao verifica os outros
@@ -279,7 +278,7 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
                 
                 return;
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarFinanca.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         } else if (isData.isSelected()){
             try {
@@ -287,9 +286,10 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
                 if (data == null){
                     BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
                     tooltipBalloon.setVisible(true);
+                    return;
                 }
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarFinanca.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         } else {
             try {
@@ -297,9 +297,10 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
                 if (data == null){
                     BalloonTip tooltipBalloon = new BalloonTip(Buscar, "Nada encontrado.");
                     tooltipBalloon.setVisible(true);
+                    return;
                 }
             } catch (DatabaseException ex) {
-                Logger.getLogger(BuscarFinanca.class.getName()).log(Level.SEVERE, null, ex);
+                MainFrame.LOG.severe(ex.getLocalizedMessage());
             }
         }
         
@@ -416,7 +417,11 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
         return cliente;
     }
 
-    private class ResultsTableModel extends FinancaTable{}
+    private class ResultsTableModel extends FinancaTable{
+        private void removeAll(){
+            super.getList().clear();
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;
