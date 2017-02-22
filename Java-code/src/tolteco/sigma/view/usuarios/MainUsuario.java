@@ -8,13 +8,11 @@ package tolteco.sigma.view.usuarios;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.controller.UsuarioController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Usuario;
 import tolteco.sigma.model.tables.UsuarioTable;
 import tolteco.sigma.view.MainFrame;
-import tolteco.sigma.view.cliente.ModificarCliente;
 import tolteco.sigma.view.interfaces.MainEntity;
 import tolteco.sigma.view.interfaces.Operacao;
 
@@ -226,15 +224,8 @@ public class MainUsuario extends javax.swing.JPanel implements MainEntity<Usuari
 
     @Override
     public void pressEdit(Usuario toFill) {
-        EditActionPerformed( new ActionEvent(toFill, -1, "ToEdit"));
-        Component[] components = Panel.getComponents();
-        
-        for(Component comp : components){
-            if (comp instanceof ModificarUsuario){
-                ModificarUsuario modif = (ModificarUsuario) comp;
-                modif.fillAllFields(toFill);
-                return;
-            }
-        }
+        ModificarUsuario modif = new ModificarUsuario(this);
+        Panel.setViewportView( modif ); 
+        modif.fillAllFields(toFill);
     }
 }

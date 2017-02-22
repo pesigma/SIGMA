@@ -5,10 +5,7 @@
  */
 package tolteco.sigma.view.servicos;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.controller.ServicoController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Servico;
@@ -224,15 +221,8 @@ public class MainServico extends javax.swing.JPanel implements MainEntity<Servic
 
     @Override
     public void pressEdit(Servico toFill) {
-        EditActionPerformed( new ActionEvent(toFill, -1, "ToEdit"));
-        Component[] components = Panel.getComponents();
-        
-        for(Component comp : components){
-            if (comp instanceof ModificarServico){
-                ModificarServico modif = (ModificarServico) comp;
-                modif.fillAllFields(toFill);
-                return;
-            }
-        }
+        ModificarServico modif = new ModificarServico(this);
+        Panel.setViewportView( modif ); 
+        modif.fillAllFields(toFill);
     }
 }

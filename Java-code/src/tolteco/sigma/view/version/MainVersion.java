@@ -8,13 +8,11 @@ package tolteco.sigma.view.version;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.controller.VersionController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.model.tables.VersionTable;
 import tolteco.sigma.view.MainFrame;
-import tolteco.sigma.view.cliente.BuscarCliente;
 import tolteco.sigma.view.interfaces.MainEntity;
 import tolteco.sigma.view.interfaces.Operacao;
 
@@ -150,7 +148,7 @@ public class MainVersion extends javax.swing.JPanel implements MainEntity<Versio
         if (ultimoPanelAdicionado != Operacao.Buscar &&
             ultimoPanelAdicionado != Operacao.Modificar &&
             ultimoPanelAdicionado != Operacao.Remover    ){
-            BuscarCliente modif = new BuscarCliente(this);
+            BuscarVersion modif = new BuscarVersion(this);
             Panel.setViewportView( modif );
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Busque uma Versão para modificar");
             tooltipBalloon.setVisible(true);
@@ -185,7 +183,7 @@ public class MainVersion extends javax.swing.JPanel implements MainEntity<Versio
 
     private void ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListActionPerformed
         if (ultimoPanelAdicionado != Operacao.Listar){ //Singleton - Sort of
-            ListarVersion add = new ListarVersion();
+            ListarVersion add = new ListarVersion(this);
             Panel.setViewportView( add );
         }
 
@@ -226,15 +224,8 @@ public class MainVersion extends javax.swing.JPanel implements MainEntity<Versio
 
     @Override
     public void pressEdit(Version toFill) {
-        EditActionPerformed( new ActionEvent(toFill, -1, "ToEdit"));
-        Component[] components = Panel.getComponents();
-        
-        for(Component comp : components){
-            if (comp instanceof ModificarVersion){
-                ModificarVersion modif = (ModificarVersion) comp;
-                modif.fillAllFields(toFill);
-                return;
-            }
-        }
+        ModificarVersion modif = new ModificarVersion(this);
+        Panel.setViewportView( modif ); 
+        modif.fillAllFields(toFill);
     }
 }

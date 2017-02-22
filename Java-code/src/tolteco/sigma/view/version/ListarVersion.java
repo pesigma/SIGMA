@@ -112,8 +112,7 @@ public class ListarVersion extends javax.swing.JPanel implements Listar<Version>
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         int row = tabela.getSelectedRow();
         if (row>=0){
-            Version version = getInstance();
-            MAIN.pressEdit(version);
+            JOptionPane.showMessageDialog(null, "Edição de versões não disponível.", "Finalizando...", JOptionPane.ERROR_MESSAGE);
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(edit, "Selecione uma linha para poder editar.");
             tooltipBalloon.setVisible(true);
@@ -123,6 +122,9 @@ public class ListarVersion extends javax.swing.JPanel implements Listar<Version>
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int row = tabela.getSelectedRow();
         if (row>=0){
+            JOptionPane.showMessageDialog(null, "Deleção de versões não disponível.", "Finalizando...", JOptionPane.ERROR_MESSAGE);
+            return;
+            /*
             Object[] choices = {"Sim", "Não"};
             Object defaultChoice = choices[0];
             int dialogRet = JOptionPane.showOptionDialog(this, "Deseja realmente excluir a Versão?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 
@@ -137,7 +139,7 @@ public class ListarVersion extends javax.swing.JPanel implements Listar<Version>
             } catch (DatabaseException ex) {
                 MainFrame.LOG.log(Level.SEVERE, null, ex);
                 MAIN.displayDatabaseException(ex);
-            }
+            }*/
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(deleteButton, "Selecione uma linha para poder excluir.");
             tooltipBalloon.setVisible(true);

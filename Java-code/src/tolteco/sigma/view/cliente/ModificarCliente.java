@@ -332,15 +332,21 @@ public class ModificarCliente extends javax.swing.JPanel implements Adicionar<Cl
     @Override
     public Cliente getInstance() {
         String nome = NomeField.getText();
+        String priNome="";
+        String segundoNome="";
+        
+        if(nome.contains(" ")){
+            priNome = nome.substring(0,nome.indexOf(' '));
+            segundoNome = nome.substring(nome.indexOf(' ')+1);
+        } else {
+            priNome=nome;
+        }
+        
         String cpf = CPFfField.getText();
         String tel = TelFField.getText();
         String obs = ObsPane.getText();
-        String end = (String) EndBox.getSelectedItem() + EndField.getText();
+        String end = (String) EndBox.getSelectedItem() + " " + EndField.getText();
         
-        return new Cliente((int) idCliente.getValue(), 
-                nome.substring(0,end.indexOf(' ')), 
-                nome.substring(end.indexOf(' ')+1), 
-                obs, end, tel, cpf, 
-                (int) idUsuario.getValue());
+        return new Cliente(priNome, segundoNome, obs, end, tel, cpf, Sistema.getUserID());
     }
 }

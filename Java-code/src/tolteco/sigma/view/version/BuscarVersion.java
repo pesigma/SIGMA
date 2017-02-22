@@ -8,6 +8,7 @@ package tolteco.sigma.view.version;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.model.dao.DatabaseException;
@@ -305,7 +306,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
         int row = tabela.getSelectedRow();
         if (row>=0){
-            
+            JOptionPane.showMessageDialog(null, "Edição de versões não disponível.", "Finalizando...", JOptionPane.ERROR_MESSAGE);
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(Edit, "Selecione uma linha para poder editar.");
             tooltipBalloon.setVisible(true);
@@ -315,7 +316,7 @@ public class BuscarVersion extends javax.swing.JPanel implements Buscar<Version>
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         int row = tabela.getSelectedRow();
         if (row>=0){
-            
+            JOptionPane.showMessageDialog(null, "Deleção de versões não disponível.", "Finalizando...", JOptionPane.ERROR_MESSAGE);
         } else {
             BalloonTip tooltipBalloon = new BalloonTip(Delete, "Selecione uma linha para poder excluir.");
             tooltipBalloon.setVisible(true);

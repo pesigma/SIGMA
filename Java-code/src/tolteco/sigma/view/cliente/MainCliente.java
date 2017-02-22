@@ -8,7 +8,6 @@ package tolteco.sigma.view.cliente;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import net.java.balloontip.BalloonTip;
-import net.java.balloontip.utils.ToolTipUtils;
 import tolteco.sigma.view.interfaces.Operacao;
 import tolteco.sigma.controller.ClienteController;
 import tolteco.sigma.model.dao.DatabaseException;
@@ -224,15 +223,8 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
 
     @Override
     public void pressEdit(Cliente toFill) {
-        EditActionPerformed( new ActionEvent(toFill, -1, "ToEdit"));
-        Component[] components = Panel.getComponents();
-        
-        for(Component comp : components){
-            if (comp instanceof ModificarCliente){
-                ModificarCliente modif = (ModificarCliente) comp;
-                modif.fillAllFields(toFill);
-                return;
-            }
-        }
+        ModificarCliente modif = new ModificarCliente(this);
+        Panel.setViewportView( modif ); 
+        modif.fillAllFields(toFill);
     }
 }

@@ -226,15 +226,8 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
 
     @Override
     public void pressEdit(Financa toFill) {
-        EditActionPerformed( new ActionEvent(toFill, -1, "ToEdit"));
-        Component[] components = Panel.getComponents();
-        
-        for(Component comp : components){
-            if (comp instanceof ModificarFinanca){
-                ModificarFinanca modif = (ModificarFinanca) comp;
-                modif.fillAllFields(toFill);
-                return;
-            }
-        }
+        ModificarFinanca modif = new ModificarFinanca(this);
+        Panel.setViewportView( modif ); 
+        modif.fillAllFields(toFill);
     }
 }

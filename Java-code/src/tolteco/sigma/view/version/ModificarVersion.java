@@ -11,20 +11,20 @@ import tolteco.sigma.model.entidades.Major;
 import tolteco.sigma.model.entidades.Minor;
 import tolteco.sigma.model.entidades.Version;
 import tolteco.sigma.view.MainFrame;
-import tolteco.sigma.view.interfaces.Adicionar;
+import tolteco.sigma.view.interfaces.Modificar;
 
 /**
  * Painel de adição de clientes.
  * @author Juliano Felipe
  */
-public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Version>{
+public class ModificarVersion extends javax.swing.JPanel implements Modificar<Version>{
     private final MainVersion MAIN;
     
     /**
      * Creates new form Version
      * @param main
      */
-    public AdicionarVersion(MainVersion main) {
+    public ModificarVersion(MainVersion main) {
         initComponents();
         this.MAIN = main;
     }
@@ -159,7 +159,7 @@ public class AdicionarVersion extends javax.swing.JPanel implements Adicionar<Ve
         });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/General/Internal/Add.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tolteco/sigma/view/images/General/Internal/Edit.png"))); // NOI18N
 
         cleanMajor.setText("Limpar Major");
         cleanMajor.addActionListener(new java.awt.event.ActionListener() {
