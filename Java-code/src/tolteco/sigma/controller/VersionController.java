@@ -56,15 +56,10 @@ public class VersionController extends GenericController<Version, VersionTable>{
     @Override
     public boolean remove(Version t) throws DatabaseException {
         if (!isTableInitialized) initTable(); isTableInitialized=true;
+        int key = t.getMajorVersion();
         boolean rem = versionDAO.remove(t);
         
         if (rem){
-            Version version = versionDAO.search(t.getMajorVersion());
-            int key = -1;
-            if (version.equals(t)){
-                key = version.getMajorVersion();
-            }
-            
             if (key==-1){ 
                 throw new DatabaseException(
                 "Falha na remoção de versão. Obtenção de ID falhou.");

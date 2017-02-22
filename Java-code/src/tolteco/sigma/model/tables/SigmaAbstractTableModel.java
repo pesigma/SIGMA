@@ -55,6 +55,7 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
     
     public void setRow(T object, int row){
         entidades.add(row, object);
+        fireTableRowsDeleted(row, row);
         fireChangeProperty(new ChangePropertyEvent(object));
     }
     
@@ -74,8 +75,9 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
                   + object.getClass() + ". Impossível atualizar.");
         }
         
-        entidades.set(10, object);
+        entidades.set(indexToUpdate, object);
         fireChangeProperty(new ChangePropertyEvent(object));
+        fireTableRowsDeleted(indexToUpdate, indexToUpdate);
     }
     
     public void addRow(T object){
@@ -87,17 +89,30 @@ public abstract class SigmaAbstractTableModel<T> extends AbstractTableModel impl
     
     public void addAll(Collection<T> lista){
         entidades.addAll(lista);
+        fireTableDataChanged();
     }
     
     public void removeRow(T object){
+        int indexToUpdate = -1;
+        int counter=0;
+        for(T entidade : entidades){
+            if (entidade.equals(object)){
+                indexToUpdate = counter;
+                break;
+            }
+            counter++;
+        }
+
         entidades.remove(object);
         fireDeletion(new DeletionEvent(object));
+        fireTableRowsDeleted(indexToUpdate, indexToUpdate);
     }
     
     public void removeRow(int row){
         T object = entidades.get(row);
         entidades.remove(row);
         fireDeletion(new DeletionEvent(object));
+        fireTableRowsDeleted(row, row);
     }
     
     /**

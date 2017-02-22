@@ -5,8 +5,6 @@
  */
 package tolteco.sigma.view.cliente;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.view.interfaces.Operacao;
 import tolteco.sigma.controller.ClienteController;
@@ -226,5 +224,6 @@ public class MainCliente extends javax.swing.JPanel implements MainEntity<Client
         ModificarCliente modif = new ModificarCliente(this);
         Panel.setViewportView( modif ); 
         modif.fillAllFields(toFill);
+        ultimoPanelAdicionado = Operacao.Modificar;
     }
 }

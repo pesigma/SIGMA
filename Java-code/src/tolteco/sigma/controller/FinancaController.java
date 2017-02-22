@@ -53,20 +53,15 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
     @Override
     public boolean remove(Financa t) throws DatabaseException {
         if (!isTableInitialized) initTable(); isTableInitialized=true;
+        int key = t.getRowid();
         boolean rem = financaDAO.remove(t);
         
         if (rem){
-            Financa financa = financaDAO.search(t.getRowid());
-            int key = -1;
-            if (financa.equals(t)){
-                key = financa.getRowid();
-            }
-            
             if (key==-1){ 
                 throw new DatabaseException(
                 "Falha na remoção de finança. Obtenção de ID falhou.");
             } else{
-                model.setRow(t); //Opção de updade de linha
+                model.removeRow(t); //Opção de updade de linha
             }
             
         } else {
@@ -94,7 +89,7 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
                 throw new DatabaseException(
                 "Falha na atualização de finança. Obtenção de ID falhou.");
             } else{
-                model.removeRow(t);
+                model.setRow(t);
             }
             
         } else {

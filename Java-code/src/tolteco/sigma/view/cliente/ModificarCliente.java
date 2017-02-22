@@ -316,7 +316,7 @@ public class ModificarCliente extends javax.swing.JPanel implements Adicionar<Cl
 
     @Override
     public void fillAllFields(Cliente object) {
-        NomeField.setText(object.getNome() + object.getSobrenome());
+        NomeField.setText(object.getNome() + " " + object.getSobrenome());
         CPFfField.setText(object.getCpf());
         TelFField.setText(object.getTel());
         ObsPane.setText(object.getObs());
@@ -347,6 +347,6 @@ public class ModificarCliente extends javax.swing.JPanel implements Adicionar<Cl
         String obs = ObsPane.getText();
         String end = (String) EndBox.getSelectedItem() + " " + EndField.getText();
         
-        return new Cliente(priNome, segundoNome, obs, end, tel, cpf, Sistema.getUserID());
+        return new Cliente((int) idCliente.getValue(), priNome, segundoNome, obs, end, tel, cpf, Sistema.getUserID());
     }
 }

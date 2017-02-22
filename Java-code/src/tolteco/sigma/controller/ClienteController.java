@@ -52,21 +52,15 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
     @Override
     public boolean remove(Cliente t) throws DatabaseException {
         if (!isTableInitialized) initTable(); isTableInitialized=true;
+        int key = t.getClienteId();
         boolean rem = clienteDAO.remove(t);
         
         if (rem){
-            Cliente cliente = clienteDAO.search(t.getClienteId());
-            int key = -1;
-            if (cliente.equals(t)){
-                key = cliente.getClienteId();
-                t = cliente;
-            }
-            
             if (key==-1){ 
                 throw new DatabaseException(
                 "Falha na remoção de cliente. Obtenção de ID falhou.");
             } else{
-                model.setRow(t); //Opção de updade de linha
+                model.removeRow(t); //Opção de updade de linha
             }
             
         } else {
@@ -96,7 +90,7 @@ public class ClienteController extends GenericController<Cliente, ClienteTable>{
                 "Falha na atualização de cliente. Obtenção de ID de cliente"
                 + " falhou.");
             } else{
-                model.removeRow(t);
+                model.setRow(t);
             }
             
         } else {

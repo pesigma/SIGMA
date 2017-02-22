@@ -52,15 +52,10 @@ public class ServicoController extends GenericController<Servico, ServicoTable>{
     @Override
     public boolean remove(Servico t) throws DatabaseException {
         if (!isTableInitialized) initTable(); isTableInitialized=true;
+        int key = t.getRowid();
         boolean rem = servicoDAO.remove(t);
         
         if (rem){
-            Servico servico = servicoDAO.search(t.getRowid());
-            int key = -1;
-            if (servico.equals(t)){
-                key = servico.getRowid();
-            }
-            
             if (key==-1){ 
                 throw new DatabaseException(
                 "Falha na remoção de serviço. Obtenção de ID falhou.");

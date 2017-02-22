@@ -7,7 +7,6 @@ package tolteco.sigma.controller;
 
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import tolteco.sigma.model.dao.DAOFactory;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.dao.UsuarioDAO;
@@ -56,15 +55,10 @@ public class UsuarioController extends GenericController<Usuario, UsuarioTable>{
     @Override
     public boolean remove(Usuario t) throws DatabaseException {
         if (!isTableInitialized) initTable(); isTableInitialized=true;
+        int key = t.getUserId();
         boolean rem = usuarioDAO.remove(t);
         
         if (rem){
-            Usuario usuario = usuarioDAO.search(t.getUserId());
-            int key = -1;
-            if (usuario.equals(t)){
-                key = usuario.getUserId();
-            }
-            
             if (key==-1){ 
                 throw new DatabaseException(
                 "Falha na remoção de usuário. Obtenção de ID falhou.");
