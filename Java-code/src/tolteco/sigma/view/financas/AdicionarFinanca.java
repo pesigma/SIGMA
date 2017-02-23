@@ -246,7 +246,7 @@ public class AdicionarFinanca extends javax.swing.JPanel implements Adicionar<Fi
         
         private Situacao decidirSituacao (){
             if (PagoCheck.isSelected())
-                return Situacao.FINACAPAGA;
+                return Situacao.FINANCAPAGA;
             else 
                 return Situacao.PENDENTE;
         }

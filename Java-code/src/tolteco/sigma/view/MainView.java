@@ -158,6 +158,16 @@ public class MainView extends javax.swing.JPanel {
                 super.getList().clear();
         }
         
+        public int getRowByRowId(Financa finn){
+            int count=0;
+            for (Financa entidade : entidades){
+                if (entidade.getRowId() == finn.getRowId())
+                    return count;
+                count++;
+            }
+            return -1;
+        }
+        
         @Override
         public void setRow(Financa object, int row){
             entidades.add(row, object);

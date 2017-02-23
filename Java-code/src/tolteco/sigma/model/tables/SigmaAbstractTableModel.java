@@ -90,7 +90,8 @@ public abstract class SigmaAbstractTableModel<T extends PrimaryKeyComparable> ex
         
         entidades.set(indexToUpdate, object);
         fireChangeProperty(new ChangePropertyEvent(object));
-        fireTableRowsDeleted(indexToUpdate, indexToUpdate);
+        //fireTableRowsUpdated(indexToUpdate, indexToUpdate);
+        fireTableDataChanged();
         MainFrame.LOG.info("Objeto alterado. Classe:" + object.getClass() +
                 ". Linha: " + indexToUpdate + " Usuário: " + 
                 Sistema.getUser().getUserName());

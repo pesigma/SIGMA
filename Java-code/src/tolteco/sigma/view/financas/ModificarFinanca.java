@@ -296,7 +296,7 @@ public class ModificarFinanca extends javax.swing.JPanel implements Adicionar<Fi
         
         private Situacao decidirSituacao (){
             if (PagoCheck.isSelected())
-                return Situacao.FINACAPAGA;
+                return Situacao.FINANCAPAGA;
             else 
                 return Situacao.PENDENTE;
         }
@@ -345,7 +345,11 @@ public class ModificarFinanca extends javax.swing.JPanel implements Adicionar<Fi
         DataChooser.setDate(object.getData());
         ObsPane.setText(object.getObs());
         
-        PagoCheck.setSelected(false);
+        if (object.getSituacao() == Situacao.FINANCAPAGA){
+            PagoCheck.setSelected(true);
+        } else {
+            PagoCheck.setSelected(false);
+        }
         ReceitaRadio.setSelected(true);
         
         idFinn.setValue(object.getRowid());

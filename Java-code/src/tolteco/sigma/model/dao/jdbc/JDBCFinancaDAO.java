@@ -125,7 +125,6 @@ public class JDBCFinancaDAO extends JDBCAbstractDAO<Financa> implements FinancaD
                 lista.add(getInstance(rs));
             }
             rs.close();
-            System.out.println(lista);
         } catch (SQLException | DatabaseException e) {
             //String error = e.getClass().getName() + ": " + e.getMessage();
             throw new DatabaseException(e);

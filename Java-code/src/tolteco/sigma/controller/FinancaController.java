@@ -79,15 +79,17 @@ public class FinancaController extends GenericController<Financa, FinancaTable>{
         boolean upd = financaDAO.update(t);
         
         if (upd){
-            Financa financa = financaDAO.search(t.getRowid());
+            Financa finn = financaDAO.search(t.getRowId());
             int key = -1;
-            if (financa.equals(t)){
-                key = financa.getRowid();
+            if (finn.equals(t)){
+                key = finn.getRowId();
+                t = finn;
             }
             
             if (key==-1){ 
                 throw new DatabaseException(
-                "Falha na atualização de finança. Obtenção de ID falhou.");
+                "Falha na atualização de cliente. Obtenção de ID de Finança"
+                + " falhou.");
             } else{
                 model.setRow(t);
             }

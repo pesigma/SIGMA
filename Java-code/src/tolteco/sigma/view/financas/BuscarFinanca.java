@@ -322,7 +322,7 @@ public class BuscarFinanca extends javax.swing.JPanel implements Buscar<Financa>
             telIF: if (isSituacao.isSelected()){
                 if (flag==false && times!=0) break telIF;
                 Situacao toCompareSit;
-                if (pagoRadio.isSelected()) toCompareSit = Situacao.FINACAPAGA;
+                if (pagoRadio.isSelected()) toCompareSit = Situacao.FINANCAPAGA;
                 else                        toCompareSit = Situacao.PENDENTE;
                 flag = financa.getSituacao() == toCompareSit;
                 times++;

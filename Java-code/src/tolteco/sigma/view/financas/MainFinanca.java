@@ -38,10 +38,42 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
         model = controller.getModel();
 
         model.addTableModelListener((TableModelEvent e) -> {
+            int type = e.getType();
+            System.out.println("Type:" + e.getType());
+            System.out.println("UPD: " + TableModelEvent.UPDATE);
+            System.out.println("INS: " + TableModelEvent.INSERT);
+            System.out.println("DEL: " + TableModelEvent.DELETE);
             Financa fin = ((FinancaTable) e.getSource()).getRow( e.getFirstRow() );
-            if (fin.getSituacao() == Situacao.PENDENTE){
-                main.getMainView().modeloTabela.addRow(fin);
+            switch (type) {
+                case TableModelEvent.INSERT:
+                    if (fin.getSituacao() == Situacao.PENDENTE){
+                        main.getMainView().modeloTabela.addRow(fin);
+                    }   break;
+                case TableModelEvent.UPDATE:
+                    {
+                        Financa toUp = model.getRowById(fin.getRowId());
+                        int row = main.getMainView().modeloTabela.getRowByRowId(toUp);
+                        System.out.println(toUp + "  -  " + row);
+                        if (toUp!=null && row!=-1){
+                            model.removeRow(row);
+                        } else if(toUp!=null && row>=-1){
+                            model.addRow(toUp);
+                        }
+                        break;
+                    }
+                case TableModelEvent.DELETE:
+                    {
+                        Financa toRem = model.getRowById(fin.getRowId());
+                        int row = main.getMainView().modeloTabela.getRowByRowId(toRem);
+                        if (toRem!=null && row!=-1){
+                            model.removeRow(row);
+                        }       break;
+                    }
+                default:
+                    break;
             }
+            
+            
         });
     }
 
