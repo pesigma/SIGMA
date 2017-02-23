@@ -118,24 +118,30 @@ public class MainFrame extends javax.swing.JFrame {
         clienteController = cliente;
         //new Font(DefaultConfigs.SYSTEMFONT, Font.BOLD|Font.ITALIC, 16)
         PainelGuias.setFont( new Font(DefaultConfigs.SYSTEMFONT, Font.PLAIN, 16) );
-            
+        
+        int titleWidth=0;
+        
         child = new MainView(this);
         PainelGuias.add(child);
-        PainelGuias.setTitleAt(0, "Principal");
+        PainelGuias.setTitleAt(titleWidth++, "Principal");
         MainFrame.initLogger(child);
         
         JPanel panel1 = new MainCliente(this, cliente);
         PainelGuias.add(panel1);
-        PainelGuias.setTitleAt(1, "Clientes");
+        PainelGuias.setTitleAt(titleWidth++, "Clientes");
         
         financaController = financa;
-        JPanel panel2 = new MainFinanca(this, financa);
-        PainelGuias.add(panel2);
-        PainelGuias.setTitleAt(2, "Finanças");
+        if (Sistema.getUser().getAccessLevel() != Access.FUNCIONARIO){
+            JPanel panel2 = new MainFinanca(this, financa);
+            PainelGuias.add(panel2);
+            PainelGuias.setTitleAt(titleWidth++, "Finanças");
+        } else {
+            child.disableActivityTable();
+        }
         
         JPanel panel3 = new MainServico(this, servico);
         PainelGuias.add(panel3);
-        PainelGuias.setTitleAt(3, "Serviços");
+        PainelGuias.setTitleAt(titleWidth++, "Serviços");
         
         BarraDeMenu.add(Box.createHorizontalGlue());
         if (Sistema.getUser().getAccessLevel() == Access.ROOT){
@@ -144,12 +150,13 @@ public class MainFrame extends javax.swing.JFrame {
             
             JPanel panel4 = new MainUsuario(this, usuario);
             PainelGuias.add(panel4);
-            PainelGuias.setTitleAt(4, "Usuários");
+            PainelGuias.setTitleAt(titleWidth++, "Usuários");
         
             JPanel panel5 = new MainVersion(this, version);
             PainelGuias.add(panel5);
-            PainelGuias.setTitleAt(5, "Versões");
+            PainelGuias.setTitleAt(titleWidth++, "Versões");
         }
+        
         try {
             ver = version.fetchLatestVersion();
         } catch (DatabaseException ex) {

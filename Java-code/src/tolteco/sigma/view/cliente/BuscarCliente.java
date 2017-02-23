@@ -10,11 +10,14 @@ import java.util.List;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
+import tolteco.sigma.model.entidades.Opcao;
+import tolteco.sigma.model.entidades.Tipo;
 import tolteco.sigma.model.tables.ClienteTable;
 import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;
 import tolteco.sigma.utils.eventsAndListeners.InsertionEvent;
 import tolteco.sigma.view.MainFrame;
+import tolteco.sigma.view.Sistema;
 import tolteco.sigma.view.interfaces.Buscar;
 
 /**
@@ -27,6 +30,10 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
     private final MainCliente MAIN;
     private final ResultsTableModel modeloTabela = new ResultsTableModel();
     
+    private void setClearance(){
+      Delete.setEnabled(Sistema.getUser().canDoOperation(Tipo.CLIENTE, Opcao.DELETE));
+    }
+    
     /**
      * Creates new form BuscarCliente
      * @param main
@@ -37,6 +44,7 @@ public class BuscarCliente extends javax.swing.JPanel implements Buscar<Cliente>
         //modeloTabela.addTableModelListener(tabela);
         tabela.setModel(modeloTabela);
         tabela.setAutoCreateRowSorter(true);
+        setClearance();
     }
 
     /**

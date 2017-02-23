@@ -8,7 +8,6 @@ package tolteco.sigma.view;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Financa;
 import tolteco.sigma.model.entidades.Situacao;
@@ -24,6 +23,11 @@ import tolteco.sigma.utils.eventsAndListeners.InsertionEvent;
 public class MainView extends javax.swing.JPanel {
     private final MainFrame MAIN;
     public final AtividadesTableModel modeloTabela = new AtividadesTableModel();
+    
+    public void disableActivityTable(){
+        tabela.setModel(new AtividadesTableModel());
+        tabela.setEnabled(false);
+    }
     
     /**
      * Creates new form NewJPanel
@@ -45,7 +49,7 @@ public class MainView extends javax.swing.JPanel {
             }
             
         } catch (DatabaseException | NullPointerException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
             MainFrame.LOG.log(Level.SEVERE, null, ex);
         }
     }
@@ -154,8 +158,8 @@ public class MainView extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     public class AtividadesTableModel extends FinancaTable{
-        private void removeAll(){
-                super.getList().clear();
+        public void removeAll(){
+            super.getList().clear();
         }
         
         public int getRowByRowId(Financa finn){

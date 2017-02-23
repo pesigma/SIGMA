@@ -5,6 +5,8 @@
  */
 package tolteco.sigma.view.financas;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.TableModelEvent;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.controller.FinancaController;
@@ -38,11 +40,7 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
         model = controller.getModel();
 
         model.addTableModelListener((TableModelEvent e) -> {
-            int type = e.getType();
-            System.out.println("Type:" + e.getType());
-            System.out.println("UPD: " + TableModelEvent.UPDATE);
-            System.out.println("INS: " + TableModelEvent.INSERT);
-            System.out.println("DEL: " + TableModelEvent.DELETE);
+            /*int type = e.getType();
             Financa fin = ((FinancaTable) e.getSource()).getRow( e.getFirstRow() );
             switch (type) {
                 case TableModelEvent.INSERT:
@@ -71,7 +69,19 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
                     }
                 default:
                     break;
+            }*/
+            
+            main.getMainView().modeloTabela.removeAll();
+            
+            try {
+                for (Financa finn : controller.selectAll()){
+                    if (finn.getSituacao() == Situacao.PENDENTE)
+                        main.getMainView().modeloTabela.addRow(finn);
+                }
+            } catch (DatabaseException ex) {
+                MainFrame.LOG.severe("Erro ao atualizar atividades. " + ex.getMessage());
             }
+            
             
             
         });

@@ -10,8 +10,11 @@ import javax.swing.JOptionPane;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Cliente;
+import tolteco.sigma.model.entidades.Opcao;
+import tolteco.sigma.model.entidades.Tipo;
 import tolteco.sigma.model.tables.ClienteTable;
 import tolteco.sigma.view.MainFrame;
+import tolteco.sigma.view.Sistema;
 import tolteco.sigma.view.interfaces.Listar;
 
 /**
@@ -24,6 +27,10 @@ import tolteco.sigma.view.interfaces.Listar;
 public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>{
     private final MainCliente MAIN;
     
+    private void setClearance(){
+      deleteButton.setEnabled(Sistema.getUser().canDoOperation(Tipo.CLIENTE, Opcao.DELETE));
+    }
+    
     /**
      * Creates new form ListarCliente
      * @param main
@@ -35,6 +42,7 @@ public class ListarCliente extends javax.swing.JPanel implements Listar<Cliente>
         //Setar informações na tabela
         tabela.setModel(main.getModel());
         tabela.setAutoCreateRowSorter(true);
+        setClearance();
     }
 
     /**
