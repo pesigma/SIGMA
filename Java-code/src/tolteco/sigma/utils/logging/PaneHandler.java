@@ -7,6 +7,7 @@ package tolteco.sigma.utils.logging;
 
 import java.util.logging.Formatter;
 import java.util.logging.Level;
+import static java.util.logging.Level.FINEST;
 import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 

@@ -5,18 +5,49 @@
  */
 package tolteco.sigma.view;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import tolteco.sigma.model.dao.DatabaseException;
+import tolteco.sigma.model.entidades.Financa;
+import tolteco.sigma.model.entidades.Situacao;
+import tolteco.sigma.model.tables.FinancaTable;
+import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
+import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;
+import tolteco.sigma.utils.eventsAndListeners.InsertionEvent;
+
 /**
  *
  * @author Juliano Felipe
  */
 public class MainView extends javax.swing.JPanel {
     private final MainFrame MAIN;
+    public final AtividadesTableModel modeloTabela = new AtividadesTableModel();
+    
     /**
      * Creates new form NewJPanel
      */
     public MainView(MainFrame main) {
         initComponents();
         MAIN = main;
+        tabela.setModel(modeloTabela);
+        tabela.setAutoCreateRowSorter(true);    
+    }
+    
+    public final void initTable(){
+        try {
+            List<Financa> atividades = MAIN.getFinancaController().selectAll();
+            
+            for (Financa fin : atividades){
+                if (fin.getSituacao() == Situacao.PENDENTE)
+                    modeloTabela.addRow(fin);
+            }
+            
+        } catch (DatabaseException | NullPointerException ex) {
+            ex.printStackTrace();
+            MainFrame.LOG.log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -32,7 +63,8 @@ public class MainView extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         FinancasPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
+        jCalendar1 = new com.toedter.calendar.JCalendar();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Console"));
 
@@ -52,7 +84,7 @@ public class MainView extends javax.swing.JPanel {
 
         FinancasPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Atividades"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -69,19 +101,23 @@ public class MainView extends javax.swing.JPanel {
                 "Title 1"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tabela);
+
+        jCalendar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout FinancasPanelLayout = new javax.swing.GroupLayout(FinancasPanel);
         FinancasPanel.setLayout(FinancasPanelLayout);
         FinancasPanelLayout.setHorizontalGroup(
             FinancasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+            .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         FinancasPanelLayout.setVerticalGroup(
             FinancasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FinancasPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(339, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -110,9 +146,81 @@ public class MainView extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FinancasPanel;
     final javax.swing.JTextPane console = new javax.swing.JTextPane();
+    private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
+    
+    public class AtividadesTableModel extends FinancaTable{
+        private void removeAll(){
+                super.getList().clear();
+        }
+        
+        @Override
+        public void setRow(Financa object, int row){
+            entidades.add(row, object);
+            fireTableRowsDeleted(row, row);
+            fireChangeProperty(new ChangePropertyEvent(object));
+        }
+
+        @Override
+        public void setRow(Financa object) throws DatabaseException{
+            int indexToUpdate = -1;
+            int counter=0;
+            for(Financa entidade : entidades){
+                if (entidade.getRowId() == object.getRowId()){
+                    indexToUpdate = counter;
+                    break;
+                }
+                counter++;
+            }
+
+            if (indexToUpdate == -1){
+                throw new DatabaseException("Objeto inexistente na tabela de "
+                      + object.getClass() + ". Impossível atualizar.");
+            }
+
+            entidades.set(indexToUpdate, object);
+            fireChangeProperty(new ChangePropertyEvent(object));
+            fireTableRowsDeleted(indexToUpdate, indexToUpdate);
+        }
+
+        @Override
+        public void addRow(Financa object){
+            entidades.add(object);
+            final int LASTROW = entidades.size()-1;
+            fireTableRowsInserted(LASTROW, LASTROW);
+            fireInsertion(new InsertionEvent(object));
+        }
+
+        @Override
+        public void addAll(Collection<Financa> lista){
+            entidades.addAll(lista);
+            fireTableDataChanged();
+        }
+
+        @Override
+        public void removeRow(Financa object){
+            int indexToUpdate = -1;
+            int counter=0;
+            for(Financa entidade : entidades){
+                if (entidade.equals(object)){
+                    indexToUpdate = counter;
+                    break;
+                }
+                counter++;
+            }
+        }
+
+        @Override
+        public void removeRow(int row){
+            Financa object = entidades.get(row);
+            entidades.remove(row);
+            fireDeletion(new DeletionEvent(object));
+            fireTableRowsDeleted(row, row);
+        }
+    }
+
 }

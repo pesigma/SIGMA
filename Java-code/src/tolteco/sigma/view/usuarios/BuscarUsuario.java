@@ -11,7 +11,6 @@ import net.java.balloontip.BalloonTip;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Access;
 import tolteco.sigma.model.entidades.Usuario;
-import tolteco.sigma.model.entidades.Usuario;
 import tolteco.sigma.model.tables.UsuarioTable;
 import tolteco.sigma.utils.eventsAndListeners.ChangePropertyEvent;
 import tolteco.sigma.utils.eventsAndListeners.DeletionEvent;

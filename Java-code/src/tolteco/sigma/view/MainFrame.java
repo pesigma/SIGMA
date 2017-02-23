@@ -48,6 +48,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
     private final MainView child;
     private final ClienteController clienteController;
+    private final FinancaController financaController;
     private Version ver;
     
     public ClienteController getClienteController(){
@@ -58,6 +59,7 @@ public class MainFrame extends javax.swing.JFrame {
         mainChild.console.setEditable(false);
         BufferedPaneOutputStream oStream = new BufferedPaneOutputStream(mainChild.console);
         LOG.addHandler(new PaneHandler(oStream));
+        LOG.setLevel(Level.FINE);
     }
     
     private JButton defineLogOutButton(){
@@ -126,6 +128,7 @@ public class MainFrame extends javax.swing.JFrame {
         PainelGuias.add(panel1);
         PainelGuias.setTitleAt(1, "Clientes");
         
+        financaController = financa;
         JPanel panel2 = new MainFinanca(this, financa);
         PainelGuias.add(panel2);
         PainelGuias.setTitleAt(2, "Finanças");
@@ -134,9 +137,9 @@ public class MainFrame extends javax.swing.JFrame {
         PainelGuias.add(panel3);
         PainelGuias.setTitleAt(3, "Serviços");
         
+        BarraDeMenu.add(Box.createHorizontalGlue());
         if (Sistema.getUser().getAccessLevel() == Access.ROOT){
             JMenu jmenu = new JMenu("Configurações");
-            BarraDeMenu.add(Box.createHorizontalGlue());
             BarraDeMenu.add(jmenu);
             
             JPanel panel4 = new MainUsuario(this, usuario);
@@ -154,8 +157,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
         
         BarraDeMenu.add(defineLogOutButton());
-        
-        
         BarraDeMenu.add(defineExitButton());
         //BalloonTip bal = new BalloonTip(panel, "Tooltip msg");
     }
@@ -219,6 +220,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         ViewUtils.centerFrame(this);
         ViewUtils.setSIGMAIcon(this);
+        child.initTable();
     }//GEN-LAST:event_formWindowOpened
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
@@ -283,6 +285,14 @@ public class MainFrame extends javax.swing.JFrame {
     
     public JComponent getExceptionTab(){
         return PainelGuias;
+    }
+    
+    public MainView getMainView(){
+        return child;
+    }
+    
+    public FinancaController getFinancaController(){
+        return financaController;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

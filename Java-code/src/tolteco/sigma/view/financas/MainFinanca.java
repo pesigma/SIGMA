@@ -5,10 +5,12 @@
  */
 package tolteco.sigma.view.financas;
 
+import javax.swing.event.TableModelEvent;
 import net.java.balloontip.BalloonTip;
 import tolteco.sigma.controller.FinancaController;
 import tolteco.sigma.model.dao.DatabaseException;
 import tolteco.sigma.model.entidades.Financa;
+import tolteco.sigma.model.entidades.Situacao;
 import tolteco.sigma.model.tables.FinancaTable;
 import tolteco.sigma.view.MainFrame;
 import tolteco.sigma.view.interfaces.MainEntity;
@@ -34,6 +36,13 @@ public class MainFinanca extends javax.swing.JPanel implements MainEntity<Financ
         this.controller = controller;
         this.main = main;
         model = controller.getModel();
+
+        model.addTableModelListener((TableModelEvent e) -> {
+            Financa fin = ((FinancaTable) e.getSource()).getRow( e.getFirstRow() );
+            if (fin.getSituacao() == Situacao.PENDENTE){
+                main.getMainView().modeloTabela.addRow(fin);
+            }
+        });
     }
 
     /**
